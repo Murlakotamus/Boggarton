@@ -7,7 +7,7 @@ public class Const {
     
     public static final int FORECAST = 3;
     public static final int LENGHT = 3;
-    
+
     public static final int BOX = 30;
 
     public static final int WIDTH = 6;
@@ -19,7 +19,7 @@ public class Const {
     // Init parameters
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 600;
-    
+
     // Texture loader is used to load and server textures to entities on init
     public static final ITextureLoader TEXTURE_LOADER = new WorkAroundTextureLoader();;
 

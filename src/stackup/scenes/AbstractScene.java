@@ -46,7 +46,7 @@ public abstract class AbstractScene {
             renderScene();
             EventManager.getInstance().checkEvents();
             if (Display.isCloseRequested())
-                nextScene(Scene.FINISH_GAME); // FIXME надо незабыть убить потоки игроков. сделать их демонами?
+                nextScene(Scene.FINISH_GAME); // FIXME пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?
             Thread.yield();
         }
     }

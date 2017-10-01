@@ -13,5 +13,5 @@ public interface IFigure {
 
     public int getLenght();
     public int getNumber();
-    public IBrick getBrick(int i);    
+    public IBrick getBrick(int i);
 }

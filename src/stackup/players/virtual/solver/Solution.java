@@ -40,6 +40,6 @@ public class Solution {
 
     @Override
     public String toString() {
-        return "Score: " + score + "\nTurns: " + turns; 
+        return "Score: " + score + "\nTurns: " + turns;
     }
 }

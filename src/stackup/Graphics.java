@@ -24,9 +24,9 @@ public class Graphics {
         initEngine();
         initGL();
     }
-    
+
     public static void destroy() {
-        Display.destroy();        
+        Display.destroy();
     }
 
     /**

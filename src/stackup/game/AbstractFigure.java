@@ -4,7 +4,7 @@ abstract public class AbstractFigure implements IFigure {
 
     static final protected int REASON_TO_RORATE = 2;
 
-    final protected IBrick[] bricks;    
+    final protected IBrick[] bricks;
     final protected int lenght;
 
     protected int number;    // number of bricks that still fall
@@ -50,7 +50,7 @@ abstract public class AbstractFigure implements IFigure {
         final int firstBrick = getFirstBrickNum();
         if (firstBrick == -1)
             return;
-        
+
         for (int i = firstBrick + 1; i < lenght; i++)
             if (bricks[i] != null)
                 swapBricks(i, firstBrick);
@@ -87,7 +87,7 @@ abstract public class AbstractFigure implements IFigure {
     public int getNumber() {
         return number;
     }
-    
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer();
@@ -101,6 +101,4 @@ abstract public class AbstractFigure implements IFigure {
 
         return sb.toString();
     }
-
-    
 }

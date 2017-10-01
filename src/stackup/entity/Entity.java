@@ -33,9 +33,9 @@ public abstract class Entity {
     protected float textureRight = 1;
 
     protected Layer layer = null;
-    
+
     final public Vector2f position = new Vector2f();
-    
+
     public void setRatio(final float newRatio) {
         ratio = newRatio;
         width = originalWidth * ratio;
@@ -59,7 +59,7 @@ public abstract class Entity {
 
         spawned = true;
     }
-    
+
     public void spawn(final Vector2f position) {
         spawn(position, layer);
     }

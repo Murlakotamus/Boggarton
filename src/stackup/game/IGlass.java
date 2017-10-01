@@ -32,6 +32,6 @@ public interface IGlass {
     void dropChanges();
     boolean hasChanges();
     int getFullness();
-    
+
     IFigure getFigure();
 }

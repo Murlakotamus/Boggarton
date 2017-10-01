@@ -2,14 +2,14 @@ package stackup.game;
 
 public enum Stage {
 
-    YUCK_PAUSE(null), 
-    COMPRESS(null), 
+    YUCK_PAUSE(null),
+    COMPRESS(null),
     PROCESS(COMPRESS),
     CRASH(PROCESS),
     SET(PROCESS),
-    FALL(SET), 
-    APPEAR(FALL), 
-    NEXT(APPEAR), 
+    FALL(SET),
+    APPEAR(FALL),
+    NEXT(APPEAR),
     START(NEXT),
     YUCK(YUCK_PAUSE);
 

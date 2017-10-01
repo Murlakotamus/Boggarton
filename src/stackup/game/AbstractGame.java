@@ -17,7 +17,7 @@ import stackup.game.utils.Pair;
 
 /**
  * The Game is the Glass, Forecast and the all motion inside the Glass.
- * 
+ *
  * @author Michael
  */
 abstract public class AbstractGame extends GameState {

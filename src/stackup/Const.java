@@ -4,7 +4,7 @@ import stackup.engine.ITextureLoader;
 import stackup.engine.WorkAroundTextureLoader;
 
 public class Const {
-    
+
     public static final int FORECAST = 3;
     public static final int LENGHT = 3;
 
@@ -25,7 +25,7 @@ public class Const {
 
     public static final int FONT_WIDTH = 14;
     public static final int FONT_HEIGHT = 28;
-    
+
     // decorations
     public static final int ABOUT = 1;
     public static final int GAME_OVER = 2;

@@ -4,7 +4,7 @@ import stackup.engine.Layer;
 
 public class SinglePlayerGame extends AbstractGame {
 
-    public SinglePlayerGame(final Layer layer, final int x, final int y, final int width, 
+    public SinglePlayerGame(final Layer layer, final int x, final int y, final int width,
             final int height, final int forecast, final int lenght, final int setSize) {
         super(layer, x, y, width, height, forecast, lenght, setSize);
     }

@@ -18,7 +18,7 @@ public abstract class AbstractScene {
     private Scene scene; // current scene
     protected Scene nextScene; // a next scene for a current scene
     protected static int setSize = 5;
-    
+
     protected final Layer layer; // the layer for draw, still only one
     private static float lastTime = TIMER.getTime(); // the last tick moment
 
@@ -46,7 +46,7 @@ public abstract class AbstractScene {
             renderScene();
             EventManager.getInstance().checkEvents();
             if (Display.isCloseRequested())
-                nextScene(Scene.FINISH_GAME); // FIXME ���� �������� ����� ������ �������. ������� �� ��������?
+                nextScene(Scene.FINISH_GAME);
             Thread.yield();
         }
     }

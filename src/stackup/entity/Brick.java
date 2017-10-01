@@ -41,7 +41,7 @@ public class Brick extends AnimatedEntity implements IBrick {
     public int getType() {
         return type;
     }
-    
+
     @Override
     public void draw() {
         if (displayAnimation) {

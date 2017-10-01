@@ -14,9 +14,9 @@ public class MultiPlayerGame extends AbstractGame {
     protected int yucks;
     private final Text showVictoies;
 
-    public MultiPlayerGame(final Layer layer, final int x, final int y, final int width, 
+    public MultiPlayerGame(final Layer layer, final int x, final int y, final int width,
             final int height, final int forecast, final int lenght, final int setSize, final int victories) {
-        
+
         super(layer, x, y, width, height, forecast, lenght, setSize);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
         showVictoies.spawn(new Vector2f(x + BOX * FORECAST + 20, y + BOX * height + 10));

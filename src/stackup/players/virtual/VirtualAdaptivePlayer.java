@@ -10,7 +10,7 @@ public class VirtualAdaptivePlayer extends VirtualPlayer {
     public VirtualAdaptivePlayer(final AbstractGame game) {
         super(game, "virtual player, adaptive");
     }
-    
+
     @Override
     protected void makeMoves(final int... moves) throws InterruptedException {
         for (int i = 0; i < moves.length && game.isGameOn(); i++)

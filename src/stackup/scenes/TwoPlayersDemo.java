@@ -35,7 +35,7 @@ public class TwoPlayersDemo extends AbstractMultiPlayer {
         if (pauseBetweenGames > 0 && (System.currentTimeMillis() - pauseBetweenGames > GAMEOVER_PAUSE))
             nextScene(Scene.MENU);
     }
-    
+
     @Override
     protected void changes() {
         super.changes();

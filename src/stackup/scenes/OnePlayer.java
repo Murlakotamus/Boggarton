@@ -19,7 +19,7 @@ public class OnePlayer extends AbstractGameScene {
     private static final int X = 200;
     private static final int Y = 100;
     private final SinglePlayerGame game;
-    
+
     private SimpleEntity gameOver;
     private SimpleEntity gamePaused;
 

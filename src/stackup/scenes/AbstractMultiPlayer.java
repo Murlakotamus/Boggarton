@@ -28,7 +28,7 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
 
     protected long pauseBetweenGames;
     protected MultiPlayerGame[] game;
-    private final SimpleEntity gamePaused[];    
+    private final SimpleEntity gamePaused[];
 
     AbstractMultiPlayer(final Scene scene, final int width, final int height, final int[] forecast,
             final int length, final int numPlayers) {
@@ -60,9 +60,9 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
             game[i].startGame();
         }
     }
-    
+
     abstract protected void checkAuto();
-    
+
     private void losersAndWinners(final int looserNumber) {
         for (int i = 0; i < numPlayers; i++) {
             if (i == looserNumber) {
@@ -109,7 +109,7 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++)
             game[i].setGameOver();
     }
-    
+
     @Override
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {

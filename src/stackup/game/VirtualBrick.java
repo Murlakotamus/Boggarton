@@ -2,10 +2,10 @@ package stackup.game;
 
 
 public class VirtualBrick implements IBrick {
-    
+
     private final int type;
     private boolean kill = false;
-    
+
     public VirtualBrick(final int type) {
         this.type = type;
     }
@@ -19,7 +19,7 @@ public class VirtualBrick implements IBrick {
     public void setKill() {
         kill = true;
     }
-    
+
     @Override
     public int getType() {
         return type;

@@ -136,22 +136,22 @@ abstract public class AbstractGlass implements IGlass {
     public IFigure getFigure() {
         return state.getFigure();
     }
-    
+
     @Override
     public boolean canMoveLeft(){
         return state.canMoveLeft();
     }
-    
+
     @Override
     public boolean canMoveRight(){
         return state.canMoveRight();
     }
-    
+
     @Override
     public int getSpaceLeft(){
         return state.getSpaceLeft();
     }
-    
+
     @Override
     public int getSpaceRight(){
         return state.getSpaceRight();

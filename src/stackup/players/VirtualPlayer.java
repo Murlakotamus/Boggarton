@@ -13,7 +13,7 @@ abstract public class VirtualPlayer implements Runnable {
     protected static final int ROTATE = 2;
     protected static final int DOWN = 3;
     protected static final int NEXT = 4;
-    
+
     protected final AbstractGame game;
     protected Solver solver;
 
@@ -24,7 +24,7 @@ abstract public class VirtualPlayer implements Runnable {
         thread.setName(game.getName() + ", " + name + ", " + thread.getId());
         thread.start();
     }
-    
+
     protected void initPlayer() {
         solver = new Solver(game);
     }
@@ -62,6 +62,6 @@ abstract public class VirtualPlayer implements Runnable {
             e1.printStackTrace();
         }
     }
-    
+
     abstract protected void makeMoves(final int... moves) throws InterruptedException;
 }

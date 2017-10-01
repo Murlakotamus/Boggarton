@@ -16,9 +16,8 @@ abstract public class GameState {
 
     protected static final int DROPPING_SPEED = 300000;
     protected static final int CRASH_SPEED = 150000;
-    protected static final int MOVING_SPEED = 5000;    
+    protected static final int MOVING_SPEED = 5000;
     volatile protected int currentSpeed = MOVING_SPEED;
-    
 
     protected float startTime = getTime();
     protected float previousTime = startTime;
@@ -27,10 +26,10 @@ abstract public class GameState {
     protected boolean glassProcessed;
     protected boolean reactionDetected = false;
     protected boolean killedBricks;
-    
+
     protected String name = "default";
     protected Stage stage = START;
-    
+
     float getTime() {
         return AbstractScene.TIMER.getTime();
     }
@@ -93,5 +92,5 @@ abstract public class GameState {
 
     public void setName(String name) {
         this.name = name;
-    }    
+    }
 }

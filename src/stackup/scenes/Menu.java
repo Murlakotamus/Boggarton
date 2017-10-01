@@ -24,9 +24,9 @@ public class Menu extends AbstractLogo {
 
     static private final int Y_POS_MENU = 170;
     static private final int Y_INTERVAL = FONT_HEIGHT + 1;
-    
+
     static private final int MIN_SET_SIZE = 4;
-    static private final int MAX_SET_SIZE = 7;    
+    static private final int MAX_SET_SIZE = 7;
 
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
     private final Text[] passive = new Text[ITEMS_NUMBER];
@@ -34,7 +34,7 @@ public class Menu extends AbstractLogo {
     private final Brick[] brickSet = new Brick[MAX_SET_SIZE];
 
     private int currentPosition = 0;
-    
+
     public Menu() {
         super(Scene.MENU);
 
@@ -50,7 +50,7 @@ public class Menu extends AbstractLogo {
         drawBricks();
         addKeyHandlers();
     }
-    
+
     private void drawMenu() {
         title.spawn(new Vector2f(TITLE_X, TITLE_Y));
 
@@ -66,7 +66,7 @@ public class Menu extends AbstractLogo {
             }
         }
     }
-    
+
     private void drawBricks() {
         for (int i = setSize; i < MAX_SET_SIZE; i++)
             brickSet[i].unspawn();

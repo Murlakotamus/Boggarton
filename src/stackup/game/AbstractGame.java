@@ -45,6 +45,7 @@ abstract public class AbstractGame extends GameState {
 
         glass.newFigure(forecast.getForecast());
         ((Forecast) forecast).setNext();
+        ((Glass) glass).respawn();
         fillBuffer();
         nextStage();
     }

@@ -23,9 +23,9 @@ public class OnePlayerDemo extends AbstractGameScene {
     public OnePlayerDemo(final int width, final int height, final int forecast, final int lenght) {
         super(Scene.ONE_PLAYER_DEMO);
 
-        assert (width < lenght) : "Glass width less than figure width";
+        assert (width < lenght) : "Glass width is less than figure width";
 
-        game = new SinglePlayerGame(layer, X, Y, width, height, forecast, lenght, setSize);
+        game = new SinglePlayerGame(layer, X, Y, width, height, 2 /*forecast*/, lenght, setSize);
         game.startGame();
         new VirtualAdaptivePlayer(game);
     }

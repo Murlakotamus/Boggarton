@@ -13,7 +13,8 @@ import stackup.engine.Layer;
 
 public abstract class AbstractScene {
 
-    final static public Timer TIMER = new Timer(); // game timer, a part of the engine
+    final static public Timer TIMER = new Timer(); // game timer, a part of the
+                                                   // engine
 
     private Scene scene; // current scene
     protected Scene nextScene; // a next scene for a current scene
@@ -100,14 +101,14 @@ public abstract class AbstractScene {
             GL11.glColor4f(0, 0, 0, fadeAlpha / 1.2f);
             GL11.glDisable(GL11.GL_TEXTURE_2D);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
             GL11.glBegin(GL11.GL_QUADS);
-            {
-                GL11.glVertex2f(SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2);
-                GL11.glVertex2f(-SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2);
-                GL11.glVertex2f(-SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-                GL11.glVertex2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-            }
+            GL11.glVertex2f(SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2);
+            GL11.glVertex2f(-SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2);
+            GL11.glVertex2f(-SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+            GL11.glVertex2f(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
             GL11.glEnd();
+
             GL11.glColor4f(1, 1, 1, 1);
             GL11.glEnable(GL11.GL_TEXTURE_2D);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);

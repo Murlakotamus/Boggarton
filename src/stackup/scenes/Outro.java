@@ -28,8 +28,7 @@ public class Outro extends AbstractLogo {
 
     @Override
     protected void changes() {
-        pause();
-
+        moveUp();
         if (y <= -TITLE_Y)
             nextScene(Scene.FINISH_GAME);
     }

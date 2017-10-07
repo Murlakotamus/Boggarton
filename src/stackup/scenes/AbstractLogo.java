@@ -19,13 +19,9 @@ public abstract class AbstractLogo extends AbstractScene {
         super(scene);
     }
 
-    protected void pause() {
-        y = y - 10;
+    protected void moveUp() {
+        y = y - 1;
         title.spawn(new Vector2f(TITLE_X, y));
-        try {
-            Thread.sleep(TICK);
-        } catch (Exception e) {
-        }
     }
 
     @Override

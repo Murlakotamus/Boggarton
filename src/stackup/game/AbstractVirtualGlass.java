@@ -1,8 +1,8 @@
 package stackup.game;
 
-public class VirtualGlass extends AbstractGlass {
+abstract public class AbstractVirtualGlass extends AbstractGlass {
 
-    public VirtualGlass(final IGlassState glass) {
+    public AbstractVirtualGlass(final IGlassState glass) {
         init(glass.getWidth(), glass.getHeight());
         for (int i = 0; i < glass.getWidth(); i++)
             for (int j = 0; j < glass.getHeight(); j++)
@@ -90,24 +90,6 @@ public class VirtualGlass extends AbstractGlass {
         addBrick(i, j);
         state.getFigure().setNull(num);
         changes.setFlag(true);
-    }
-
-    /**
-     * FIXME tricky, but effective implementation
-     */
-    @Override
-    public boolean moveDown() {
-        for (int i = 0; i < state.getFigure().getLenght(); i++)
-            if (state.getFigure().getBrick(i) != null)
-                if (state.getJ() + 1 == state.getHeight()
-                        || state.getBrick(state.getI() + i, state.getJ() + 1) != null)
-                    setChanges(i, state.getI() + i, state.getJ());
-
-        if (state.getFigure().isFallen())
-            return false;
-
-        setFigure(state.getI(), state.getJ() + 1, false);
-        return true;
     }
 
     @Override

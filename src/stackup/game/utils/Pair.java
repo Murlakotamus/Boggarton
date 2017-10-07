@@ -40,7 +40,7 @@ public class Pair<F, S> {
     public static <O1, O2> Pair<O1, O2> create(O1 first, O2 second) {
         return new Pair<O1, O2>(first, second);
     }
- 
+
     public boolean isEmpty() {
         return first == null || second == null;
     }

@@ -2,12 +2,13 @@ package stackup.players.virtual.solver;
 
 import static stackup.Const.LENGHT;
 import static stackup.Const.WIDTH;
+
 import stackup.game.AbstractGame;
 import stackup.game.IForecast;
 import stackup.game.IGlass;
 import stackup.game.IGlassState;
+import stackup.game.TrueVirtualGlass;
 import stackup.game.VirtualForecast;
-import stackup.game.VirtualGlass;
 import stackup.game.utils.Pair;
 
 public class Solver {
@@ -62,7 +63,7 @@ public class Solver {
         try {
             solution = new Solution();
             pair = game.getBuffer();
-            initGlass = new VirtualGlass(pair.getFirst());
+            initGlass = new TrueVirtualGlass(pair.getFirst());
             forecast = new VirtualForecast(pair.getSecond());
             maxDepth = Math.min(forecast.getDepth(), dept);
             score = initGlass.getGlassState().getScore();
@@ -131,7 +132,7 @@ public class Solver {
         for (int j = 0; j <= shift.getSpace(); j++)
             for (int i = 0; i <= avail; i++) {
 
-                final IGlass virtualGlass = new VirtualGlass(glass.getGlassState());
+                final IGlass virtualGlass = new TrueVirtualGlass(glass.getGlassState());
                 final StringBuilder currResult = new StringBuilder(result);
                 currResult.append(doRotate(virtualGlass, i));
                 currResult.append(doShift(virtualGlass, shift.getDirection(), j));

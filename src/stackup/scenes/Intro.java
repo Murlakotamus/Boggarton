@@ -28,8 +28,7 @@ public class Intro extends AbstractLogo {
 
     @Override
     protected void changes() {
-        pause();
-
+        moveUp();
         if (y <= TITLE_Y)
             nextScene(Scene.MENU);
 

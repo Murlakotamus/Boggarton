@@ -15,7 +15,8 @@ public class MultiPlayerGame extends AbstractGame {
     private final Text showVictoies;
 
     public MultiPlayerGame(final Layer layer, final int x, final int y, final int width,
-            final int height, final int forecast, final int lenght, final int setSize, final int victories) {
+            final int height, final int forecast, final int lenght, final int setSize,
+            final int victories) {
 
         super(layer, x, y, width, height, forecast, lenght, setSize);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
@@ -40,8 +41,8 @@ public class MultiPlayerGame extends AbstractGame {
             stagePause(APPEAR_PAUSE);
             break;
         case FALL:
-            executeCommand();
             fall();
+            executeCommand();
             break;
         case SET:
             stagePause(SET_PAUSE);
@@ -66,9 +67,9 @@ public class MultiPlayerGame extends AbstractGame {
     }
 
     protected void executeYuck() {
-        ((Glass)glass).executeYuck();
+        ((Glass) glass).executeYuck();
         yucks--;
-        ((Glass)glass).respawn();
+        ((Glass) glass).respawn();
         nextStage();
     }
 

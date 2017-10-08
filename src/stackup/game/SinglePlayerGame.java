@@ -27,8 +27,8 @@ public class SinglePlayerGame extends AbstractGame {
             stagePause(APPEAR_PAUSE);
             break;
         case FALL:
-            executeCommand();
             fall();
+            executeCommand();
             break;
         case SET:
             stagePause(SET_PAUSE);

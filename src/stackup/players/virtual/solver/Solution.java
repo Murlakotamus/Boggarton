@@ -18,8 +18,8 @@ public class Solution {
         this.fullness = 0;
     }
 
-    public String getTurns() {
-        return turns;
+    public char[] getMoves() {
+        return turns.toCharArray();
     }
 
     public int getScore() {
@@ -40,6 +40,6 @@ public class Solution {
 
     @Override
     public String toString() {
-        return "Score: " + score + "\nTurns: " + turns;
+        return "Score: " + score + "\nMoves: " + turns;
     }
 }

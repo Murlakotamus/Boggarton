@@ -3,7 +3,6 @@ package stackup.players.virtual;
 import stackup.game.AbstractGame;
 import stackup.game.Glass;
 import stackup.game.utils.Command;
-import stackup.players.VirtualPlayer;
 
 abstract public class AbstractVirtualNonAdaptivePlayer extends VirtualPlayer {
 
@@ -12,7 +11,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends VirtualPlayer {
     }
 
     @Override
-    protected void makeMoves(final int... moves) throws InterruptedException {
+    protected void makeMoves(final char... moves) throws InterruptedException {
         for (int i = 0; i < moves.length && game.isGameOn(); i++)
             switch (moves[i]) {
             case LEFT:
@@ -33,7 +32,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends VirtualPlayer {
                 });
                 break;
 
-            case ROTATE:
+            case CYCLE:
                 game.sendCommand(new Command() {
                     @Override
                     public void execute() {
@@ -45,13 +44,17 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends VirtualPlayer {
             case DOWN:
                 game.checkCommand();
                 game.getGlass().dropChanges();
-                ((Glass)game.getGlass()).waitChanges();
+                game.setMaxSpeed();
+                ((Glass) game.getGlass()).waitChanges();
                 break;
 
+            // non-adaptive algorithm
             case NEXT:
                 game.clearBuffer();
+                game.setMaxSpeed();
                 game.getBuffer();
-                break; // non-adaptive algorithm
+                game.restoreSpeed();
+                break;
             }
     }
 }

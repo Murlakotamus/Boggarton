@@ -15,7 +15,7 @@ public class Solver {
 
     private static final int DEFAULT_SIZE = 48;
     private static final String D = "D";
-    private static final String DE = "DE";
+    private static final String DN = "DN";
 
     private static final int SIZE = WIDTH - LENGHT + 1;
     private static final String ROTATES[];
@@ -35,11 +35,11 @@ public class Solver {
     static {
         SHIFTS_LEFT = new String[SIZE];
         for (int i = 0; i < SIZE; i++)
-            SHIFTS_LEFT[i] = getRepeat(i, 'A');
+            SHIFTS_LEFT[i] = getRepeat(i, 'L');
 
         SHIFTS_RIGHT = new String[SIZE];
         for (int i = 0; i < SIZE; i++)
-            SHIFTS_RIGHT[i] = getRepeat(i, 'B');
+            SHIFTS_RIGHT[i] = getRepeat(i, 'R');
 
         ROTATES = new String[LENGHT];
         for (int i = 0; i < LENGHT; i++)
@@ -75,14 +75,14 @@ public class Solver {
         }
     }
 
-    public String getMoves() {
+    public Solution getSolution() {
         if (!isInit)
-            return "";
+            return null;
 
         findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE));
         isInit = false;
         game.clearBuffer();
-        return solution.getTurns();
+        return solution;
     }
 
     private Vector getSpace(final IGlass glass) {
@@ -121,7 +121,7 @@ public class Solver {
             isFallen = glass.moveDown();
         } while (!glass.hasChanges());
 
-        return isFallen ? D : DE;
+        return isFallen ? D : DN;
     }
 
     private void findSolutionRecursively(final IGlass glass, final StringBuilder result) {

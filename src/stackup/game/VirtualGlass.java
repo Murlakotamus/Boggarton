@@ -1,8 +1,10 @@
 package stackup.game;
 
-abstract public class AbstractVirtualGlass extends AbstractGlass {
+public class VirtualGlass extends AbstractGlass {
 
-    public AbstractVirtualGlass(final IGlassState glass) {
+    private boolean moveDown;
+
+    public VirtualGlass(final IGlassState glass, final boolean moveDown) {
         init(glass.getWidth(), glass.getHeight());
         for (int i = 0; i < glass.getWidth(); i++)
             for (int j = 0; j < glass.getHeight(); j++)
@@ -14,6 +16,8 @@ abstract public class AbstractVirtualGlass extends AbstractGlass {
         state.setScore(glass.getScore());
         state.setI(glass.getI());
         state.setJ(glass.getJ());
+
+        this.moveDown = moveDown;
     }
 
     private void init(final int width, final int height) {
@@ -44,11 +48,6 @@ abstract public class AbstractVirtualGlass extends AbstractGlass {
     }
 
     @Override
-    public void rotate() {
-        state.getFigure().rotate();
-    }
-
-    @Override
     public void moveLeft() {
         if (canMoveLeft()) {
             state.setI(state.getI() - 1);
@@ -62,6 +61,20 @@ abstract public class AbstractVirtualGlass extends AbstractGlass {
             state.setI(state.getI() + 1);
             setFigure(state.getI(), state.getJ(), true);
         }
+    }
+
+    @Override
+    public void rotate() {
+        state.getFigure().rotate();
+    }
+
+
+    @Override
+    public boolean moveDown() {
+        if (moveDown)
+            return moveDownTrue();
+        
+        return moveDownEffective(); 
     }
 
     @Override
@@ -101,5 +114,35 @@ abstract public class AbstractVirtualGlass extends AbstractGlass {
     @Override
     public void dropChanges() {
         changes.setFlag(false);
+    }
+    
+    private boolean moveDownTrue() {
+        boolean changes = false;
+        for (int i = 0; i < state.getFigure().getLenght(); i++)
+            if (state.getFigure().getBrick(i) != null)
+                if (state.getJ() + 1 == state.getHeight()
+                        || state.getBrick(state.getI() + i, state.getJ() + 1) != null) {
+                    changes = true;
+                    setChanges(i, state.getI() + i, state.getJ());
+                }
+        if (state.getFigure().isFallen())
+            return false;
+
+        setFigure(state.getI(), state.getJ() + 1, changes);
+        return true;
+    } 
+    
+    private boolean moveDownEffective () {
+        for (int i = 0; i < state.getFigure().getLenght(); i++)
+            if (state.getFigure().getBrick(i) != null)
+                if (state.getJ() + 1 == state.getHeight()
+                        || state.getBrick(state.getI() + i, state.getJ() + 1) != null)
+                    setChanges(i, state.getI() + i, state.getJ());
+
+        if (state.getFigure().isFallen())
+            return false;
+
+        setFigure(state.getI(), state.getJ() + 1, false);
+        return true;   
     }
 }

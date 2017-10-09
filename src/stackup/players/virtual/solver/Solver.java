@@ -7,8 +7,8 @@ import stackup.game.AbstractGame;
 import stackup.game.IForecast;
 import stackup.game.IGlass;
 import stackup.game.IGlassState;
-import stackup.game.TrueVirtualGlass;
 import stackup.game.VirtualForecast;
+import stackup.game.VirtualGlass;
 import stackup.game.utils.Pair;
 
 public class Solver {
@@ -23,6 +23,7 @@ public class Solver {
     private static final String SHIFTS_RIGHT[];
 
     private final AbstractGame game;
+    private final boolean moveDown;
     private IGlass initGlass;
     private IForecast forecast;
     private Solution solution;
@@ -53,8 +54,9 @@ public class Solver {
         return sb.toString();
     }
 
-    public Solver(final AbstractGame game) {
+    public Solver(final AbstractGame game, final boolean moveDown) {
         this.game = game;
+        this.moveDown = moveDown;
         isInit = false;
     }
 
@@ -63,7 +65,7 @@ public class Solver {
         try {
             solution = new Solution();
             pair = game.getBuffer();
-            initGlass = new TrueVirtualGlass(pair.getFirst());
+            initGlass = new VirtualGlass(pair.getFirst(), moveDown);
             forecast = new VirtualForecast(pair.getSecond());
             maxDepth = Math.min(forecast.getDepth(), dept);
             score = initGlass.getGlassState().getScore();
@@ -112,7 +114,6 @@ public class Solver {
         return SHIFTS_LEFT[j];
     }
 
-    // due to invalid implementation of moveDownVirtual always returns D.
     private String doFall(final IGlass glass) {
         glass.dropChanges();
         boolean isFallen = false;
@@ -132,7 +133,7 @@ public class Solver {
         for (int j = 0; j <= shift.getSpace(); j++)
             for (int i = 0; i <= avail; i++) {
 
-                final IGlass virtualGlass = new TrueVirtualGlass(glass.getGlassState());
+                final IGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
                 final StringBuilder currResult = new StringBuilder(result);
                 currResult.append(doRotate(virtualGlass, i));
                 currResult.append(doShift(virtualGlass, shift.getDirection(), j));
@@ -150,12 +151,14 @@ public class Solver {
                     }
 
                     if (depth == maxDepth) {
-                        final int scoreDifference = virtualGlass.getGlassState().getScore()- score;
+                        final int scoreDifference = virtualGlass.getGlassState().getScore() - score;
                         if (!virtualGlass.isGameOver())
-                            if (Solution.getPrice(virtualGlass.getFullness(), scoreDifference) > solution.getPrice())
-                                solution = new Solution(currResult.toString(), scoreDifference, virtualGlass.getFullness());
+                            if (Solution.getPrice(virtualGlass.getFullness(),
+                                    scoreDifference) > solution.getPrice())
+                                solution = new Solution(currResult.toString(), scoreDifference,
+                                        virtualGlass.getFullness());
                     }
                 }
             }
-        }
+    }
 }

@@ -1,8 +1,8 @@
 package stackup.scenes;
 
+import static stackup.Const.BOX;
 import static stackup.Const.GAME_OVER;
 import static stackup.Const.LENGHT;
-import static stackup.Const.BOX;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -25,7 +25,7 @@ public class OnePlayerDemo extends AbstractGameScene {
 
         assert (width < lenght) : "Glass width is less than figure width";
 
-        game = new SinglePlayerGame(layer, X, Y, width, height, 2 /*forecast*/, lenght, setSize);
+        game = new SinglePlayerGame(layer, X, Y, width, height, forecast, lenght, setSize);
         game.startGame();
         new VirtualAdaptivePlayer(game);
     }

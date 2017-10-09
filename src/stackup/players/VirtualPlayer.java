@@ -16,9 +16,11 @@ abstract public class VirtualPlayer implements Runnable {
 
     protected final AbstractGame game;
     protected Solver solver;
+    private final boolean moveDown;
 
-    public VirtualPlayer(final AbstractGame game, final String name) {
+    public VirtualPlayer(final AbstractGame game, final String name, final boolean moveDown) {
         this.game = game;
+        this.moveDown = moveDown;
         final Thread thread = new Thread(this);
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.setName(game.getName() + ", " + name + ", " + thread.getId());
@@ -26,7 +28,7 @@ abstract public class VirtualPlayer implements Runnable {
     }
 
     protected void initPlayer() {
-        solver = new Solver(game);
+        solver = new Solver(game, moveDown);
     }
 
     protected int[] getMoves(final int dept) {

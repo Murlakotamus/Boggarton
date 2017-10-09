@@ -23,13 +23,13 @@ public enum Scene {
         case ONE_PLAYER_GAME:
             return new OnePlayer(WIDTH, HEIGHT, FORECAST, LENGHT);
         case ONE_PLAYER_DEMO:
-            return new OnePlayerDemo(WIDTH, HEIGHT, FORECAST, LENGHT);
+            return new OnePlayerDemo(WIDTH, HEIGHT, 2, LENGHT);
         case PLAYER_VS_COMP:
             return new PlayerVsComp(WIDTH, HEIGHT, FORECASTS, LENGHT);
         case TWO_PLAYERS_GAME:
             return new PlayerVsPlayer(WIDTH, HEIGHT, FORECASTS, LENGHT);
         case TWO_PLAYERS_DEMO:
-            return new TwoPlayersDemo(WIDTH, HEIGHT, FORECASTS, LENGHT);
+            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, LENGHT);
         case OUTRO:
             return new Outro();
         default:

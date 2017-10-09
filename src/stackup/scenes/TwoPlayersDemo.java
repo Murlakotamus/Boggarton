@@ -1,7 +1,7 @@
 package stackup.scenes;
 
+import stackup.players.virtual.EffectiveVirtualNonAdaptivePlayer;
 import stackup.players.virtual.VirtualAdaptivePlayer;
-import stackup.players.virtual.VirtualNonAdaptivePlayer;
 
 
 public class TwoPlayersDemo extends AbstractMultiPlayer {
@@ -11,7 +11,7 @@ public class TwoPlayersDemo extends AbstractMultiPlayer {
     public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int lenght) {
         super(Scene.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2);
 
-        new VirtualNonAdaptivePlayer(game[0]);
+        new EffectiveVirtualNonAdaptivePlayer(game[0]);
         new VirtualAdaptivePlayer(game[1]);
     }
 

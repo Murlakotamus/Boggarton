@@ -2,24 +2,36 @@ package stackup.game;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import stackup.Const;
+import static stackup.Const.BOX;
+import static stackup.Const.BORDER;
 import stackup.engine.Layer;
 import stackup.entity.Frame;
 
 public class Forecast extends AbstractForecast {
 
     final private Frame frame;
-    final private int setSize;
+    final private int difficulty;
 
     public Forecast(final Layer layer, final Vector2f startPos, final int debth, final int lenght,
             final int setSize) {
         super(debth, lenght);
-        this.setSize = setSize;
+        this.difficulty = setSize;
         frame = new Frame(layer, startPos, lenght, debth);
 
         for (int i = 0; i < debth; i++)
-            figures[i] = new Figure(layer, new Vector2f(frame.getPosition().getX(), frame
-                    .getPosition().getY() + i * Const.BOX + Frame.BORDER), lenght, setSize);
+            figures[i] = new Figure(layer, new Vector2f(frame.getPosition().getX(),
+                    frame.getPosition().getY() + i * BOX + BORDER), lenght, setSize);
+    }
+
+    public Forecast(final Layer layer, final Vector2f startPos, final int debth, final int lenght,
+            final int setSize, final boolean forMenu) {
+        super(debth, lenght);
+        this.difficulty = setSize;
+        frame = new Frame(layer, startPos, lenght, debth);
+
+        for (int i = 0; i < debth; i++)
+            figures[i] = new Figure(layer, new Vector2f(frame.getPosition().getX(),
+                    frame.getPosition().getY() + i * BOX + BORDER), lenght, setSize, true);
     }
 
     @Override
@@ -30,10 +42,17 @@ public class Forecast extends AbstractForecast {
     public void setNext() {
         for (int i = debth - 1; i > 0; i--) {
             figures[i] = figures[i - 1];
-            ((Figure) figures[i]).shiftY(Const.BOX);
+            ((Figure) figures[i]).shiftY(BOX);
         }
 
-        figures[0] = new Figure(frame.getLayer(), new Vector2f(frame.getPosition().getX(), frame
-                .getPosition().getY() + Frame.BORDER), lenght, setSize);
+        figures[0] = new Figure(frame.getLayer(),
+                new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + BORDER),
+                lenght, difficulty);
+    }
+
+    public void unspawn() {
+        frame.unspawn();
+        for (int i = 0; i < debth; i++)
+            ((Figure) figures[i]).unspawn();
     }
 }

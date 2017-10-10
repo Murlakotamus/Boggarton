@@ -7,6 +7,8 @@ import static stackup.Const.FONT_WIDTH;
 import static stackup.Const.LIGHT_FONT;
 import static stackup.Const.SCREEN_WIDTH;
 import static stackup.Const.TITLE;
+import static stackup.Const.WIDTH;
+import static stackup.Const.BORDER;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
@@ -16,6 +18,7 @@ import stackup.engine.KeyListener;
 import stackup.entity.Brick;
 import stackup.entity.SimpleEntity;
 import stackup.entity.Text;
+import stackup.game.Forecast;
 
 public class Menu extends AbstractLogo {
 
@@ -27,11 +30,14 @@ public class Menu extends AbstractLogo {
 
     static private final int MIN_SET_SIZE = 4;
     static private final int MAX_SET_SIZE = 7;
+    static private final int MIN_FIGURE_SIZE = 2;
 
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
     private final Text[] passive = new Text[ITEMS_NUMBER];
     private final Text[] active = new Text[ITEMS_NUMBER];
     private final Brick[] brickSet = new Brick[MAX_SET_SIZE];
+
+    private Forecast forecast = null;
 
     private int currentPosition = 0;
 
@@ -48,6 +54,7 @@ public class Menu extends AbstractLogo {
 
         drawMenu();
         drawBricks();
+        drawForecast();
         addKeyHandlers();
     }
 
@@ -68,13 +75,23 @@ public class Menu extends AbstractLogo {
     }
 
     private void drawBricks() {
-        for (int i = setSize; i < MAX_SET_SIZE; i++)
+        for (int i = difficulty; i < MAX_SET_SIZE; i++)
             brickSet[i].unspawn();
 
-        for (int i = 0; i < setSize; i++) {
-            int pointX = (SCREEN_WIDTH / 2) - (setSize * BOX / 2) + BOX * i;
+        for (int i = 0; i < difficulty; i++) {
+            int pointX = (SCREEN_WIDTH / 2) - (difficulty * BOX / 2) + BOX * i;
             brickSet[i].spawn(new Vector2f(pointX, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU));
         }
+    }
+
+    private void drawForecast() {
+        if (forecast != null)
+            forecast.unspawn();
+
+        forecast = new Forecast(layer,
+                new Vector2f((SCREEN_WIDTH / 2) - (length * BOX / 2) - BORDER,
+                        ITEMS_NUMBER * Y_INTERVAL + BOX * 2.5f + Y_POS_MENU),
+                deepness, length, difficulty, true);
     }
 
     private void addKeyHandlers() {
@@ -113,12 +130,20 @@ public class Menu extends AbstractLogo {
             @Override
             public void onKeyUp() {
                 final Scene scene = ITEMS[currentPosition].getScene();
-                if (scene == Scene.DIFFICULTY) {
-                    if (++setSize > MAX_SET_SIZE)
-                        setSize = MIN_SET_SIZE;
+                switch (scene) {
+                case DIFFICULTY:
+                    if (++difficulty > MAX_SET_SIZE)
+                        difficulty = MIN_SET_SIZE;
                     drawBricks();
-                } else
+                    break;
+                case SIZE:
+                    if (++length > WIDTH)
+                        length = MIN_FIGURE_SIZE;
+                    drawForecast();
+                    break;
+                default:
                     nextScene = scene;
+                }
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_RETURN, enter);

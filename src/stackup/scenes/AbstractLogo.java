@@ -28,5 +28,4 @@ public abstract class AbstractLogo extends AbstractScene {
     protected void changes() {
         // Do nothing
     }
-
 }

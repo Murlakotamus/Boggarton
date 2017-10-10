@@ -8,8 +8,6 @@ import stackup.engine.Layer;
 
 public class Frame {
 
-    public static final int BORDER = 5;
-
     private static final int MINIMAL_HEIGHT = 1;
     private static final int WIDTH_WITH_BORDER = BORDER + BOX;
 
@@ -27,18 +25,18 @@ public class Frame {
         int elCount = 0;
         for (int i = 1; i < width - 1; i++) {
             frameEl[elCount] = new FrameEl(FRAME_UPPER, layer);
-            frameEl[elCount++].spawn(new Vector2f(position.getX() + i * BOX + BORDER, position
-                    .getY()));
+            frameEl[elCount++]
+                    .spawn(new Vector2f(position.getX() + i * BOX + BORDER, position.getY()));
 
             frameEl[elCount] = new FrameEl(FRAME_LOWER, layer);
-            frameEl[elCount++].spawn(new Vector2f(position.getX() + i * BOX + BORDER, position
-                    .getY() + BORDER + (height - 1) * BOX));
+            frameEl[elCount++].spawn(new Vector2f(position.getX() + i * BOX + BORDER,
+                    position.getY() + BORDER + (height - 1) * BOX));
         }
 
         for (int i = 1; i < height - 1; i++) {
             frameEl[elCount] = new FrameEl(FRAME_LEFT, layer);
-            frameEl[elCount++].spawn(new Vector2f(position.getX(), position.getY() + BORDER + i
-                    * BOX));
+            frameEl[elCount++]
+                    .spawn(new Vector2f(position.getX(), position.getY() + BORDER + i * BOX));
 
             frameEl[elCount] = new FrameEl(FRAME_RIGHT, layer);
             frameEl[elCount++].spawn(new Vector2f(position.getX() + (width - 1) * BOX + BORDER,
@@ -47,28 +45,35 @@ public class Frame {
 
         if (height > MINIMAL_HEIGHT) {
             frameEl[elCount] = new FrameEl(FRAME_UPPER_RIGHT, layer);
-            frameEl[elCount++].spawn(new Vector2f(position.getX() + WIDTH_WITH_BORDER + (width - 2)
-                    * BOX, position.getY()));
+            frameEl[elCount++].spawn(new Vector2f(
+                    position.getX() + WIDTH_WITH_BORDER + (width - 2) * BOX, position.getY()));
 
             frameEl[elCount] = new FrameEl(FRAME_UPPER_LEFT, layer);
             frameEl[elCount++].spawn(new Vector2f(position.getX(), position.getY()));
 
             frameEl[elCount] = new FrameEl(FRAME_LOWER_RIGHT, layer);
-            frameEl[elCount++].spawn(new Vector2f(position.getX() + WIDTH_WITH_BORDER + (width - 2)
-                    * BOX, position.getY() + WIDTH_WITH_BORDER + (height - 2) * BOX));
+            frameEl[elCount++]
+                    .spawn(new Vector2f(position.getX() + WIDTH_WITH_BORDER + (width - 2) * BOX,
+                            position.getY() + WIDTH_WITH_BORDER + (height - 2) * BOX));
 
             frameEl[elCount] = new FrameEl(FRAME_LOWER_LEFT, layer);
-            frameEl[elCount++].spawn(new Vector2f(position.getX(), position.getY()
-                    + WIDTH_WITH_BORDER + (height - 2) * BOX));
+            frameEl[elCount++].spawn(new Vector2f(position.getX(),
+                    position.getY() + WIDTH_WITH_BORDER + (height - 2) * BOX));
         } else {
             frameEl[elCount] = new FrameEl(FRAME_FULL_LEFT, layer);
             frameEl[elCount++].spawn(new Vector2f(position.getX(), position.getY()));
 
             frameEl[elCount] = new FrameEl(FRAME_FULL_RIGHT, layer);
-            frameEl[elCount++].spawn(new Vector2f(position.getX() + WIDTH_WITH_BORDER + (width - 2)
-                    * BOX, position.getY()));
+            frameEl[elCount++].spawn(new Vector2f(
+                    position.getX() + WIDTH_WITH_BORDER + (width - 2) * BOX, position.getY()));
         }
 
+    }
+
+    public void unspawn() {
+        for (FrameEl fe : frameEl)
+            if (fe != null)
+                fe.unspawn();
     }
 
     public Vector2f getPosition() {

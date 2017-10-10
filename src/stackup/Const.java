@@ -6,9 +6,11 @@ import stackup.engine.WorkAroundTextureLoader;
 public class Const {
 
     public static final int FORECAST = 3;
-    public static final int LENGHT = 3;
+//    public static final int LENGHT = 3;
 
     public static final int BOX = 30;
+    public static final int BORDER = 5;
+
 
     public static final int WIDTH = 6;
     public static final int HEIGHT = 12;

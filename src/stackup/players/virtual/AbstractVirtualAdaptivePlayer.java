@@ -4,7 +4,7 @@ import stackup.game.AbstractGame;
 import stackup.game.Glass;
 import stackup.game.utils.Command;
 
-abstract public class AbstractVirtualAdaptivePlayer extends VirtualPlayer {
+abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlayer {
 
     public AbstractVirtualAdaptivePlayer(final AbstractGame game, final boolean moveDown) {
         super(game, "virtual player, adaptive, effective: " + moveDown, moveDown);

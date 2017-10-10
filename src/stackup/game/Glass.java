@@ -4,7 +4,7 @@ import static stackup.Const.FONT_WIDTH;
 import static stackup.Const.FORECAST;
 import static stackup.Const.LIGHT_FONT;
 import static stackup.Const.BOX;
-import static stackup.entity.Frame.BORDER;
+import static stackup.Const.BORDER;
 
 import org.lwjgl.util.vector.Vector2f;
 

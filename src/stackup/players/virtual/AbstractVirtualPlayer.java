@@ -7,7 +7,7 @@ import stackup.game.utils.Pair;
 import stackup.players.virtual.solver.Solution;
 import stackup.players.virtual.solver.Solver;
 
-abstract public class VirtualPlayer implements Runnable {
+abstract public class AbstractVirtualPlayer implements Runnable {
 
     private final boolean moveDown;
     protected final AbstractGame game;
@@ -20,7 +20,7 @@ abstract public class VirtualPlayer implements Runnable {
 
     protected Solver solver;    
 
-    public VirtualPlayer(final AbstractGame game, final String name, final boolean moveDown) {
+    public AbstractVirtualPlayer(final AbstractGame game, final String name, final boolean moveDown) {
         this.game = game;
         this.moveDown = moveDown;
         final Thread thread = new Thread(this);

@@ -1,14 +1,15 @@
 package stackup.scenes;
 
+
+import static stackup.Const.BORDER;
 import static stackup.Const.GAME_PAUSED;
-import static stackup.Const.LENGHT;
 import static stackup.Const.LOSER;
 import static stackup.Const.BOX;
 import static stackup.Const.WINNER;
 
+
 import org.lwjgl.util.vector.Vector2f;
 
-import stackup.entity.Frame;
 import stackup.entity.SimpleEntity;
 import stackup.game.Glass;
 import stackup.game.MultiPlayerGame;
@@ -52,7 +53,7 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
 
         for (int i = 0; i < numPlayers; i++) {
             game[i] = new MultiPlayerGame(layer, X + 350 * i, Y, width, height, forecast[i],
-                    length, setSize, Victories.getVictories(i)); // FIXME => vic to player
+                    length, difficulty, Victories.getVictories(i)); // FIXME => vic to player
             if (i < 4)
                 game[i].setName(PLAYERS_NAMES[i]);
             else
@@ -67,10 +68,10 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             if (i == looserNumber) {
                 loser = new SimpleEntity(LOSER, layer);
-                loser.spawn(new Vector2f(game[i].getX() + 115, Y + BOX * LENGHT + Frame.BORDER));
+                loser.spawn(new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
             } else {
                 winners[i] = new SimpleEntity(WINNER, layer);
-                winners[i].spawn(new Vector2f(game[i].getX() + 115, Y + BOX * LENGHT + Frame.BORDER));
+                winners[i].spawn(new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
                 Victories.addVictory(i);
             }
             game[i].setGameOver();
@@ -114,7 +115,7 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {
             ((Glass)game[i].getGlass()).pauseOn();
-            gamePaused[i].spawn(new Vector2f(game[i].getX() + 115, Y + BOX * LENGHT + Frame.BORDER));
+            gamePaused[i].spawn(new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
         }
     }
 

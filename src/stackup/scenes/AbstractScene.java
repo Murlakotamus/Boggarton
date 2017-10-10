@@ -15,14 +15,15 @@ public abstract class AbstractScene {
 
     final static public Timer TIMER = new Timer(); // game timer, a part of the
                                                    // engine
-
     private Scene scene; // current scene
     protected Scene nextScene; // a next scene for a current scene
-    protected static int setSize = 5;
+    protected static int difficulty = 5;
+    protected static int deepness = 3;
 
     protected final Layer layer; // the layer for draw, still only one
     private static float lastTime = TIMER.getTime(); // the last tick moment
 
+    public static int size = 3;
     // How much time spent since the last tick. It is used by sprite engine
     public static float tick;
     public static float fadeAlpha;

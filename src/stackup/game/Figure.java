@@ -3,23 +3,36 @@ package stackup.game;
 import org.lwjgl.util.vector.Vector2f;
 
 import static stackup.Const.BOX;
-import static stackup.entity.Frame.BORDER;
+import static stackup.Const.BORDER;
+
+import stackup.Const;
 import stackup.engine.Layer;
 import stackup.entity.Brick;
-//import stackup.entity.Frame;
 import stackup.game.utils.Utils;
 
 public class Figure extends AbstractFigure {
 
     private final Vector2f position;
 
-    public Figure(final Layer layer, final Vector2f position, final int lenght, final int setSize) {
+    public Figure(final Layer layer, final Vector2f position, final int lenght, final int difficulty) {
         super(lenght);
         this.position = position;
         number = lenght;
 
         for (int j = 0; j < lenght; j++)
-            bricks[j] = new Brick(Utils.randomBrick(setSize), layer);
+            bricks[j] = new Brick(Utils.randomBrick(difficulty), layer);
+
+        respawn();
+    }
+
+    public Figure(final Layer layer, final Vector2f position, final int lenght, final int difficulty,
+            final boolean forMenu) {
+        super(lenght);
+        this.position = position;
+        number = lenght;
+
+        for (int j = 0; j < lenght; j++)
+            bricks[j] = new Brick(j + Const.CURRENT_SET * 10 + 1, layer);
 
         respawn();
     }

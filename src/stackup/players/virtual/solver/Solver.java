@@ -75,6 +75,7 @@ public class Solver {
             CYCLES[i] = getRepeat(i, 'C');
 
         final int size = WIDTH - AbstractScene.size;
+
         MOVES_TO_LEFT = new Vector[size + 1];
         for (int i = 0; i <= size; i++)
             MOVES_TO_LEFT[i] = new Vector(false, i);

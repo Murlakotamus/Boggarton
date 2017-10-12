@@ -87,7 +87,7 @@ public class GlassState implements IGlassState {
 
         for (int num = 0; num < figure.getLenght(); num++)
             if (figure.getBrick(num) != null)
-                if (bricks[i + num - 1][j] != null)
+                if (j + 1 < height && bricks[i + num - 1][j + 1] != null)
                     return false;
 
         return true;
@@ -100,7 +100,7 @@ public class GlassState implements IGlassState {
 
         for (int num = 0; num < figure.getLenght(); num++)
             if (figure.getBrick(num) != null)
-                if (bricks[i + num + 1][j] != null)
+                if (j + 1 < height && bricks[i + num + 1][j + 1] != null)
                     return false;
 
         return true;

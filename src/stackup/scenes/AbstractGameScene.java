@@ -10,6 +10,7 @@ import stackup.engine.KeyListener;
 
 public abstract class AbstractGameScene extends AbstractScene {
 
+    protected static final int Y = 160;
     protected boolean escapePressed = false;
 
     AbstractGameScene(final Scene scene) {

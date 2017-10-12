@@ -15,8 +15,7 @@ import stackup.players.RealPlayer;
 
 public class OnePlayer extends AbstractGameScene {
 
-    private static final int X = 200;
-    private static final int Y = 100;
+    private static final int X = 350;
     private final SinglePlayerGame game;
 
     private SimpleEntity gameOver;
@@ -26,8 +25,10 @@ public class OnePlayer extends AbstractGameScene {
         super(Scene.ONE_PLAYER_GAME);
         gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
-        game = new SinglePlayerGame(layer, X, Y, width, height, forecast, lenght, difficulty);
-        new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
+        game = new SinglePlayerGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
+                lenght, difficulty);
+        new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,
+                Keyboard.KEY_UP);
         game.startGame();
     }
 
@@ -50,7 +51,7 @@ public class OnePlayer extends AbstractGameScene {
     protected void hideGlass() {
         if (game.isGameOver())
             return;
-        ((Glass)game.getGlass()).pauseOn();
+        ((Glass) game.getGlass()).pauseOn();
         gamePaused.spawn(new Vector2f(X + 115, Y + BOX * AbstractScene.size + BORDER));
     }
 
@@ -59,6 +60,6 @@ public class OnePlayer extends AbstractGameScene {
         if (game.isGameOver())
             return;
         gamePaused.unspawn();
-        ((Glass)game.getGlass()).pauseOff();
+        ((Glass) game.getGlass()).pauseOff();
     }
 }

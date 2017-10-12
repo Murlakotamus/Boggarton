@@ -2,13 +2,13 @@ package stackup.game;
 
 abstract public class AbstractForecast implements IForecast {
 
-    final protected int debth; // dept
-    final protected int lenght; // length of figure
+    final protected int prognosis; // dept
+    final protected int size; // length of figure
     final protected IFigure[] figures;
 
-    public AbstractForecast(int debth, int lenght) {
-        this.debth = debth;
-        this.lenght = lenght;
+    public AbstractForecast(int prognosis, int size) {
+        this.prognosis = prognosis;
+        this.size = size;
         figures = initFigures();
     }
 
@@ -16,12 +16,12 @@ abstract public class AbstractForecast implements IForecast {
 
     @Override
     public int getDepth() {
-        return debth;
+        return prognosis;
     }
 
     @Override
     public int getLenght() {
-        return lenght;
+        return size;
     }
 
     @Override
@@ -31,6 +31,6 @@ abstract public class AbstractForecast implements IForecast {
 
     @Override
     public IFigure getForecast(final int i) {
-        return figures[debth - i - 1];
+        return figures[prognosis - i - 1];
     }
 }

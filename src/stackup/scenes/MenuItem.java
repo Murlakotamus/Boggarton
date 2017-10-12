@@ -9,6 +9,7 @@ public enum MenuItem {
     TWO_PLAYERS_DEMO("Two players demo", Scene.TWO_PLAYERS_DEMO),
     DIFFICULTY("Difficulty", Scene.DIFFICULTY),
     FIGURE_SIZE("Figure size", Scene.SIZE),
+    PROGNOSIS("Prognosis", Scene.PROGNOSIS),
     ABOUT("About", Scene.ABOUT);
 
     final private Scene scene;

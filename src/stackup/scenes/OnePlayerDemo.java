@@ -12,9 +12,7 @@ import stackup.players.virtual.VirtualAdaptivePlayer;
 
 public class OnePlayerDemo extends AbstractGameScene {
 
-    private static final int X = 200;
-    private static final int Y = 100;
-
+    private static final int X = 350;
     private final SinglePlayerGame game;
 
     private SimpleEntity gameOver = null;
@@ -24,7 +22,8 @@ public class OnePlayerDemo extends AbstractGameScene {
 
         assert (width < lenght) : "Glass width is less than figure width";
 
-        game = new SinglePlayerGame(layer, X, Y, width, height, forecast, lenght, difficulty);
+        game = new SinglePlayerGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
+                lenght, difficulty);
         game.startGame();
         new VirtualAdaptivePlayer(game);
     }

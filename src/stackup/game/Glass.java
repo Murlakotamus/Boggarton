@@ -1,10 +1,8 @@
 package stackup.game;
 
-import static stackup.Const.FONT_WIDTH;
-import static stackup.Const.FORECAST;
-import static stackup.Const.LIGHT_FONT;
-import static stackup.Const.BOX;
 import static stackup.Const.BORDER;
+import static stackup.Const.BOX;
+import static stackup.Const.LIGHT_FONT;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -16,33 +14,32 @@ import stackup.game.utils.Utils;
 
 public class Glass extends AbstractGlass {
 
-    static public final int SCREEN_OFFSET = 105;
+    static public final int SCREEN_OFFSET = 165;
 
     private final Text showScore;
     private final Text showCount;
     private final Frame frame;
     private final Layer layer;
-    private final int setSize;
+    private final int difficulty;
 
     private boolean gamePaused;
-    private int count; // fallen figures number
+    private int count; // figures counter s
 
     /**
      * Real glass constructor
      */
-    public Glass(final Layer layer, final Vector2f position, final int width, final int height, final int setSize) {
+    public Glass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty) {
         this.layer = layer;
-        this.setSize = setSize;
+        this.difficulty = difficulty;
         frame = new Frame(layer, position, width, height);
         init(width, height);
 
         showScore = new Text("Score: " + state.getScore(), LIGHT_FONT, layer);
         showScore.spawn(new Vector2f(position.getX(), position.getY() - 30));
 
-        final int numLen = ("" + count).length();
-        showCount = new Text("" + count, LIGHT_FONT, layer);
-        showCount.spawn(new Vector2f(position.getX() - numLen * FONT_WIDTH - 10, position.getY()
-                + FORECAST * BOX + 15));
+        showCount = new Text("Figures: " + count, LIGHT_FONT, layer);
+        showCount.spawn(new Vector2f(position.getX(), position.getY()
+                + height * BOX + 15));
     }
 
     private void init(final int width, final int height) {
@@ -105,11 +102,9 @@ public class Glass extends AbstractGlass {
         figure().respawn();
         showScore.setString("Score: " + state.getScore());
 
-        final String count = "" + this.count;
-        final int numLen = count.length();
-        showCount.setString(count);
-        showCount.spawn(new Vector2f(position.getX() - numLen * FONT_WIDTH - 10, position.getY()
-                + FORECAST * BOX + 15));
+        showCount.setString("Figures: " + count);
+        showCount.spawn(new Vector2f(position.getX(), position.getY()
+                + state.height * BOX + 15));
     }
 
     public void executeYuck() {
@@ -121,7 +116,7 @@ public class Glass extends AbstractGlass {
             }
 
         for (int i = 0; i < state.getWidth(); i++)
-            state.setBrick(i, state.getHeight() - 1, new Brick(Utils.randomBrick(setSize), layer));
+            state.setBrick(i, state.getHeight() - 1, new Brick(Utils.randomBrick(difficulty), layer));
 
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++)

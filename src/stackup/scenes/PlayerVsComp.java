@@ -5,7 +5,7 @@ import org.lwjgl.input.Keyboard;
 import stackup.players.RealPlayer;
 import stackup.players.virtual.EffectiveVirtualAdaptivePlayer;
 
-public class PlayerVsComp extends AbstractMultiPlayer {
+public class PlayerVsComp extends AbstractMultiPlayerGame {
 
     public PlayerVsComp(final int width, final int height, final int[] forecast, final int lenght) {
         super(Scene.PLAYER_VS_COMP, width, height, forecast, lenght, 2);

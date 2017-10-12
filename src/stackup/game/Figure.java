@@ -14,25 +14,28 @@ public class Figure extends AbstractFigure {
 
     private final Vector2f position;
 
-    public Figure(final Layer layer, final Vector2f position, final int lenght, final int difficulty) {
-        super(lenght);
+    public Figure(final Layer layer, final Vector2f position, final int size,
+            final int difficulty) {
+        super(size);
         this.position = position;
-        number = lenght;
+        number = size;
 
-        for (int j = 0; j < lenght; j++)
+        for (int j = 0; j < size; j++)
             bricks[j] = new Brick(Utils.randomBrick(difficulty), layer);
 
         respawn();
     }
 
-    public Figure(final Layer layer, final Vector2f position, final int lenght, final int difficulty,
+    public Figure(final Layer layer, final Vector2f position, final int size, final int difficulty,
             final boolean forMenu) {
-        super(lenght);
+        super(size);
         this.position = position;
-        number = lenght;
 
-        for (int j = 0; j < lenght; j++)
-            bricks[j] = new Brick(j + Const.CURRENT_SET * 10 + 1, layer);
+        for (int j = difficulty, i = 0; j > difficulty - size; j--, i++) {
+            int value = difficulty - i % difficulty;
+            value = value + Const.CURRENT_SET * 10;
+            bricks[i] = new Brick(value, layer);
+        }
 
         respawn();
     }

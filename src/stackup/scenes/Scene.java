@@ -1,15 +1,13 @@
 package stackup.scenes;
 
-import static stackup.Const.FORECAST;
 import static stackup.Const.HEIGHT;
 import static stackup.Const.WIDTH;
 
 public enum Scene {
-    INTRO, MENU, ONE_PLAYER_GAME, ONE_PLAYER_DEMO, PLAYER_VS_COMP, TWO_PLAYERS_GAME, TWO_PLAYERS_DEMO, DIFFICULTY, SIZE, ABOUT, OUTRO, FINISH_GAME;
+    INTRO, MENU, ONE_PLAYER_GAME, ONE_PLAYER_DEMO, PLAYER_VS_COMP, TWO_PLAYERS_GAME, TWO_PLAYERS_DEMO, DIFFICULTY, SIZE, PROGNOSIS, ABOUT, OUTRO, FINISH_GAME;
 
-    private static final int[] FORECASTS = { FORECAST, FORECAST };
+    private static final int[] FORECASTS = { AbstractScene.prognosis, AbstractScene.prognosis };
 
-    @SuppressWarnings("unused")
     public AbstractScene createScene() {
         if (WIDTH < AbstractScene.size)
             return new Outro();
@@ -20,7 +18,7 @@ public enum Scene {
         case MENU:
             return new Menu();
         case ONE_PLAYER_GAME:
-            return new OnePlayer(WIDTH, HEIGHT, FORECAST, AbstractScene.size);
+            return new OnePlayer(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.size);
         case ONE_PLAYER_DEMO:
             return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.size);
         case PLAYER_VS_COMP:

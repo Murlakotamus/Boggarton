@@ -2,7 +2,6 @@ package stackup.game;
 
 import static stackup.Const.LIGHT_FONT;
 import static stackup.Const.BOX;
-import static stackup.Const.FORECAST;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -20,7 +19,7 @@ public class MultiPlayerGame extends AbstractGame {
 
         super(layer, x, y, width, height, forecast, lenght, setSize);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
-        showVictoies.spawn(new Vector2f(x + BOX * FORECAST + 20, y + BOX * height + 10));
+        showVictoies.spawn(new Vector2f(x + BOX * lenght + 20, y + BOX * height + 40));
     }
 
     @Override

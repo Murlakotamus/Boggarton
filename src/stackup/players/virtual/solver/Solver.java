@@ -62,6 +62,9 @@ public class Solver {
     }
 
     public Solver(final AbstractGame game, final boolean moveDown) {
+        this.game = game;
+        this.moveDown = moveDown;
+
         SHIFTS_LEFT = new String[SIZE];
         for (int i = 0; i < SIZE; i++)
             SHIFTS_LEFT[i] = getRepeat(i, 'L');
@@ -84,8 +87,6 @@ public class Solver {
         for (int i = 0; i < size; i++)
             MOVES_TO_RIGHT[i] = new Vector(true, i + 1);
 
-        this.game = game;
-        this.moveDown = moveDown;
         isInit = false;
     }
 
@@ -130,7 +131,7 @@ public class Solver {
         return CYCLES[i];
     }
 
-    private String shift(final IGlass glass, final boolean direction, final int j) {
+    private String move(final IGlass glass, final boolean direction, final int j) {
         if (direction) {
             for (int s = 0; s < j; s++)
                 glass.moveRight();
@@ -143,7 +144,7 @@ public class Solver {
         return SHIFTS_LEFT[j];
     }
 
-    private String fall(final IGlass glass) {
+    private String drop(final IGlass glass) {
         glass.dropChanges();
         boolean isFallen = false;
         do {
@@ -165,8 +166,8 @@ public class Solver {
                 final IGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
                 final StringBuilder currResult = new StringBuilder(result);
                 currResult.append(cycle(virtualGlass, i));
-                currResult.append(shift(virtualGlass, shift.getDirection(), j));
-                currResult.append(fall(virtualGlass));
+                currResult.append(move(virtualGlass, shift.getDirection(), j));
+                currResult.append(drop(virtualGlass));
 
                 if (!virtualGlass.getFigure().isFallen())
                     findSolutionRecursively(virtualGlass, currResult);

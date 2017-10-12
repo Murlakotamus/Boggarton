@@ -1,12 +1,10 @@
 package stackup.scenes;
 
-
 import static stackup.Const.BORDER;
 import static stackup.Const.GAME_PAUSED;
 import static stackup.Const.LOSER;
 import static stackup.Const.BOX;
 import static stackup.Const.WINNER;
-
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -16,10 +14,9 @@ import stackup.game.MultiPlayerGame;
 import stackup.game.Stage;
 import stackup.game.utils.Victories;
 
-abstract public class AbstractMultiPlayer extends AbstractGameScene {
+abstract public class AbstractMultiPlayerGame extends AbstractGameScene {
 
-    protected static final int X = 50;
-    protected static final int Y = 100;
+    protected static final int X = 90;
 
     protected static final String[] PLAYERS_NAMES = { "First", "Second", "Third" };
 
@@ -31,8 +28,8 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
     protected MultiPlayerGame[] game;
     private final SimpleEntity gamePaused[];
 
-    AbstractMultiPlayer(final Scene scene, final int width, final int height, final int[] forecast,
-            final int length, final int numPlayers) {
+    AbstractMultiPlayerGame(final Scene scene, final int width, final int height,
+            final int[] forecast, final int length, final int numPlayers) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
@@ -52,8 +49,9 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
         game = new MultiPlayerGame[numPlayers];
 
         for (int i = 0; i < numPlayers; i++) {
-            game[i] = new MultiPlayerGame(layer, X + 350 * i, Y, width, height, forecast[i],
-                    length, difficulty, Victories.getVictories(i)); // FIXME => vic to player
+            game[i] = new MultiPlayerGame(layer, X + 450 * i, Y, width, height,
+                    Math.min(prognosis, forecast[i]), length, difficulty,
+                    Victories.getVictories(i)); // FIXME => vic to player
             if (i < 4)
                 game[i].setName(PLAYERS_NAMES[i]);
             else
@@ -68,10 +66,12 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             if (i == looserNumber) {
                 loser = new SimpleEntity(LOSER, layer);
-                loser.spawn(new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
+                loser.spawn(
+                        new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
             } else {
                 winners[i] = new SimpleEntity(WINNER, layer);
-                winners[i].spawn(new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
+                winners[i].spawn(
+                        new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
                 Victories.addVictory(i);
             }
             game[i].setGameOver();
@@ -114,8 +114,9 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
     @Override
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {
-            ((Glass)game[i].getGlass()).pauseOn();
-            gamePaused[i].spawn(new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
+            ((Glass) game[i].getGlass()).pauseOn();
+            gamePaused[i].spawn(
+                    new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
         }
     }
 
@@ -123,7 +124,7 @@ abstract public class AbstractMultiPlayer extends AbstractGameScene {
     protected void showGlass() {
         for (int i = 0; i < numPlayers; i++) {
             gamePaused[i].unspawn();
-            ((Glass)game[i].getGlass()).pauseOff();
+            ((Glass) game[i].getGlass()).pauseOff();
         }
     }
 }

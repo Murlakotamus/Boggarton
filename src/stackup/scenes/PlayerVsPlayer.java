@@ -4,7 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import stackup.players.RealPlayer;
 
-public class PlayerVsPlayer extends AbstractMultiPlayer {
+public class PlayerVsPlayer extends AbstractMultiPlayerGame {
 
     public PlayerVsPlayer(final int width, final int height, final int[] forecast, final int lenght) {
         super(Scene.PLAYER_VS_COMP, width, height, forecast, lenght, 2);

@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import stackup.Const;
 import stackup.entity.SimpleEntity;
 
-public abstract class AbstractLogo extends AbstractScene {
+abstract public class AbstractLogo extends AbstractScene {
 
     static public final int TICK = 1000 / 60;
 

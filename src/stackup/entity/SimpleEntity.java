@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import stackup.engine.Layer;
 
-public class SimpleEntity extends Entity {
+public class SimpleEntity extends AbstractEntity {
 
     public SimpleEntity(final int type, final Layer layer) {
         this.type = type;

@@ -23,7 +23,7 @@ public class Glass extends AbstractGlass {
     private final int difficulty;
 
     private boolean gamePaused;
-    private int count; // figures counter s
+    private int count; // figures counter
 
     /**
      * Real glass constructor

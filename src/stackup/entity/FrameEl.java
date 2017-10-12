@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import stackup.engine.Layer;
 
-public class FrameEl extends Entity {
+public class FrameEl extends AbstractEntity {
 
     public FrameEl(int type, Layer layer) {
         this.type = type;

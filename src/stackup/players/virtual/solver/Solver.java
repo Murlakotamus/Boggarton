@@ -18,9 +18,9 @@ public class Solver {
     private static final String DN = "DN";
 
     private final int SIZE = WIDTH - AbstractScene.size + 1;
-    private final String CYCLES[];
-    private final String SHIFTS_LEFT[];
-    private final String SHIFTS_RIGHT[];
+    private final String[] CYCLES;
+    private final String[] SHIFTS_LEFT;
+    private final String[] SHIFTS_RIGHT;
     private final Vector[] MOVES_TO_LEFT;
     private final Vector[] MOVES_TO_RIGHT;
 

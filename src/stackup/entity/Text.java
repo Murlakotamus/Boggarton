@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 import stackup.Const;
 import stackup.engine.Layer;
 
-public class Text extends AnimatedEntity {
+public class Text extends AbstractAnimatedEntity {
 
     public static final int LEFT_TO_RIGHT = 0;
     public static final int RIGHT_TO_LEFT = 1;

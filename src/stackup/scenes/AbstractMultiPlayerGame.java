@@ -67,11 +67,11 @@ abstract public class AbstractMultiPlayerGame extends AbstractGameScene {
             if (i == looserNumber) {
                 loser = new SimpleEntity(LOSER, layer);
                 loser.spawn(
-                        new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
+                        new Vector2f(game[i].getX() + size * 30 + 25, Y + BOX * 3 + BORDER));
             } else {
                 winners[i] = new SimpleEntity(WINNER, layer);
                 winners[i].spawn(
-                        new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
+                        new Vector2f(game[i].getX() + size * 30 + 25, Y + BOX * 3 + BORDER));
                 Victories.addVictory(i);
             }
             game[i].setGameOver();
@@ -116,7 +116,7 @@ abstract public class AbstractMultiPlayerGame extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             ((Glass) game[i].getGlass()).pauseOn();
             gamePaused[i].spawn(
-                    new Vector2f(game[i].getX() + 115, Y + BOX * AbstractScene.size + BORDER));
+                    new Vector2f(game[i].getX() + size * 30 + 25, Y + BOX * 3 + BORDER));
         }
     }
 

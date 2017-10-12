@@ -8,7 +8,7 @@ import stackup.Logger;
 import stackup.engine.EventManager;
 import stackup.engine.KeyListener;
 
-public abstract class AbstractGameScene extends AbstractScene {
+abstract public class AbstractGameScene extends AbstractScene {
 
     protected static final int Y = 160;
     protected boolean escapePressed = false;
@@ -19,7 +19,6 @@ public abstract class AbstractGameScene extends AbstractScene {
     }
 
     abstract protected void hideGlass();
-
     abstract protected void showGlass();
 
     private void addControlKeys() {
@@ -78,7 +77,8 @@ public abstract class AbstractGameScene extends AbstractScene {
                 for (;;)
                     try {
                         final Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
-                        for (final Map.Entry<Thread, StackTraceElement[]> elements : map.entrySet()) {
+                        for (final Map.Entry<Thread, StackTraceElement[]> elements : map
+                                .entrySet()) {
                             for (StackTraceElement element : elements.getValue())
                                 Logger.err(elements.getKey().getName() + ": " + element);
                             Logger.err("-----------------------------------------------");

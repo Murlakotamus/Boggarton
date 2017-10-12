@@ -6,7 +6,7 @@ import org.lwjgl.util.Timer;
 import stackup.engine.EventManager;
 import stackup.engine.Layer;
 
-public abstract class AbstractScene {
+abstract public class AbstractScene {
 
     final static public Timer TIMER = new Timer(); // game timer, a part of the
                                                    // engine

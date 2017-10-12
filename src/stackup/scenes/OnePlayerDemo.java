@@ -1,46 +1,16 @@
 package stackup.scenes;
 
-import static stackup.Const.BORDER;
-import static stackup.Const.BOX;
-import static stackup.Const.GAME_OVER;
-
-import org.lwjgl.util.vector.Vector2f;
-
-import stackup.entity.SimpleEntity;
 import stackup.game.SinglePlayerGame;
 import stackup.players.virtual.VirtualAdaptivePlayer;
 
-public class OnePlayerDemo extends AbstractGameScene {
-
-    private static final int X = 350;
-    private final SinglePlayerGame game;
-
-    private SimpleEntity gameOver = null;
+public class OnePlayerDemo extends AbstractSinglePlayerGame {
 
     public OnePlayerDemo(final int width, final int height, final int forecast, final int lenght) {
         super(Scene.ONE_PLAYER_DEMO);
-
-        assert (width < lenght) : "Glass width is less than figure width";
-
         game = new SinglePlayerGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
                 lenght, difficulty);
         game.startGame();
         new VirtualAdaptivePlayer(game);
-    }
-
-    @Override
-    protected void changes() {
-        if (game.isGameOver() && gameOver == null) {
-            gameOver = new SimpleEntity(GAME_OVER, layer);
-            gameOver.spawn(new Vector2f(X + 115, Y + BOX * AbstractScene.size + BORDER));
-        } else if (game.isGameOn())
-            game.processStage();
-    }
-
-    @Override
-    protected void setGameOver() {
-        super.setGameOver();
-        game.setGameOver();
     }
 
     @Override

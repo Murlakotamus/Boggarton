@@ -3,7 +3,7 @@ package stackup.entity;
 import stackup.Const;
 import stackup.engine.Texture;
 
-public abstract class AnimatedEntity extends Entity {
+abstract public class AbstractAnimatedEntity extends AbstractEntity {
 
     protected Texture[] animationTextures;
     protected boolean displayAnimation = false;

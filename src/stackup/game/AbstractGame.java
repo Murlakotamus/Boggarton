@@ -34,7 +34,6 @@ abstract public class AbstractGame extends GameState {
     }
 
     abstract protected void nextStage();
-
     abstract public void processStage();
 
     public void nextFigure() {

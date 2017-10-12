@@ -13,7 +13,7 @@ import stackup.engine.Layer;
 import stackup.engine.Texture;
 import stackup.scenes.AbstractScene;
 
-public abstract class Entity {
+abstract public class AbstractEntity {
 
     public int originalWidth;
     public int originalHeight;

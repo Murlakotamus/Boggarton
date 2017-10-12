@@ -6,7 +6,7 @@ import stackup.Const;
 import stackup.engine.Layer;
 import stackup.game.IBrick;
 
-public class Brick extends AnimatedEntity implements IBrick {
+public class Brick extends AbstractAnimatedEntity implements IBrick {
 
     private boolean kill = false;
     private boolean crashing = false;

@@ -4,35 +4,35 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
-import stackup.entity.Entity;
+import stackup.entity.AbstractEntity;
 
 public class Layer {
 
-    final public ArrayList<Entity> entities = new ArrayList<Entity>(300);
+    final public ArrayList<AbstractEntity> entities = new ArrayList<AbstractEntity>(300);
 
     public Layer() {
     }
 
-    public void add(final Entity entity) {
+    public void add(final AbstractEntity entity) {
         entities.add(entity);
     }
 
-    public boolean remove(final Entity entity) {
+    public boolean remove(final AbstractEntity entity) {
         return entities.remove(entity);
     }
 
-    public boolean contains(final Entity entity) {
+    public boolean contains(final AbstractEntity entity) {
         return entities.contains(entity);
     }
 
     public void render() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-        for (final Entity entity : entities)
+        for (final AbstractEntity entity : entities)
             entity.draw();
     }
 
     public void update() {
-        for (final Entity entity : entities) {
+        for (final AbstractEntity entity : entities) {
             entity.updateTick();
             entity.update();
         }
@@ -45,7 +45,7 @@ public class Layer {
     @Override
     public String toString() {
         String result = "";
-        for (final Entity entity : entities)
+        for (final AbstractEntity entity : entities)
             result += entity;
         return result;
     }

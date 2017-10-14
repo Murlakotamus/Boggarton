@@ -1,7 +1,8 @@
 package stackup.game;
 
+import static stackup.Const.BORDER;
 import static stackup.Const.BOX;
-import static stackup.game.Glass.SCREEN_OFFSET;
+import static stackup.game.Glass.SCREEN_OFFSET_Y;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -24,6 +25,8 @@ abstract public class AbstractGame extends GameState {
 
     final private Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
     final private OuterCommand command = new OuterCommand();
+    protected boolean needNewFigure = true;
+    private int targetPosition = 0;
 
     public AbstractGame(final Layer layer, final int x, final int y, final int width,
             final int height, final int forecast, final int lenght, final int setSize) {
@@ -34,6 +37,7 @@ abstract public class AbstractGame extends GameState {
     }
 
     abstract protected void nextStage();
+
     abstract public void processStage();
 
     public void nextFigure() {
@@ -42,11 +46,8 @@ abstract public class AbstractGame extends GameState {
             return;
         }
 
-        glass.newFigure(forecast.getForecast());
-        ((Forecast) forecast).setNext();
-        ((Glass) glass).respawn();
-        fillBuffer();
-        nextStage();
+        if (needNewFigure)
+            targetPosition = glass.newFigure(forecast.getForecast());
     }
 
     private boolean enoughSleep(final float sleep) {
@@ -56,6 +57,27 @@ abstract public class AbstractGame extends GameState {
     protected void stagePause(final float pause) {
         if (enoughSleep(pause))
             nextStage();
+    }
+
+    protected void charge() {
+        // final float currentTime = getTime();
+        // figure.setPosition(new Vector2f(frame.getPosition().getX() +
+        // state.getI() * BOX, frame.getPosition().getY() + BORDER));
+        Figure figure = (Figure) glass.getFigure();
+        Vector2f figurePosition = figure.getPosition();
+        Vector2f framePosition = ((Glass) glass).getFrame().getPosition();
+
+        if (figurePosition.getX() >=        framePosition.getX() + targetPosition * BOX) {
+            figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX,
+                    figurePosition.getY()));
+            ((Forecast) forecast).setNext();
+            ((Glass) glass).respawn();
+            fillBuffer();
+            needNewFigure = true;
+            nextStage();
+            return;
+        }
+        figure.setPosition(new Vector2f(figurePosition.getX() + 1f, figurePosition.getY()));
     }
 
     public void fall() {
@@ -108,7 +130,7 @@ abstract public class AbstractGame extends GameState {
                 if (brick == null || !brick.isCrashing())
                     continue;
 
-                final int currY = (int) brick.position.getY() - SCREEN_OFFSET;
+                final int currY = (int) brick.position.getY() - SCREEN_OFFSET_Y;
                 final int newY = currY + Math.round(spentTime * CRASH_SPEED);
                 if (newY == currY)
                     return;
@@ -125,11 +147,11 @@ abstract public class AbstractGame extends GameState {
         final int diffCell = newCell - oldCell;
         final Vector2f position = brick.position;
         if (diffCell == 0)
-            position.setY(newY + SCREEN_OFFSET);
+            position.setY(newY + SCREEN_OFFSET_Y);
         else {
             final GlassState state = glass.getGlassState();
             for (int k = 1; k <= diffCell; k++) {
-                position.setY((oldCell + k) * BOX + SCREEN_OFFSET);
+                position.setY((oldCell + k) * BOX + SCREEN_OFFSET_Y);
                 ((Glass) glass).addBrick(i, j + k);
                 state.setBrick(i, j + k, brick);
                 state.setBrick(i, j + k - 1, null);

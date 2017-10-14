@@ -14,7 +14,7 @@ import stackup.game.utils.Utils;
 
 public class Glass extends AbstractGlass {
 
-    static public final int SCREEN_OFFSET = 165;
+    static public final int SCREEN_OFFSET_Y = 165;
 
     private final Text showScore;
     private final Text showCount;
@@ -28,18 +28,18 @@ public class Glass extends AbstractGlass {
     /**
      * Real glass constructor
      */
-    public Glass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty) {
+    public Glass(final Layer layer, final Vector2f position, final int width, final int height,
+            final int difficulty) {
         this.layer = layer;
         this.difficulty = difficulty;
-        frame = new Frame(layer, position, width, height);
+        frame = new Frame(layer, position, width, height, true, false);
         init(width, height);
 
         showScore = new Text("Score: " + state.getScore(), LIGHT_FONT, layer);
         showScore.spawn(new Vector2f(position.getX(), position.getY() - 30));
 
         showCount = new Text("Figures: " + count, LIGHT_FONT, layer);
-        showCount.spawn(new Vector2f(position.getX(), position.getY()
-                + height * BOX + 15));
+        showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
     }
 
     private void init(final int width, final int height) {
@@ -63,7 +63,8 @@ public class Glass extends AbstractGlass {
             return true; // game is not started yet
 
         // if there's no space where for a next figure
-        for (int i = state.getNextPosition(); i < state.getNextPosition() + getFigure().getLenght(); i++)
+        for (int i = state.getNextPosition(); i < state.getNextPosition()
+                + getFigure().getLenght(); i++)
             if (state.getBrick(i, 0) != null)
                 return false;
 
@@ -96,15 +97,13 @@ public class Glass extends AbstractGlass {
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++)
                 if (state.getBrick(i, j) != null)
-                    brick(i, j).spawn(
-                            new Vector2f(position.getX() + i * BOX + BORDER, position.getY() + j
-                                    * BOX + BORDER));
+                    brick(i, j).spawn(new Vector2f(position.getX() + i * BOX + BORDER,
+                            position.getY() + j * BOX + BORDER));
         figure().respawn();
         showScore.setString("Score: " + state.getScore());
 
         showCount.setString("Figures: " + count);
-        showCount.spawn(new Vector2f(position.getX(), position.getY()
-                + state.height * BOX + 15));
+        showCount.spawn(new Vector2f(position.getX(), position.getY() + state.height * BOX + 15));
     }
 
     public void executeYuck() {
@@ -116,7 +115,8 @@ public class Glass extends AbstractGlass {
             }
 
         for (int i = 0; i < state.getWidth(); i++)
-            state.setBrick(i, state.getHeight() - 1, new Brick(Utils.randomBrick(difficulty), layer));
+            state.setBrick(i, state.getHeight() - 1,
+                    new Brick(Utils.randomBrick(difficulty), layer));
 
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++)
@@ -143,8 +143,24 @@ public class Glass extends AbstractGlass {
         return result;
     }
 
+    public int getX() {
+        return (int) figure().getPosition().getX();
+    }
+
     public int getY() {
-        return (int) figure().getPosition().getY() - SCREEN_OFFSET;
+        return (int) figure().getPosition().getY() - SCREEN_OFFSET_Y;
+    }
+
+    public void setX(final int x) {
+        final Figure figure = figure();
+        figure.getPosition().setX(x);
+        figure.respawn();
+    }
+
+    public void setY(final int y) {
+        final Figure figure = figure();
+        figure.getPosition().setY(y + SCREEN_OFFSET_Y);
+        figure.respawn();
     }
 
     public boolean allBricksFell() {
@@ -155,14 +171,8 @@ public class Glass extends AbstractGlass {
         return true;
     }
 
-    public void setY(final int y) {
-        final Figure figure = figure();
-        figure.getPosition().setY(y + SCREEN_OFFSET);
-        figure.respawn();
-    }
-
     @Override
-    public void newFigure(final IFigure newFigure) {
+    public int newFigure(final IFigure newFigure) {
         if (getFigure() != null)
             figure().unspawn();
 
@@ -171,9 +181,8 @@ public class Glass extends AbstractGlass {
         state.setI(state.getNextPosition());
         state.setJ(0);
 
-        figure.setPosition(new Vector2f(frame.getPosition().getX() + state.getI() * BOX, frame
-                .getPosition().getY() + BORDER));
         // figures will appear from left and right side by rotation
+        int currentPosition = state.getNextPosition();
         if (state.getNextPosition() == 0)
             state.setNextPosition(state.getWidth() - figure.getLenght());
         else
@@ -181,6 +190,7 @@ public class Glass extends AbstractGlass {
 
         count++;
         setChanges(true);
+        return currentPosition;
     }
 
     @Override
@@ -218,8 +228,8 @@ public class Glass extends AbstractGlass {
         state.setI(i);
         state.setJ(j);
         final Vector2f position = frame.getPosition();
-        figure().setPosition(new Vector2f(i * BOX + position.getX(), getY() + position.getY()
-                + BORDER));
+        figure().setPosition(
+                new Vector2f(i * BOX + position.getX(), getY() + position.getY() + BORDER));
         setChanges(setChanges);
     }
 
@@ -280,5 +290,9 @@ public class Glass extends AbstractGlass {
     @Override
     public void dropChanges() {
         setChanges(false);
+    }
+    
+    public Frame getFrame() {
+        return frame;
     }
 }

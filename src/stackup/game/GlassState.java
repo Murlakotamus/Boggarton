@@ -102,7 +102,6 @@ public class GlassState implements IGlassState {
             if (figure.getBrick(num) != null)
                 if (j + 1 < height && bricks[i + num + 1][j + 1] != null)
                     return false;
-
         return true;
     }
 

@@ -33,7 +33,11 @@ public class MultiPlayerGame extends AbstractGame {
     public void processStage() {
         switch (stage) {
         case NEXT:
-            nextFigure();
+            if (needNewFigure) {
+                nextFigure();
+                needNewFigure = false;
+            } else
+                charge();
             break;
         case APPEAR:
             executeCommand();

@@ -48,6 +48,7 @@ public class WorkAroundTextureLoader implements ITextureLoader {
         textures[FRAME_UPPER_LEFT] = loadTexture("/data/framedetails/1001.png", 0, 0, 35, 35);
         textures[FRAME_FULL_LEFT] = loadTexture("/data/framedetails/1011.png", 0, 0, 35, 40);
         textures[FRAME_FULL_RIGHT] = loadTexture("/data/framedetails/1110.png", 0, 0, 35, 40);
+        textures[FRAME_BRIDGE] = loadTexture("/data/framedetails/1111.png", 0, 0, 15, 5);
 
         // Bricks
         animations[A] = loadAnimation("/data/bricks/A.png", 6, 1, 30, 30);

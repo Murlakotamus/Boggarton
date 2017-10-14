@@ -4,7 +4,7 @@ public interface IGlass {
 
     GlassState getGlassState();
     void setFigure(int x, int y, boolean setChanges);
-    void newFigure(IFigure f);
+    int newFigure(IFigure f);
 
     int getSpaceLeft();
     int getSpaceRight();

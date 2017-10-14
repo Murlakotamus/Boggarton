@@ -31,6 +31,6 @@ abstract public class AbstractForecast implements IForecast {
 
     @Override
     public IFigure getForecast(final int i) {
-        return figures[prognosis - i - 1];
+        return figures[i];
     }
 }

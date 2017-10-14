@@ -9,6 +9,7 @@ abstract public class GameState {
     protected IGlass glass;
     protected IForecast forecast;
 
+    protected static final float CHARGE_PAUSE = 0.2f;
     protected static final float APPEAR_PAUSE = 0.2f;
     protected static final float DISAPPEAR_PAUSE = 1f;
     protected static final float SET_PAUSE = 0.1f;

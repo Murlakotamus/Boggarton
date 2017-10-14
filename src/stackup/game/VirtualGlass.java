@@ -36,7 +36,7 @@ public class VirtualGlass extends AbstractGlass {
     }
 
     @Override
-    public void newFigure(final IFigure figure) {
+    public int newFigure(final IFigure figure) {
         state.setFigure(new VirtualFigure(figure));
 
         // figures will appear from left and right side by rotation
@@ -45,6 +45,7 @@ public class VirtualGlass extends AbstractGlass {
             state.setNextPosition(state.getWidth() - figure.getLenght());
         else
             state.setNextPosition(0);
+        return 0;
     }
 
     @Override

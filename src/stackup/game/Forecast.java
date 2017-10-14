@@ -16,7 +16,7 @@ public class Forecast extends AbstractForecast {
             final int difficulty) {
         super(prognosis, size);
         this.difficulty = difficulty;
-        frame = new Frame(layer, startPos, size, prognosis);
+        frame = new Frame(layer, startPos, size, prognosis, false, true);
 
         for (int i = 0; i < prognosis; i++)
             figures[i] = new Figure(layer, new Vector2f(frame.getPosition().getX(),
@@ -27,7 +27,7 @@ public class Forecast extends AbstractForecast {
             final int difficulty, final boolean forMenu) {
         super(prognosis, size);
         this.difficulty = difficulty;
-        frame = new Frame(layer, startPos, size, prognosis);
+        frame = new Frame(layer, startPos, size, prognosis, true, true);
 
         for (int i = 0; i < prognosis; i++)
             figures[i] = new Figure(layer, new Vector2f(frame.getPosition().getX(),
@@ -40,13 +40,13 @@ public class Forecast extends AbstractForecast {
     }
 
     public void setNext() {
-        for (int i = prognosis - 1; i > 0; i--) {
-            figures[i] = figures[i - 1];
-            ((Figure) figures[i]).shiftY(BOX);
+        for (int i = 0; i < prognosis - 1; i++) {
+            figures[i] = figures[i + 1];
+            ((Figure) figures[i]).shiftY(-BOX);
         }
 
-        figures[0] = new Figure(frame.getLayer(),
-                new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + BORDER),
+        figures[prognosis - 1] = new Figure(frame.getLayer(),
+                new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER),
                 size, difficulty);
     }
 

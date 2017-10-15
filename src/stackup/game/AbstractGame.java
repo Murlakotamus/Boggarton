@@ -60,9 +60,6 @@ abstract public class AbstractGame extends GameState {
     }
 
     protected void charge() {
-        // final float currentTime = getTime();
-        // figure.setPosition(new Vector2f(frame.getPosition().getX() +
-        // state.getI() * BOX, frame.getPosition().getY() + BORDER));
         Figure figure = (Figure) glass.getFigure();
         Vector2f figurePosition = figure.getPosition();
         Vector2f framePosition = ((Glass) glass).getFrame().getPosition();

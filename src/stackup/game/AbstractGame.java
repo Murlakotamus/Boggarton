@@ -41,13 +41,13 @@ abstract public class AbstractGame extends GameState {
     abstract public void processStage();
 
     public void nextFigure() {
-        if (!glass.getGlassState().canTakeNewFigure()) {
+        if (needNewFigure)
+            targetPosition = glass.newFigure(forecast.getForecast());
+
+        if (!glass.getGlassState().canTakeNewFigure(targetPosition)) {
             setGameOver();
             return;
         }
-
-        if (needNewFigure)
-            targetPosition = glass.newFigure(forecast.getForecast());
     }
 
     private boolean enoughSleep(final float sleep) {

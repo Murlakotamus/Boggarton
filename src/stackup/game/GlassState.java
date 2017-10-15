@@ -69,10 +69,14 @@ public class GlassState implements IGlassState {
         }
     }
 
-    public boolean canTakeNewFigure() {
+    public boolean canTakeNewFigure(int targetPosition) {
         if (figure == null)
-            return true; // game not started yet
+            return true; // game's not started yet
 
+        for (int i = 0; i < targetPosition + figure.getLenght(); i++)
+            if (bricks[i][0] != null)
+                return false;
+        
         for (int i = nextPosition; i < nextPosition + figure.getLenght(); i++)
             if (bricks[i][0] != null)
                 return false;

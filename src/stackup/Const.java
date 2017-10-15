@@ -59,5 +59,6 @@ public class Const {
 
     public static final int FRAME_FULL_RIGHT = 109;
     public static final int FRAME_FULL_LEFT = 110;
-    public static final int FRAME_BRIDGE = 111;
+    public static final int FRAME_UPPER_BRIDGE = 111;
+    public static final int FRAME_LOWER_BRIDGE = 112;
 }

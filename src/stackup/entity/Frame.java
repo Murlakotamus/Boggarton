@@ -21,7 +21,7 @@ public class Frame {
         this.position = position;
 
         if (isGlass)
-            frameEl = new FrameEl[width * 2 + height * 2 + 1];
+            frameEl = new FrameEl[width * 2 + height * 2];
         else
             frameEl = new FrameEl[width * 2 + height * 2 - 2];
 
@@ -56,13 +56,13 @@ public class Frame {
                         position.getX() + WIDTH_WITH_BORDER + (width - 2) * BOX, position.getY()));
 
                 if (!isForecast) {
-                    frameEl[elCount] = new FrameEl(FRAME_BRIDGE, layer);
-                    frameEl[elCount++].spawn(new Vector2f(position.getX() - BORDER * 3, position.getY()));
-                    frameEl[elCount] = new FrameEl(FRAME_BRIDGE, layer);
-                    frameEl[elCount++].spawn(new Vector2f(position.getX() - BORDER * 1, position.getY()));
+                    frameEl[elCount] = new FrameEl(FRAME_UPPER_BRIDGE, layer);
+                    frameEl[elCount++]
+                            .spawn(new Vector2f(position.getX() - BORDER * 3, position.getY()));
 
-                    frameEl[elCount] = new FrameEl(FRAME_BRIDGE, layer);
-                    frameEl[elCount++].spawn(new Vector2f(position.getX() - BORDER * 2, position.getY() + BOX + BORDER));
+                    frameEl[elCount] = new FrameEl(FRAME_LOWER_BRIDGE, layer);
+                    frameEl[elCount++].spawn(new Vector2f(position.getX() - BORDER * 2,
+                            position.getY() + BOX + BORDER));
                 }
 
             } else if (isForecast) {
@@ -91,9 +91,19 @@ public class Frame {
             frameEl[elCount] = new FrameEl(FRAME_FULL_LEFT, layer);
             frameEl[elCount++].spawn(new Vector2f(position.getX(), position.getY()));
 
-            frameEl[elCount] = new FrameEl(FRAME_FULL_RIGHT, layer);
-            frameEl[elCount++].spawn(new Vector2f(
-                    position.getX() + WIDTH_WITH_BORDER + (width - 2) * BOX, position.getY()));
+            if (isForecast && isGlass) {
+                frameEl[elCount] = new FrameEl(FRAME_FULL_RIGHT, layer);
+                frameEl[elCount++].spawn(new Vector2f(position.getX() + BORDER + (width - 1) * BOX, position.getY()));
+            } else if (isForecast & !isGlass) {
+                frameEl[elCount] = new FrameEl(FRAME_UPPER, layer);
+                frameEl[elCount++].spawn(new Vector2f(position.getX() + BORDER + (width - 1) * BOX, position.getY()));
+
+                frameEl[elCount] = new FrameEl(FRAME_LOWER, layer);
+                frameEl[elCount++].spawn(new Vector2f(position.getX() + BORDER + (width - 1) * BOX, position.getY() + BORDER));
+
+                frameEl[elCount] = new FrameEl(FRAME_UPPER_BRIDGE, layer);
+                frameEl[elCount++].spawn(new Vector2f(position.getX() + BORDER + width * BOX, position.getY() + + BOX + BORDER));
+            }
         }
 
     }

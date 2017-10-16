@@ -19,11 +19,7 @@ public class Frame {
             boolean isGlass, boolean isForecast) {
         this.layer = layer;
         this.position = position;
-
-        if (isGlass)
-            frameEl = new FrameEl[width * 2 + height * 2];
-        else
-            frameEl = new FrameEl[width * 2 + height * 2 - 2];
+        frameEl = new FrameEl[width * 2 + height * 2 ];
 
         if (width == 0 || height == 0)
             return;

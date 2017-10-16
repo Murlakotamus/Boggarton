@@ -76,10 +76,6 @@ public class GlassState implements IGlassState {
         for (int i = 0; i < targetPosition + figure.getLenght(); i++)
             if (bricks[i][0] != null)
                 return false;
-        
-        for (int i = nextPosition; i < nextPosition + figure.getLenght(); i++)
-            if (bricks[i][0] != null)
-                return false;
 
         return true;
     }

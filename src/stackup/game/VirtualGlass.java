@@ -50,18 +50,14 @@ public class VirtualGlass extends AbstractGlass {
 
     @Override
     public void moveLeft() {
-        if (canMoveLeft()) {
-            state.setI(state.getI() - 1);
-            setFigure(state.getI(), state.getJ(), true);
-        }
+        if (canMoveLeft())
+            setFigure(state.getI() - 1, state.getJ(), true);
     }
 
     @Override
     public void moveRight() {
-        if (canMoveRight()) {
-            state.setI(state.getI() + 1);
-            setFigure(state.getI(), state.getJ(), true);
-        }
+        if (canMoveRight())
+            setFigure(state.getI() + 1, state.getJ(), true);
     }
 
     @Override

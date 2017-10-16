@@ -1,6 +1,5 @@
 package stackup.game;
 
-import static stackup.Const.BORDER;
 import static stackup.Const.BOX;
 import static stackup.game.Glass.SCREEN_OFFSET_Y;
 

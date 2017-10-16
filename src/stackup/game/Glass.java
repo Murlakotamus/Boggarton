@@ -201,18 +201,14 @@ public class Glass extends AbstractGlass {
 
     @Override
     public void moveLeft() {
-        if (!gamePaused && canMoveLeft()) {
-            state.setI(state.getI() - 1);
-            setFigure(state.getI(), state.getJ(), true);
-        }
+        if (!gamePaused && canMoveLeft())
+            setFigure(state.getI() - 1, state.getJ(), true);
     }
 
     @Override
     public void moveRight() {
-        if (!gamePaused && canMoveRight()) {
-            state.setI(state.getI() + 1);
-            setFigure(state.getI(), state.getJ(), true);
-        }
+        if (!gamePaused && canMoveRight())
+            setFigure(state.getI() + 1, state.getJ(), true);
     }
 
     @Override

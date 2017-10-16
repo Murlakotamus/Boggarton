@@ -42,7 +42,7 @@ public enum Stage {
             if (hasYucks)
                 return Stage.YUCK;
             else
-                return Stage.NEXT;
+                return Stage.PROCESS;
         default:
             return nextStage;
         }

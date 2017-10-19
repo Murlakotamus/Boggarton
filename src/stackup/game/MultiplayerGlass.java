@@ -9,10 +9,11 @@ import stackup.game.utils.Utils;
 
 public class MultiplayerGlass extends SimpleGlass {
 
-    private static final int STRATEGY = 0;
     private final Layer layer;
     private final int difficulty;
     private int count = 0;
+
+    public static boolean strategy = true;
 
     public MultiplayerGlass(final Layer layer, final Vector2f position, final int width,
             final int height, final int difficulty) {
@@ -30,17 +31,7 @@ public class MultiplayerGlass extends SimpleGlass {
             }
 
         for (int i = 0; i < state.getWidth(); i++) {
-            int brick;
-            switch (STRATEGY) {
-            case 1:
-                brick = getRandomBrick();
-                break;
-            case 2:
-                brick = getQuazyRandomBrick();
-                break;
-            default:
-                brick = getBrick();
-            }
+            int brick = strategy ? getBadBrick() : getRandomBrick();
             state.setBrick(i, state.getHeight() - 1, new Brick(brick, layer));
         }
 
@@ -53,7 +44,7 @@ public class MultiplayerGlass extends SimpleGlass {
         count += delta;
     }
 
-    private int getBrick() {
+    private int getBadBrick() {
         int result = count++;
         if (result >= difficulty)
             result = result % difficulty;
@@ -62,10 +53,6 @@ public class MultiplayerGlass extends SimpleGlass {
     }
 
     private int getRandomBrick() {
-        return Utils.randomBrick(difficulty);
-    }
-
-    private int getQuazyRandomBrick() {
         return Utils.randomBrick(difficulty);
     }
 }

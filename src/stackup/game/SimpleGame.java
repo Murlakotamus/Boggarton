@@ -1,12 +1,17 @@
 package stackup.game;
 
+import static stackup.Const.BOX;
+
+import org.lwjgl.util.vector.Vector2f;
+
 import stackup.engine.Layer;
 
-public class SinglePlayerGame extends AbstractGame {
+public class SimpleGame extends AbstractGame {
    
-    public SinglePlayerGame(final Layer layer, final int x, final int y, final int width,
-            final int height, final int forecast, final int lenght, final int setSize) {
-        super(layer, x, y, width, height, forecast, lenght, setSize);
+    public SimpleGame(final Layer layer, final int x, final int y, final int width,
+            final int height, final int forecast, final int lenght, final int difficulty) {
+        super(layer, x, y, width, height, forecast, lenght, difficulty);
+        glass = new SimpleGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height);
     }
 
     @Override

@@ -1,9 +1,10 @@
 package stackup.game;
 
+import static stackup.Const.BORDER;
+import static stackup.Const.BOX;
+
 import org.lwjgl.util.vector.Vector2f;
 
-import static stackup.Const.BOX;
-import static stackup.Const.BORDER;
 import stackup.engine.Layer;
 import stackup.entity.Frame;
 

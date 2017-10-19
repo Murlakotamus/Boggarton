@@ -1,34 +1,34 @@
 package stackup.scenes;
 
 import static stackup.Const.BORDER;
+import static stackup.Const.BOX;
 import static stackup.Const.GAME_PAUSED;
 import static stackup.Const.LOSER;
-import static stackup.Const.BOX;
 import static stackup.Const.WINNER;
 
 import org.lwjgl.util.vector.Vector2f;
 
 import stackup.entity.SimpleEntity;
-import stackup.game.Glass;
-import stackup.game.MultiPlayerGame;
+import stackup.game.MultiplayerGame;
+import stackup.game.SimpleGlass;
 import stackup.game.Stage;
 import stackup.game.utils.Victories;
 
-abstract public class AbstractMultiPlayerGame extends AbstractGameScene {
+abstract public class AbstractMultiplayerGame extends AbstractGameScene {
 
     protected static final int X = 90;
 
-    protected static final String[] PLAYERS_NAMES = { "First", "Second", "Third" };
+    protected static final String[] PLAYERS_NAMES = { "First", "Second" };
 
     protected final int numPlayers;
     private final SimpleEntity[] winners;
     private SimpleEntity loser;
 
     protected long pauseBetweenGames;
-    protected MultiPlayerGame[] game;
+    protected MultiplayerGame[] game;
     private final SimpleEntity gamePaused[];
 
-    AbstractMultiPlayerGame(final Scene scene, final int width, final int height,
+    AbstractMultiplayerGame(final Scene scene, final int width, final int height,
             final int[] forecast, final int length, final int numPlayers) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
@@ -46,10 +46,10 @@ abstract public class AbstractMultiPlayerGame extends AbstractGameScene {
 
         this.numPlayers = numPlayers;
         winners = new SimpleEntity[numPlayers];
-        game = new MultiPlayerGame[numPlayers];
+        game = new MultiplayerGame[numPlayers];
 
         for (int i = 0; i < numPlayers; i++) {
-            game[i] = new MultiPlayerGame(layer, X + 450 * i, Y, width, height,
+            game[i] = new MultiplayerGame(layer, X + 450 * i, Y, width, height,
                     Math.min(prognosis, forecast[i]), length, difficulty,
                     Victories.getVictories(i)); // FIXME => vic to player
             if (i < 4)
@@ -114,7 +114,7 @@ abstract public class AbstractMultiPlayerGame extends AbstractGameScene {
     @Override
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {
-            ((Glass) game[i].getGlass()).pauseOn();
+            ((SimpleGlass) game[i].getGlass()).pauseOn();
             gamePaused[i].spawn(
                     new Vector2f(game[i].getX() + size * 30 + 25, Y + BOX * 3 + BORDER));
         }
@@ -124,7 +124,7 @@ abstract public class AbstractMultiPlayerGame extends AbstractGameScene {
     protected void showGlass() {
         for (int i = 0; i < numPlayers; i++) {
             gamePaused[i].unspawn();
-            ((Glass) game[i].getGlass()).pauseOff();
+            ((SimpleGlass) game[i].getGlass()).pauseOff();
         }
     }
 }

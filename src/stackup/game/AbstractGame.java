@@ -1,7 +1,7 @@
 package stackup.game;
 
 import static stackup.Const.BOX;
-import static stackup.game.Glass.SCREEN_OFFSET_Y;
+import static stackup.game.SimpleGlass.SCREEN_OFFSET_Y;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -32,7 +32,6 @@ abstract public class AbstractGame extends GameState {
         this.x = x;
         this.y = y;
         this.forecast = new Forecast(layer, new Vector2f(x, y), forecast, lenght, setSize);
-        glass = new Glass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, setSize);
     }
 
     abstract protected void nextStage();
@@ -61,13 +60,13 @@ abstract public class AbstractGame extends GameState {
     protected void charge() {
         Figure figure = (Figure) glass.getFigure();
         Vector2f figurePosition = figure.getPosition();
-        Vector2f framePosition = ((Glass) glass).getFrame().getPosition();
+        Vector2f framePosition = ((SimpleGlass) glass).getFrame().getPosition();
 
         if (figurePosition.getX() >=        framePosition.getX() + targetPosition * BOX) {
             figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX,
                     figurePosition.getY()));
             ((Forecast) forecast).setNext();
-            ((Glass) glass).respawn();
+            ((SimpleGlass) glass).respawn();
             fillBuffer();
             needNewFigure = true;
             nextStage();
@@ -77,7 +76,7 @@ abstract public class AbstractGame extends GameState {
     }
 
     public void fall() {
-        final Glass glass = (Glass) this.glass;
+        final SimpleGlass glass = (SimpleGlass) this.glass;
         if (glass.getY() % BOX == 0 && !glass.moveDown()) {
             nextStage();
             return;
@@ -111,7 +110,7 @@ abstract public class AbstractGame extends GameState {
     }
 
     public void crashDown() {
-        if (((Glass) glass).allBricksFell()) {
+        if (((SimpleGlass) glass).allBricksFell()) {
             nextStage();
             return;
         }
@@ -148,7 +147,7 @@ abstract public class AbstractGame extends GameState {
             final GlassState state = glass.getGlassState();
             for (int k = 1; k <= diffCell; k++) {
                 position.setY((oldCell + k) * BOX + SCREEN_OFFSET_Y);
-                ((Glass) glass).addBrick(i, j + k);
+                ((SimpleGlass) glass).addBrick(i, j + k);
                 state.setBrick(i, j + k, brick);
                 state.setBrick(i, j + k - 1, null);
                 final int z = j + k + 1;
@@ -163,14 +162,14 @@ abstract public class AbstractGame extends GameState {
         if (!glassProcessed) {
             killedBricks = glass.findChainsToKill();
             if (killedBricks)
-                ((Glass) glass).startAnimation();
+                ((SimpleGlass) glass).startAnimation();
             glassProcessed = true;
         }
         if (!killedBricks)
             nextStage();
         if (enoughSleep(DISAPPEAR_PAUSE)) {
             glass.killChains();
-            ((Glass) glass).respawn();
+            ((SimpleGlass) glass).respawn();
             nextStage();
         }
     }
@@ -194,7 +193,7 @@ abstract public class AbstractGame extends GameState {
 
     public void setGameOver() {
         synchronized (buffer) {
-            ((Glass) glass).setGameOver();
+            ((SimpleGlass) glass).setGameOver();
             buffer.notify();
         }
     }

@@ -1,7 +1,7 @@
 package stackup.players.virtual;
 
 import stackup.game.AbstractGame;
-import stackup.game.Glass;
+import stackup.game.SimpleGlass;
 import stackup.game.utils.Command;
 
 abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPlayer {
@@ -45,7 +45,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
                 game.checkCommand();
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();
-                ((Glass) game.getGlass()).waitChanges();
+                ((SimpleGlass) game.getGlass()).waitChanges();
                 break;
 
             // non-adaptive algorithm

@@ -4,7 +4,7 @@ import stackup.players.virtual.EffectiveVirtualNonAdaptivePlayer;
 import stackup.players.virtual.VirtualAdaptivePlayer;
 
 
-public class TwoPlayersDemo extends AbstractMultiPlayerGame {
+public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
     private static final long GAMEOVER_PAUSE = 3000;
 

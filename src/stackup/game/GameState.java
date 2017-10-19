@@ -1,6 +1,7 @@
 package stackup.game;
 
 import static stackup.game.Stage.START;
+
 import stackup.scenes.AbstractScene;
 
 abstract public class GameState {

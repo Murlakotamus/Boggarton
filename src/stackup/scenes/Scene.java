@@ -18,13 +18,13 @@ public enum Scene {
         case MENU:
             return new Menu();
         case ONE_PLAYER_GAME:
-            return new OnePlayer(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.size);
+            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.size);
         case ONE_PLAYER_DEMO:
             return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.size);
         case PLAYER_VS_COMP:
-            return new PlayerVsComp(WIDTH, HEIGHT, FORECASTS, AbstractScene.size);
+            return new PlayerVsCompGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size);
         case TWO_PLAYERS_GAME:
-            return new PlayerVsPlayer(WIDTH, HEIGHT, FORECASTS, AbstractScene.size);
+            return new PlayerVsPlayerGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size);
         case TWO_PLAYERS_DEMO:
             return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.size);
         case OUTRO:

@@ -10,17 +10,14 @@ import stackup.engine.Layer;
 import stackup.entity.Brick;
 import stackup.entity.Frame;
 import stackup.entity.Text;
-import stackup.game.utils.Utils;
 
-public class Glass extends AbstractGlass {
+public class SimpleGlass extends AbstractGlass {
 
     static public final int SCREEN_OFFSET_Y = 165;
 
     private final Text showScore;
     private final Text showCount;
     private final Frame frame;
-    private final Layer layer;
-    private final int difficulty;
 
     private boolean gamePaused;
     private int count; // figures counter
@@ -28,26 +25,19 @@ public class Glass extends AbstractGlass {
     /**
      * Real glass constructor
      */
-    public Glass(final Layer layer, final Vector2f position, final int width, final int height,
-            final int difficulty) {
-        this.layer = layer;
-        this.difficulty = difficulty;
+    public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height) {
         frame = new Frame(layer, position, width, height, true, false);
-        init(width, height);
-
-        showScore = new Text("Score: " + state.getScore(), LIGHT_FONT, layer);
-        showScore.spawn(new Vector2f(position.getX(), position.getY() - 30));
-
-        showCount = new Text("Figures: " + count, LIGHT_FONT, layer);
-        showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
-    }
-
-    private void init(final int width, final int height) {
+        
         state.setWidth(width);
         state.setHeight(height);
         state.setBricks(new Brick[width][height]);
         setChanges(false);
         gameOver = false;
+        showScore = new Text("Score: " + state.getScore(), LIGHT_FONT, layer);
+        showScore.spawn(new Vector2f(position.getX(), position.getY() - 30));
+
+        showCount = new Text("Figures: " + count, LIGHT_FONT, layer);
+        showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
     }
 
     private Brick brick(final int i, final int j) {
@@ -60,9 +50,9 @@ public class Glass extends AbstractGlass {
 
     public boolean canTakeNewFigure() {
         if (getFigure() == null)
-            return true; // game is not started yet
+            return true; // game's not started yet
 
-        // if there's no space where for a next figure
+        // is there room for a next figure
         for (int i = state.getNextPosition(); i < state.getNextPosition()
                 + getFigure().getLenght(); i++)
             if (state.getBrick(i, 0) != null)
@@ -106,27 +96,9 @@ public class Glass extends AbstractGlass {
         showCount.spawn(new Vector2f(position.getX(), position.getY() + state.height * BOX + 15));
     }
 
-    public void executeYuck() {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++) {
-                if (j > 0)
-                    state.setBrick(i, j - 1, state.getBrick(i, j));
-                removeBrick(i, j);
-            }
-
-        for (int i = 0; i < state.getWidth(); i++)
-            state.setBrick(i, state.getHeight() - 1,
-                    new Brick(Utils.randomBrick(difficulty), layer));
-
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++)
-                if (state.getBrick(i, j) != null)
-                    addBrick(i, j);
-    }
-
     @Override
     public boolean removeHoles() {
-        boolean result = false; // useless but we need to be honest in advance
+        boolean result = false;
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = state.getHeight() - 2; j >= 0; j--)
                 if (state.getBrick(i, j) != null && state.getBrick(i, j + 1) == null) {

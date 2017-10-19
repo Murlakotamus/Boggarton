@@ -7,15 +7,15 @@ import static stackup.Const.GAME_OVER;
 import org.lwjgl.util.vector.Vector2f;
 
 import stackup.entity.SimpleEntity;
-import stackup.game.SinglePlayerGame;
+import stackup.game.SimpleGame;
 
-abstract public class AbstractSinglePlayerGame extends AbstractGameScene {
+abstract public class AbstractOnePlayerGame extends AbstractGameScene {
 
     protected static final int X = 350;
     protected SimpleEntity gameOver;;
-    protected SinglePlayerGame game;
+    protected SimpleGame game;
 
-    public AbstractSinglePlayerGame(final Scene scene) {
+    public AbstractOnePlayerGame(final Scene scene) {
         super(scene);
     }
 

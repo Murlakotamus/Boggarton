@@ -8,19 +8,19 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 
 import stackup.entity.SimpleEntity;
-import stackup.game.Glass;
-import stackup.game.SinglePlayerGame;
+import stackup.game.SimpleGame;
+import stackup.game.SimpleGlass;
 import stackup.players.RealPlayer;
 
-public class OnePlayer extends AbstractSinglePlayerGame {
+public class OnePlayerGame extends AbstractOnePlayerGame {
 
     private final SimpleEntity gamePaused;
 
-    public OnePlayer(final int width, final int height, final int forecast, final int lenght) {
+    public OnePlayerGame(final int width, final int height, final int forecast, final int lenght) {
         super(Scene.ONE_PLAYER_GAME);
         gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
-        game = new SinglePlayerGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
                 lenght, difficulty);
         new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,
                 Keyboard.KEY_UP);
@@ -31,7 +31,7 @@ public class OnePlayer extends AbstractSinglePlayerGame {
     protected void hideGlass() {
         if (game.isGameOver())
             return;
-        ((Glass) game.getGlass()).pauseOn();
+        ((SimpleGlass) game.getGlass()).pauseOn();
         gamePaused.spawn(new Vector2f(X + size * 30 + 25, Y + BOX * 3 + BORDER));
     }
 
@@ -40,6 +40,6 @@ public class OnePlayer extends AbstractSinglePlayerGame {
         if (game.isGameOver())
             return;
         gamePaused.unspawn();
-        ((Glass) game.getGlass()).pauseOff();
+        ((SimpleGlass) game.getGlass()).pauseOff();
     }
 }

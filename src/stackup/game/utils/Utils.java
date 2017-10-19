@@ -8,8 +8,8 @@ public class Utils {
         return (int) (Math.random() * number);
     }
 
-    static public int randomBrick(int setSize) {
-        return random(setSize) + Const.CURRENT_SET * 10 + 1;
+    static public int randomBrick(final int difficulty) {
+        return random(difficulty) + Const.CURRENT_SET * 10 + 1;
     }
 
     static public void printStackTrace(StackTraceElement... elements) {

@@ -1,5 +1,6 @@
 package stackup.scenes;
 
+import static stackup.Const.BORDER;
 import static stackup.Const.BOX;
 import static stackup.Const.DARK_FONT;
 import static stackup.Const.FONT_HEIGHT;
@@ -7,7 +8,6 @@ import static stackup.Const.FONT_WIDTH;
 import static stackup.Const.LIGHT_FONT;
 import static stackup.Const.SCREEN_WIDTH;
 import static stackup.Const.TITLE;
-import static stackup.Const.BORDER;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;

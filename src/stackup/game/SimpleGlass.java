@@ -27,7 +27,7 @@ public class SimpleGlass extends AbstractGlass {
      */
     public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height) {
         frame = new Frame(layer, position, width, height, true, false);
-        
+
         state.setWidth(width);
         state.setHeight(height);
         state.setBricks(new Brick[width][height]);

@@ -29,7 +29,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     private final SimpleEntity gamePaused[];
 
     AbstractMultiplayerGame(final Scene scene, final int width, final int height,
-            final int[] forecast, final int length, final int numPlayers) {
+            final int[] forecast, final int length, final int numPlayers, boolean yackStrategy) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
@@ -51,7 +51,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             game[i] = new MultiplayerGame(layer, X + 450 * i, Y, width, height,
                     Math.min(prognosis, forecast[i]), length, difficulty,
-                    Victories.getVictories(i)); // FIXME => vic to player
+                    Victories.getVictories(i), yackStrategy); // FIXME => vic to player
             if (i < 4)
                 game[i].setName(PLAYERS_NAMES[i]);
             else

@@ -3,13 +3,13 @@ package stackup.scenes;
 import stackup.players.virtual.EffectiveVirtualNonAdaptivePlayer;
 import stackup.players.virtual.VirtualAdaptivePlayer;
 
-
 public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
     private static final long GAMEOVER_PAUSE = 3000;
 
-    public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int lenght) {
-        super(Scene.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2);
+    public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int lenght,
+            final boolean yackStrategy) {
+        super(Scene.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2, yackStrategy);
 
         new EffectiveVirtualNonAdaptivePlayer(game[0]);
         new VirtualAdaptivePlayer(game[1]);
@@ -32,7 +32,8 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
     @Override
     protected void checkAuto() {
-        if (pauseBetweenGames > 0 && (System.currentTimeMillis() - pauseBetweenGames > GAMEOVER_PAUSE))
+        if (pauseBetweenGames > 0
+                && (System.currentTimeMillis() - pauseBetweenGames > GAMEOVER_PAUSE))
             nextScene(Scene.MENU);
     }
 

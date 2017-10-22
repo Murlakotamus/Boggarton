@@ -7,6 +7,7 @@ public enum MenuItem {
     ONE_PLAYER_DEMO("One player demo", Scene.ONE_PLAYER_DEMO),
     TWO_PLAYERS_GAME("Player vs. player", Scene.TWO_PLAYERS_GAME),
     TWO_PLAYERS_DEMO("Two players demo", Scene.TWO_PLAYERS_DEMO),
+    YACKS("Yacks:      ", Scene.YACKS, "Random", "Hard"),
     DIFFICULTY("Difficulty", Scene.DIFFICULTY),
     FIGURE_SIZE("Figure size", Scene.SIZE),
     PROGNOSIS("Prognosis", Scene.PROGNOSIS),
@@ -14,9 +15,17 @@ public enum MenuItem {
 
     final private Scene scene;
     final private String name;
+    final private String[] values;
 
     MenuItem(final String name, final Scene scene) {
         this.name = name;
+        this.scene = scene;
+        values = null;
+    }
+
+    MenuItem(final String name, final Scene scene, final String... values) {
+        this.name = name;
+        this.values = values;
         this.scene = scene;
     }
 
@@ -26,5 +35,9 @@ public enum MenuItem {
 
     public String getName() {
         return name;
+    }
+
+    public String[] getValues() {
+        return values;
     }
 }

@@ -15,17 +15,13 @@ abstract public class AbstractGameScene extends AbstractScene {
 
     AbstractGameScene(final Scene scene) {
         super(scene);
-        addControlKeys();
-    }
-
-    abstract protected void hideGlass();
-    abstract protected void showGlass();
-
-    private void addControlKeys() {
         addEscape();
         addPause();
         addStartStackTrace();
     }
+
+    abstract protected void hideGlass();
+    abstract protected void showGlass();
 
     private void addEscape() {
         final KeyListener escape = new KeyListener() {

@@ -58,11 +58,15 @@ abstract public class AbstractGame extends GameState {
     }
 
     protected void charge() {
-        Figure figure = (Figure) glass.getFigure();
-        Vector2f figurePosition = figure.getPosition();
-        Vector2f framePosition = ((SimpleGlass) glass).getFrame().getPosition();
+        final Figure figure = (Figure) glass.getFigure();
+        final Vector2f figurePosition = figure.getPosition();
+        final float currentTime = getTime();
+        final float spentTime = (currentTime - previousTime) / 1000f;
+        final int currX = Math.round(figurePosition.getX());
+        final int newX = currX + Math.round(spentTime * CHARGE_SPEED);
+        final Vector2f framePosition = ((SimpleGlass) glass).getFrame().getPosition();
 
-        if (figurePosition.getX() >=        framePosition.getX() + targetPosition * BOX) {
+        if (newX >= framePosition.getX() + targetPosition * BOX) {
             figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX,
                     figurePosition.getY()));
             ((Forecast) forecast).setNext();
@@ -72,7 +76,8 @@ abstract public class AbstractGame extends GameState {
             nextStage();
             return;
         }
-        figure.setPosition(new Vector2f(figurePosition.getX() + 1f, figurePosition.getY()));
+        figure.setPosition(new Vector2f(newX, figurePosition.getY()));
+        previousTime = currentTime;
     }
 
     public void fall() {

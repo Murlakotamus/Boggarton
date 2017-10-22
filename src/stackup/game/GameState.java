@@ -18,6 +18,7 @@ abstract public class GameState {
     protected static final int DROPPING_SPEED = 300000;
     protected static final int CRASH_SPEED = 150000;
     protected static final int MOVING_SPEED = 5000;
+    protected static final int CHARGE_SPEED = 300000;
     volatile protected int currentSpeed = MOVING_SPEED;
 
     protected float startTime = getTime();

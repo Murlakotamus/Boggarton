@@ -24,7 +24,7 @@ abstract public class GameState {
     protected float startTime = getTime();
     protected float previousTime = startTime;
 
-    protected int enemiesYuck;
+    protected int yucksForEnemies;
     protected boolean glassProcessed;
     protected boolean reactionDetected = false;
     protected boolean killedBricks;

@@ -188,7 +188,7 @@ abstract public class AbstractGame extends GameState {
             reactionDetected = true;
         } else {
             if (glass.getReactionLenght() > 2)
-                enemiesYuck += glass.getReactionLenght() - 2;
+                yucksForEnemies += glass.getReactionLenght() - 2;
             glass.cleanReactions();
             reactionDetected = false;
         }

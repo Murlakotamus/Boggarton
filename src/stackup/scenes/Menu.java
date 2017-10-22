@@ -35,8 +35,8 @@ public class Menu extends AbstractLogo {
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
     private final Text[] passive = new Text[ITEMS_NUMBER];
     private final Text[] active = new Text[ITEMS_NUMBER];
-    private final Text[] yackActive = new Text[MenuItem.YACKS.getValues().length];
-    private final Text[] yackPassive = new Text[MenuItem.YACKS.getValues().length];
+    private final Text[] yuckActive = new Text[MenuItem.YUCKS.getValues().length];
+    private final Text[] yuckPassive = new Text[MenuItem.YUCKS.getValues().length];
     private final Brick[] brickSet = new Brick[MAX_DIFFICULTY];
 
     private Forecast forecast = null;
@@ -52,9 +52,9 @@ public class Menu extends AbstractLogo {
         }
 
         i = 0;
-        for (String item : MenuItem.YACKS.getValues()) {
-            yackPassive[i] = new Text(item, DARK_FONT, layer);
-            yackActive[i++] = new Text(item, LIGHT_FONT, layer);
+        for (String item : MenuItem.YUCKS.getValues()) {
+            yuckPassive[i] = new Text(item, DARK_FONT, layer);
+            yuckActive[i++] = new Text(item, LIGHT_FONT, layer);
         }
 
         for (i = 0; i < MAX_DIFFICULTY; i++)
@@ -74,22 +74,22 @@ public class Menu extends AbstractLogo {
             if (i == currentPosition) {
                 passive[i].unspawn();
                 active[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
-                if (i == MenuItem.YACKS.ordinal()) {
-                    int item = Scene.getYackStrategy() ? 1 : 0;
-                    yackActive[1 - item].unspawn();
-                    yackPassive[item].unspawn();
-                    yackActive[item].spawn(new Vector2f(
+                if (i == MenuItem.YUCKS.ordinal()) {
+                    int item = Scene.getYuckStrategy() ? 1 : 0;
+                    yuckActive[1 - item].unspawn();
+                    yuckPassive[item].unspawn();
+                    yuckActive[item].spawn(new Vector2f(
                             pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
                 }
             } else {
                 active[i].unspawn();
                 passive[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
-                if (i == MenuItem.YACKS.ordinal()) {
-                    int item = Scene.getYackStrategy() ? 1 : 0;
-                    yackPassive[1 - item].unspawn();
+                if (i == MenuItem.YUCKS.ordinal()) {
+                    int item = Scene.getYuckStrategy() ? 1 : 0;
+                    yuckPassive[1 - item].unspawn();
 
-                    yackActive[item].unspawn();
-                    yackPassive[item].spawn(new Vector2f(
+                    yuckActive[item].unspawn();
+                    yuckPassive[item].spawn(new Vector2f(
                             pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
                 }
             }
@@ -144,8 +144,8 @@ public class Menu extends AbstractLogo {
             public void onKeyUp() {
                 final Scene scene = ITEMS[currentPosition].getScene();
                 switch (scene) {
-                case YACKS:
-                    Scene.changeYacksStrategy();
+                case YUCKS:
+                    Scene.changeYucksStrategy();
                     drawMenu();
                     break;
                 case DIFFICULTY:

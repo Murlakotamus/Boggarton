@@ -8,8 +8,8 @@ import stackup.players.virtual.EffectiveVirtualAdaptivePlayer;
 public class PlayerVsCompGame extends AbstractMultiplayerGame {
 
     public PlayerVsCompGame(final int width, final int height, final int[] forecast,
-            final int lenght, final boolean yackStrategy) {
-        super(Scene.PLAYER_VS_COMP, width, height, forecast, lenght, 2, yackStrategy);
+            final int lenght, final boolean yuckStrategy) {
+        super(Scene.PLAYER_VS_COMP, width, height, forecast, lenght, 2, yuckStrategy);
 
         new EffectiveVirtualAdaptivePlayer(game[0]);
         new RealPlayer(game[1], Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,

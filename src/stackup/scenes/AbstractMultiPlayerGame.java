@@ -29,14 +29,14 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     private final SimpleEntity gamePaused[];
 
     AbstractMultiplayerGame(final Scene scene, final int width, final int height,
-            final int[] forecast, final int length, final int numPlayers, boolean yackStrategy) {
+            final int[] forecast, final int length, final int numPlayers, boolean yuckStrategy) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);
 
         if (width < length)
-            throw new RuntimeException("Glass too small for figures");
+            throw new RuntimeException("Glass too narrow for figures");
 
         if (numPlayers > 2)
             throw new RuntimeException("Not implemented yet");
@@ -51,13 +51,18 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             game[i] = new MultiplayerGame(layer, X + 450 * i, Y, width, height,
                     Math.min(prognosis, forecast[i]), length, difficulty,
-                    Victories.getVictories(i), yackStrategy); // FIXME => vic to player
+                    Victories.getVictories(i), yuckStrategy); // FIXME => vic to player
             if (i < 4)
                 game[i].setName(PLAYERS_NAMES[i]);
             else
                 game[i].setName(i + " player");
-            game[i].startGame();
         }
+
+        for (int i = 0; i < numPlayers; i++)
+            game[1 - i].setEnemyGlass(game[i].getGlass());
+
+        for (int i = 0; i < numPlayers; i++)
+            game[i].startGame();
     }
 
     abstract protected void checkAuto();
@@ -93,8 +98,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
 
         for (int i = 0; i < numPlayers; i++) {
             game[i].processStage();
-            if (game[i].getStages() == Stage.COMPRESS)
-                getYucks(i);
+            getYucks(i);
         }
     }
 

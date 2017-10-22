@@ -29,6 +29,7 @@ public interface IGlass {
     int getReactionLenght();
     void addReaction();
     void cleanReactions();
+
     void dropChanges();
     boolean hasChanges();
     int getFullness();

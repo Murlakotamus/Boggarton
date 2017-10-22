@@ -9,8 +9,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import stackup.Const;
 import stackup.engine.Layer;
 import stackup.entity.Brick;
+import stackup.entity.Text;
 import stackup.game.utils.Command;
 import stackup.game.utils.OuterCommand;
 import stackup.game.utils.Pair;
@@ -24,14 +26,18 @@ abstract public class AbstractGame extends GameState {
 
     final private Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
     final private OuterCommand command = new OuterCommand();
-    protected boolean needNewFigure = true;
+    final private Text diffScore;
     private int targetPosition = 0;
+
+    protected boolean needNewFigure = true;
+    protected int lastScore = 0;
 
     public AbstractGame(final Layer layer, final int x, final int y, final int width,
             final int height, final int forecast, final int lenght, final int setSize) {
         this.x = x;
         this.y = y;
         this.forecast = new Forecast(layer, new Vector2f(x, y), forecast, lenght, setSize);
+        diffScore = new Text("", Const.DARK_FONT, layer);
     }
 
     abstract protected void nextStage();
@@ -46,6 +52,15 @@ abstract public class AbstractGame extends GameState {
             setGameOver();
             return;
         }
+
+        int diff = getGlass().getGlassState().getScore() - lastScore;
+        if (diff > 0) {
+            diffScore.setString("+" + diff);
+            diffScore.spawn(new Vector2f(x + BOX * 8, y - BOX * 2));
+        } else {
+            diffScore.unspawn();
+        }
+        lastScore = getGlass().getGlassState().getScore();
     }
 
     private boolean enoughSleep(final float sleep) {

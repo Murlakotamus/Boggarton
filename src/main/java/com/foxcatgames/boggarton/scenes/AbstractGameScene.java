@@ -13,7 +13,7 @@ abstract public class AbstractGameScene extends AbstractScene {
     protected static final int Y = 160;
     protected boolean escapePressed = false;
 
-    AbstractGameScene(final Scene scene) {
+    AbstractGameScene(final SceneItem scene) {
         super(scene);
         addEscape();
         addPause();
@@ -29,7 +29,7 @@ abstract public class AbstractGameScene extends AbstractScene {
             public void onKeyUp() {
                 escapePressed = true;
                 setGameOver();
-                nextScene(Scene.MENU);
+                nextScene(SceneItem.MENU);
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);

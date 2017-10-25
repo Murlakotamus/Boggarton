@@ -9,7 +9,7 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
     public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int lenght,
             final boolean yuckStrategy) {
-        super(Scene.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2, yuckStrategy);
+        super(SceneItem.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2, yuckStrategy);
 
         new EffectiveVirtualNonAdaptivePlayer(game[0]);
         new VirtualAdaptivePlayer(game[1]);
@@ -27,14 +27,14 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
     protected void terminate() {
         super.terminate();
         if (!escapePressed)
-            nextScene(Scene.TWO_PLAYERS_DEMO);
+            nextScene(SceneItem.TWO_PLAYERS_DEMO);
     }
 
     @Override
     protected void checkAuto() {
         if (pauseBetweenGames > 0
                 && (System.currentTimeMillis() - pauseBetweenGames > GAMEOVER_PAUSE))
-            nextScene(Scene.MENU);
+            nextScene(SceneItem.MENU);
     }
 
     @Override

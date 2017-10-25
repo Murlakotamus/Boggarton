@@ -1,7 +1,7 @@
 package com.foxcatgames.boggarton;
 
 import com.foxcatgames.boggarton.engine.ITextureLoader;
-import com.foxcatgames.boggarton.engine.WorkAroundTextureLoader;
+import com.foxcatgames.boggarton.engine.TextureLoader;
 
 public class Const {
 
@@ -19,7 +19,7 @@ public class Const {
     public static final int SCREEN_HEIGHT = 768;
 
     // Texture loader is used to load and server textures to entities on init
-    public static final ITextureLoader TEXTURE_LOADER = new WorkAroundTextureLoader();;
+    public static final ITextureLoader TEXTURE_LOADER = new TextureLoader();;
 
     public static final int FONT_WIDTH = 14;
     public static final int FONT_HEIGHT = 28;

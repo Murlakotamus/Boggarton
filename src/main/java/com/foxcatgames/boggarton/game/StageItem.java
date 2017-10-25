@@ -1,6 +1,6 @@
 package com.foxcatgames.boggarton.game;
 
-public enum Stage {
+public enum StageItem {
 
     YUCK_PAUSE(null),
     COMPRESS(null),
@@ -13,36 +13,36 @@ public enum Stage {
     START(NEXT),
     YUCK(YUCK_PAUSE);
 
-    private final Stage nextStage;
+    private final StageItem nextStage;
 
-    private Stage(final Stage nextStage) {
+    private StageItem(final StageItem nextStage) {
         this.nextStage = nextStage;
     }
 
-    public Stage getNextStage(final boolean reactionDetected) {
+    public StageItem getNextStage(final boolean reactionDetected) {
         if (this == COMPRESS)
             if (reactionDetected)
-                return Stage.CRASH;
+                return StageItem.CRASH;
             else
-                return Stage.NEXT;
+                return StageItem.NEXT;
         return nextStage;
     }
 
-    public Stage getNextStage(final boolean reactionDetected, final boolean hasYucks) {
+    public StageItem getNextStage(final boolean reactionDetected, final boolean hasYucks) {
         switch (this) {
         case COMPRESS:
             if (reactionDetected)
-                return Stage.CRASH;
+                return StageItem.CRASH;
             else
                 if (hasYucks)
-                    return Stage.YUCK;
+                    return StageItem.YUCK;
                 else
-                    return Stage.NEXT;
+                    return StageItem.NEXT;
         case YUCK_PAUSE:
             if (hasYucks)
-                return Stage.YUCK;
+                return StageItem.YUCK;
             else
-                return Stage.PROCESS;
+                return StageItem.PROCESS;
         default:
             return nextStage;
         }

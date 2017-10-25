@@ -15,6 +15,5 @@ public class SimpleEntity extends AbstractEntity {
     public void draw() {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         super.draw();
-
     }
 }

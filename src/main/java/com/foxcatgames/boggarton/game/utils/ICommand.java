@@ -1,6 +1,6 @@
 package com.foxcatgames.boggarton.game.utils;
 
-public interface Command {
+public interface ICommand {
 
         void execute();
 }

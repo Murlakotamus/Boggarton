@@ -10,8 +10,8 @@ abstract public class AbstractScene {
 
     final static public Timer TIMER = new Timer(); // game timer, a part of the
                                                    // engine
-    private Scene scene; // current scene
-    protected Scene nextScene; // a next scene for a current scene
+    private SceneItem scene; // current scene
+    protected SceneItem nextScene; // a next scene for a current scene
 
     protected static int difficulty = 5;
     public  static int prognosis = 3;
@@ -30,13 +30,13 @@ abstract public class AbstractScene {
         lastTime = TIMER.getTime();
     }
 
-    protected AbstractScene(final Scene scene) {
+    protected AbstractScene(final SceneItem scene) {
         this.scene = scene;
         nextScene = scene;
         layer = new Layer();
     }
 
-    public Scene play() {
+    public SceneItem play() {
         start();
         run();
         terminate();
@@ -62,7 +62,7 @@ abstract public class AbstractScene {
             renderScene();
             EventManager.getInstance().checkEvents();
             if (Display.isCloseRequested())
-                nextScene(Scene.FINISH_GAME);
+                nextScene(SceneItem.FINISH_GAME);
             Thread.yield();
         }
     }
@@ -70,7 +70,7 @@ abstract public class AbstractScene {
     protected void start() {
     }
 
-    protected void nextScene(final Scene scene) {
+    protected void nextScene(final SceneItem scene) {
         nextScene = scene;
     }
 

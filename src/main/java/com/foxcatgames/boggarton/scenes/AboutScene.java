@@ -11,13 +11,13 @@ import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 
-public class About extends AbstractLogo {
+public class AboutScene extends AbstractLogoScene {
 
     private final SimpleEntity title;
     private final SimpleEntity about;
 
-    public About() {
-        super(Scene.ABOUT);
+    public AboutScene() {
+        super(SceneItem.ABOUT);
 
         title = new SimpleEntity(TITLE, layer);
         about = new SimpleEntity(ABOUT, layer);
@@ -27,14 +27,14 @@ public class About extends AbstractLogo {
 
         final KeyListener escape = new KeyListener() {
             public void onKeyUp() {
-                nextScene(Scene.MENU);
+                nextScene(SceneItem.MENU);
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
 
         final KeyListener enter = new KeyListener() {
             public void onKeyUp() {
-                nextScene(Scene.MENU);
+                nextScene(SceneItem.MENU);
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_RETURN, enter);

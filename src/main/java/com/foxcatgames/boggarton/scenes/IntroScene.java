@@ -10,17 +10,17 @@ import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 
-public class Intro extends AbstractLogo {
+public class IntroScene extends AbstractLogoScene {
 
-    public Intro() {
-        super(Scene.INTRO);
+    public IntroScene() {
+        super(SceneItem.INTRO);
         y = SCREEN_HEIGHT;
         title = new SimpleEntity(TITLE, layer);
         title.spawn(new Vector2f(TITLE_X, y));
 
         final KeyListener escape = new KeyListener() {
             public void onKeyUp() {
-                nextScene(Scene.MENU);
+                nextScene(SceneItem.MENU);
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
@@ -30,7 +30,7 @@ public class Intro extends AbstractLogo {
     protected void changes() {
         moveUp();
         if (y <= TITLE_Y)
-            nextScene(Scene.MENU);
+            nextScene(SceneItem.MENU);
 
     }
 

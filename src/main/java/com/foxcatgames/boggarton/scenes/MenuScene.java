@@ -19,7 +19,7 @@ import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.Forecast;
 
-public class Menu extends AbstractLogo {
+public class MenuScene extends AbstractLogoScene {
 
     static private final MenuItem[] ITEMS = MenuItem.values();
     static private final int ITEMS_NUMBER = MenuItem.values().length;
@@ -42,8 +42,8 @@ public class Menu extends AbstractLogo {
     private Forecast forecast = null;
     private int currentPosition = 0;
 
-    public Menu() {
-        super(Scene.MENU);
+    public MenuScene() {
+        super(SceneItem.MENU);
 
         int i = 0;
         for (MenuItem item : ITEMS) {
@@ -75,7 +75,7 @@ public class Menu extends AbstractLogo {
                 passive[i].unspawn();
                 active[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
                 if (i == MenuItem.YUCKS.ordinal()) {
-                    int item = Scene.getYuckStrategy() ? 1 : 0;
+                    int item = SceneItem.getYuckStrategy() ? 1 : 0;
                     yuckActive[1 - item].unspawn();
                     yuckPassive[item].unspawn();
                     yuckActive[item].spawn(new Vector2f(
@@ -85,7 +85,7 @@ public class Menu extends AbstractLogo {
                 active[i].unspawn();
                 passive[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
                 if (i == MenuItem.YUCKS.ordinal()) {
-                    int item = Scene.getYuckStrategy() ? 1 : 0;
+                    int item = SceneItem.getYuckStrategy() ? 1 : 0;
                     yuckPassive[1 - item].unspawn();
 
                     yuckActive[item].unspawn();
@@ -142,10 +142,10 @@ public class Menu extends AbstractLogo {
         final KeyListener enter = new KeyListener() {
             @Override
             public void onKeyUp() {
-                final Scene scene = ITEMS[currentPosition].getScene();
+                final SceneItem scene = ITEMS[currentPosition].getScene();
                 switch (scene) {
                 case YUCKS:
-                    Scene.changeYucksStrategy();
+                    SceneItem.changeYucksStrategy();
                     drawMenu();
                     break;
                 case DIFFICULTY:
@@ -178,7 +178,7 @@ public class Menu extends AbstractLogo {
         final KeyListener escape = new KeyListener() {
             @Override
             public void onKeyUp() {
-                nextScene(Scene.OUTRO);
+                nextScene(SceneItem.OUTRO);
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);

@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.SimpleGlass;
-import com.foxcatgames.boggarton.game.utils.Command;
+import com.foxcatgames.boggarton.game.utils.ICommand;
 
 abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPlayer {
 
@@ -15,7 +15,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
         for (int i = 0; i < moves.length && game.isGameOn(); i++)
             switch (moves[i]) {
             case LEFT:
-                game.sendCommand(new Command() {
+                game.sendCommand(new ICommand() {
                     @Override
                     public void execute() {
                         game.moveLeft();
@@ -24,7 +24,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
                 break;
 
             case RIGHT:
-                game.sendCommand(new Command() {
+                game.sendCommand(new ICommand() {
                     @Override
                     public void execute() {
                         game.moveRight();
@@ -33,7 +33,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
                 break;
 
             case CYCLE:
-                game.sendCommand(new Command() {
+                game.sendCommand(new ICommand() {
                     @Override
                     public void execute() {
                         game.rotateFigure();

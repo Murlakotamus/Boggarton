@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 
-abstract public class AbstractLogo extends AbstractScene {
+abstract public class AbstractLogoScene extends AbstractScene {
 
     static public final int TICK = 1000 / 60;
 
@@ -15,7 +15,7 @@ abstract public class AbstractLogo extends AbstractScene {
     protected int y;
     protected SimpleEntity title;
 
-    AbstractLogo(final Scene scene) {
+    AbstractLogoScene(final SceneItem scene) {
         super(scene);
     }
 

@@ -1,7 +1,6 @@
 package com.foxcatgames.boggarton.game;
 
-
-public class VirtualForecast extends AbstractForecast implements IForecast {
+public class VirtualForecast extends AbstractForecast {
 
     public VirtualForecast(final IForecast forecast) {
         super(forecast.getDepth(), forecast.getLenght());

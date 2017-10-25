@@ -13,7 +13,7 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
-import com.foxcatgames.boggarton.game.utils.Command;
+import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 
@@ -22,7 +22,7 @@ import com.foxcatgames.boggarton.game.utils.Pair;
  *
  * @author Michael
  */
-abstract public class AbstractGame extends GameState {
+abstract public class AbstractGame extends AbstractGameState {
 
     final private Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
     final private OuterCommand command = new OuterCommand();
@@ -258,7 +258,7 @@ abstract public class AbstractGame extends GameState {
         }
     }
 
-    public void sendCommand(Command cmd) {
+    public void sendCommand(ICommand cmd) {
         commandLock.lock();
         try {
             while (command.getCommand() != null)

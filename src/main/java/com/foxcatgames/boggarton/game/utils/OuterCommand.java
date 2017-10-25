@@ -2,18 +2,18 @@ package com.foxcatgames.boggarton.game.utils;
 
 public class OuterCommand {
 
-    Command command = null;
+    ICommand command = null;
 
     public void execute() {
         command.execute();
         command = null;
     }
 
-    public Command getCommand() {
+    public ICommand getCommand() {
         return command;
     }
 
-    public void setCommand(Command command) {
+    public void setCommand(ICommand command) {
         this.command = command;
     }
 }

@@ -18,17 +18,14 @@ import org.lwjgl.opengl.GL11;
 
 import com.foxcatgames.boggarton.Logger;
 
-public class WorkAroundTextureLoader implements ITextureLoader {
+public class TextureLoader implements ITextureLoader {
 
     private static Texture[] textures = new Texture[1024];
     private static Texture[][] animations = new Texture[1024][1024];
 
     private Map<String, BufferedImage> imageCache = new ConcurrentHashMap<>();
 
-    public static final ITextureLoader TEXTURE_LOADER = new WorkAroundTextureLoader();;
-
     public void init() {
-
         // Common elements
         textures[ABOUT] = loadTexture("/data/About.png", 0, 0, 151, 129);
         textures[GAME_OVER] = loadTexture("/data/GameOver.png", 0, 0, 180, 90);

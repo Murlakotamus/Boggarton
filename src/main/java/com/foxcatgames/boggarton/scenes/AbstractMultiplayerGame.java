@@ -11,7 +11,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.SimpleGlass;
-import com.foxcatgames.boggarton.game.Stage;
+import com.foxcatgames.boggarton.game.StageItem;
 import com.foxcatgames.boggarton.game.utils.Victories;
 
 abstract public class AbstractMultiplayerGame extends AbstractGameScene {
@@ -28,7 +28,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     protected MultiplayerGame[] game;
     private final SimpleEntity gamePaused[];
 
-    AbstractMultiplayerGame(final Scene scene, final int width, final int height,
+    AbstractMultiplayerGame(final SceneItem scene, final int width, final int height,
             final int[] forecast, final int length, final int numPlayers, boolean yuckStrategy) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];

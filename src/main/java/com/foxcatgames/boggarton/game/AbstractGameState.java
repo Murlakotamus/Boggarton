@@ -1,10 +1,10 @@
 package com.foxcatgames.boggarton.game;
 
-import static com.foxcatgames.boggarton.game.Stage.START;
+import static com.foxcatgames.boggarton.game.StageItem.START;
 
 import com.foxcatgames.boggarton.scenes.AbstractScene;
 
-abstract public class GameState {
+abstract public class AbstractGameState {
 
     protected int x, y;
     protected IGlass glass;
@@ -30,7 +30,7 @@ abstract public class GameState {
     protected boolean killedBricks;
 
     protected String name = "default";
-    protected Stage stage = START;
+    protected StageItem stage = START;
 
     float getTime() {
         return AbstractScene.TIMER.getTime();
@@ -84,7 +84,7 @@ abstract public class GameState {
         return reactionDetected;
     }
 
-    public Stage getStages() {
+    public StageItem getStages() {
         return stage;
     }
 

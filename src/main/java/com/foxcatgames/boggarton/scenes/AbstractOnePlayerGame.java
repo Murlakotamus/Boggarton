@@ -23,7 +23,7 @@ abstract public class AbstractOnePlayerGame extends AbstractGameScene {
     protected void changes() {
         if (game.isGameOver() && gameOver == null) {
             gameOver = new SimpleEntity(GAME_OVER, layer);
-            gameOver.spawn(new Vector2f(X + size * 30 + 25, Y + BOX * 3 + BORDER));
+            gameOver.spawn(new Vector2f(X + size * BOX + 25, Y + BOX * 3 + BORDER));
         } else if (game.isGameOn())
             game.processStage();
     }
@@ -32,5 +32,6 @@ abstract public class AbstractOnePlayerGame extends AbstractGameScene {
     protected void setGameOver() {
         super.setGameOver();
         game.setGameOver();
+        game.closeLogger();
     }
 }

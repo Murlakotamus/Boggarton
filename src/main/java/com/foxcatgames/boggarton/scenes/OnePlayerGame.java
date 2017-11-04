@@ -24,6 +24,8 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
                 lenght, difficulty);
         new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,
                 Keyboard.KEY_UP);
+        game.setName("Human");
+        game.initLogger("Still no strategy information");
         game.startGame();
     }
 

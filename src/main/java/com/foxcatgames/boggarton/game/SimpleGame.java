@@ -26,8 +26,9 @@ public class SimpleGame extends AbstractGame {
         switch (stage) {
         case NEXT:
             if (needNewFigure) {
-                nextFigure();
+                IFigure figure = nextFigure();
                 needNewFigure = false;
+                logFigure(figure);
             } else
                 charge();
             break;

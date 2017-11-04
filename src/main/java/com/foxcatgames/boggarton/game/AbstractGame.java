@@ -44,13 +44,15 @@ abstract public class AbstractGame extends AbstractGameState {
 
     abstract public void processStage();
 
-    public void nextFigure() {
-        if (needNewFigure)
-            targetPosition = glass.newFigure(forecast.getForecast());
-
+    public IFigure nextFigure() {
+        IFigure figure = null;
+        if (needNewFigure) {
+            figure = forecast.getForecast();
+            targetPosition = glass.newFigure(figure);
+        }
         if (!glass.getGlassState().canTakeNewFigure(targetPosition)) {
             setGameOver();
-            return;
+            return null;
         }
 
         int diff = getGlass().getGlassState().getScore() - lastScore;
@@ -61,6 +63,7 @@ abstract public class AbstractGame extends AbstractGameState {
             diffScore.unspawn();
         }
         lastScore = getGlass().getGlassState().getScore();
+        return figure;
     }
 
     private boolean enoughSleep(final float sleep) {

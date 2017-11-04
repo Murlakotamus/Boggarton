@@ -20,9 +20,8 @@ public class MultiplayerGame extends AbstractGame {
     private final Brick[] yuckBricks = new Brick[MAX_YUCKS];
     private final Vector2f yuckPosition;
 
-    public MultiplayerGame(final Layer layer, final int x, final int y, final int width,
-            final int height, final int forecast, final int lenght, final int difficulty,
-            final int victories, boolean yuckStrategy) {
+    public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
+            final int difficulty, final int victories, boolean yuckStrategy) {
 
         super(layer, x, y, width, height, forecast, lenght, difficulty);
         this.yuckStrategy = yuckStrategy;
@@ -45,8 +44,9 @@ public class MultiplayerGame extends AbstractGame {
         switch (stage) {
         case NEXT:
             if (needNewFigure) {
-                nextFigure();
+                IFigure figure = nextFigure();
                 needNewFigure = false;
+                logFigure(figure);
             } else
                 charge();
             break;
@@ -103,7 +103,8 @@ public class MultiplayerGame extends AbstractGame {
     }
 
     protected void executeYuck() {
-        ((MultiplayerGlass) glass).executeYuck(yuckStrategy);
+        String yuck = ((MultiplayerGlass) glass).executeYuck(yuckStrategy);
+        logYuck(yuck);
         yucks--;
         ((MultiplayerGlass) glass).respawn();
         drawYucks();

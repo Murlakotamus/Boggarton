@@ -20,7 +20,7 @@ public class MultiplayerGlass extends SimpleGlass {
         this.difficulty = difficulty;
     }
 
-    public void executeYuck(boolean yuckStrategy) {
+    public String executeYuck(boolean yuckStrategy) {
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++) {
                 if (j > 0)
@@ -28,8 +28,10 @@ public class MultiplayerGlass extends SimpleGlass {
                 removeBrick(i, j);
             }
 
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < state.getWidth(); i++) {
             int brick = yuckStrategy ? getBadBrick() : getRandomBrick();
+            result.append(brick - Const.CURRENT_SET * 10);
             state.setBrick(i, state.getHeight() - 1, new Brick(brick, layer));
         }
 
@@ -42,6 +44,7 @@ public class MultiplayerGlass extends SimpleGlass {
             int delta = difficulty - 4;
             count += delta;
         }
+        return result.toString();
     }
 
     private int getBadBrick() {

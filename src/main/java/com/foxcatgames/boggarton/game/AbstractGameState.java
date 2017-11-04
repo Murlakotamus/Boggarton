@@ -2,6 +2,15 @@ package com.foxcatgames.boggarton.game;
 
 import static com.foxcatgames.boggarton.game.StageItem.START;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.foxcatgames.boggarton.scenes.AbstractScene;
 
 abstract public class AbstractGameState {
@@ -32,6 +41,9 @@ abstract public class AbstractGameState {
     protected String name = "default";
     protected StageItem stage = START;
 
+    private FileOutputStream fos = null;
+    private BufferedWriter bw = null;
+
     float getTime() {
         return AbstractScene.TIMER.getTime();
     }
@@ -54,14 +66,34 @@ abstract public class AbstractGameState {
 
     public void rotateFigure() {
         glass.rotate();
+        log("C");
     }
 
     public void moveLeft() {
         glass.moveLeft();
+        log("L");
     }
 
     public void moveRight() {
         glass.moveRight();
+        log("R");
+    }
+
+    public void dropFigure() {
+        log("D");
+    }
+
+    public void waitNextFigure() {
+        log("N\n");
+    }
+
+    protected void logFigure(IFigure figure) {
+        if (figure != null)
+            log("FIGURE: " + figure);
+    }
+
+    public void logYuck(String yuck) {
+        log("YUCK:   " + yuck + "\n");
     }
 
     public IGlass getGlass() {
@@ -84,8 +116,13 @@ abstract public class AbstractGameState {
         return reactionDetected;
     }
 
-    public StageItem getStages() {
-        return stage;
+    private void log(String str) {
+        if (bw != null)
+            try {
+                bw.write(str);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
     public String getName() {
@@ -94,5 +131,41 @@ abstract public class AbstractGameState {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void initLogger(String comment) {
+        String pattern1 = "yyyy-MM-dd";
+        String pattern2 = "HH-mm-ss";
+
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(pattern1);
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat(pattern2);
+
+        Date moment = new Date();
+        String date = simpleDateFormat1.format(moment);
+        String time = simpleDateFormat2.format(moment);
+
+        File file = new File("History" + File.separator + name + File.separator + date + File.separator + time + ".txt");
+        file.getParentFile().mkdirs();
+        try {
+            fos = new FileOutputStream(file);
+            bw = new BufferedWriter(new OutputStreamWriter(fos));
+            log(comment + "\n\n");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeLogger() {
+        try {
+            log("\nGame over!");
+            bw.flush();
+            bw.close();
+            fos.flush();
+            fos.close();
+            bw = null;
+            fos = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

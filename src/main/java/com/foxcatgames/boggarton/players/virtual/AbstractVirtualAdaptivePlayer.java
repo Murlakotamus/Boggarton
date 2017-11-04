@@ -42,6 +42,12 @@ abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlaye
                 break;
 
             case DOWN:
+                game.sendCommand(new ICommand() {
+                    @Override
+                    public void execute() {
+                        game.dropFigure(); // only for log
+                    }
+                });
                 game.checkCommand();
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();
@@ -50,6 +56,7 @@ abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlaye
 
             // adaptive algorithm
             case NEXT:
+                game.waitNextFigure(); // only for log
                 game.clearBuffer();
                 game.getBuffer();
                 game.restoreSpeed();

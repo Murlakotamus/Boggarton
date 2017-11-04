@@ -11,14 +11,14 @@ abstract public class AbstractVirtualPlayer implements Runnable {
 
     private final boolean moveDown;
     protected final AbstractGame game;
-    
+
     protected static final char LEFT = 'L';
     protected static final char RIGHT = 'R';
     protected static final char CYCLE = 'C';
     protected static final char DOWN = 'D';
     protected static final char NEXT = 'N';
 
-    protected Solver solver;    
+    protected Solver solver;
 
     public AbstractVirtualPlayer(final AbstractGame game, final String name, final boolean moveDown) {
         this.game = game;
@@ -52,8 +52,8 @@ abstract public class AbstractVirtualPlayer implements Runnable {
                 else
                     game.clearBuffer();
             }
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

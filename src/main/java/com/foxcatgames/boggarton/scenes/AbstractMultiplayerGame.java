@@ -11,7 +11,6 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.SimpleGlass;
-import com.foxcatgames.boggarton.game.StageItem;
 import com.foxcatgames.boggarton.game.utils.Victories;
 
 abstract public class AbstractMultiplayerGame extends AbstractGameScene {
@@ -28,8 +27,8 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     protected MultiplayerGame[] game;
     private final SimpleEntity gamePaused[];
 
-    AbstractMultiplayerGame(final SceneItem scene, final int width, final int height,
-            final int[] forecast, final int length, final int numPlayers, boolean yuckStrategy) {
+    AbstractMultiplayerGame(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
+            boolean yuckStrategy) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
@@ -49,20 +48,23 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         game = new MultiplayerGame[numPlayers];
 
         for (int i = 0; i < numPlayers; i++) {
-            game[i] = new MultiplayerGame(layer, X + 450 * i, Y, width, height,
-                    Math.min(prognosis, forecast[i]), length, difficulty,
-                    Victories.getVictories(i), yuckStrategy); // FIXME => vic to player
+            game[i] = new MultiplayerGame(layer, X + 450 * i, Y, width, height, Math.min(prognosis, forecast[i]), length, difficulty, Victories.getVictories(i),
+                    yuckStrategy); // FIXME => vic to player
             if (i < 4)
                 game[i].setName(PLAYERS_NAMES[i]);
             else
                 game[i].setName(i + " player");
         }
 
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < numPlayers; i++) {
+            game[1 - i].initLogger("Still no strategy information");
             game[1 - i].setEnemyGlass(game[i].getGlass());
+        }
 
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < numPlayers; i++) {
+            game[i].initLogger("Still no strategy information");
             game[i].startGame();
+        }
     }
 
     abstract protected void checkAuto();
@@ -71,15 +73,14 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             if (i == looserNumber) {
                 loser = new SimpleEntity(LOSER, layer);
-                loser.spawn(
-                        new Vector2f(game[i].getX() + size * 30 + 25, Y + BOX * 3 + BORDER));
+                loser.spawn(new Vector2f(game[i].getX() + size * BOX + 25, Y + BOX * 3 + BORDER));
             } else {
                 winners[i] = new SimpleEntity(WINNER, layer);
-                winners[i].spawn(
-                        new Vector2f(game[i].getX() + size * 30 + 25, Y + BOX * 3 + BORDER));
+                winners[i].spawn(new Vector2f(game[i].getX() + size * BOX + 25, Y + BOX * 3 + BORDER));
                 Victories.addVictory(i);
             }
             game[i].setGameOver();
+            game[i].closeLogger();
         }
     }
 
@@ -111,16 +112,17 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     @Override
     protected void setGameOver() {
         super.setGameOver();
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < numPlayers; i++) {
             game[i].setGameOver();
+            game[i].closeLogger();
+        }
     }
 
     @Override
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {
             ((SimpleGlass) game[i].getGlass()).pauseOn();
-            gamePaused[i].spawn(
-                    new Vector2f(game[i].getX() + size * 30 + 25, Y + BOX * 3 + BORDER));
+            gamePaused[i].spawn(new Vector2f(game[i].getX() + size * BOX + 25, Y + BOX * 3 + BORDER));
         }
     }
 

@@ -7,6 +7,7 @@ public enum MenuItem {
     ONE_PLAYER_DEMO("One player demo", SceneItem.ONE_PLAYER_DEMO),
     TWO_PLAYERS_GAME("Player vs. player", SceneItem.TWO_PLAYERS_GAME),
     TWO_PLAYERS_DEMO("Two players demo", SceneItem.TWO_PLAYERS_DEMO),
+    REPLAY_GAME("Replay game", SceneItem.REPLAY_GAME),
     YUCKS("Yucks:      ", SceneItem.YUCKS, "Random", "Hard"),
     DIFFICULTY("Difficulty", SceneItem.DIFFICULTY),
     FIGURE_SIZE("Figure size", SceneItem.SIZE),

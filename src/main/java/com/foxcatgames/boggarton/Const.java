@@ -8,6 +8,13 @@ public class Const {
     public static final int BOX = 30;
     public static final int BORDER = 5;
 
+    static public final int MIN_DIFFICULTY = 4;
+    static public final int MAX_DIFFICULTY = 7;
+    static public final int MIN_SIZE = 3;
+    static public final int MAX_SIZE = 6;
+    static public final int MIN_PROGNOSIS = 1;
+    static public final int MAX_PROGNOSIS = 3;
+
     public static final int WIDTH = 6;
     public static final int HEIGHT = 12;
 
@@ -61,4 +68,8 @@ public class Const {
     public static final int FRAME_FULL_LEFT = 110;
     public static final int FRAME_UPPER_BRIDGE = 111;
     public static final int FRAME_LOWER_BRIDGE = 112;
+
+    public static final String FIGURE = "FIGURE: ";
+    public static final String YUCK   = "YUCK:   ";
+    public static final String GAMEOVER = "Game over!";
 }

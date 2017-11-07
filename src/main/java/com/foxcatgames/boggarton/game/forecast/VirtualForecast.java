@@ -1,4 +1,7 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.forecast;
+
+import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 
 public class VirtualForecast extends AbstractForecast {
 
@@ -12,5 +15,4 @@ public class VirtualForecast extends AbstractForecast {
     protected IFigure[] initFigures() {
         return new VirtualFigure[prognosis];
     }
-
 }

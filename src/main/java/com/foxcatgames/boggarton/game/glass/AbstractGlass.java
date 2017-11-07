@@ -1,20 +1,21 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.glass;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
+import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.utils.Changes;
 import com.foxcatgames.boggarton.game.utils.Coords;
 
 abstract public class AbstractGlass implements IGlass {
 
-    volatile protected boolean gameOver;
+    volatile protected boolean gameOver = false;
 
     final protected HashSet<Coords> newBricks = new HashSet<>();
     final protected Changes changes = new Changes(true);
     final protected GlassState state = new GlassState();
 
-    protected void addBrick(final int i, final int j) {
+    public void addBrick(final int i, final int j) {
         if (checkCoords(i, j))
             newBricks.add(new Coords(i, j));
 

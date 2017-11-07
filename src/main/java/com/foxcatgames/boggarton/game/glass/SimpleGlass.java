@@ -1,4 +1,4 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.glass;
 
 import static com.foxcatgames.boggarton.Const.BORDER;
 import static com.foxcatgames.boggarton.Const.BOX;
@@ -10,6 +10,8 @@ import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.entity.Text;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.figure.IFigure;
 
 public class SimpleGlass extends AbstractGlass {
 
@@ -44,8 +46,8 @@ public class SimpleGlass extends AbstractGlass {
         return (Brick) state.getBrick(i, j);
     }
 
-    private Figure figure() {
-        return (Figure) state.getFigure();
+    private AbstractVisualFigure figure() {
+        return (AbstractVisualFigure) state.getFigure();
     }
 
     public boolean canTakeNewFigure() {
@@ -124,13 +126,13 @@ public class SimpleGlass extends AbstractGlass {
     }
 
     public void setX(final int x) {
-        final Figure figure = figure();
+        final AbstractVisualFigure figure = figure();
         figure.getPosition().setX(x);
         figure.respawn();
     }
 
     public void setY(final int y) {
-        final Figure figure = figure();
+        final AbstractVisualFigure figure = figure();
         figure.getPosition().setY(y + SCREEN_OFFSET_Y);
         figure.respawn();
     }
@@ -148,7 +150,7 @@ public class SimpleGlass extends AbstractGlass {
         if (getFigure() != null)
             figure().unspawn();
 
-        final Figure figure = (Figure) newFigure;
+        final IFigure figure = newFigure;
         state.setFigure(figure);
         state.setI(state.getNextPosition());
         state.setJ(0);

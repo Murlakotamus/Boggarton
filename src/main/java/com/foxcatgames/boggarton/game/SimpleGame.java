@@ -5,6 +5,8 @@ import static com.foxcatgames.boggarton.Const.BOX;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.engine.Layer;
+import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 
 public class SimpleGame extends AbstractGame {
    

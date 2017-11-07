@@ -1,4 +1,4 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.glass;
 
 import org.lwjgl.util.vector.Vector2f;
 

@@ -1,4 +1,8 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.glass;
+
+import com.foxcatgames.boggarton.game.VirtualBrick;
+import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 
 public class VirtualGlass extends AbstractGlass {
 

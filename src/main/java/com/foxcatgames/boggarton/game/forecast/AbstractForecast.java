@@ -1,4 +1,6 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.forecast;
+
+import com.foxcatgames.boggarton.game.figure.IFigure;
 
 abstract public class AbstractForecast implements IForecast {
 
@@ -6,7 +8,7 @@ abstract public class AbstractForecast implements IForecast {
     final protected int size; // length of figure
     final protected IFigure[] figures;
 
-    public AbstractForecast(int prognosis, int size) {
+    public AbstractForecast(final int prognosis, final int size) {
         this.prognosis = prognosis;
         this.size = size;
         figures = initFigures();

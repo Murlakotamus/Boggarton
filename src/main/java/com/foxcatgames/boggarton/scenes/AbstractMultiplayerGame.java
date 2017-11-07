@@ -10,7 +10,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
-import com.foxcatgames.boggarton.game.SimpleGlass;
+import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.Victories;
 
 abstract public class AbstractMultiplayerGame extends AbstractGameScene {
@@ -57,12 +57,12 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         }
 
         for (int i = 0; i < numPlayers; i++) {
-            game[1 - i].initLogger("Still no strategy information");
+            game[1 - i].initLogger();
             game[1 - i].setEnemyGlass(game[i].getGlass());
         }
 
         for (int i = 0; i < numPlayers; i++) {
-            game[i].initLogger("Still no strategy information");
+            game[i].initLogger();
             game[i].startGame();
         }
     }

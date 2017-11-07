@@ -4,7 +4,7 @@ import static com.foxcatgames.boggarton.Const.HEIGHT;
 import static com.foxcatgames.boggarton.Const.WIDTH;
 
 public enum SceneItem {
-    INTRO, MENU, ONE_PLAYER_GAME, ONE_PLAYER_DEMO, PLAYER_VS_COMP, TWO_PLAYERS_GAME, TWO_PLAYERS_DEMO, YUCKS, DIFFICULTY, SIZE, PROGNOSIS, ABOUT, OUTRO, FINISH_GAME;
+    INTRO, MENU, ONE_PLAYER_GAME, ONE_PLAYER_DEMO, PLAYER_VS_COMP, TWO_PLAYERS_GAME, TWO_PLAYERS_DEMO, REPLAY_GAME, YUCKS, DIFFICULTY, SIZE, PROGNOSIS, ABOUT, OUTRO, FINISH_GAME;
 
     private static final int[] FORECASTS = { AbstractScene.prognosis, AbstractScene.prognosis };
     private static boolean yuckStrategy = true;
@@ -25,6 +25,8 @@ public enum SceneItem {
             return new PlayerVsPlayerGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size, yuckStrategy);
         case TWO_PLAYERS_DEMO:
             return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.size, yuckStrategy);
+        case REPLAY_GAME:
+            return new Replay(WIDTH, HEIGHT, 3, AbstractScene.size);
         case OUTRO:
             return new OutroScene();
         default:

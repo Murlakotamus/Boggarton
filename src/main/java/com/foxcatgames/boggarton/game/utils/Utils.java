@@ -16,4 +16,8 @@ public class Utils {
         for (StackTraceElement element : elements)
             System.err.println(element);
     }
+
+    static public int getBrick(final String str, final int index) {
+        return Integer.parseInt("" + str.charAt(index)) + Const.CURRENT_SET * 10;
+    }
 }

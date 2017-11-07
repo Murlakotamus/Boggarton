@@ -10,7 +10,7 @@ public class OnePlayerDemo extends AbstractOnePlayerGame {
         game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
                 lenght, difficulty);
         game.setName("Virtual");
-        game.initLogger("Still no strategy information");
+        game.initLogger();
         game.startGame();
         new VirtualAdaptivePlayer(game);
     }

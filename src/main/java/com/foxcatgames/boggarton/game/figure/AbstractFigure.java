@@ -1,4 +1,6 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.figure;
+
+import com.foxcatgames.boggarton.game.IBrick;
 
 abstract public class AbstractFigure implements IFigure {
 
@@ -7,7 +9,7 @@ abstract public class AbstractFigure implements IFigure {
     final protected IBrick[] bricks;
     final protected int lenght;
 
-    protected int number;    // number of bricks that still fall
+    protected int number; // number of bricks that still fall
 
     public AbstractFigure(int lenght) {
         this.lenght = lenght;
@@ -63,14 +65,6 @@ abstract public class AbstractFigure implements IFigure {
 
         bricks[i] = null;
         number--;
-    }
-
-    @Override
-    public boolean checkFigure() {
-        for (int j = 0; j < lenght; j++)
-            if (bricks[j] == null)
-                return false;
-        return number == lenght;
     }
 
     @Override

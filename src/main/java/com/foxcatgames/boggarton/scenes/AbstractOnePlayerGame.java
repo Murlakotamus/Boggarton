@@ -7,13 +7,13 @@ import static com.foxcatgames.boggarton.Const.GAME_OVER;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.SimpleEntity;
-import com.foxcatgames.boggarton.game.SimpleGame;
+import com.foxcatgames.boggarton.game.AbstractGame;
 
 abstract public class AbstractOnePlayerGame extends AbstractGameScene {
 
     protected static final int X = 350;
     protected SimpleEntity gameOver;
-    protected SimpleGame game;
+    protected AbstractGame game;
 
     public AbstractOnePlayerGame(final SceneItem scene) {
         super(scene);

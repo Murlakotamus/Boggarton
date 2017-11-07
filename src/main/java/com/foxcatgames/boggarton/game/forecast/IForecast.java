@@ -1,4 +1,6 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.forecast;
+
+import com.foxcatgames.boggarton.game.figure.IFigure;
 
 public interface IForecast {
 

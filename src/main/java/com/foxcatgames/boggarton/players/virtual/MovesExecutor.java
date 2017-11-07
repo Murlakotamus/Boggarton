@@ -4,14 +4,29 @@ import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
-abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlayer {
+public class MovesExecutor extends AbstractExecutor implements Runnable {
 
-    public AbstractVirtualAdaptivePlayer(final AbstractGame game, final boolean moveDown) {
-        super(game, "virtual player, adaptive, effective: " + moveDown, moveDown);
+    private final char[] moves;
+
+    public MovesExecutor(final AbstractGame game, final char[] moves) {
+        super(game);
+        this.moves = moves;
+
+        final Thread thread = new Thread(this);
+        thread.setPriority(Thread.MIN_PRIORITY);
+        thread.setName(game.getName() + thread.getId());
+        thread.start();
     }
 
-    @Override
-    protected void makeMoves(final char... moves) throws InterruptedException {
+    public void run() {
+        try {
+            makeMoves(moves);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void makeMoves(final char... moves) throws InterruptedException {
         for (int i = 0; i < moves.length && game.isGameOn(); i++)
             switch (moves[i]) {
             case LEFT:
@@ -42,25 +57,17 @@ abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlaye
                 break;
 
             case DOWN:
-                game.sendCommand(new ICommand() {
-                    @Override
-                    public void execute() {
-                        game.dropFigure(); // for log only
-                    }
-                });
                 game.checkCommand();
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();
                 ((SimpleGlass) game.getGlass()).waitChanges();
                 break;
 
-            // adaptive algorithm
             case NEXT:
-                game.waitNextFigure(); // for log only
                 game.clearBuffer();
                 game.getBuffer();
                 game.restoreSpeed();
-                return;
+                break;
             }
     }
 }

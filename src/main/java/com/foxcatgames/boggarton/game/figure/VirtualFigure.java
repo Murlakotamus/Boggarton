@@ -1,4 +1,6 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.figure;
+
+import com.foxcatgames.boggarton.game.VirtualBrick;
 
 public class VirtualFigure extends AbstractFigure {
 

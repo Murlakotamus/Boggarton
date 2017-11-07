@@ -1,13 +1,6 @@
 package com.foxcatgames.boggarton.scenes;
 
-import static com.foxcatgames.boggarton.Const.BORDER;
-import static com.foxcatgames.boggarton.Const.BOX;
-import static com.foxcatgames.boggarton.Const.DARK_FONT;
-import static com.foxcatgames.boggarton.Const.FONT_HEIGHT;
-import static com.foxcatgames.boggarton.Const.FONT_WIDTH;
-import static com.foxcatgames.boggarton.Const.LIGHT_FONT;
-import static com.foxcatgames.boggarton.Const.SCREEN_WIDTH;
-import static com.foxcatgames.boggarton.Const.TITLE;
+import static com.foxcatgames.boggarton.Const.*;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
@@ -17,7 +10,7 @@ import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.entity.Text;
-import com.foxcatgames.boggarton.game.Forecast;
+import com.foxcatgames.boggarton.game.forecast.MenuForecast;
 
 public class MenuScene extends AbstractLogoScene {
 
@@ -25,12 +18,6 @@ public class MenuScene extends AbstractLogoScene {
     static private final int ITEMS_NUMBER = MenuItem.values().length;
     static private final int Y_POS_MENU = 190;
     static private final int Y_INTERVAL = FONT_HEIGHT + 1;
-    static private final int MIN_DIFFICULTY = 4;
-    static private final int MAX_DIFFICULTY = 7;
-    static private final int MIN_SIZE = 3;
-    static private final int MAX_SIZE = 6;
-    static private final int MIN_PROGNOSIS = 1;
-    static private final int MAX_PROGNOSIS = 3;
 
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
     private final Text[] passive = new Text[ITEMS_NUMBER];
@@ -39,7 +26,7 @@ public class MenuScene extends AbstractLogoScene {
     private final Text[] yuckPassive = new Text[MenuItem.YUCKS.getValues().length];
     private final Brick[] brickSet = new Brick[MAX_DIFFICULTY];
 
-    private Forecast forecast = null;
+    private MenuForecast forecast = null;
     private int currentPosition = 0;
 
     public MenuScene() {
@@ -78,8 +65,7 @@ public class MenuScene extends AbstractLogoScene {
                     int item = SceneItem.getYuckStrategy() ? 1 : 0;
                     yuckActive[1 - item].unspawn();
                     yuckPassive[item].unspawn();
-                    yuckActive[item].spawn(new Vector2f(
-                            pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
+                    yuckActive[item].spawn(new Vector2f(pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
                 }
             } else {
                 active[i].unspawn();
@@ -89,8 +75,7 @@ public class MenuScene extends AbstractLogoScene {
                     yuckPassive[1 - item].unspawn();
 
                     yuckActive[item].unspawn();
-                    yuckPassive[item].spawn(new Vector2f(
-                            pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
+                    yuckPassive[item].spawn(new Vector2f(pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
                 }
             }
 
@@ -101,10 +86,8 @@ public class MenuScene extends AbstractLogoScene {
         if (forecast != null)
             forecast.unspawn();
 
-        forecast = new Forecast(layer,
-                new Vector2f((SCREEN_WIDTH / 2) - (size * BOX / 2) - BORDER,
-                        ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU),
-                prognosis, size, difficulty, true);
+        forecast = new MenuForecast(layer, new Vector2f((SCREEN_WIDTH / 2) - (size * BOX / 2) - BORDER, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU),
+                prognosis, size, difficulty);
     }
 
     private void addKeyHandlers() {

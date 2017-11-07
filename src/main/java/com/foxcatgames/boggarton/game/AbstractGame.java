@@ -1,7 +1,7 @@
 package com.foxcatgames.boggarton.game;
 
 import static com.foxcatgames.boggarton.Const.BOX;
-import static com.foxcatgames.boggarton.game.SimpleGlass.SCREEN_OFFSET_Y;
+import static com.foxcatgames.boggarton.game.glass.SimpleGlass.SCREEN_OFFSET_Y;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -13,30 +13,38 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.forecast.IForecast;
+import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
+import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
+import com.foxcatgames.boggarton.game.glass.GlassState;
+import com.foxcatgames.boggarton.game.glass.IGlassState;
+import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 
 /**
  * The Game is the Glass, Forecast and the all motion inside the Glass.
- *
- * @author Michael
  */
 abstract public class AbstractGame extends AbstractGameState {
 
-    final private Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
+    final protected Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
     final private OuterCommand command = new OuterCommand();
-    final private Text diffScore;
-    private int targetPosition = 0;
+    final protected Text diffScore;
+    protected int targetPosition = 0;
 
     protected boolean needNewFigure = true;
     protected int lastScore = 0;
 
     public AbstractGame(final Layer layer, final int x, final int y, final int width,
-            final int height, final int forecast, final int lenght, final int setSize) {
+            final int height, final int forecast, final int lenght, final int difficulty) {
         this.x = x;
         this.y = y;
-        this.forecast = new Forecast(layer, new Vector2f(x, y), forecast, lenght, setSize);
+        if (forecast > 1)
+            this.forecast = new SimpleForecast(layer, new Vector2f(x, y), forecast, lenght, difficulty);
         diffScore = new Text("", Const.DARK_FONT, layer);
     }
 
@@ -76,7 +84,7 @@ abstract public class AbstractGame extends AbstractGameState {
     }
 
     protected void charge() {
-        final Figure figure = (Figure) glass.getFigure();
+        final AbstractVisualFigure figure = (AbstractVisualFigure) glass.getFigure();
         final Vector2f figurePosition = figure.getPosition();
         final float currentTime = getTime();
         final float spentTime = (currentTime - previousTime) / 1000f;
@@ -85,9 +93,8 @@ abstract public class AbstractGame extends AbstractGameState {
         final Vector2f framePosition = ((SimpleGlass) glass).getFrame().getPosition();
 
         if (newX >= framePosition.getX() + targetPosition * BOX) {
-            figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX,
-                    figurePosition.getY()));
-            ((Forecast) forecast).setNext();
+            figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
+            ((AbstractVisualForecast) forecast).setNext();
             ((SimpleGlass) glass).respawn();
             fillBuffer();
             needNewFigure = true;

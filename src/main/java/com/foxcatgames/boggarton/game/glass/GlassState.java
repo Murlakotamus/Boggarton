@@ -1,4 +1,7 @@
-package com.foxcatgames.boggarton.game;
+package com.foxcatgames.boggarton.game.glass;
+
+import com.foxcatgames.boggarton.game.IBrick;
+import com.foxcatgames.boggarton.game.figure.IFigure;
 
 public class GlassState implements IGlassState {
 

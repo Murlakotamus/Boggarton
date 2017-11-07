@@ -20,10 +20,9 @@ import com.foxcatgames.boggarton.Logger;
 
 public class TextureLoader implements ITextureLoader {
 
-    private static Texture[] textures = new Texture[1024];
-    private static Texture[][] animations = new Texture[1024][1024];
-
-    private Map<String, BufferedImage> imageCache = new ConcurrentHashMap<>();
+    private static final Texture[] textures = new Texture[1024];
+    private static final Texture[][] animations = new Texture[1024][1024];
+    private static final Map<String, BufferedImage> imageCache = new ConcurrentHashMap<>();
 
     public void init() {
         // Common elements

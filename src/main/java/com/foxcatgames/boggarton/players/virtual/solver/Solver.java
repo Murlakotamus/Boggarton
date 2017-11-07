@@ -3,11 +3,11 @@ package com.foxcatgames.boggarton.players.virtual.solver;
 import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.IForecast;
-import com.foxcatgames.boggarton.game.IGlass;
-import com.foxcatgames.boggarton.game.IGlassState;
-import com.foxcatgames.boggarton.game.VirtualForecast;
-import com.foxcatgames.boggarton.game.VirtualGlass;
+import com.foxcatgames.boggarton.game.forecast.IForecast;
+import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
+import com.foxcatgames.boggarton.game.glass.IGlass;
+import com.foxcatgames.boggarton.game.glass.IGlassState;
+import com.foxcatgames.boggarton.game.glass.VirtualGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.AbstractScene;
 

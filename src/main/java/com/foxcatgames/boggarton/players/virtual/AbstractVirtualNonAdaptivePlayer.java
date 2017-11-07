@@ -1,7 +1,7 @@
 package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.SimpleGlass;
+import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
 abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPlayer {
@@ -45,7 +45,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
                 game.sendCommand(new ICommand() {
                     @Override
                     public void execute() {
-                        game.dropFigure();  // only for log
+                        game.dropFigure();  // for log only
                     }
                 });
                 game.checkCommand();
@@ -56,7 +56,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
 
             // non-adaptive algorithm
             case NEXT:
-                game.waitNextFigure(); // only for log
+                game.waitNextFigure(); // for log only
                 game.clearBuffer();
                 game.getBuffer();
                 game.restoreSpeed();

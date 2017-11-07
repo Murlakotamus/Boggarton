@@ -8,19 +8,17 @@ import com.foxcatgames.boggarton.engine.Layer;
 
 abstract public class AbstractScene {
 
-    final static public Timer TIMER = new Timer(); // game timer, a part of the
-                                                   // engine
-    private SceneItem scene; // current scene
-    protected SceneItem nextScene; // a next scene for a current scene
+    final static public Timer TIMER = new Timer();
+    private SceneItem scene;
+    protected SceneItem nextScene;
 
     protected static int difficulty = 5;
     public  static int prognosis = 3;
     public static int size = 3;
 
-    protected final Layer layer; // the layer for draw, still only one
-    private static float lastTime = TIMER.getTime(); // the last tick moment
+    protected final Layer layer;
+    private static float lastTime = TIMER.getTime();
 
-    // How much time spent since the last tick. It is used by sprite engine
     public static float tick;
     public static float fadeAlpha;
 

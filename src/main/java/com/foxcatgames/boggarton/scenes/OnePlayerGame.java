@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.SimpleGame;
-import com.foxcatgames.boggarton.game.SimpleGlass;
+import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.players.RealPlayer;
 
 public class OnePlayerGame extends AbstractOnePlayerGame {
@@ -22,11 +22,11 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
 
         game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
                 lenght, difficulty);
+        game.setName("Human");
+        game.initLogger();
+        game.startGame();
         new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,
                 Keyboard.KEY_UP);
-        game.setName("Human");
-        game.initLogger("Still no strategy information");
-        game.startGame();
     }
 
     @Override

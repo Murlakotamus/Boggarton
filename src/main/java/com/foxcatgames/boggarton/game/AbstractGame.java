@@ -63,7 +63,7 @@ abstract public class AbstractGame extends AbstractGameState {
             return null;
         }
 
-        int diff = getGlass().getGlassState().getScore() - lastScore;
+        final int diff = getGlass().getGlassState().getScore() - lastScore;
         if (diff > 0) {
             diffScore.setString("+" + diff);
             diffScore.spawn(new Vector2f(x + BOX * 8, y - BOX * 2));

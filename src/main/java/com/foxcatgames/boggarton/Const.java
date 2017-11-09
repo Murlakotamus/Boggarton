@@ -11,7 +11,7 @@ public class Const {
     static public final int MIN_DIFFICULTY = 4;
     static public final int MAX_DIFFICULTY = 7;
     static public final int MIN_SIZE = 3;
-    static public final int MAX_SIZE = 6;
+    static public final int MAX_SIZE = 5;
     static public final int MIN_PROGNOSIS = 1;
     static public final int MAX_PROGNOSIS = 3;
 

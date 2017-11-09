@@ -16,8 +16,8 @@ public class Replay extends AbstractOnePlayerGame {
     public Replay(final int width, final int height, final int forecast, final int lenght) {
         super(SceneItem.ONE_PLAYER_DEMO);
 
-        StringBuilder moves = new StringBuilder();
-        List<String> events = new ArrayList<>();
+        final StringBuilder moves = new StringBuilder();
+        final List<String> events = new ArrayList<>();
 
         final String filename = this.getClass().getResource("/games/game.txt").getFile();
         try (final BufferedReader in = new BufferedReader(new FileReader(new File(filename)))) {
@@ -33,7 +33,7 @@ public class Replay extends AbstractOnePlayerGame {
             e.printStackTrace();
         }
 
-        game = new ReplayGame(layer, X, Y, width, height, 1, lenght, events);
+        game = new ReplayGame(layer, X, Y, width, height, 0, 3, events);
         game.setName("Replay");
         game.startGame();
 

@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
@@ -22,7 +21,7 @@ public class ReplayGame extends AbstractGame {
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
             final List<String> events) {
-        super(layer, x, y, width, height, 0, lenght, Const.MIN_DIFFICULTY);
+        super(layer, x, y, width, height, forecast, lenght, 0);
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, lenght, events);
         this.events = events;
         glass = new ReplayGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height);

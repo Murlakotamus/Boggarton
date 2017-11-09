@@ -1,8 +1,8 @@
 package com.foxcatgames.boggarton.game.forecast;
 
 import com.foxcatgames.boggarton.entity.Frame;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.IFigure;
-import com.foxcatgames.boggarton.game.figure.SimpleFigure;
 
 abstract public class AbstractVisualForecast extends AbstractForecast {
 
@@ -22,6 +22,6 @@ abstract public class AbstractVisualForecast extends AbstractForecast {
     public void unspawn() {
         frame.unspawn();
         for (int i = 0; i < prognosis; i++)
-            ((SimpleFigure) figures[i]).unspawn();
+            ((AbstractVisualFigure) figures[i]).unspawn();
     }
 }

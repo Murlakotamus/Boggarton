@@ -9,8 +9,9 @@ abstract public class AbstractLogoScene extends AbstractScene {
 
     static public final int TICK = 1000 / 60;
 
-    static protected final int TITLE_X = Const.SCREEN_WIDTH / 2 - 280 / 2 + 15;
-    static protected final int TITLE_Y = 140;
+    //static protected final int TITLE_X = Const.SCREEN_WIDTH / 2 - 560 / 2 - 115;
+    static protected final int TITLE_X = Const.SCREEN_WIDTH / 2 - 560 / 2;
+    static protected final int TITLE_Y = 115;
 
     protected int y;
     protected SimpleEntity title;

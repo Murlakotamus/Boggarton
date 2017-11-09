@@ -29,7 +29,7 @@ public class TextureLoader implements ITextureLoader {
         textures[ABOUT] = loadTexture("/data/About.png", 0, 0, 151, 129);
         textures[GAME_OVER] = loadTexture("/data/GameOver.png", 0, 0, 180, 90);
         textures[LOSER] = loadTexture("/data/Loser.png", 0, 0, 180, 90);
-        textures[TITLE] = loadTexture("/data/Title.png", 0, 0, 280, 75);
+        textures[TITLE] = loadTexture("/data/Title.png", 0, 0, 560, 150);
         textures[WINNER] = loadTexture("/data/Winner.png", 0, 0, 180, 90);
         textures[GAME_PAUSED] = loadTexture("/data/GamePaused.png", 0, 0, 180, 90);
 

@@ -16,7 +16,7 @@ public class MenuScene extends AbstractLogoScene {
 
     static private final MenuItem[] ITEMS = MenuItem.values();
     static private final int ITEMS_NUMBER = MenuItem.values().length;
-    static private final int Y_POS_MENU = 190;
+    static private final int Y_POS_MENU = 195;
     static private final int Y_INTERVAL = FONT_HEIGHT + 1;
 
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
@@ -57,7 +57,7 @@ public class MenuScene extends AbstractLogoScene {
 
         int pointY = Y_POS_MENU;
         for (int i = 0; i < ITEMS_NUMBER; i++) {
-            int pointX = (SCREEN_WIDTH / 2) - ((ITEMS[i].getName().length() * FONT_WIDTH) / 2);
+            int pointX = 510;
             if (i == currentPosition) {
                 passive[i].unspawn();
                 active[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
@@ -86,8 +86,8 @@ public class MenuScene extends AbstractLogoScene {
         if (forecast != null)
             forecast.unspawn();
 
-        forecast = new MenuForecast(layer, new Vector2f((SCREEN_WIDTH / 2) - (size * BOX / 2) - BORDER, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU),
-                prognosis, size, difficulty);
+        forecast = new MenuForecast(layer, new Vector2f(470 - BOX * size + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 270), prognosis, size,
+                difficulty);
     }
 
     private void addKeyHandlers() {

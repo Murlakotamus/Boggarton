@@ -2,6 +2,7 @@ package com.foxcatgames.boggarton.scenes;
 
 import com.foxcatgames.boggarton.players.virtual.EffectiveVirtualNonAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
+import com.foxcatgames.boggarton.players.virtual.solver.Price;
 
 public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
@@ -11,8 +12,8 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
             final boolean yuckStrategy) {
         super(SceneItem.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2, yuckStrategy);
 
-        new EffectiveVirtualNonAdaptivePlayer(game[0]);
-        new VirtualAdaptivePlayer(game[1]);
+        new EffectiveVirtualNonAdaptivePlayer(game[0], new Price());
+        new VirtualAdaptivePlayer(game[1], new Price());
     }
 
     @Override

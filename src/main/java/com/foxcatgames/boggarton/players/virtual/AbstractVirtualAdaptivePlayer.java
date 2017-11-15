@@ -3,11 +3,12 @@ package com.foxcatgames.boggarton.players.virtual;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
+import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
 
 abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlayer {
 
-    public AbstractVirtualAdaptivePlayer(final AbstractGame game, final boolean moveDown) {
-        super(game, "virtual player, adaptive, effective: " + moveDown, moveDown);
+    public AbstractVirtualAdaptivePlayer(final AbstractGame game, final IPrice price, final boolean moveDown) {
+        super(game, "virtual player, adaptive, effective: " + moveDown, price, moveDown);
     }
 
     @Override

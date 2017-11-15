@@ -16,7 +16,7 @@ public class MenuScene extends AbstractLogoScene {
 
     static private final MenuItem[] ITEMS = MenuItem.values();
     static private final int ITEMS_NUMBER = MenuItem.values().length;
-    static private final int Y_POS_MENU = 195;
+    static private final int Y_POS_MENU = 200;
     static private final int Y_INTERVAL = FONT_HEIGHT + 1;
 
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
@@ -78,7 +78,6 @@ public class MenuScene extends AbstractLogoScene {
                     yuckPassive[item].spawn(new Vector2f(pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
                 }
             }
-
         }
     }
 

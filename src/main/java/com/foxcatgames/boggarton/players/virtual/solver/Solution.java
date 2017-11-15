@@ -2,20 +2,26 @@ package com.foxcatgames.boggarton.players.virtual.solver;
 
 public class Solution {
 
+    private String turns;
     private int score;
     private int fullness;
-    private String turns;
+    private int chainLenght;
+    private boolean gameOver;
 
-    public Solution(final String turns, final int score, final int fullness) {
+    public Solution(final String turns, final int score, final int fullness, final int chainLenght, final boolean gameOver) {
         this.turns = turns;
         this.score = score;
         this.fullness = fullness;
+        this.chainLenght = chainLenght;
+        this.gameOver = gameOver;
     }
 
     public Solution() {
         this.turns = "";
         this.score = -1;
         this.fullness = 0;
+        this.chainLenght = 0;
+        this.gameOver = false;
     }
 
     public char[] getMoves() {
@@ -30,12 +36,12 @@ public class Solution {
         return fullness;
     }
 
-    public int getPrice() {
-        return getPrice(fullness, score);
+    public int getChainLenght() {
+        return chainLenght;
     }
 
-    public static int getPrice(final int fullness, final int score) {
-        return fullness * fullness + score;
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     @Override

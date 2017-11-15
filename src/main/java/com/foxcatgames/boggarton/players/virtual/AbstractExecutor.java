@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
 
-abstract public class AbstractExecutor {
+abstract public class AbstractExecutor implements Runnable {
 
     protected static final char LEFT = 'L';
     protected static final char RIGHT = 'R';

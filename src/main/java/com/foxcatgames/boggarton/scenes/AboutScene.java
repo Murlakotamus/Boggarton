@@ -23,7 +23,7 @@ public class AboutScene extends AbstractLogoScene {
         about = new SimpleEntity(ABOUT, layer);
 
         title.spawn(new Vector2f(TITLE_X, TITLE_Y));
-        about.spawn(new Vector2f((SCREEN_WIDTH / 2) - (about.width / 2), 240));
+        about.spawn(new Vector2f((SCREEN_WIDTH / 2) - (about.width / 2), 300));
 
         final KeyListener escape = new KeyListener() {
             public void onKeyUp() {
@@ -38,6 +38,5 @@ public class AboutScene extends AbstractLogoScene {
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_RETURN, enter);
-
     }
 }

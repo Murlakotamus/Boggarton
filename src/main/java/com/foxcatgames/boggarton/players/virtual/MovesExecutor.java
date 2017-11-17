@@ -57,6 +57,12 @@ public class MovesExecutor extends AbstractExecutor implements Runnable {
                 break;
 
             case DOWN:
+                game.sendCommand(new ICommand() {
+                    @Override
+                    public void execute() {
+                        game.dropFigure();
+                    }
+                });
                 game.checkCommand();
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();

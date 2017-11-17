@@ -39,8 +39,8 @@ abstract public class AbstractGame extends AbstractGameState {
     protected boolean needNewFigure = true;
     protected int lastScore = 0;
 
-    public AbstractGame(final Layer layer, final int x, final int y, final int width,
-            final int height, final int forecast, final int lenght, final int difficulty) {
+    public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
+            final int difficulty) {
         this.x = x;
         this.y = y;
         if (forecast > 1)
@@ -53,6 +53,7 @@ abstract public class AbstractGame extends AbstractGameState {
     abstract public void processStage();
 
     public IFigure nextFigure() {
+        dropPressed = false;
         IFigure figure = null;
         if (needNewFigure) {
             figure = forecast.getForecast();
@@ -124,9 +125,10 @@ abstract public class AbstractGame extends AbstractGameState {
         final int newCell = newY / BOX;
         final int diffCell = newCell - oldCell;
 
-        if (diffCell == 0)
+        if (diffCell == 0) {
             glass.setY(newY);
-        else {
+            glass.getGlassState().setJ((int) ((newY + BOX) / BOX));
+        } else {
             for (int i = 1; i <= diffCell; i++) {
                 glass.setY((oldCell + i) * BOX);
                 if (!glass.moveDown()) {
@@ -165,8 +167,7 @@ abstract public class AbstractGame extends AbstractGameState {
         previousTime = currentTime;
     }
 
-    private void crashDownBrick(final Brick brick, final int i, final int j, final int currY,
-            final int newY) {
+    private void crashDownBrick(final Brick brick, final int i, final int j, final int currY, final int newY) {
         final int oldCell = currY / BOX;
         final int newCell = newY / BOX;
         final int diffCell = newCell - oldCell;
@@ -181,8 +182,7 @@ abstract public class AbstractGame extends AbstractGameState {
                 state.setBrick(i, j + k, brick);
                 state.setBrick(i, j + k - 1, null);
                 final int z = j + k + 1;
-                if ((z == state.getHeight()) || state.getBrick(i, z) != null
-                        && !((Brick) state.getBrick(i, z)).isCrashing())
+                if ((z == state.getHeight()) || state.getBrick(i, z) != null && !((Brick) state.getBrick(i, z)).isCrashing())
                     brick.setCrashing(false);
             }
         }

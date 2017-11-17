@@ -36,7 +36,10 @@ public class SimpleGame extends AbstractGame {
             break;
         case APPEAR:
             executeCommand();
-            stagePause(APPEAR_PAUSE);
+            if (!dropPressed)
+                stagePause(APPEAR_PAUSE);
+            else
+                nextStage();
             break;
         case FALL:
             executeCommand();

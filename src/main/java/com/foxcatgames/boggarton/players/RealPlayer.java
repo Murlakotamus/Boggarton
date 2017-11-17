@@ -47,6 +47,7 @@ public class RealPlayer {
             @Override
             public void onKeyDown() {
                 game.setMaxSpeed();
+                game.dropFigure();
             }
 
             @Override

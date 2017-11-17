@@ -46,7 +46,7 @@ abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlaye
                 game.sendCommand(new ICommand() {
                     @Override
                     public void execute() {
-                        game.dropFigure(); // for log only
+                        game.dropFigure();
                     }
                 });
                 game.checkCommand();

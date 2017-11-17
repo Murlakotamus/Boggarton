@@ -33,7 +33,7 @@ public class ReplayGame extends AbstractGame {
         case NEXT:
             if (needNewFigure) {
                 IFigure figure = nextFigure();
-                if (figure == null) {
+                if (figure == null || figure.getNumber() == 0) {
                     setGameOver();
                     break;
                 }
@@ -44,7 +44,10 @@ public class ReplayGame extends AbstractGame {
             break;
         case APPEAR:
             executeCommand();
-            stagePause(APPEAR_PAUSE);
+            if (!dropPressed)
+                stagePause(APPEAR_PAUSE);
+            else
+                nextStage();
             break;
         case FALL:
             executeCommand();

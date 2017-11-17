@@ -14,7 +14,7 @@ abstract public class AbstractGameState {
     protected IGlass glass;
     protected IForecast forecast;
 
-    protected static final float APPEAR_PAUSE = 0.3f;
+    protected static final float APPEAR_PAUSE = 1f;
     protected static final float DISAPPEAR_PAUSE = 1f;
     protected static final float SET_PAUSE = 0.1f;
     protected static final float YUCK_PAUSE = 0.5f;
@@ -32,6 +32,7 @@ abstract public class AbstractGameState {
     protected boolean glassProcessed;
     protected boolean reactionDetected = false;
     protected boolean killedBricks;
+    protected boolean dropPressed = false;
 
     protected String name = "default";
     protected StageItem stage = START;
@@ -75,6 +76,7 @@ abstract public class AbstractGameState {
     }
 
     public void dropFigure() {
+        dropPressed = true;
         logEvent("D");
     }
 

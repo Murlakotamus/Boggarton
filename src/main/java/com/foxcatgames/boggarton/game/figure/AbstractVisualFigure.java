@@ -34,6 +34,7 @@ abstract public class AbstractVisualFigure extends AbstractFigure {
     @Override
     public void rotate() {
         super.rotate();
+        respawn();
     }
 
     final public void respawn() {

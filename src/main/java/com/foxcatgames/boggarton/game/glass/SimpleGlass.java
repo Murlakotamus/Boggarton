@@ -6,6 +6,7 @@ import static com.foxcatgames.boggarton.Const.LIGHT_FONT;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Frame;
@@ -24,22 +25,28 @@ public class SimpleGlass extends AbstractGlass {
     private boolean gamePaused;
     private int count; // figures counter
 
-    /**
-     * Real glass constructor
-     */
     public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height) {
+        super(width, height);
+
+        state.setBricks(new Brick[width][height]);
         frame = new Frame(layer, position, width, height, true, false);
 
-        state.setWidth(width);
-        state.setHeight(height);
-        state.setBricks(new Brick[width][height]);
-        setChanges(false);
-        gameOver = false;
         showScore = new Text("Score: " + state.getScore(), LIGHT_FONT, layer);
         showScore.spawn(new Vector2f(position.getX(), position.getY() - 30));
 
         showCount = new Text("Figures: " + count, LIGHT_FONT, layer);
         showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
+    }
+
+    public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass) {
+        this(layer, position, width, height);
+
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
+                if (glass[i][j] > 0)
+                    state.setBrick(i, j, new Brick(glass[i][j] + Const.CURRENT_SET * 10, layer));
+
+        respawn();
     }
 
     private Brick brick(final int i, final int j) {
@@ -48,19 +55,6 @@ public class SimpleGlass extends AbstractGlass {
 
     private AbstractVisualFigure figure() {
         return (AbstractVisualFigure) state.getFigure();
-    }
-
-    public boolean canTakeNewFigure() {
-        if (getFigure() == null)
-            return true; // game's not started yet
-
-        // is there room for a next figure
-        for (int i = state.getNextPosition(); i < state.getNextPosition()
-                + getFigure().getLenght(); i++)
-            if (state.getBrick(i, 0) != null)
-                return false;
-
-        return true;
     }
 
     public void startAnimation() {
@@ -89,9 +83,9 @@ public class SimpleGlass extends AbstractGlass {
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++)
                 if (state.getBrick(i, j) != null)
-                    brick(i, j).spawn(new Vector2f(position.getX() + i * BOX + BORDER,
-                            position.getY() + j * BOX + BORDER));
-        figure().respawn();
+                    brick(i, j).spawn(new Vector2f(position.getX() + i * BOX + BORDER, position.getY() + j * BOX + BORDER));
+        if (figure() != null)
+            figure().respawn();
         showScore.setString("Score: " + state.getScore());
 
         showCount.setString("Figures: " + count);
@@ -198,8 +192,7 @@ public class SimpleGlass extends AbstractGlass {
         state.setI(i);
         state.setJ(j);
         final Vector2f position = frame.getPosition();
-        figure().setPosition(
-                new Vector2f(i * BOX + position.getX(), getY() + position.getY() + BORDER));
+        figure().setPosition(new Vector2f(i * BOX + position.getX(), getY() + position.getY() + BORDER));
         setChanges(setChanges);
     }
 
@@ -209,8 +202,7 @@ public class SimpleGlass extends AbstractGlass {
         state.setJ((int) (getY() / BOX));
         for (int i = 0; i < getFigure().getLenght(); i++)
             if (getFigure().getBrick(i) != null)
-                if (state.getJ() + 1 == state.getHeight()
-                        || state.getBrick(state.getI() + i, state.getJ() + 1) != null) {
+                if (state.getJ() + 1 == state.getHeight() || state.getBrick(state.getI() + i, state.getJ() + 1) != null) {
                     changes = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
@@ -261,7 +253,7 @@ public class SimpleGlass extends AbstractGlass {
     public void dropChanges() {
         setChanges(false);
     }
-    
+
     public Frame getFrame() {
         return frame;
     }

@@ -28,9 +28,13 @@ public class PredefinedForecast extends AbstractVisualForecast {
             if (event.startsWith(FIGURE))
                 predefinedFigures.add(event.substring(FIGURE.length()));
 
-        for (int i = 0; i < prognosis; i++)
-            figures[i] = new PredefinedFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), size,
-                    predefinedFigures.get(forecastCounter++));
+        for (int i = 0; i < prognosis; i++) {
+            if (i < predefinedFigures.size())
+                figures[i] = new PredefinedFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), size,
+                        predefinedFigures.get(forecastCounter++));
+            else
+                figures[i] = new PredefinedFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), 0, "");
+        }
     }
 
     @Override

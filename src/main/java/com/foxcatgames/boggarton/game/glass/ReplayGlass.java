@@ -15,6 +15,11 @@ public class ReplayGlass extends SimpleGlass {
         this.layer = layer;
     }
 
+    public ReplayGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] bricks) {
+        super(layer, position, width, height, bricks);
+        this.layer = layer;
+    }
+    
     public void executeYuck(String yuckBricks) {
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++) {

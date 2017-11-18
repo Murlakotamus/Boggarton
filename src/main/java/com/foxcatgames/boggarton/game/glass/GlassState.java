@@ -1,5 +1,6 @@
 package com.foxcatgames.boggarton.game.glass;
 
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 
@@ -22,8 +23,7 @@ public class GlassState implements IGlassState {
         if (i - 1 < 0 || i + 1 >= width || bricks[i - 1][j] == null || bricks[i + 1][j] == null)
             return;
 
-        if (bricks[i - 1][j].getType() == bricks[i][j].getType()
-                && bricks[i][j].getType() == bricks[i + 1][j].getType()) {
+        if (bricks[i - 1][j].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i + 1][j].getType()) {
             bricks[i - 1][j].setKill();
             bricks[i][j].setKill();
             bricks[i + 1][j].setKill();
@@ -35,8 +35,7 @@ public class GlassState implements IGlassState {
         if (j + 2 >= height || bricks[i][j + 2] == null || bricks[i][j + 1] == null)
             return;
 
-        if (bricks[i][j + 2].getType() == bricks[i][j].getType()
-                && bricks[i][j].getType() == bricks[i][j + 1].getType()) {
+        if (bricks[i][j + 2].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i][j + 1].getType()) {
             bricks[i][j + 2].setKill();
             bricks[i][j].setKill();
             bricks[i][j + 1].setKill();
@@ -45,12 +44,10 @@ public class GlassState implements IGlassState {
     }
 
     public void findMainDiags(final int i, final int j) {
-        if (j - 1 < 0 || i - 1 < 0 || j + 1 >= height || i + 1 >= width
-                || bricks[i - 1][j - 1] == null || bricks[i + 1][j + 1] == null)
+        if (j - 1 < 0 || i - 1 < 0 || j + 1 >= height || i + 1 >= width || bricks[i - 1][j - 1] == null || bricks[i + 1][j + 1] == null)
             return;
 
-        if (bricks[i - 1][j - 1].getType() == bricks[i][j].getType()
-                && bricks[i][j].getType() == bricks[i + 1][j + 1].getType()) {
+        if (bricks[i - 1][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i + 1][j + 1].getType()) {
             bricks[i + 1][j + 1].setKill();
             bricks[i][j].setKill();
             bricks[i - 1][j - 1].setKill();
@@ -59,12 +56,10 @@ public class GlassState implements IGlassState {
     }
 
     public void findAntiDiags(final int i, final int j) {
-        if (j - 1 < 0 || i + 1 >= width || j + 1 >= height || i - 1 < 0
-                || bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
+        if (j - 1 < 0 || i + 1 >= width || j + 1 >= height || i - 1 < 0 || bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
             return;
 
-        if (bricks[i + 1][j - 1].getType() == bricks[i][j].getType()
-                && bricks[i][j].getType() == bricks[i - 1][j + 1].getType()) {
+        if (bricks[i + 1][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i - 1][j + 1].getType()) {
             bricks[i + 1][j - 1].setKill();
             bricks[i][j].setKill();
             bricks[i - 1][j + 1].setKill();
@@ -73,6 +68,7 @@ public class GlassState implements IGlassState {
     }
 
     public boolean canTakeNewFigure(int targetPosition) {
+        Logger.log(this);
         if (figure == null)
             return true; // game's not started yet
 

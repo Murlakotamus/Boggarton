@@ -6,14 +6,12 @@ public class Solution {
     private int score;
     private int fullness;
     private int chainLenght;
-    private boolean gameOver;
 
-    public Solution(final String turns, final int score, final int fullness, final int chainLenght, final boolean gameOver) {
+    public Solution(final String turns, final int score, final int fullness, final int chainLenght) {
         this.turns = turns;
         this.score = score;
         this.fullness = fullness;
         this.chainLenght = chainLenght;
-        this.gameOver = gameOver;
     }
 
     public Solution() {
@@ -21,7 +19,6 @@ public class Solution {
         this.score = -1;
         this.fullness = 0;
         this.chainLenght = 0;
-        this.gameOver = false;
     }
 
     public char[] getMoves() {
@@ -38,10 +35,6 @@ public class Solution {
 
     public int getChainLenght() {
         return chainLenght;
-    }
-
-    public boolean isGameOver() {
-        return gameOver;
     }
 
     @Override

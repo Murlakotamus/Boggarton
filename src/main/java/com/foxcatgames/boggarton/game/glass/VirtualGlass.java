@@ -9,7 +9,11 @@ public class VirtualGlass extends AbstractGlass {
     private boolean moveDown;
 
     public VirtualGlass(final IGlassState glass, final boolean moveDown) {
-        init(glass.getWidth(), glass.getHeight());
+        super(glass.getWidth(), glass.getHeight());
+        this.moveDown = moveDown;
+
+        state.setBricks(new VirtualBrick[glass.getWidth()][glass.getHeight()]);
+
         for (int i = 0; i < glass.getWidth(); i++)
             for (int j = 0; j < glass.getHeight(); j++)
                 if (glass.getBrick(i, j) != null)
@@ -20,16 +24,6 @@ public class VirtualGlass extends AbstractGlass {
         state.setScore(glass.getScore());
         state.setI(glass.getI());
         state.setJ(glass.getJ());
-
-        this.moveDown = moveDown;
-    }
-
-    private void init(final int width, final int height) {
-        state.setWidth(width);
-        state.setHeight(height);
-        state.setBricks(new VirtualBrick[width][height]);
-        changes.setFlag(false);
-        gameOver = false;
     }
 
     @Override
@@ -69,13 +63,12 @@ public class VirtualGlass extends AbstractGlass {
         state.getFigure().rotate();
     }
 
-
     @Override
     public boolean moveDown() {
         if (moveDown)
             return moveDownTrue();
-        
-        return moveDownEffective(); 
+
+        return moveDownEffective();
     }
 
     @Override
@@ -116,13 +109,12 @@ public class VirtualGlass extends AbstractGlass {
     public void dropChanges() {
         changes.setFlag(false);
     }
-    
+
     private boolean moveDownTrue() {
         boolean changes = false;
         for (int i = 0; i < state.getFigure().getLenght(); i++)
             if (state.getFigure().getBrick(i) != null)
-                if (state.getJ() + 1 == state.getHeight()
-                        || state.getBrick(state.getI() + i, state.getJ() + 1) != null) {
+                if (state.getJ() + 1 == state.getHeight() || state.getBrick(state.getI() + i, state.getJ() + 1) != null) {
                     changes = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
@@ -131,19 +123,18 @@ public class VirtualGlass extends AbstractGlass {
 
         setFigure(state.getI(), state.getJ() + 1, changes);
         return true;
-    } 
-    
-    private boolean moveDownEffective () {
+    }
+
+    private boolean moveDownEffective() {
         for (int i = 0; i < state.getFigure().getLenght(); i++)
             if (state.getFigure().getBrick(i) != null)
-                if (state.getJ() + 1 == state.getHeight()
-                        || state.getBrick(state.getI() + i, state.getJ() + 1) != null)
+                if (state.getJ() + 1 == state.getHeight() || state.getBrick(state.getI() + i, state.getJ() + 1) != null)
                     setChanges(i, state.getI() + i, state.getJ());
 
         if (state.getFigure().isFallen())
             return false;
 
         setFigure(state.getI(), state.getJ() + 1, false);
-        return true;   
+        return true;
     }
 }

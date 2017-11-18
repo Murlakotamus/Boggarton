@@ -19,7 +19,7 @@ abstract public class AbstractGameState {
     protected static final float SET_PAUSE = 0.1f;
     protected static final float YUCK_PAUSE = 0.5f;
 
-    protected static final int DROPPING_SPEED = 500000;
+    protected static final int DROPPING_SPEED = 100000;
     protected static final int CRASH_SPEED = 150000;
     protected static final int MOVING_SPEED = 3000;
     protected static final int CHARGE_SPEED = 300000;
@@ -76,7 +76,7 @@ abstract public class AbstractGameState {
     }
 
     public void dropFigure() {
-        dropPressed = true;
+        //dropPressed = true;
         logEvent("D");
     }
 

@@ -5,6 +5,7 @@ import static com.foxcatgames.boggarton.Const.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.entity.Brick;
@@ -45,7 +46,7 @@ public class MenuScene extends AbstractLogoScene {
         }
 
         for (i = 0; i < MAX_DIFFICULTY; i++)
-            brickSet[i] = new Brick(11 + i, layer);
+            brickSet[i] = new Brick(10 * Const.CURRENT_SET + 1 + i, layer);
 
         drawMenu();
         drawPrognosis();

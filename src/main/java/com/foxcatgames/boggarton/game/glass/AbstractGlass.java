@@ -12,8 +12,13 @@ abstract public class AbstractGlass implements IGlass {
     volatile protected boolean gameOver = false;
 
     final protected HashSet<Coords> newBricks = new HashSet<>();
-    final protected Changes changes = new Changes(true);
+    final protected Changes changes = new Changes(false);
     final protected GlassState state = new GlassState();
+
+    public AbstractGlass(final int width, final int height) {
+        state.setWidth(width);
+        state.setHeight(height);
+    }
 
     public void addBrick(final int i, final int j) {
         if (checkCoords(i, j))
@@ -42,10 +47,8 @@ abstract public class AbstractGlass implements IGlass {
     }
 
     private boolean checkCoords(final int i, final int j) {
-        return !(i < 0 || i >= state.getWidth() || j < 0 || j >= state.getHeight()
-                || (i <= 0 && j <= 0) || (i >= state.getWidth() - 1 && j <= 0)
-                || (i <= 0 && j >= state.getHeight() - 1) || (i >= state.getWidth() - 1 && j >= state
-                .getHeight() - 1));
+        return !(i < 0 || i >= state.getWidth() || j < 0 || j >= state.getHeight() || (i <= 0 && j <= 0) || (i >= state.getWidth() - 1 && j <= 0)
+                || (i <= 0 && j >= state.getHeight() - 1) || (i >= state.getWidth() - 1 && j >= state.getHeight() - 1));
     }
 
     @Override
@@ -139,22 +142,22 @@ abstract public class AbstractGlass implements IGlass {
     }
 
     @Override
-    public boolean canMoveLeft(){
+    public boolean canMoveLeft() {
         return state.canMoveLeft();
     }
 
     @Override
-    public boolean canMoveRight(){
+    public boolean canMoveRight() {
         return state.canMoveRight();
     }
 
     @Override
-    public int getSpaceLeft(){
+    public int getSpaceLeft() {
         return state.getSpaceLeft();
     }
 
     @Override
-    public int getSpaceRight(){
+    public int getSpaceRight() {
         return state.getSpaceRight();
     }
 }

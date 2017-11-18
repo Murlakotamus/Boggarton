@@ -172,9 +172,9 @@ public class Solver {
                     if (depth == maxDepth) {
                         if (!virtualGlass.isGameOver()) {
                             final int scoreDifference = virtualGlass.getGlassState().getScore() - score;
-                            if (price.getPrice(new Solution(null, scoreDifference, virtualGlass.getFullness(), 0, virtualGlass.isGameOver())) > price
+                            if (price.getPrice(new Solution(null, scoreDifference, virtualGlass.getFullness(), 0)) > price
                                     .getPrice(solution))
-                                solution = new Solution(currResult.toString(), scoreDifference, virtualGlass.getFullness(), 0, virtualGlass.isGameOver());
+                                solution = new Solution(currResult.toString(), scoreDifference, virtualGlass.getFullness(), 0);
                         }
                     }
                 }

@@ -3,6 +3,10 @@ package com.foxcatgames.boggarton.game;
 import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.Const.YUCK;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
@@ -24,7 +28,27 @@ public class ReplayGame extends AbstractGame {
         super(layer, x, y, width, height, forecast, lenght, 0);
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, lenght, events);
         this.events = events;
-        glass = new ReplayGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height);
+
+        final int[][] bricks = new int[width][height];
+        final String filename = this.getClass().getResource("/games/glass.txt").getFile();
+        try (final BufferedReader in = new BufferedReader(new FileReader(new File(filename)))) {
+            int j = 0;
+            String line;
+            while ((line = in.readLine()) != null) {
+                for (int i = 0; i < width; i++) {
+                    char c = line.charAt(i);
+                    if (c >= 'A' && c <= 'J')
+                        bricks[i][j] = (int) (c - 64);
+                    else
+                        bricks[i][j] = 0;
+                }
+                j++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        glass = new ReplayGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, bricks);
     }
 
     @Override

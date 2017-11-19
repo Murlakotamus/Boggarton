@@ -83,7 +83,6 @@ public class Graphics {
      */
     private static void initGL() {
         GL11.glEnable(GL_TEXTURE_2D); // Enable Texture Mapping
-
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
         GL11.glClearDepth(1.0f); // Depth Buffer Setup
         GL11.glDisable(GL_DEPTH_TEST); // Enables Depth Testing
@@ -91,11 +90,7 @@ public class Graphics {
         GL11.glDepthMask(false);
         GL11.glMatrixMode(GL_PROJECTION); // Select The Projection Matrix
         GL11.glLoadIdentity(); // Reset The Projection Matrix
-
-        gluPerspective(60, (float) SCREEN_WIDTH / SCREEN_HEIGHT, 0.01f, 100.0f);
-
         GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2, -(int) SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
-
         GL11.glMatrixMode(GL_MODELVIEW);
         TEXTURE_LOADER.init();
     }

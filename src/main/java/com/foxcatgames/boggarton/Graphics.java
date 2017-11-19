@@ -42,15 +42,13 @@ public class Graphics {
         int glType = GL_RGB;
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        GL11.glTexImage2D(GL_TEXTURE_2D, 0, glType, 1024, 1024, 0, glType, GL_UNSIGNED_BYTE,
-                scratch);
+        GL11.glTexImage2D(GL_TEXTURE_2D, 0, glType, 1024, 1024, 0, glType, GL_UNSIGNED_BYTE, scratch);
     }
 
     /**
      * create OpenGL window
      */
-    private static void createWindow(int screenWidth, int screenHeight, boolean fullscreen)
-            throws Exception {
+    private static void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
 
         if (!fullscreen) { // create windowed mode
             Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
@@ -58,11 +56,9 @@ public class Graphics {
         } else {
             Display.setFullscreen(true);
             try {
-                DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(320, 240, -1,
-                        -1, -1, -1, 60, 85);
-                org.lwjgl.util.Display.setDisplayMode(dm, new String[] { "width=" + screenWidth,
-                        "height=" + screenHeight, "freq=85",
-                        "bpp=" + Display.getDisplayMode().getBitsPerPixel() });
+                DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(1024, 768, -1, -1, -1, -1, 60, 100);
+                org.lwjgl.util.Display.setDisplayMode(dm,
+                        new String[] { "width=" + screenWidth, "height=" + screenHeight, "freq=85", "bpp=" + Display.getDisplayMode().getBitsPerPixel() });
             } catch (Exception e) {
                 Sys.alert("Error", "Could not start full screen, switching to windowed mode");
                 Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
@@ -96,8 +92,9 @@ public class Graphics {
         GL11.glMatrixMode(GL_PROJECTION); // Select The Projection Matrix
         GL11.glLoadIdentity(); // Reset The Projection Matrix
 
-        GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2, -(int) SCREEN_HEIGHT / 2,
-                (int) SCREEN_HEIGHT / 2);
+        gluPerspective(60, (float) SCREEN_WIDTH / SCREEN_HEIGHT, 0.01f, 100.0f);
+
+        GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2, -(int) SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
 
         GL11.glMatrixMode(GL_MODELVIEW);
         TEXTURE_LOADER.init();

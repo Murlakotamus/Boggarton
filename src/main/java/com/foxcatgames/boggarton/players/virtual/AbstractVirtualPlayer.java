@@ -20,7 +20,7 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor {
         solver = new Solver(game, moveDown);
         final Thread thread = new Thread(this);
         thread.setPriority(Thread.MIN_PRIORITY);
-        thread.setName(game.getName() + ", " + name + ", " + thread.getId());
+        thread.setName(game.getName() + ", " + thread.getId());
         thread.start();
     }
 

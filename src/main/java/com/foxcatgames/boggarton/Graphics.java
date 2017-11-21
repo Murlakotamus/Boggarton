@@ -19,6 +19,7 @@ import org.lwjgl.util.glu.GLU;
 public class Graphics {
 
     private static final boolean FULL_SCREEN = false;
+    private static DisplayMode actualDisplayMode = null;
 
     public static void init() {
         initEngine();
@@ -56,9 +57,10 @@ public class Graphics {
         } else {
             Display.setFullscreen(true);
             try {
-                DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(1024, 768, -1, -1, -1, -1, 60, 100);
+                DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(screenWidth, screenHeight, -1, -1, -1, -1, 60, 100);
                 org.lwjgl.util.Display.setDisplayMode(dm,
                         new String[] { "width=" + screenWidth, "height=" + screenHeight, "freq=85", "bpp=" + Display.getDisplayMode().getBitsPerPixel() });
+                actualDisplayMode = Display.getDesktopDisplayMode();
             } catch (Exception e) {
                 Sys.alert("Error", "Could not start full screen, switching to windowed mode");
                 Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
@@ -90,7 +92,20 @@ public class Graphics {
         GL11.glDepthMask(false);
         GL11.glMatrixMode(GL_PROJECTION); // Select The Projection Matrix
         GL11.glLoadIdentity(); // Reset The Projection Matrix
-        GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2, -(int) SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
+        if (FULL_SCREEN) {
+            int actualWidth = actualDisplayMode.getWidth();
+            int actualHeight = actualDisplayMode.getHeight();
+
+            final double initialRatio = (double) SCREEN_WIDTH / SCREEN_HEIGHT;
+            final double actualRatio = (double) actualWidth / actualHeight;
+            final double ratioAmendment = actualRatio / initialRatio;
+
+            actualWidth = (int) Math.round(SCREEN_WIDTH * ratioAmendment);
+            actualHeight = SCREEN_HEIGHT;
+
+            GLU.gluOrtho2D(-(int) actualWidth / 2, (int) actualWidth / 2, -(int) actualHeight / 2, (int) actualHeight / 2);
+        } else
+            GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2, -(int) SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
         GL11.glMatrixMode(GL_MODELVIEW);
         TEXTURE_LOADER.init();
     }

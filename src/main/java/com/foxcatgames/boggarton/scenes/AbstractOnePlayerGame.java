@@ -11,7 +11,7 @@ import com.foxcatgames.boggarton.game.AbstractGame;
 
 abstract public class AbstractOnePlayerGame extends AbstractGameScene {
 
-    protected static final int X = 350;
+    protected static final int X = 355;
     protected SimpleEntity gameOver;
     protected AbstractGame game;
 

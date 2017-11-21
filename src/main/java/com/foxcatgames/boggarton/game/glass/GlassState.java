@@ -68,7 +68,6 @@ public class GlassState implements IGlassState {
     }
 
     public boolean canTakeNewFigure(int targetPosition) {
-        Logger.log(this);
         if (figure == null)
             return true; // game's not started yet
 

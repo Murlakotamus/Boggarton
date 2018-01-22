@@ -9,12 +9,13 @@ import java.util.List;
 
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.game.ReplayGame;
-import com.foxcatgames.boggarton.players.virtual.MovesExecutor;
+import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
+import com.foxcatgames.boggarton.players.virtual.solver.Price;
 
 public class Replay extends AbstractOnePlayerGame {
 
     public Replay(final int width, final int height, final int forecast, final int lenght) {
-        super(SceneItem.ONE_PLAYER_DEMO);
+        super(SceneItem.REPLAY_GAME);
 
         final StringBuilder moves = new StringBuilder();
         final List<String> events = new ArrayList<>();
@@ -25,7 +26,7 @@ public class Replay extends AbstractOnePlayerGame {
             while ((line = in.readLine()) != null)
                 if (line.startsWith(Const.FIGURE) || line.startsWith(Const.YUCK))
                     events.add(line);
-                else if ("Game over!".equals(line))
+                else if (Const.GAMEOVER.equals(line))
                     break;
                 else
                     moves.append(line);
@@ -37,7 +38,8 @@ public class Replay extends AbstractOnePlayerGame {
         game.setName("Replay");
         game.startGame();
 
-        new MovesExecutor(game, moves.toString().toCharArray());
+        //new MovesExecutor(game, moves.toString().toCharArray());
+        new VirtualAdaptivePlayer(game, new Price());
     }
 
     @Override

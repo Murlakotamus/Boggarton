@@ -23,7 +23,6 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
         game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
                 lenght, difficulty);
         game.setName("Human");
-        game.initLogger();
         game.startGame();
         new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,
                 Keyboard.KEY_UP);

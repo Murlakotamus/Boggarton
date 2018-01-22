@@ -39,9 +39,8 @@ public class PredefinedForecast extends AbstractVisualForecast {
 
     @Override
     public void setNext() {
+        final int newMax = predefinedFigures.size() - 1 - figuresCounter;
         int max = prognosis - 1;
-        int newMax = predefinedFigures.size() - 1 - figuresCounter;
-
         if (max > newMax)
             max = newMax;
         for (int i = 0; i < max; i++) {
@@ -54,5 +53,9 @@ public class PredefinedForecast extends AbstractVisualForecast {
             figures[prognosis - 1] = new PredefinedFigure(frame.getLayer(),
                     new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER), size,
                     predefinedFigures.get(forecastCounter++));
+        else
+            figures[prognosis - 1] = new PredefinedFigure(frame.getLayer(),
+                    new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER), 0, "");
+
     }
 }

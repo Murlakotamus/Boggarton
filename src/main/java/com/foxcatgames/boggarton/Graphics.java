@@ -34,13 +34,13 @@ public class Graphics {
      * Off-screen buffer
      */
     private static void createOffScreenBuffer() {
-        int bytesPerPixel = 3;
-        ByteBuffer scratch = ByteBuffer.allocateDirect(1024 * 1024 * bytesPerPixel);
-        IntBuffer buf = ByteBuffer.allocateDirect(12).order(ByteOrder.nativeOrder()).asIntBuffer();
+        final int bytesPerPixel = 3;
+        final ByteBuffer scratch = ByteBuffer.allocateDirect(1024 * 1024 * bytesPerPixel);
+        final IntBuffer buf = ByteBuffer.allocateDirect(12).order(ByteOrder.nativeOrder()).asIntBuffer();
         GL11.glGenTextures(buf); // Create Texture In OpenGL
         GL11.glBindTexture(GL_TEXTURE_2D, buf.get(0));
 
-        int glType = GL_RGB;
+        final int glType = GL_RGB;
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         GL11.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         GL11.glTexImage2D(GL_TEXTURE_2D, 0, glType, 1024, 1024, 0, glType, GL_UNSIGNED_BYTE, scratch);
@@ -57,7 +57,7 @@ public class Graphics {
         } else {
             Display.setFullscreen(true);
             try {
-                DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(screenWidth, screenHeight, -1, -1, -1, -1, 60, 100);
+                final DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(screenWidth, screenHeight, -1, -1, -1, -1, 60, 100);
                 org.lwjgl.util.Display.setDisplayMode(dm,
                         new String[] { "width=" + screenWidth, "height=" + screenHeight, "freq=85", "bpp=" + Display.getDisplayMode().getBitsPerPixel() });
                 actualDisplayMode = Display.getDesktopDisplayMode();
@@ -109,5 +109,4 @@ public class Graphics {
         GL11.glMatrixMode(GL_MODELVIEW);
         TEXTURE_LOADER.init();
     }
-
 }

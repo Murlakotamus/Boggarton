@@ -34,6 +34,36 @@ import com.foxcatgames.boggarton.scenes.AbstractScene;
  */
 abstract public class AbstractGame {
 
+    protected int x, y;
+    protected IGlass glass;
+    protected IForecast forecast;
+
+    protected static final float APPEAR_PAUSE = 1f;
+    protected static final float DISAPPEAR_PAUSE = 1f;
+    protected static final float SET_PAUSE = 0.1f;
+    protected static final float YUCK_PAUSE = 0.5f;
+
+    protected static final int DROPPING_SPEED = 500000;
+    protected static final int CRASH_SPEED = 150000;
+    protected static final int MOVING_SPEED = 3000;
+    protected static final int CHARGE_SPEED = 300000;
+    volatile protected int currentSpeed = MOVING_SPEED;
+
+    protected float startTime = getTime();
+    protected float previousTime = startTime;
+
+    protected int yucksForEnemies;
+    protected boolean glassProcessed;
+    protected boolean reactionDetected = false;
+    protected boolean killedBricks;
+    protected boolean dropPressed = false;
+
+    protected String name = "default";
+    protected StageItem stage = START;
+    private boolean isLoggerInit = false;
+
+    private GameLogger gameLogger = null;
+
     final protected Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
     final private OuterCommand command = new OuterCommand();
     final protected Text diffScore;
@@ -46,7 +76,7 @@ abstract public class AbstractGame {
             final int difficulty) {
         this.x = x;
         this.y = y;
-        if (forecast > 1)
+        if (forecast >= 1)
             this.forecast = new SimpleForecast(layer, new Vector2f(x, y), forecast, lenght, difficulty);
         diffScore = new Text("", Const.DARK_FONT, layer);
     }
@@ -301,36 +331,6 @@ abstract public class AbstractGame {
     public void startGame() {
         nextStage();
     }
-
-    protected int x, y;
-    protected IGlass glass;
-    protected IForecast forecast;
-
-    protected static final float APPEAR_PAUSE = 1f;
-    protected static final float DISAPPEAR_PAUSE = 1f;
-    protected static final float SET_PAUSE = 0.1f;
-    protected static final float YUCK_PAUSE = 0.5f;
-
-    protected static final int DROPPING_SPEED = 500000;
-    protected static final int CRASH_SPEED = 150000;
-    protected static final int MOVING_SPEED = 3000;
-    protected static final int CHARGE_SPEED = 300000;
-    volatile protected int currentSpeed = MOVING_SPEED;
-
-    protected float startTime = getTime();
-    protected float previousTime = startTime;
-
-    protected int yucksForEnemies;
-    protected boolean glassProcessed;
-    protected boolean reactionDetected = false;
-    protected boolean killedBricks;
-    protected boolean dropPressed = false;
-
-    protected String name = "default";
-    protected StageItem stage = START;
-    private boolean isLoggerInit = false;
-
-    private GameLogger gameLogger = null;
 
     float getTime() {
         return AbstractScene.TIMER.getTime();

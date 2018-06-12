@@ -258,6 +258,7 @@ abstract public class AbstractGame {
         synchronized (buffer) {
             ((SimpleGlass) glass).setGameOver();
             buffer.notify();
+            executeCommand();
         }
     }
 

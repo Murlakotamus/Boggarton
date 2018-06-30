@@ -17,7 +17,7 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
     private final SimpleEntity gamePaused;
 
     public OnePlayerGame(final int width, final int height, final int forecast, final int lenght) {
-        super(SceneItem.ONE_PLAYER_GAME);
+        super(SceneItem.PRACTICE);
         gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
         game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast),

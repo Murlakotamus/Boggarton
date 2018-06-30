@@ -23,8 +23,6 @@ public class MenuScene extends AbstractLogoScene {
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
     private final Text[] passive = new Text[ITEMS_NUMBER];
     private final Text[] active = new Text[ITEMS_NUMBER];
-    private final Text[] yuckActive = new Text[MenuItem.YUCKS.getValues().length];
-    private final Text[] yuckPassive = new Text[MenuItem.YUCKS.getValues().length];
     private final Brick[] brickSet = new Brick[MAX_DIFFICULTY];
 
     private MenuForecast forecast = null;
@@ -39,12 +37,6 @@ public class MenuScene extends AbstractLogoScene {
             active[i++] = new Text(item.getName(), LIGHT_FONT, layer);
         }
 
-        i = 0;
-        for (String item : MenuItem.YUCKS.getValues()) {
-            yuckPassive[i] = new Text(item, DARK_FONT, layer);
-            yuckActive[i++] = new Text(item, LIGHT_FONT, layer);
-        }
-
         for (i = 0; i < MAX_DIFFICULTY; i++)
             brickSet[i] = new Brick(10 * Const.CURRENT_SET + 1 + i, layer);
 
@@ -55,29 +47,25 @@ public class MenuScene extends AbstractLogoScene {
 
     private void drawMenu() {
         title.spawn(new Vector2f(TITLE_X, TITLE_Y));
-
+        int pointX = 510;
         int pointY = Y_POS_MENU;
         for (int i = 0; i < ITEMS_NUMBER; i++) {
-            int pointX = 510;
+            MenuItem item = MenuItem.values()[i];
             if (i == currentPosition) {
                 passive[i].unspawn();
-                active[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
-                if (i == MenuItem.YUCKS.ordinal()) {
-                    int item = SceneItem.getYuckStrategy() ? 1 : 0;
-                    yuckActive[1 - item].unspawn();
-                    yuckPassive[item].unspawn();
-                    yuckActive[item].spawn(new Vector2f(pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
+                if (item.getValues() != null) {
+                    active[i].unspawn();
+                    active[i] = new Text(item.getName() + ": " + item.getValues()[item.getPosition()], LIGHT_FONT, layer);
                 }
+                active[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
+
             } else {
                 active[i].unspawn();
-                passive[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
-                if (i == MenuItem.YUCKS.ordinal()) {
-                    int item = SceneItem.getYuckStrategy() ? 1 : 0;
-                    yuckPassive[1 - item].unspawn();
-
-                    yuckActive[item].unspawn();
-                    yuckPassive[item].spawn(new Vector2f(pointX + (((ITEMS[i].getName().length() - 4) * FONT_WIDTH)), pointY));
+                if (item.getValues() != null) {
+                    passive[i].unspawn();
+                    passive[i] = new Text(item.getName() + ": " + item.getValues()[item.getPosition()], DARK_FONT, layer);
                 }
+                passive[i].spawn(new Vector2f(pointX, pointY += Y_INTERVAL));
             }
         }
     }
@@ -86,7 +74,7 @@ public class MenuScene extends AbstractLogoScene {
         if (forecast != null)
             forecast.unspawn();
 
-        forecast = new MenuForecast(layer, new Vector2f(470 - BOX * size + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 270), prognosis, size,
+        forecast = new MenuForecast(layer, new Vector2f(470 - BOX * size + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 170), prognosis, size,
                 difficulty);
     }
 
@@ -125,9 +113,18 @@ public class MenuScene extends AbstractLogoScene {
         final KeyListener enter = new KeyListener() {
             @Override
             public void onKeyUp() {
-                final SceneItem scene = ITEMS[currentPosition].getScene();
+                final MenuItem scene = ITEMS[currentPosition];
                 switch (scene) {
+                case START:
+                    nextScene = SceneItem.getStartScene();
+                    break;
+                case MODE:
+                    scene.nextPosition();
+                    SceneItem.nextStartScene();
+                    drawMenu();
+                    break;
                 case YUCKS:
+                    scene.nextPosition();
                     SceneItem.changeYucksStrategy();
                     drawMenu();
                     break;
@@ -135,7 +132,7 @@ public class MenuScene extends AbstractLogoScene {
                     difficulty = changeParam(difficulty, MIN_DIFFICULTY, MAX_DIFFICULTY);
                     drawPrognosis();
                     break;
-                case SIZE:
+                case FIGURE_SIZE:
                     size = changeParam(size, MIN_SIZE, MAX_SIZE);
                     drawPrognosis();
                     break;
@@ -144,7 +141,7 @@ public class MenuScene extends AbstractLogoScene {
                     drawPrognosis();
                     break;
                 default:
-                    nextScene = scene;
+                    nextScene = SceneItem.ABOUT;
                 }
             }
         };

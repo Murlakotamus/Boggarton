@@ -3,7 +3,6 @@ package com.foxcatgames.boggarton.players.virtual.solver;
 import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.IGlass;
@@ -94,13 +93,14 @@ public class Solver {
             final Pair<IGlassState, IForecast> pair = game.getBuffer();
             initGlass = new VirtualGlass(pair.getFirst(), moveDown);
             forecast = new VirtualForecast(pair.getSecond());
-            int realDepth = 0;
-            for (realDepth = 0; realDepth < forecast.getDepth(); realDepth++) {
-                IFigure figure = forecast.getForecast(realDepth);
-                if (figure.getNumber() == 0)
-                    break;
-            }
-            maxDepth = Math.min(Math.min(realDepth, dept), 2);
+            maxDepth = Math.min(forecast.getDepth(), dept);
+//            int realDepth = 0;
+//            for (realDepth = 0; realDepth < forecast.getDepth(); realDepth++) {
+//                IFigure figure = forecast.getForecast(realDepth);
+//                if (figure.getNumber() == 0)
+//                    break;
+//            }
+//            maxDepth = Math.min(Math.min(realDepth, dept), 2);
             score = initGlass.getGlassState().getScore();
             findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE), price);
             game.clearBuffer();

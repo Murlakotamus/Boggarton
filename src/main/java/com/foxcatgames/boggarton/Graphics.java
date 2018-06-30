@@ -53,7 +53,7 @@ public class Graphics {
 
         if (!fullscreen) { // create windowed mode
             Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
-            Display.setLocation(300, 0);
+            Display.setLocation(300, 300);
         } else {
             Display.setFullscreen(true);
             try {

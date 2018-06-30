@@ -16,7 +16,6 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.GL11;
 
-import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.Logger;
 
 public class TextureLoader implements ITextureLoader {

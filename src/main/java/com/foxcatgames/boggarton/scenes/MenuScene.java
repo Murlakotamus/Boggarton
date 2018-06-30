@@ -2,6 +2,15 @@ package com.foxcatgames.boggarton.scenes;
 
 import static com.foxcatgames.boggarton.Const.*;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Properties;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 
@@ -14,6 +23,13 @@ import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.forecast.MenuForecast;
 
 public class MenuScene extends AbstractLogoScene {
+
+    static private final String CONFIG = "config.ini";
+    static private final String MODE = "mode";
+    static private final String YUCKS = "yucks";
+    static private final String DIFFICULTY = "difficulty";
+    static private final String SIZE = "size";
+    static private final String PROGNOSIS = "prognosis";
 
     static private final MenuItem[] ITEMS = MenuItem.values();
     static private final int ITEMS_NUMBER = MenuItem.values().length;
@@ -30,6 +46,7 @@ public class MenuScene extends AbstractLogoScene {
 
     public MenuScene() {
         super(SceneItem.MENU);
+        restoreSettings();
 
         int i = 0;
         for (MenuItem item : ITEMS) {
@@ -45,12 +62,67 @@ public class MenuScene extends AbstractLogoScene {
         addKeyHandlers();
     }
 
+    private void restoreSettings() {
+        try (final BufferedReader in = new BufferedReader(new FileReader(new File(CONFIG)))) {
+            final Properties props = new Properties();
+            props.load(in);
+            for (final String key : props.stringPropertyNames()) {
+                int value = Integer.parseInt(props.getProperty(key));
+                switch (key) {
+                case MODE:
+                    final MenuItem mode = MenuItem.MODE;
+                    for (int i = 0; i < value; i++) {
+                        mode.nextPosition();
+                        SceneItem.nextStartScene();
+                    }
+                    break;
+                case YUCKS:
+                    final MenuItem yucks = MenuItem.YUCKS;
+                    for (int i = 0; i < value; i++) {
+                        yucks.nextPosition();
+                        SceneItem.changeYucksStrategy();
+                    }
+                    break;
+                case DIFFICULTY:
+                    difficulty = setParam(value, MIN_DIFFICULTY, MAX_DIFFICULTY);
+                    break;
+                case SIZE:
+                    size = setParam(value, MIN_SIZE, MAX_SIZE);
+                    break;
+                case PROGNOSIS:
+                    prognosis = setParam(value, MIN_PROGNOSIS, MAX_PROGNOSIS);
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveSettings() {
+        final File file = new File(CONFIG);
+        try (FileOutputStream fos = new FileOutputStream(file); BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos))) {
+            file.createNewFile();
+            final Properties props = new Properties();
+
+            props.setProperty(MODE, "" + MenuItem.MODE.getPosition());
+            props.setProperty(YUCKS, "" + MenuItem.YUCKS.getPosition());
+            props.setProperty(DIFFICULTY, "" + difficulty);
+            props.setProperty(SIZE, "" + size);
+            props.setProperty(PROGNOSIS, "" + prognosis);
+
+            props.store(bw, "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void drawMenu() {
         title.spawn(new Vector2f(TITLE_X, TITLE_Y));
-        int pointX = 510;
+        final int pointX = 510;
         int pointY = Y_POS_MENU;
         for (int i = 0; i < ITEMS_NUMBER; i++) {
-            MenuItem item = MenuItem.values()[i];
+            final MenuItem item = MenuItem.values()[i];
             if (i == currentPosition) {
                 passive[i].unspawn();
                 if (item.getValues() != null) {
@@ -143,13 +215,20 @@ public class MenuScene extends AbstractLogoScene {
                 default:
                     nextScene = SceneItem.ABOUT;
                 }
+                saveSettings();
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_RETURN, enter);
     }
 
-    private int changeParam(int param, int min, int max) {
+    private int changeParam(int param, final int min, final int max) {
         if (++param > max)
+            param = min;
+        return param;
+    }
+
+    private int setParam(int param, final int min, final int max) {
+        if (param > max)
             param = min;
         return param;
     }

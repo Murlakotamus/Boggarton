@@ -316,19 +316,6 @@ abstract public class AbstractGame {
         }
     }
 
-    public void checkCommand() {
-        commandLock.lock();
-        try {
-            while (command.getCommand() != null)
-                bufferReady.await();
-            bufferReady.signal();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            commandLock.unlock();
-        }
-    }
-
     public void startGame() {
         nextStage();
     }

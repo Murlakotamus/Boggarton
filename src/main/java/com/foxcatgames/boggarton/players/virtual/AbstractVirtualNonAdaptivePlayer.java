@@ -49,7 +49,6 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
                         game.dropFigure();
                     }
                 });
-                game.checkCommand();
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();
                 ((SimpleGlass) game.getGlass()).waitChanges();

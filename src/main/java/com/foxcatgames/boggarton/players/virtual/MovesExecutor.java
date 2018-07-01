@@ -63,7 +63,6 @@ public class MovesExecutor extends AbstractExecutor implements Runnable {
                         game.dropFigure();
                     }
                 });
-                game.checkCommand();
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();
                 ((SimpleGlass) game.getGlass()).waitChanges();

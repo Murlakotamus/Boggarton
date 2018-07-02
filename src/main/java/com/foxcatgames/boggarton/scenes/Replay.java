@@ -38,7 +38,6 @@ public class Replay extends AbstractOnePlayerGame {
         game.startGame();
 
         new MovesExecutor(game, moves.toString().toCharArray());
-        //new VirtualAdaptivePlayer(game, new Price());
     }
 
     @Override

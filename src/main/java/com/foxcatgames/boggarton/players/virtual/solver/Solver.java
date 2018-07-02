@@ -94,13 +94,6 @@ public class Solver {
             initGlass = new VirtualGlass(pair.getFirst(), moveDown);
             forecast = new VirtualForecast(pair.getSecond());
             maxDepth = Math.min(forecast.getDepth(), dept);
-//            int realDepth = 0;
-//            for (realDepth = 0; realDepth < forecast.getDepth(); realDepth++) {
-//                IFigure figure = forecast.getForecast(realDepth);
-//                if (figure.getNumber() == 0)
-//                    break;
-//            }
-//            maxDepth = Math.min(Math.min(realDepth, dept), 2);
             score = initGlass.getGlassState().getScore();
             findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE), price);
             game.clearBuffer();
@@ -170,14 +163,14 @@ public class Solver {
                 else {
                     virtualGlass.processGlass();
 
-                    if (!virtualGlass.isGameOver() && depth < maxDepth) {
+                    if (!virtualGlass.isGameOver() && depth < maxDepth && virtualGlass.getFullness() > 0) {
                         virtualGlass.newFigure(forecast.getForecast(depth++));
                         findSolutionRecursively(virtualGlass, currResult, price);
                         depth--;
                     }
 
                     if (depth == maxDepth) {
-                        if (!virtualGlass.isGameOver()) {
+                        if (!virtualGlass.isGameOver() && virtualGlass.getFullness() > 0) {
                             final int scoreDifference = virtualGlass.getGlassState().getScore() - score;
                             if (price.getPrice(new Solution(null, scoreDifference, virtualGlass.getFullness(), 0)) > price
                                     .getPrice(solution))

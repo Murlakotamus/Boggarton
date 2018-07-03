@@ -1,13 +1,27 @@
 package com.foxcatgames.boggarton;
 
-import static org.lwjgl.opengl.GL11.*;
 import static com.foxcatgames.boggarton.Const.SCREEN_HEIGHT;
 import static com.foxcatgames.boggarton.Const.SCREEN_WIDTH;
 import static com.foxcatgames.boggarton.Const.TEXTURE_LOADER;
+import static org.lwjgl.opengl.GL11.*;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Transparency;
+import java.awt.color.ColorSpace;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
+import java.util.Hashtable;
+
+import javax.imageio.ImageIO;
 
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
@@ -16,6 +30,9 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
+import com.apple.eawt.Application;
+
+@SuppressWarnings("restriction")
 public class Graphics {
 
     private static final boolean FULL_SCREEN = false;
@@ -46,14 +63,51 @@ public class Graphics {
         GL11.glTexImage2D(GL_TEXTURE_2D, 0, glType, 1024, 1024, 0, glType, GL_UNSIGNED_BYTE, scratch);
     }
 
+    private static ByteBuffer convertImageData(BufferedImage bufferedImage, int square) {
+        ByteBuffer imageBuffer;
+        WritableRaster raster;
+        BufferedImage texImage;
+
+        ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false,
+                Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+
+        raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, bufferedImage.getWidth(), bufferedImage.getHeight(), 4, null);
+        texImage = new BufferedImage(glAlphaColorModel, raster, true, new Hashtable<>());
+
+        // copy the source image into the produced image
+        java.awt.Graphics g = texImage.getGraphics();
+        g.drawImage(bufferedImage, 0, 0, null);
+
+        // build a byte buffer from the temporary image
+        // that be used by OpenGL to produce a texture.
+        byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
+
+        imageBuffer = ByteBuffer.allocateDirect(data.length);
+        imageBuffer.order(ByteOrder.nativeOrder());
+        imageBuffer.put(data, 0, data.length);
+        imageBuffer.flip();
+
+        return imageBuffer;
+    }
+
     /**
      * create OpenGL window
      */
     private static void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
-
+        Application application = Application.getApplication();
+        Image image = Toolkit.getDefaultToolkit().getImage(Graphics.class.getResource("/icons/boggarton128.png"));
+        application.setDockIconImage(image);
         if (!fullscreen) { // create windowed mode
             Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
             Display.setLocation(300, 300);
+            Display.setTitle("Boggarton");
+
+            ByteBuffer[] list = new ByteBuffer[3];
+            list[0] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton128.png")), 128);
+            list[1] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton32.png")), 32);
+            list[2] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton16.png")), 16);
+
+            Display.setIcon(list);
         } else {
             Display.setFullscreen(true);
             try {

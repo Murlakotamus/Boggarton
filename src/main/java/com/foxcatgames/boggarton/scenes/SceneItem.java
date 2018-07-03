@@ -59,12 +59,20 @@ public enum SceneItem {
         currentGameScene = gameScenes.get(startSceneNumber);
     }
 
+    public static void dropStartScene() {
+        currentGameScene = gameScenes.get(0);
+    }
+
     public static SceneItem getStartScene() {
         return currentGameScene;
     }
 
     public static void changeYucksStrategy() {
         yuckStrategy = !yuckStrategy;
+    }
+
+    public static void dropYucksStrategy() {
+        yuckStrategy = false;
     }
 
     public static boolean getYuckStrategy() {

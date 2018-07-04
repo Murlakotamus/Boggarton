@@ -47,8 +47,8 @@ abstract public class AbstractGlass implements IGlass {
     }
 
     private boolean checkCoords(final int i, final int j) {
-        return !(i < 0 || i >= state.getWidth() || j < 0 || j >= state.getHeight() || (i <= 0 && j <= 0) || (i >= state.getWidth() - 1 && j <= 0)
-                || (i <= 0 && j >= state.getHeight() - 1) || (i >= state.getWidth() - 1 && j >= state.getHeight() - 1));
+        return !(i < 0 || i >= state.getWidth() || j < 0 || j >= state.getHeight() || (i < 0 && j < 0) || (i > state.getWidth() - 1 && j < 0)
+                || (i < 0 && j > state.getHeight() - 1) || (i > state.getWidth() - 1 && j > state.getHeight() - 1));
     }
 
     @Override

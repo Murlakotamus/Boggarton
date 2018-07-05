@@ -88,19 +88,22 @@ public class Solver {
     }
 
     public Solution getSolution(final int dept, final IPrice price) {
+        solution = new Solution();
         try {
-            solution = new Solution();
             final Pair<IGlassState, IForecast> pair = game.getBuffer();
             initGlass = new VirtualGlass(pair.getFirst(), moveDown);
             forecast = new VirtualForecast(pair.getSecond());
             maxDepth = Math.min(forecast.getDepth(), dept);
             score = initGlass.getGlassState().getScore();
             findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE), price);
+
+            if (solution.getScore() <= 0)
+                findDropRecursively(initGlass, new StringBuilder(DEFAULT_SIZE));
             game.clearBuffer();
             return solution;
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return null;
+            return solution;
         }
     }
 
@@ -163,7 +166,7 @@ public class Solver {
                 else {
                     virtualGlass.processGlass();
 
-                    if (!virtualGlass.isGameOver() && depth < maxDepth && virtualGlass.getFullness() > 0) {
+                    if (depth < maxDepth && virtualGlass.getFullness() > 0) {
                         virtualGlass.newFigure(forecast.getForecast(depth++));
                         findSolutionRecursively(virtualGlass, currResult, price);
                         depth--;
@@ -172,12 +175,38 @@ public class Solver {
                     if (depth == maxDepth) {
                         if (!virtualGlass.isGameOver() && virtualGlass.getFullness() > 0) {
                             final int scoreDifference = virtualGlass.getGlassState().getScore() - score;
-                            if (price.getPrice(new Solution(null, scoreDifference, virtualGlass.getFullness(), 0)) > price
-                                    .getPrice(solution))
+                            if (price.getPrice(new Solution(null, scoreDifference, virtualGlass.getFullness(), 0)) > price.getPrice(solution))
                                 solution = new Solution(currResult.toString(), scoreDifference, virtualGlass.getFullness(), 0);
                         }
                     }
                 }
             }
+    }
+
+    private void findDropRecursively(final IGlass glass, final StringBuilder result) {
+        final int avail = glass.getFigure().getNumber() - 1;
+        for (int i = 0; i <= avail; i++) {
+
+            final IGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
+            final StringBuilder currResult = new StringBuilder(result);
+            currResult.append(drop(virtualGlass));
+
+            if (!virtualGlass.getFigure().isFallen())
+                findDropRecursively(virtualGlass, currResult);
+            else {
+                virtualGlass.processGlass();
+
+                if (depth < maxDepth && virtualGlass.getFullness() >= 0) {
+                    virtualGlass.newFigure(forecast.getForecast(depth++));
+                    findDropRecursively(virtualGlass, currResult);
+                    depth--;
+                }
+
+                if (depth == maxDepth) {
+                    solution = new Solution(currResult.toString(), 0, virtualGlass.getFullness(), 0);
+                    return;
+                }
+            }
+        }
     }
 }

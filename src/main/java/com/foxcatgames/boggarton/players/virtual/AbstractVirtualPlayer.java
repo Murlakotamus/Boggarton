@@ -26,11 +26,8 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor {
 
     protected char[] getMoves(final int dept) {
         Solution solution = solver.getSolution(dept, price);
-        if (solution != null) {
-            Logger.log(Thread.currentThread().getName() + ", " + solution);
-            return solution.getMoves();
-        } else
-            return "DN".toCharArray();
+        Logger.log(Thread.currentThread().getName() + ", " + solution);
+        return solution.getMoves();
     }
 
     public void run() {

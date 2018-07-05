@@ -33,13 +33,8 @@ public enum MenuItem {
         return position;
     }
 
-    public void dropPosition() {
-        position = 0;
+    public void setPosition(final int position) {
+        this.position = position;
     }
 
-    public void nextPosition() {
-        position++;
-        if (position >= values.length)
-            position = 0;
-    }
 }

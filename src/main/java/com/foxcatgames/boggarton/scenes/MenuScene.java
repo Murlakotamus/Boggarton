@@ -71,21 +71,15 @@ public class MenuScene extends AbstractLogoScene {
                 switch (key) {
                 case MODE:
                     final MenuItem mode = MenuItem.MODE;
-                    mode.dropPosition();
                     SceneItem.dropStartScene();
-                    for (int i = 0; i < value; i++) {
-                        mode.nextPosition();
-                        SceneItem.nextStartScene();
-                    }
+                    for (int i = 0; i < value; i++)
+                        mode.setPosition(SceneItem.nextStartScene());
                     break;
                 case YUCKS:
                     final MenuItem yucks = MenuItem.YUCKS;
-                    yucks.dropPosition();
                     SceneItem.dropYucksStrategy();
-                    for (int i = 0; i < value; i++) {
-                        yucks.nextPosition();
-                        SceneItem.changeYucksStrategy();
-                    }
+                    for (int i = 0; i < value; i++)
+                        yucks.setPosition(SceneItem.changeYucksStrategy());
                     break;
                 case DIFFICULTY:
                     difficulty = setParam(value, MIN_DIFFICULTY, MAX_DIFFICULTY);
@@ -195,13 +189,11 @@ public class MenuScene extends AbstractLogoScene {
                     nextScene = SceneItem.getStartScene();
                     break;
                 case MODE:
-                    scene.nextPosition();
-                    SceneItem.nextStartScene();
+                    scene.setPosition(SceneItem.nextStartScene());
                     drawMenu();
                     break;
                 case YUCKS:
-                    scene.nextPosition();
-                    SceneItem.changeYucksStrategy();
+                    scene.setPosition(SceneItem.changeYucksStrategy());
                     drawMenu();
                     break;
                 case DIFFICULTY:

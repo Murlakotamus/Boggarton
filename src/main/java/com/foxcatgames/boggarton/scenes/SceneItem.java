@@ -52,11 +52,12 @@ public enum SceneItem {
         }
     }
 
-    public static void nextStartScene() {
+    public static int nextStartScene() {
         int startSceneNumber = gameScenes.indexOf(currentGameScene) + 1;
         if (startSceneNumber >= gameScenes.size())
             startSceneNumber = 0;
         currentGameScene = gameScenes.get(startSceneNumber);
+        return gameScenes.indexOf(currentGameScene);
     }
 
     public static void dropStartScene() {
@@ -67,8 +68,9 @@ public enum SceneItem {
         return currentGameScene;
     }
 
-    public static void changeYucksStrategy() {
+    public static int changeYucksStrategy() {
         yuckStrategy = !yuckStrategy;
+        return yuckStrategy ? 1 : 0;
     }
 
     public static void dropYucksStrategy() {

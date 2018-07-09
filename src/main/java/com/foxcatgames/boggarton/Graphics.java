@@ -95,8 +95,11 @@ public class Graphics {
      */
     private static void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
         Application application = Application.getApplication();
-        Image image = Toolkit.getDefaultToolkit().getImage(Graphics.class.getResource("/icons/boggarton128.png"));
-        application.setDockIconImage(image);
+        if (application != null) {
+            Image image = Toolkit.getDefaultToolkit().getImage(Graphics.class.getResource("/icons/boggarton128.png"));
+            application.setDockIconImage(image);
+        }
+
         if (!fullscreen) { // create windowed mode
             Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
             Display.setLocation(300, 300);

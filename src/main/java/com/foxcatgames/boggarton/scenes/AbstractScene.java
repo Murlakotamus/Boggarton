@@ -17,9 +17,9 @@ abstract public class AbstractScene {
     private SceneItem scene;
     protected SceneItem nextScene;
 
-    protected static int difficulty = 7;
-    public static int prognosis = 3;
-    public static int size = 3;
+    protected volatile static int difficulty = 7;
+    protected volatile static int prognosis = 3;
+    protected static int size = 3;
 
     protected final Layer layer;
     private static float lastTime = TIMER.getTime();

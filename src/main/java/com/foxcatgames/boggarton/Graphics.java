@@ -32,7 +32,6 @@ import org.lwjgl.util.glu.GLU;
 
 import com.apple.eawt.Application;
 
-@SuppressWarnings("restriction")
 public class Graphics {
 
     private static final boolean FULL_SCREEN = false;

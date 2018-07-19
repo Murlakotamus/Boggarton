@@ -9,7 +9,6 @@ import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.glass.VirtualGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
-import com.foxcatgames.boggarton.scenes.AbstractScene;
 
 public class Solver {
 
@@ -17,7 +16,7 @@ public class Solver {
     private static final String D = "D";
     private static final String DN = "DN";
 
-    private final int SIZE = WIDTH - AbstractScene.size + 1;
+    private final int SIZE;
     private final String[] CYCLES;
     private final String[] SHIFTS_LEFT;
     private final String[] SHIFTS_RIGHT;
@@ -60,9 +59,10 @@ public class Solver {
         return sb.toString();
     }
 
-    public Solver(final AbstractGame game, final boolean moveDown) {
+    public Solver(final AbstractGame game, final boolean moveDown, final int figureSize) {
         this.game = game;
         this.moveDown = moveDown;
+        SIZE = WIDTH - figureSize + 1;
 
         SHIFTS_LEFT = new String[SIZE];
         for (int i = 0; i < SIZE; i++)
@@ -72,11 +72,11 @@ public class Solver {
         for (int i = 0; i < SIZE; i++)
             SHIFTS_RIGHT[i] = getRepeat(i, 'R');
 
-        CYCLES = new String[AbstractScene.size];
-        for (int i = 0; i < AbstractScene.size; i++)
+        CYCLES = new String[figureSize];
+        for (int i = 0; i < figureSize; i++)
             CYCLES[i] = getRepeat(i, 'C');
 
-        final int size = WIDTH - AbstractScene.size;
+        final int size = WIDTH - figureSize;
 
         MOVES_TO_LEFT = new Vector[size + 1];
         for (int i = 0; i <= size; i++)

@@ -17,7 +17,7 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor {
     public AbstractVirtualPlayer(final AbstractGame game, final String name, final IPrice price, final boolean moveDown) {
         super(game);
         this.price = price;
-        solver = new Solver(game, moveDown);
+        solver = new Solver(game, moveDown, game.getForecast().getLenght());
         final Thread thread = new Thread(this);
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.setName(game.getName() + ", " + thread.getId());

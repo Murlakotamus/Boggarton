@@ -16,18 +16,18 @@ public class Utils {
         return getBrickType(random(difficulty));
     }
 
-    static public int probableBrick(final int difficulty, final int[] probabilities) {
+    static public int probabilisticBrick(final int difficulty, final int[] probabilities) {
         int total = 0;
         for (int i = 0; i < probabilities.length && i < difficulty; i++)
             total += probabilities[i];
 
-        final double quantil = 1d / total;
+        final double quantile = 1d / total;
         final double p = Math.random();
 
-        double percentil = 0;
+        double percenthile = 0;
         for (int i = 0; i < probabilities.length && i < difficulty; i++) {
-            percentil += (quantil * probabilities[i]);
-            if (p <= percentil)
+            percenthile += (quantile * probabilities[i]);
+            if (p <= percenthile)
                 return getBrickType(i);
         }
         return getBrickType(difficulty);

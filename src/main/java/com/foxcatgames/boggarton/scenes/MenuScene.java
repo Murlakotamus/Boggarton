@@ -77,9 +77,9 @@ public class MenuScene extends AbstractLogoScene {
                     break;
                 case YUCKS:
                     final MenuItem yucks = MenuItem.YUCKS;
-                    SceneItem.dropYucksStrategy();
+                    SceneItem.dropYucksType();
                     for (int i = 0; i < value; i++)
-                        yucks.setPosition(SceneItem.changeYucksStrategy());
+                        yucks.setPosition(SceneItem.nextYucksType());
                     break;
                 case DIFFICULTY:
                     difficulty = setParam(value, MIN_DIFFICULTY, MAX_DIFFICULTY);
@@ -183,17 +183,17 @@ public class MenuScene extends AbstractLogoScene {
         final KeyListener enter = new KeyListener() {
             @Override
             public void onKeyUp() {
-                final MenuItem scene = ITEMS[currentPosition];
-                switch (scene) {
+                final MenuItem menuItem = ITEMS[currentPosition];
+                switch (menuItem) {
                 case START:
                     nextScene = SceneItem.getStartScene();
                     break;
                 case MODE:
-                    scene.setPosition(SceneItem.nextStartScene());
+                    menuItem.setPosition(SceneItem.nextStartScene());
                     drawMenu();
                     break;
                 case YUCKS:
-                    scene.setPosition(SceneItem.changeYucksStrategy());
+                    menuItem.setPosition(SceneItem.nextYucksType());
                     drawMenu();
                     break;
                 case DIFFICULTY:

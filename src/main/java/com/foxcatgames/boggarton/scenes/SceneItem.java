@@ -15,7 +15,7 @@ public enum SceneItem {
 
     private final String sceneName;
     private static final int[] FORECASTS = { AbstractScene.prognosis, AbstractScene.prognosis };
-    private static boolean yuckStrategy = false;
+    private static Yucks yuckType = Yucks.RANDOM;
     private static SceneItem currentGameScene = GAME;
 
     SceneItem() {
@@ -38,11 +38,11 @@ public enum SceneItem {
         case ONE_PLAYER_DEMO:
             return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.size);
         case PLAYER_VS_COMP:
-            return new PlayerVsCompGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size, yuckStrategy);
+            return new PlayerVsCompGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size, yuckType);
         case TWO_PLAYERS_GAME:
-            return new PlayerVsPlayerGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size, yuckStrategy);
+            return new PlayerVsPlayerGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size, yuckType);
         case TWO_PLAYERS_DEMO:
-            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.size, yuckStrategy);
+            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.size, yuckType);
         case REPLAY_GAME:
             return new Replay(WIDTH, HEIGHT, 3, AbstractScene.size);
         case OUTRO:
@@ -68,17 +68,17 @@ public enum SceneItem {
         return currentGameScene;
     }
 
-    public static int changeYucksStrategy() {
-        yuckStrategy = !yuckStrategy;
-        return yuckStrategy ? 1 : 0;
+    public static int nextYucksType() {
+        yuckType = yuckType.next();
+        return yuckType.ordinal();
     }
 
-    public static void dropYucksStrategy() {
-        yuckStrategy = false;
+    public static void dropYucksType() {
+        yuckType = Yucks.RANDOM;
     }
 
-    public static boolean getYuckStrategy() {
-        return yuckStrategy;
+    public static Yucks getYuckType() {
+        return yuckType;
     }
 
     public String getSceneName() {

@@ -2,8 +2,7 @@ package com.foxcatgames.boggarton.scenes;
 
 public enum MenuItem {
 
-    START("Start"), MODE("Mode", SceneItem.getAllSceneNames()), YUCKS("Yucks", "Random",
-            "Hard"), DIFFICULTY("Difficulty"), FIGURE_SIZE("Figure size"), PROGNOSIS("Prognosis"), ABOUT("About");
+    START("Start"), MODE("Mode", SceneItem.getAllSceneNames()), YUCKS("Yucks", Yucks.getAllYuckNames()), DIFFICULTY("Difficulty"), FIGURE_SIZE("Figure size"), PROGNOSIS("Prognosis"), ABOUT("About");
 
     final private String name;
     final private String[] values;

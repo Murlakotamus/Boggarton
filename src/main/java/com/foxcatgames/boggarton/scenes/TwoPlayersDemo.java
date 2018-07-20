@@ -9,8 +9,8 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
     private static final long GAMEOVER_PAUSE = 3000;
 
     public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int lenght,
-            final boolean yuckStrategy) {
-        super(SceneItem.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2, yuckStrategy);
+            final Yucks yuckType) {
+        super(SceneItem.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2, yuckType);
 
         new EffectiveVirtualNonAdaptivePlayer(game[0], new Price());
         new VirtualAdaptivePlayer(game[1], new Price());

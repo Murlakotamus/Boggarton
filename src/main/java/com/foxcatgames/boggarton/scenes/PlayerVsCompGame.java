@@ -9,8 +9,8 @@ import com.foxcatgames.boggarton.players.virtual.solver.Price;
 public class PlayerVsCompGame extends AbstractMultiplayerGame {
 
     public PlayerVsCompGame(final int width, final int height, final int[] forecast,
-            final int lenght, final boolean yuckStrategy) {
-        super(SceneItem.PLAYER_VS_COMP, width, height, forecast, lenght, 2, yuckStrategy);
+            final int lenght, final Yucks yuckType) {
+        super(SceneItem.PLAYER_VS_COMP, width, height, forecast, lenght, 2, yuckType);
 
         new EffectiveVirtualAdaptivePlayer(game[0], new Price());
         new RealPlayer(game[1], Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,

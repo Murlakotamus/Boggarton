@@ -5,6 +5,8 @@ import com.foxcatgames.boggarton.engine.TextureLoader;
 
 public class Const {
 
+    public static final int[] PROBABILITIES = { 64, 32, 16, 8, 4, 2, 1 };
+
     public static final int BOX = 30;
     public static final int BORDER = 5;
 

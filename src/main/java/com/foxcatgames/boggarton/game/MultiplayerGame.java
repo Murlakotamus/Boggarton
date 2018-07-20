@@ -12,11 +12,12 @@ import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
+import com.foxcatgames.boggarton.scenes.Yucks;
 
 public class MultiplayerGame extends AbstractGame {
 
     public static final int MAX_YUCKS = 20;
-    public final boolean yuckStrategy;
+    public final Yucks yuckType;
     protected int yucks;
     private final Text showVictoies;
     private IGlass enemyGlass;
@@ -24,10 +25,10 @@ public class MultiplayerGame extends AbstractGame {
     private final Vector2f yuckPosition;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final int victories, boolean yuckStrategy) {
+            final int difficulty, final int victories, Yucks yuckType) {
 
         super(layer, x, y, width, height, forecast, lenght, difficulty);
-        this.yuckStrategy = yuckStrategy;
+        this.yuckType = yuckType;
         glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, difficulty);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
         showVictoies.spawn(new Vector2f(x + BOX * lenght + 20, y + BOX * height + 40));
@@ -109,7 +110,7 @@ public class MultiplayerGame extends AbstractGame {
     }
 
     protected void executeYuck() {
-        String yuck = ((MultiplayerGlass) glass).executeYuck(yuckStrategy);
+        String yuck = ((MultiplayerGlass) glass).executeYuck(yuckType);
         logYuck(yuck);
         yucks--;
         ((MultiplayerGlass) glass).respawn();

@@ -21,8 +21,8 @@ public class Utils {
         for (int i = 0; i < probabilities.length && i < difficulty; i++)
             total += probabilities[i];
 
-        double quantil = 1d / total;
-        double p = Math.random();
+        final double quantil = 1d / total;
+        final double p = Math.random();
 
         double percentil = 0;
         for (int i = 0; i < probabilities.length && i < difficulty; i++) {

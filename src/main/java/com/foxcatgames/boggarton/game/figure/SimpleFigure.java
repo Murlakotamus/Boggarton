@@ -8,12 +8,14 @@ import com.foxcatgames.boggarton.game.utils.Utils;
 
 public class SimpleFigure extends AbstractVisualFigure {
 
+    static int[] probabilities = { 1, 1, 1, 1, 1, 1, 1 };
+
     public SimpleFigure(final Layer layer, final Vector2f position, final int size, final int difficulty) {
         super(size, position);
 
         number = size;
         for (int j = 0; j < size; j++)
-            bricks[j] = new Brick(Utils.randomBrick(difficulty), layer);
+            bricks[j] = new Brick(Utils.probableBrick(difficulty, probabilities), layer);
 
         respawn();
     }

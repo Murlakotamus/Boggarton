@@ -73,11 +73,11 @@ abstract public class AbstractGame {
     protected int lastScore = 0;
 
     public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty) {
+            final int difficulty, final int[] randomType) {
         this.x = x;
         this.y = y;
         if (forecast >= 1)
-            this.forecast = new SimpleForecast(layer, new Vector2f(x, y), forecast, lenght, difficulty);
+            this.forecast = new SimpleForecast(layer, new Vector2f(x, y), forecast, lenght, difficulty, randomType);
         diffScore = new Text("", Const.DARK_FONT, layer);
     }
 

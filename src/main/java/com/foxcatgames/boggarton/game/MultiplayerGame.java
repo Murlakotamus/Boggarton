@@ -25,9 +25,9 @@ public class MultiplayerGame extends AbstractGame {
     private final Vector2f yuckPosition;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final int victories, Yucks yuckType) {
+            final int difficulty, final int victories, Yucks yuckType, final int[] randomType) {
 
-        super(layer, x, y, width, height, forecast, lenght, difficulty);
+        super(layer, x, y, width, height, forecast, lenght, difficulty, randomType);
         this.yuckType = yuckType;
         glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, difficulty);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);

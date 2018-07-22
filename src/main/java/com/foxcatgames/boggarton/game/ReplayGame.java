@@ -25,7 +25,7 @@ public class ReplayGame extends AbstractGame {
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
             final List<String> events) {
-        super(layer, x, y, width, height, forecast, lenght, 0);
+        super(layer, x, y, width, height, forecast, lenght, 0, null);
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, lenght, events);
         this.events = events;
 

@@ -9,10 +9,10 @@ import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 
 public class SimpleGame extends AbstractGame {
-   
-    public SimpleGame(final Layer layer, final int x, final int y, final int width,
-            final int height, final int forecast, final int lenght, final int difficulty) {
-        super(layer, x, y, width, height, forecast, lenght, difficulty);
+
+    public SimpleGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
+            final int difficulty, final int[] randomType) {
+        super(layer, x, y, width, height, forecast, lenght, difficulty, randomType);
         glass = new SimpleGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height);
     }
 

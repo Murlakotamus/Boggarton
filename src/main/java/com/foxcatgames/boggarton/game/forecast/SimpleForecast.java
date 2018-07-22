@@ -12,14 +12,17 @@ import com.foxcatgames.boggarton.game.figure.SimpleFigure;
 public class SimpleForecast extends AbstractVisualForecast {
 
     final private int difficulty;
+    final private int[] randomType;
 
-    public SimpleForecast(final Layer layer, final Vector2f startPos, final int prognosis, final int size, final int difficulty) {
+    public SimpleForecast(final Layer layer, final Vector2f startPos, final int prognosis, final int size, final int difficulty, final int[] randomType) {
         super(prognosis, size);
         this.difficulty = difficulty;
+        this.randomType = randomType;
         frame = new Frame(layer, startPos, size, prognosis, false, true);
 
         for (int i = 0; i < prognosis; i++)
-            figures[i] = new SimpleFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), size, difficulty);
+            figures[i] = new SimpleFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), size, difficulty,
+                    randomType);
     }
 
     @Override
@@ -30,6 +33,6 @@ public class SimpleForecast extends AbstractVisualForecast {
         }
 
         figures[prognosis - 1] = new SimpleFigure(frame.getLayer(),
-                new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER), size, difficulty);
+                new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER), size, difficulty, randomType);
     }
 }

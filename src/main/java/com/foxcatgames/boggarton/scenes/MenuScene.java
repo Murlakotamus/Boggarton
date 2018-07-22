@@ -25,11 +25,6 @@ import com.foxcatgames.boggarton.game.forecast.MenuForecast;
 public class MenuScene extends AbstractLogoScene {
 
     static private final String CONFIG = "config.ini";
-    static private final String MODE = "mode";
-    static private final String YUCKS = "yucks";
-    static private final String DIFFICULTY = "difficulty";
-    static private final String SIZE = "size";
-    static private final String PROGNOSIS = "prognosis";
 
     static private final MenuItem[] ITEMS = MenuItem.values();
     static private final int ITEMS_NUMBER = MenuItem.values().length;
@@ -69,25 +64,31 @@ public class MenuScene extends AbstractLogoScene {
             for (final String key : props.stringPropertyNames()) {
                 int value = Integer.parseInt(props.getProperty(key));
                 switch (key) {
-                case MODE:
+                case "MODE":
                     final MenuItem mode = MenuItem.MODE;
                     SceneItem.dropStartScene();
                     for (int i = 0; i < value; i++)
                         mode.setPosition(SceneItem.nextStartScene());
                     break;
-                case YUCKS:
+                case "YUCKS":
                     final MenuItem yucks = MenuItem.YUCKS;
                     SceneItem.dropYucksType();
                     for (int i = 0; i < value; i++)
                         yucks.setPosition(SceneItem.nextYucksType());
                     break;
-                case DIFFICULTY:
+                case "RANDOM_TYPE":
+                    final MenuItem bricks = MenuItem.RANDOM_TYPE;
+                    SceneItem.dropRandomType();
+                    for (int i = 0; i < value; i++)
+                        bricks.setPosition(SceneItem.nextRandomType());
+                    break;
+                case "DIFFICULTY":
                     difficulty = setParam(value, MIN_DIFFICULTY, MAX_DIFFICULTY);
                     break;
-                case SIZE:
-                    size = setParam(value, MIN_SIZE, MAX_SIZE);
+                case "FIGURE_SIZE":
+                    figureSize = setParam(value, MIN_SIZE, MAX_SIZE);
                     break;
-                case PROGNOSIS:
+                case "PROGNOSIS":
                     prognosis = setParam(value, MIN_PROGNOSIS, MAX_PROGNOSIS);
                     break;
                 }
@@ -103,11 +104,12 @@ public class MenuScene extends AbstractLogoScene {
             file.createNewFile();
             final Properties props = new Properties();
 
-            props.setProperty(MODE, "" + MenuItem.MODE.getPosition());
-            props.setProperty(YUCKS, "" + MenuItem.YUCKS.getPosition());
-            props.setProperty(DIFFICULTY, "" + difficulty);
-            props.setProperty(SIZE, "" + size);
-            props.setProperty(PROGNOSIS, "" + prognosis);
+            props.setProperty(MenuItem.MODE.name(), "" + MenuItem.MODE.getPosition());
+            props.setProperty(MenuItem.YUCKS.name(), "" + MenuItem.YUCKS.getPosition());
+            props.setProperty(MenuItem.RANDOM_TYPE.name(), "" + MenuItem.RANDOM_TYPE.getPosition());
+            props.setProperty(MenuItem.DIFFICULTY.name(), "" + difficulty);
+            props.setProperty(MenuItem.FIGURE_SIZE.name(), "" + figureSize);
+            props.setProperty(MenuItem.PROGNOSIS.name(), "" + prognosis);
 
             props.store(bw, "");
         } catch (IOException e) {
@@ -144,7 +146,7 @@ public class MenuScene extends AbstractLogoScene {
         if (forecast != null)
             forecast.unspawn();
 
-        forecast = new MenuForecast(layer, new Vector2f(470 - BOX * size + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 170), prognosis, size,
+        forecast = new MenuForecast(layer, new Vector2f(470 - BOX * figureSize + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 170), prognosis, figureSize,
                 difficulty);
     }
 
@@ -196,12 +198,16 @@ public class MenuScene extends AbstractLogoScene {
                     menuItem.setPosition(SceneItem.nextYucksType());
                     drawMenu();
                     break;
+                case RANDOM_TYPE:
+                    menuItem.setPosition(SceneItem.nextRandomType());
+                    drawMenu();
+                    break;
                 case DIFFICULTY:
                     difficulty = changeParam(difficulty, MIN_DIFFICULTY, MAX_DIFFICULTY);
                     drawPrognosis();
                     break;
                 case FIGURE_SIZE:
-                    size = changeParam(size, MIN_SIZE, MAX_SIZE);
+                    figureSize = changeParam(figureSize, MIN_SIZE, MAX_SIZE);
                     drawPrognosis();
                     break;
                 case PROGNOSIS:

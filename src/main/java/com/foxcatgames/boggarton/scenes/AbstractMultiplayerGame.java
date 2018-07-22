@@ -28,7 +28,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     private final SimpleEntity gamePaused[];
 
     AbstractMultiplayerGame(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
-            Yucks yuckType) {
+            Yucks yuckType, final int[] randomType) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
@@ -49,7 +49,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
 
         for (int i = 0; i < numPlayers; i++) {
             game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, Math.min(prognosis, forecast[i]), length, difficulty, Victories.getVictories(i),
-                    yuckType); // FIXME => vic to player
+                    yuckType, randomType); // FIXME => vic to player
             if (i < 4)
                 game[i].setName(PLAYERS_NAMES[i]);
             else
@@ -73,10 +73,10 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             if (i == looserNumber) {
                 loser = new SimpleEntity(LOSER, layer);
-                loser.spawn(new Vector2f(game[i].getX() + size * BOX + 25, Y + BOX * 3 + BORDER));
+                loser.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
             } else {
                 winners[i] = new SimpleEntity(WINNER, layer);
-                winners[i].spawn(new Vector2f(game[i].getX() + size * BOX + 25, Y + BOX * 3 + BORDER));
+                winners[i].spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
                 Victories.addVictory(i);
             }
             game[i].setGameOver();
@@ -122,7 +122,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {
             ((SimpleGlass) game[i].getGlass()).pauseOn();
-            gamePaused[i].spawn(new Vector2f(game[i].getX() + size * BOX + 25, Y + BOX * 3 + BORDER));
+            gamePaused[i].spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
         }
     }
 

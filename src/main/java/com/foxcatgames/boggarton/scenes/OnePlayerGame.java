@@ -16,16 +16,14 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
 
     private final SimpleEntity gamePaused;
 
-    public OnePlayerGame(final int width, final int height, final int forecast, final int lenght) {
+    public OnePlayerGame(final int width, final int height, final int forecast, final int figureSize, final int[] randomType) {
         super(SceneItem.PRACTICE);
         gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast),
-                lenght, difficulty);
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty, randomType);
         game.setName("Human");
         game.startGame();
-        new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN,
-                Keyboard.KEY_UP);
+        new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
     }
 
     @Override
@@ -33,7 +31,7 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
         if (game.isGameOver())
             return;
         ((SimpleGlass) game.getGlass()).pauseOn();
-        gamePaused.spawn(new Vector2f(X + size * 30 + 25, Y + BOX * 3 + BORDER));
+        gamePaused.spawn(new Vector2f(X + figureSize * 30 + 25, Y + BOX * 3 + BORDER));
     }
 
     @Override

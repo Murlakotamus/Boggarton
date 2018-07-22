@@ -14,8 +14,9 @@ public enum SceneItem {
     private static List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, PLAYER_VS_COMP, TWO_PLAYERS_GAME, ONE_PLAYER_DEMO, TWO_PLAYERS_DEMO, REPLAY_GAME);
 
     private final String sceneName;
-    private static final int[] FORECASTS = { AbstractScene.prognosis, AbstractScene.prognosis };
+    private static final int[] PROGNOSIS = { AbstractScene.prognosis, AbstractScene.prognosis };
     private static Yucks yuckType = Yucks.RANDOM;
+    private static RandomTypes randomType = RandomTypes.RANDOM;
     private static SceneItem currentGameScene = GAME;
 
     SceneItem() {
@@ -34,17 +35,17 @@ public enum SceneItem {
             return new MenuScene();
         case GAME:
         case PRACTICE:
-            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.size);
+            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType.getRandomType());
         case ONE_PLAYER_DEMO:
-            return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.size);
+            return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType.getRandomType());
         case PLAYER_VS_COMP:
-            return new PlayerVsCompGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size, yuckType);
+            return new PlayerVsCompGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType.getRandomType());
         case TWO_PLAYERS_GAME:
-            return new PlayerVsPlayerGame(WIDTH, HEIGHT, FORECASTS, AbstractScene.size, yuckType);
+            return new PlayerVsPlayerGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType.getRandomType());
         case TWO_PLAYERS_DEMO:
-            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.size, yuckType);
+            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.figureSize, yuckType, randomType.getRandomType());
         case REPLAY_GAME:
-            return new Replay(WIDTH, HEIGHT, 3, AbstractScene.size);
+            return new Replay(WIDTH, HEIGHT, 3, AbstractScene.figureSize);
         case OUTRO:
             return new OutroScene();
         default:
@@ -79,6 +80,19 @@ public enum SceneItem {
 
     public static Yucks getYuckType() {
         return yuckType;
+    }
+
+    public static int nextRandomType() {
+        randomType = randomType.next();
+        return randomType.ordinal();
+    }
+
+    public static void dropRandomType() {
+        randomType = RandomTypes.RANDOM;
+    }
+
+    public static RandomTypes getRandomType() {
+        return randomType;
     }
 
     public String getSceneName() {

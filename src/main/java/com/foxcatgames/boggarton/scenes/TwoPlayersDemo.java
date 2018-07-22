@@ -8,9 +8,8 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
     private static final long GAMEOVER_PAUSE = 3000;
 
-    public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int lenght,
-            final Yucks yuckType) {
-        super(SceneItem.TWO_PLAYERS_DEMO, width, height, forecast, lenght, 2, yuckType);
+    public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int figureSize, final Yucks yuckType, final int[] randomType) {
+        super(SceneItem.TWO_PLAYERS_DEMO, width, height, forecast, figureSize, 2, yuckType, randomType);
 
         new EffectiveVirtualNonAdaptivePlayer(game[0], new Price());
         new VirtualAdaptivePlayer(game[1], new Price());
@@ -33,8 +32,7 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
     @Override
     protected void checkAuto() {
-        if (pauseBetweenGames > 0
-                && (System.currentTimeMillis() - pauseBetweenGames > GAMEOVER_PAUSE))
+        if (pauseBetweenGames > 0 && (System.currentTimeMillis() - pauseBetweenGames > GAMEOVER_PAUSE))
             nextScene(SceneItem.MENU);
     }
 

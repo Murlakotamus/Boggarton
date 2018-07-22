@@ -4,16 +4,8 @@ import com.foxcatgames.boggarton.Const;
 
 public class Utils {
 
-    static public int random(final int number) {
-        return (int) (Math.random() * number);
-    }
-
     static int getBrickType(int i) {
         return i + Const.CURRENT_SET * 10 + 1;
-    }
-
-    static public int randomBrick(final int difficulty) {
-        return getBrickType(random(difficulty));
     }
 
     static public int probabilisticBrick(final int difficulty, final int[] probabilities) {

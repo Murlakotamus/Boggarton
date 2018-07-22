@@ -6,6 +6,7 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.utils.Utils;
+import com.foxcatgames.boggarton.scenes.RandomTypes;
 import com.foxcatgames.boggarton.scenes.Yucks;
 
 public class MultiplayerGlass extends SimpleGlass {
@@ -33,14 +34,14 @@ public class MultiplayerGlass extends SimpleGlass {
         for (int i = 0; i < state.getWidth(); i++) {
             switch (yuckType) {
             case PROBABILISTIC:
-                brick = getProbabilisticBrick();
+                brick = Utils.probabilisticBrick(difficulty, RandomTypes.PROBABILISTIC.getRandomType());
                 break;
             case HARD:
                 brick = getHardBrick();
                 break;
             case RANDOM:
             default:
-                brick = getRandomBrick();
+                brick = Utils.probabilisticBrick(difficulty, RandomTypes.RANDOM.getRandomType());
             }
             result.append(brick - Const.CURRENT_SET * 10);
             state.setBrick(i, state.getHeight() - 1, new Brick(brick, layer));
@@ -64,13 +65,5 @@ public class MultiplayerGlass extends SimpleGlass {
             result = result % difficulty;
 
         return result + Const.CURRENT_SET * 10 + 1;
-    }
-
-    private int getRandomBrick() {
-        return Utils.randomBrick(difficulty);
-    }
-
-    private int getProbabilisticBrick() {
-        return Utils.probabilisticBrick(difficulty, Const.PROBABILITIES);
     }
 }

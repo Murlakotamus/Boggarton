@@ -6,7 +6,7 @@ import com.foxcatgames.boggarton.players.RealPlayer;
 
 public class PlayerVsPlayerGame extends AbstractMultiplayerGame {
 
-    public PlayerVsPlayerGame(final int width, final int height, final int[] forecast, final int figureSize, final Yucks yuckType, final int[] randomType) {
+    public PlayerVsPlayerGame(final int width, final int height, final int[] forecast, final int figureSize, final YuckTypes yuckType, final int[] randomType) {
         super(SceneItem.PLAYER_VS_COMP, width, height, forecast, figureSize, 2, yuckType, randomType);
 
         new RealPlayer(game[0], Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_S, Keyboard.KEY_W);
@@ -22,4 +22,7 @@ public class PlayerVsPlayerGame extends AbstractMultiplayerGame {
         super.changes();
     }
 
+    @Override
+    protected void start() {
+    }
 }

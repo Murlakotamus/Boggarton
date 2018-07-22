@@ -12,12 +12,12 @@ import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
-import com.foxcatgames.boggarton.scenes.Yucks;
+import com.foxcatgames.boggarton.scenes.YuckTypes;
 
 public class MultiplayerGame extends AbstractGame {
 
     public static final int MAX_YUCKS = 20;
-    public final Yucks yuckType;
+    public final YuckTypes yuckType;
     protected int yucks;
     private final Text showVictoies;
     private IGlass enemyGlass;
@@ -25,7 +25,7 @@ public class MultiplayerGame extends AbstractGame {
     private final Vector2f yuckPosition;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final int victories, Yucks yuckType, final int[] randomType) {
+            final int difficulty, final int victories, YuckTypes yuckType, final int[] randomType) {
 
         super(layer, x, y, width, height, forecast, lenght, difficulty, randomType);
         this.yuckType = yuckType;

@@ -28,7 +28,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     private final SimpleEntity gamePaused[];
 
     AbstractMultiplayerGame(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
-            Yucks yuckType, final int[] randomType) {
+            YuckTypes yuckType, final int[] randomType) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)

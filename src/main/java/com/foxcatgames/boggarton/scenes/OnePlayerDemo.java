@@ -22,4 +22,8 @@ public class OnePlayerDemo extends AbstractOnePlayerGame {
     @Override
     protected void showGlass() {
     }
+
+    @Override
+    protected void start() {
+    }
 }

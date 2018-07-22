@@ -3,12 +3,12 @@ package com.foxcatgames.boggarton.scenes;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Yucks {
+public enum YuckTypes {
     RANDOM("Random"), PROBABILISTIC("Probabilistic"), HARD("Hard");
 
     private String name;
 
-    private Yucks(String name) {
+    private YuckTypes(String name) {
         this.name = name;
     }
     
@@ -16,7 +16,7 @@ public enum Yucks {
         return name;
     }
     
-    public Yucks next() {
+    public YuckTypes next() {
         switch(this) {
         case PROBABILISTIC:
             return HARD;
@@ -30,7 +30,7 @@ public enum Yucks {
     
     public static String[] getAllYuckNames() {
         List<String> list = new ArrayList<>();
-        for (Yucks yuck : Yucks.values())
+        for (YuckTypes yuck : YuckTypes.values())
             list.add(yuck.getName());
         String result[] = new String[list.size()];
         return list.toArray(result);

@@ -41,4 +41,8 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
         gamePaused.unspawn();
         ((SimpleGlass) game.getGlass()).pauseOff();
     }
+
+    @Override
+    protected void start() {
+    }
 }

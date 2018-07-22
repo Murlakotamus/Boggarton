@@ -32,4 +32,7 @@ public class OutroScene extends AbstractLogoScene {
             nextScene(SceneItem.FINISH_GAME);
     }
 
+    @Override
+    protected void start() {
+    }
 }

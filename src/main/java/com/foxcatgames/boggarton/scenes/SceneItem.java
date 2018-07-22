@@ -15,7 +15,7 @@ public enum SceneItem {
 
     private final String sceneName;
     private static final int[] PROGNOSIS = { AbstractScene.prognosis, AbstractScene.prognosis };
-    private static Yucks yuckType = Yucks.RANDOM;
+    private static YuckTypes yuckType = YuckTypes.RANDOM;
     private static RandomTypes randomType = RandomTypes.RANDOM;
     private static SceneItem currentGameScene = GAME;
 
@@ -75,10 +75,10 @@ public enum SceneItem {
     }
 
     public static void dropYucksType() {
-        yuckType = Yucks.RANDOM;
+        yuckType = YuckTypes.RANDOM;
     }
 
-    public static Yucks getYuckType() {
+    public static YuckTypes getYuckType() {
         return yuckType;
     }
 

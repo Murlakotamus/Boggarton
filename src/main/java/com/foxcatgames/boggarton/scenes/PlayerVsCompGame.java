@@ -8,7 +8,7 @@ import com.foxcatgames.boggarton.players.virtual.solver.Price;
 
 public class PlayerVsCompGame extends AbstractMultiplayerGame {
 
-    public PlayerVsCompGame(final int width, final int height, final int[] forecast, final int figureSize, final Yucks yuckType, final int[] randomType) {
+    public PlayerVsCompGame(final int width, final int height, final int[] forecast, final int figureSize, final YuckTypes yuckType, final int[] randomType) {
         super(SceneItem.PLAYER_VS_COMP, width, height, forecast, figureSize, 2, yuckType, randomType);
 
         new EffectiveVirtualAdaptivePlayer(game[0], new Price());
@@ -22,5 +22,9 @@ public class PlayerVsCompGame extends AbstractMultiplayerGame {
     @Override
     protected void changes() {
         super.changes();
+    }
+
+    @Override
+    protected void start() {
     }
 }

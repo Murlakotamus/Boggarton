@@ -26,6 +26,5 @@ abstract public class AbstractLogoScene extends AbstractScene {
 
     @Override
     protected void changes() {
-        // Do nothing
     }
 }

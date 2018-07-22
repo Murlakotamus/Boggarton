@@ -244,4 +244,8 @@ public class MenuScene extends AbstractLogoScene {
         };
         EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
     }
+
+    @Override
+    protected void start() {
+    }
 }

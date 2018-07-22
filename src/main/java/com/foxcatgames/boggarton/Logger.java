@@ -7,7 +7,8 @@ public final class Logger {
     }
 
     public static void log(final Object obj) {
-        System.out.println(obj);
+        if (IS_ACTIVE)
+            System.out.println(obj);
     }
 
     public static void err(final String string) {

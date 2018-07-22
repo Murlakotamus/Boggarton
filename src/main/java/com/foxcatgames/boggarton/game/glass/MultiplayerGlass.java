@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.utils.Utils;
 import com.foxcatgames.boggarton.scenes.RandomTypes;
-import com.foxcatgames.boggarton.scenes.Yucks;
+import com.foxcatgames.boggarton.scenes.YuckTypes;
 
 public class MultiplayerGlass extends SimpleGlass {
 
@@ -21,7 +21,7 @@ public class MultiplayerGlass extends SimpleGlass {
         this.difficulty = difficulty;
     }
 
-    public String executeYuck(Yucks yuckType) {
+    public String executeYuck(YuckTypes yuckType) {
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++) {
                 if (j > 0)
@@ -52,7 +52,7 @@ public class MultiplayerGlass extends SimpleGlass {
                 if (state.getBrick(i, j) != null)
                     addBrick(i, j);
 
-        if (yuckType == Yucks.HARD) {
+        if (yuckType == YuckTypes.HARD) {
             int delta = difficulty - 4;
             count += delta;
         }

@@ -8,7 +8,7 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
 
     private static final long GAMEOVER_PAUSE = 3000;
 
-    public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int figureSize, final Yucks yuckType, final int[] randomType) {
+    public TwoPlayersDemo(final int width, final int height, final int[] forecast, final int figureSize, final YuckTypes yuckType, final int[] randomType) {
         super(SceneItem.TWO_PLAYERS_DEMO, width, height, forecast, figureSize, 2, yuckType, randomType);
 
         new EffectiveVirtualNonAdaptivePlayer(game[0], new Price());
@@ -39,5 +39,9 @@ public class TwoPlayersDemo extends AbstractMultiplayerGame {
     @Override
     protected void changes() {
         super.changes();
+    }
+
+    @Override
+    protected void start() {
     }
 }

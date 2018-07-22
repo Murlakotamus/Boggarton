@@ -34,4 +34,7 @@ public class IntroScene extends AbstractLogoScene {
 
     }
 
+    @Override
+    protected void start() {
+    }
 }

@@ -39,4 +39,8 @@ public class AboutScene extends AbstractLogoScene {
         };
         EventManager.getInstance().addListener(Keyboard.KEY_RETURN, enter);
     }
+
+    @Override
+    protected void start() {
+    }
 }

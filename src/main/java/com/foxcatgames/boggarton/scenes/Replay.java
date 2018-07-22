@@ -48,4 +48,7 @@ public class Replay extends AbstractOnePlayerGame {
     protected void showGlass() {
     }
 
+    @Override
+    protected void start() {
+    }
 }

@@ -13,7 +13,7 @@ public class SimpleFigure extends AbstractVisualFigure {
 
         number = size;
         for (int j = 0; j < size; j++)
-            bricks[j] = new Brick(Utils.probabilisticBrick(difficulty, randomType), layer);
+            bricks[j] = new Brick(Utils.getBrick(difficulty, randomType), layer);
 
         respawn();
     }

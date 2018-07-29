@@ -94,6 +94,9 @@ public class MultiplayerGame extends AbstractGame {
     }
 
     public void addYuck(final int yuck) {
+        if (yuckType == YuckTypes.NONE)
+            return;
+
         yucks += yuck;
         drawYucks();
     }

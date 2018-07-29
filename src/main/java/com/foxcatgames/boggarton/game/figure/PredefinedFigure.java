@@ -13,7 +13,7 @@ public class PredefinedFigure extends AbstractVisualFigure {
 
         number = size;
         for (int i = 0; i < size; i++)
-            bricks[i] = new Brick(Utils.getBrick(figure, i), layer);
+            bricks[i] = new Brick(Utils.parseBrick(figure, i), layer);
 
         respawn();
     }

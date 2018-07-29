@@ -75,11 +75,7 @@ public enum SceneItem {
     }
 
     public static void dropYucksType() {
-        yuckType = YuckTypes.RANDOM;
-    }
-
-    public static YuckTypes getYuckType() {
-        return yuckType;
+        yuckType = YuckTypes.NONE;
     }
 
     public static int nextRandomType() {
@@ -89,10 +85,6 @@ public enum SceneItem {
 
     public static void dropRandomType() {
         randomType = RandomTypes.RANDOM;
-    }
-
-    public static RandomTypes getRandomType() {
-        return randomType;
     }
 
     public String getSceneName() {

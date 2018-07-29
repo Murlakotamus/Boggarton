@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum YuckTypes {
-    RANDOM("Random"), PROBABILISTIC("Probabilistic"), HARD("Hard");
+    NONE("None"), RANDOM("Random"), PROBABILISTIC("Probabilistic"), HARD("Hard");
 
     private String name;
 
@@ -18,13 +18,15 @@ public enum YuckTypes {
     
     public YuckTypes next() {
         switch(this) {
+        case RANDOM:
+            return PROBABILISTIC;
         case PROBABILISTIC:
             return HARD;
         case HARD:
-            return RANDOM;
-        case RANDOM:
+            return NONE;
+        case NONE:
         default:
-            return PROBABILISTIC;
+            return RANDOM;
         }
     }
     

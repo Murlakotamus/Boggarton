@@ -8,7 +8,7 @@ public class Utils {
         return i + Const.CURRENT_SET * 10 + 1;
     }
 
-    static public int probabilisticBrick(final int difficulty, final int[] probabilities) {
+    static public int getBrick(final int difficulty, final int[] probabilities) {
         int total = 0;
         for (int i = 0; i < probabilities.length && i < difficulty; i++)
             total += probabilities[i];
@@ -25,7 +25,7 @@ public class Utils {
         return getBrickType(difficulty);
     }
 
-    static public int getBrick(final String str, final int index) {
+    static public int parseBrick(final String str, final int index) {
         return Integer.parseInt("" + str.charAt(index)) + Const.CURRENT_SET * 10;
     }
 

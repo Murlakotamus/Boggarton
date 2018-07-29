@@ -34,14 +34,16 @@ public class MultiplayerGlass extends SimpleGlass {
         for (int i = 0; i < state.getWidth(); i++) {
             switch (yuckType) {
             case PROBABILISTIC:
-                brick = Utils.probabilisticBrick(difficulty, RandomTypes.PROBABILISTIC.getRandomType());
+                brick = Utils.getBrick(difficulty, RandomTypes.PROBABILISTIC.getRandomType());
                 break;
             case HARD:
                 brick = getHardBrick();
                 break;
             case RANDOM:
+                brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
+            case NONE:
             default:
-                brick = Utils.probabilisticBrick(difficulty, RandomTypes.RANDOM.getRandomType());
+                throw new IllegalStateException("Incredible situation!");
             }
             result.append(brick - Const.CURRENT_SET * 10);
             state.setBrick(i, state.getHeight() - 1, new Brick(brick, layer));

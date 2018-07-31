@@ -1,9 +1,11 @@
 package com.foxcatgames.boggarton.scenes;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Timer;
 
 import com.foxcatgames.boggarton.engine.EventManager;
+import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.engine.Layer;
 
 abstract public class AbstractScene {
@@ -75,4 +77,15 @@ abstract public class AbstractScene {
         EventManager.getInstance().clear();
         layer.removeAll();
     }
+
+    protected void addKeyEscape(SceneItem sceneItem) {
+        final KeyListener escape = new KeyListener() {
+            @Override
+            public void onKeyUp() {
+                nextScene(sceneItem);
+            }
+        };
+        EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
+    }
+
 }

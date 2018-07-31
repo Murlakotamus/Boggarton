@@ -12,27 +12,27 @@ abstract public class AbstractGameScene extends AbstractScene {
 
     AbstractGameScene(final SceneItem scene) {
         super(scene);
-        addEscape();
-        addPause();
+        addKeyEscape(SceneItem.MENU);
+        addKeyPause();
     }
 
     abstract protected void hideGlass();
 
     abstract protected void showGlass();
 
-    private void addEscape() {
+    protected void addKeyEscape(SceneItem sceneItem) {
         final KeyListener escape = new KeyListener() {
             @Override
             public void onKeyUp() {
                 escapePressed = true;
                 setGameOver();
-                nextScene(SceneItem.MENU);
+                nextScene(sceneItem);
             }
         };
         EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
     }
 
-    private void addPause() {
+    private void addKeyPause() {
         final KeyListener pause = new KeyListener() {
             @Override
             public void onKeyDown() {

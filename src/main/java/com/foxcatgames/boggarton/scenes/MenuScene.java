@@ -154,7 +154,7 @@ public class MenuScene extends AbstractLogoScene {
         addKeyUp();
         addKeyDown();
         addKeyEnter();
-        addKeyEscape();
+        addKeyEscape(SceneItem.OUTRO);
     }
 
     private void addKeyUp() {
@@ -233,16 +233,6 @@ public class MenuScene extends AbstractLogoScene {
         if (param > max)
             param = min;
         return param;
-    }
-
-    private void addKeyEscape() {
-        final KeyListener escape = new KeyListener() {
-            @Override
-            public void onKeyUp() {
-                nextScene(SceneItem.OUTRO);
-            }
-        };
-        EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
     }
 
     @Override

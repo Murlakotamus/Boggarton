@@ -35,15 +35,15 @@ public enum SceneItem {
             return new MenuScene();
         case GAME:
         case PRACTICE:
-            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType.getRandomType());
+            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType);
         case ONE_PLAYER_DEMO:
-            return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType.getRandomType());
+            return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType);
         case PLAYER_VS_COMP:
-            return new PlayerVsCompGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType.getRandomType());
+            return new PlayerVsCompGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType);
         case TWO_PLAYERS_GAME:
-            return new PlayerVsPlayerGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType.getRandomType());
+            return new TwoPlayersGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType);
         case TWO_PLAYERS_DEMO:
-            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.figureSize, yuckType, randomType.getRandomType());
+            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.figureSize, yuckType, randomType);
         case REPLAY_GAME:
             return new Replay(WIDTH, HEIGHT, 3, AbstractScene.figureSize);
         case OUTRO:

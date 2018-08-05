@@ -22,7 +22,7 @@ abstract public class AbstractForecast implements IForecast {
     }
 
     @Override
-    public int getLenght() {
+    public int getFigureSize() {
         return size;
     }
 

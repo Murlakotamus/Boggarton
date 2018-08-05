@@ -16,14 +16,17 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
 
     private final SimpleEntity gamePaused;
 
-    public OnePlayerGame(final int width, final int height, final int forecast, final int figureSize, final int[] randomType) {
+    public OnePlayerGame(final int width, final int height, final int forecast, final int figureSize,
+            final RandomTypes randomType) {
+
         super(SceneItem.PRACTICE);
         gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty, randomType);
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty,
+                randomType);
         game.setName("Human");
         game.startGame();
-        new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
+        player = new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
     }
 
     @Override

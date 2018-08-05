@@ -12,6 +12,7 @@ import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
+import com.foxcatgames.boggarton.scenes.RandomTypes;
 import com.foxcatgames.boggarton.scenes.YuckTypes;
 
 public class MultiplayerGame extends AbstractGame {
@@ -25,7 +26,7 @@ public class MultiplayerGame extends AbstractGame {
     private final Vector2f yuckPosition;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final int victories, YuckTypes yuckType, final int[] randomType) {
+            final int difficulty, final int victories, YuckTypes yuckType, final RandomTypes randomType) {
 
         super(layer, x, y, width, height, forecast, lenght, difficulty, randomType);
         this.yuckType = yuckType;
@@ -134,5 +135,9 @@ public class MultiplayerGame extends AbstractGame {
         int result = enemyGlass.getGlassState().getReactionLenght() - 2;
         result = result > 0 ? result : 0;
         return result + yucks;
+    }
+
+    public YuckTypes getYuckType() {
+        return yuckType;
     }
 }

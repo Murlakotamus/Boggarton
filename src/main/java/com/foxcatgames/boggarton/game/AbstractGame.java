@@ -28,6 +28,7 @@ import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.AbstractScene;
+import com.foxcatgames.boggarton.scenes.RandomTypes;
 
 /**
  * The Game is the Glass, Forecast and the all motion inside the Glass.
@@ -73,7 +74,8 @@ abstract public class AbstractGame {
     protected int lastScore = 0;
 
     public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final int[] randomType) {
+            final int difficulty, final RandomTypes randomType) {
+
         this.x = x;
         this.y = y;
         if (forecast >= 1)

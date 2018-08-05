@@ -6,12 +6,16 @@ import static com.foxcatgames.boggarton.Const.GAME_PAUSED;
 import static com.foxcatgames.boggarton.Const.LOSER;
 import static com.foxcatgames.boggarton.Const.WINNER;
 
+import java.sql.SQLException;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
+import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.game.utils.Victories;
+import com.foxcatgames.boggarton.players.IPlayer;
 
 abstract public class AbstractMultiplayerGame extends AbstractGameScene {
 
@@ -27,8 +31,11 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     protected MultiplayerGame[] game;
     private final SimpleEntity gamePaused[];
 
+    protected IPlayer first;
+    protected IPlayer second;
+
     AbstractMultiplayerGame(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
-            YuckTypes yuckType, final int[] randomType) {
+            YuckTypes yuckType, final RandomTypes randomType) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
@@ -50,6 +57,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, Math.min(prognosis, forecast[i]), length, difficulty, Victories.getVictories(i),
                     yuckType, randomType); // FIXME => vic to player
+
             if (i < 4)
                 game[i].setName(PLAYERS_NAMES[i]);
             else
@@ -84,11 +92,23 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         }
     }
 
+    protected void saveOutcome(final int loserNumber) {
+        try {
+            if (loserNumber == 0)
+                DbHandler.getInstance().saveGameOutcome(second.getSurrogatePlayerParams(), first.getSurrogatePlayerParams());
+            else
+                DbHandler.getInstance().saveGameOutcome(first.getSurrogatePlayerParams(), second.getSurrogatePlayerParams());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void changes() {
         for (int i = 0; i < numPlayers; i++)
             if (game[i].isGameOver() && loser == null) {
                 losersAndWinners(i);
+                saveOutcome(i);
                 pauseBetweenGames = System.currentTimeMillis();
             }
 

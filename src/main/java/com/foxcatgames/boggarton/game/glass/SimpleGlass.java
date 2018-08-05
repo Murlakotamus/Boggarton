@@ -257,4 +257,8 @@ public class SimpleGlass extends AbstractGlass {
     public Frame getFrame() {
         return frame;
     }
+
+    public int getCount() {
+        return count;
+    }
 }

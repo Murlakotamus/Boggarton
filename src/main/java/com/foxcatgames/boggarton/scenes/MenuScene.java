@@ -58,6 +58,10 @@ public class MenuScene extends AbstractLogoScene {
     }
 
     private void restoreSettings() {
+        final File configFile = new File(CONFIG);
+        if (!configFile.exists())
+            return;
+
         try (final BufferedReader in = new BufferedReader(new FileReader(new File(CONFIG)))) {
             final Properties props = new Properties();
             props.load(in);

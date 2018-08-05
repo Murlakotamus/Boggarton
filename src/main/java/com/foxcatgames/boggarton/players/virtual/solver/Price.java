@@ -6,4 +6,9 @@ public class Price implements IPrice {
     public int getPrice(final Solution solution) {
         return solution.getFullness() * solution.getFullness() + solution.getScore();
     }
+
+    @Override
+    public String getName() {
+        return "classic";
+    }
 }

@@ -8,4 +8,8 @@ public class EffectiveVirtualNonAdaptivePlayer extends AbstractVirtualNonAdaptiv
     public EffectiveVirtualNonAdaptivePlayer(final AbstractGame game, final IPrice price) {
         super(game, price, false);
     }
+
+    public String getName() {
+        return "Улюкаев"; // Улюкаев эффективный, но не адаптивный
+    }
 }

@@ -41,6 +41,10 @@ public class Replay extends AbstractOnePlayerGame {
     }
 
     @Override
+    protected void saveOutcome() {
+    }
+
+    @Override
     protected void hideGlass() {
     }
 

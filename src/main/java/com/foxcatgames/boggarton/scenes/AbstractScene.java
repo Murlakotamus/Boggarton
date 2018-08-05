@@ -78,7 +78,7 @@ abstract public class AbstractScene {
         layer.removeAll();
     }
 
-    protected void addKeyEscape(SceneItem sceneItem) {
+    protected void addKeyEscape(final SceneItem sceneItem) {
         final KeyListener escape = new KeyListener() {
             @Override
             public void onKeyUp() {

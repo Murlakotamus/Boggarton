@@ -2,14 +2,19 @@ package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.AbstractGame;
+import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
+import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
+import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
+import com.foxcatgames.boggarton.players.IPlayer;
+import com.foxcatgames.boggarton.players.SurrogatePlayerParams;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
 import com.foxcatgames.boggarton.players.virtual.solver.Solution;
 import com.foxcatgames.boggarton.players.virtual.solver.Solver;
 
-abstract public class AbstractVirtualPlayer extends AbstractExecutor {
+abstract public class AbstractVirtualPlayer extends AbstractExecutor implements IPlayer {
 
     private final Solver solver;
     private final IPrice price;
@@ -17,7 +22,7 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor {
     public AbstractVirtualPlayer(final AbstractGame game, final String name, final IPrice price, final boolean moveDown) {
         super(game);
         this.price = price;
-        solver = new Solver(game, moveDown, game.getForecast().getLenght());
+        solver = new Solver(game, moveDown, game.getForecast().getFigureSize());
         final Thread thread = new Thread(this);
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.setName(game.getName() + ", " + thread.getId());
@@ -25,7 +30,7 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor {
     }
 
     protected char[] getMoves(final int dept) {
-        Solution solution = solver.getSolution(dept, price);
+        final Solution solution = solver.getSolution(dept, price);
         Logger.log(Thread.currentThread().getName() + ", " + solution);
         return solution.getMoves();
     }
@@ -34,7 +39,7 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor {
         try {
             while (game.isGameOn()) {
                 final Pair<IGlassState, IForecast> buffer = game.getBuffer();
-                IGlassState glassState = buffer.getFirst();
+                final IGlassState glassState = buffer.getFirst();
                 if (glassState == null)
                     break;
 
@@ -51,4 +56,30 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor {
     }
 
     abstract protected void makeMoves(final char... moves) throws InterruptedException;
+
+    @Override
+    public SurrogatePlayerParams getSurrogatePlayerParams() {
+        final SurrogatePlayerParams.Builder builder = new SurrogatePlayerParams.Builder();
+
+        builder.setPrognosisDebth(game.getForecast().getDepth());
+        builder.setFigureSize(game.getForecast().getFigureSize());
+        builder.setScore(game.getGlass().getGlassState().getScore());
+        builder.setPriceName(price.getName());
+
+        if (game.getForecast() instanceof SimpleForecast)
+            builder.setSetSize(((SimpleForecast) game.getForecast()).getDifficulty());
+
+        if (game.getForecast() instanceof SimpleForecast)
+            builder.setRandomName(((SimpleForecast) game.getForecast()).getRandomType().getName());
+
+        if (game.getGlass() instanceof SimpleGlass)
+            builder.setCount(((SimpleGlass) game.getGlass()).getCount());
+
+        builder.setPlayerName(getName());
+
+        if (game instanceof MultiplayerGame)
+            builder.setYuckName(((MultiplayerGame) game).getYuckType().getName());
+
+        return builder.build();
+    }
 }

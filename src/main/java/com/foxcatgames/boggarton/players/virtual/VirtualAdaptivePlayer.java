@@ -8,4 +8,8 @@ public class VirtualAdaptivePlayer extends AbstractVirtualAdaptivePlayer {
     public VirtualAdaptivePlayer(final AbstractGame game, final IPrice price) {
         super(game, price, true);
     }
+
+    public String getName() {
+        return "Путин"; // Путин адаптивный, но не эффективный
+    }
 }

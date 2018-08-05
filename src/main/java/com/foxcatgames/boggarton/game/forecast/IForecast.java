@@ -5,7 +5,7 @@ import com.foxcatgames.boggarton.game.figure.IFigure;
 public interface IForecast {
 
     int getDepth();
-    int getLenght();
+    int getFigureSize();
 
     IFigure getForecast();
     IFigure getForecast(int i);

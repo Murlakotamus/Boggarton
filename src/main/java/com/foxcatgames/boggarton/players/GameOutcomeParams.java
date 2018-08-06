@@ -1,20 +1,22 @@
 package com.foxcatgames.boggarton.players;
 
-public class SurrogatePlayerParams {
+public class GameOutcomeParams {
 
     final private Integer prognosisDebth;
     final private Integer setSize;
     final private Integer figureSize;
-    private Integer score;
-    private Integer count;
+    final private Integer score;
+    final private Integer count;
 
     final private String playerName;
     final private String yuckName;
     final private String randomName;
     final private String priceName;
 
-    private SurrogatePlayerParams(final Integer prognosisDebth, final Integer setSize, final Integer figureSize, final Integer score, final Integer count,
-            final String playerName, final String yuckName, String randomName, String priceName) {
+    final private Boolean virtual;
+
+    private GameOutcomeParams(final Integer prognosisDebth, final Integer setSize, final Integer figureSize, final Integer score, final Integer count,
+            final String playerName, final String yuckName, String randomName, String priceName, final Boolean virtual) {
 
         this.prognosisDebth = prognosisDebth;
         this.setSize = setSize;
@@ -26,6 +28,8 @@ public class SurrogatePlayerParams {
         this.yuckName = yuckName;
         this.randomName = randomName;
         this.priceName = priceName;
+
+        this.virtual = virtual;
     }
 
     public static final class Builder {
@@ -40,6 +44,8 @@ public class SurrogatePlayerParams {
         private String yuckName = "";
         private String randomName = "";
         private String priceName = "";
+
+        private Boolean virtual = true;
 
         public Builder setPrognosisDebth(final Integer prognosisDebth) {
             this.prognosisDebth = prognosisDebth;
@@ -86,8 +92,13 @@ public class SurrogatePlayerParams {
             return this;
         }
 
-        public SurrogatePlayerParams build() {
-            return new SurrogatePlayerParams(prognosisDebth, setSize, figureSize, score, count, playerName, yuckName, randomName, priceName);
+        public Builder setVirtual(final Boolean virtual) {
+            this.virtual = virtual;
+            return this;
+        }
+
+        public GameOutcomeParams build() {
+            return new GameOutcomeParams(prognosisDebth, setSize, figureSize, score, count, playerName, yuckName, randomName, priceName, virtual);
         }
     }
 
@@ -126,4 +137,9 @@ public class SurrogatePlayerParams {
     public String getPriceName() {
         return priceName;
     }
+
+    public Boolean isVirtual() {
+        return virtual;
+    }
+
 }

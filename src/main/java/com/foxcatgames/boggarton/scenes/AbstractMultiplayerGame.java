@@ -95,9 +95,9 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     protected void saveOutcome(final int loserNumber) {
         try {
             if (loserNumber == 0)
-                DbHandler.getInstance().saveGameOutcome(second.getSurrogatePlayerParams(), first.getSurrogatePlayerParams());
+                DbHandler.getInstance().saveGameOutcome(second, first);
             else
-                DbHandler.getInstance().saveGameOutcome(first.getSurrogatePlayerParams(), second.getSurrogatePlayerParams());
+                DbHandler.getInstance().saveGameOutcome(first, second);
         } catch (SQLException e) {
             e.printStackTrace();
         }

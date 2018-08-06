@@ -11,17 +11,18 @@ import java.util.Date;
 
 import org.sqlite.JDBC;
 
-import com.foxcatgames.boggarton.players.SurrogatePlayerParams;
+import com.foxcatgames.boggarton.players.IPlayer;
+import com.foxcatgames.boggarton.players.GameOutcomeParams;
 
 public class DbHandler {
 
     private static final String GAMES = "CREATE TABLE IF NOT EXISTS Games (ga_id INTEGER PRIMARY KEY AUTOINCREMENT, ga_time DATETIME)";
-    private static final String LOSERS = "CREATE TABLE IF NOT EXISTS Losers (lo_game INTEGER, lo_debth INTEGER, lo_set INTEGER, lo_size INTEGER, lo_score INTEGER, lo_count INTEGER, lo_player TEXT, lo_yuck TEXT, lo_random TEXT, lo_price TEXT, FOREIGN KEY(lo_game) REFERENCES artist(ga_id))";
-    private static final String WINNERS = "CREATE TABLE IF NOT EXISTS Winners (wi_game INTEGER, wi_debth INTEGER, wi_set INTEGER, wi_size INTEGER, wi_score INTEGER, wi_count INTEGER, wi_player TEXT, wi_yuck TEXT, wi_random TEXT, wi_price TEXT, FOREIGN KEY(wi_game) REFERENCES artist(ga_id))";
+    private static final String LOSERS = "CREATE TABLE IF NOT EXISTS Losers (lo_game INTEGER, lo_debth INTEGER, lo_set INTEGER, lo_size INTEGER, lo_score INTEGER, lo_count INTEGER, lo_player TEXT, lo_yuck TEXT, lo_random TEXT, lo_price TEXT, lo_virtual INTEGER, FOREIGN KEY(lo_game) REFERENCES artist(ga_id))";
+    private static final String WINNERS = "CREATE TABLE IF NOT EXISTS Winners (wi_game INTEGER, wi_debth INTEGER, wi_set INTEGER, wi_size INTEGER, wi_score INTEGER, wi_count INTEGER, wi_player TEXT, wi_yuck TEXT, wi_random TEXT, wi_price TEXT, wi_virtual INTEGER, FOREIGN KEY(wi_game) REFERENCES artist(ga_id))";
 
     private static final String GAME = "INSERT INTO Games (ga_time) values(?)";
-    private static final String LOSER = "INSERT INTO Losers  (lo_game, lo_debth, lo_set, lo_size, lo_score, lo_count, lo_player, lo_yuck, lo_random, lo_price) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String WINNER = "INSERT INTO Winners (wi_game, wi_debth, wi_set, wi_size, wi_score, wi_count, wi_player, wi_yuck, wi_random, wi_price) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String LOSER = "INSERT INTO Losers  (lo_game, lo_debth, lo_set, lo_size, lo_score, lo_count, lo_player, lo_yuck, lo_random, lo_price, lo_virtual) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String WINNER = "INSERT INTO Winners (wi_game, wi_debth, wi_set, wi_size, wi_score, wi_count, wi_player, wi_yuck, wi_random, wi_price, wi_virtual) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String CONN_STR = "jdbc:sqlite:boggarton.db";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,9 +50,10 @@ public class DbHandler {
     private DbHandler() throws SQLException {
         DriverManager.registerDriver(new JDBC());
         conn = DriverManager.getConnection(CONN_STR);
+        conn.setAutoCommit(false);
     }
 
-    private void executePreraredStatemnt(final PreparedStatement st, final Integer id, final SurrogatePlayerParams params) throws SQLException {
+    private void executePreraredStatemnt(final PreparedStatement st, final Integer id, final GameOutcomeParams params) throws SQLException {
         st.setInt(1, id);
 
         st.setInt(2, params.getPrognosisDebth());
@@ -65,31 +67,42 @@ public class DbHandler {
         st.setString(9, params.getRandomName());
         st.setString(10, params.getPriceName());
 
+        st.setInt(11, params.isVirtual() ? 1 : 0);
+
         st.executeUpdate();
     }
 
-    public void saveGameOutcome(final SurrogatePlayerParams winner, final SurrogatePlayerParams loser) throws SQLException {
-        final Statement stmt = conn.createStatement();
+    public void saveGameOutcome(final IPlayer winner, final IPlayer loser) {
         try {
-            stmt.executeUpdate("BEGIN");
-
+            final Statement stmt = conn.createStatement();
             final String date = DATE_FORMAT.format(new Date());
+
             gameStmt.setString(1, date);
             gameStmt.executeUpdate();
 
             final ResultSet rs = stmt.executeQuery("select max(ga_id) as id from games");
             final Integer gameId = rs.getInt("id");
 
-            executePreraredStatemnt(loserStmt, gameId, loser);
+            executePreraredStatemnt(loserStmt, gameId, loser.getSurrogatePlayerParams());
             if (winner != null)
-                executePreraredStatemnt(winnerStmt, gameId, winner);
+                executePreraredStatemnt(winnerStmt, gameId, winner.getSurrogatePlayerParams());
 
             rs.close();
             stmt.close();
-            conn.createStatement().executeUpdate("COMMIT");
-        } catch (SQLException e) {
-            conn.createStatement().executeUpdate("ROLLBACK");
+            conn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                conn.rollback();
+            } catch (SQLException sqlEx) {
+                sqlEx.printStackTrace();
+            }
+
         }
+    }
+
+    public void saveGameOutcome(final IPlayer loser) throws SQLException {
+        saveGameOutcome(null, loser);
     }
 
     private static void initDb(final DbHandler dbHandler) throws SQLException {

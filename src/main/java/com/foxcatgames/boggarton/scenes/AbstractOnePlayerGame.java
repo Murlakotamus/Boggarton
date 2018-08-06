@@ -27,7 +27,7 @@ abstract public class AbstractOnePlayerGame extends AbstractGameScene {
 
     protected void saveOutcome() {
         try {
-            DbHandler.getInstance().saveGameOutcome(null, player.getSurrogatePlayerParams());
+            DbHandler.getInstance().saveGameOutcome(player);
         } catch (SQLException e) {
             e.printStackTrace();
         }

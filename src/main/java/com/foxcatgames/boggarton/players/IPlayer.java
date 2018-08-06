@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.players;
 
 public interface IPlayer {
 
-    SurrogatePlayerParams getSurrogatePlayerParams();
+    GameOutcomeParams getSurrogatePlayerParams();
 
     String getName();
 }

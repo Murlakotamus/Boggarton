@@ -71,8 +71,8 @@ public class RealPlayer implements IPlayer {
     }
 
     @Override
-    public SurrogatePlayerParams getSurrogatePlayerParams() {
-        final SurrogatePlayerParams.Builder builder = new SurrogatePlayerParams.Builder();
+    public GameOutcomeParams getSurrogatePlayerParams() {
+        final GameOutcomeParams.Builder builder = new GameOutcomeParams.Builder();
 
         builder.setPrognosisDebth(game.getForecast().getDepth());
         builder.setFigureSize(game.getForecast().getFigureSize());
@@ -91,6 +91,8 @@ public class RealPlayer implements IPlayer {
 
         if (game instanceof MultiplayerGame)
             builder.setYuckName(((MultiplayerGame) game).getYuckType().getName());
+
+        builder.setVirtual(false);
 
         return builder.build();
     }

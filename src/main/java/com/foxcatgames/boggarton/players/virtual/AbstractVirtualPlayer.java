@@ -9,7 +9,7 @@ import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
-import com.foxcatgames.boggarton.players.SurrogatePlayerParams;
+import com.foxcatgames.boggarton.players.GameOutcomeParams;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
 import com.foxcatgames.boggarton.players.virtual.solver.Solution;
 import com.foxcatgames.boggarton.players.virtual.solver.Solver;
@@ -58,8 +58,8 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
     abstract protected void makeMoves(final char... moves) throws InterruptedException;
 
     @Override
-    public SurrogatePlayerParams getSurrogatePlayerParams() {
-        final SurrogatePlayerParams.Builder builder = new SurrogatePlayerParams.Builder();
+    public GameOutcomeParams getSurrogatePlayerParams() {
+        final GameOutcomeParams.Builder builder = new GameOutcomeParams.Builder();
 
         builder.setPrognosisDebth(game.getForecast().getDepth());
         builder.setFigureSize(game.getForecast().getFigureSize());
@@ -79,6 +79,8 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
 
         if (game instanceof MultiplayerGame)
             builder.setYuckName(((MultiplayerGame) game).getYuckType().getName());
+
+        builder.setVirtual(true);
 
         return builder.build();
     }

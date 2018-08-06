@@ -6,10 +6,11 @@ import com.foxcatgames.boggarton.players.virtual.solver.Price;
 
 public class OnePlayerDemo extends AbstractOnePlayerGame {
 
-    public OnePlayerDemo(final int width, final int height, final int forecast, final int figureSize, final RandomTypes randomType) {
+    public OnePlayerDemo(final int width, final int height, final int forecast, final int figureSize, final RandomTypes randomType,
+            final DifficultyTypes difficulty) {
 
         super(SceneItem.ONE_PLAYER_DEMO);
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty, randomType);
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType);
         game.setName("Virtual");
         game.initLogger();
         game.startGame();

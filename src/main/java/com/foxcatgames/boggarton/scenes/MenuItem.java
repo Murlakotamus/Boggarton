@@ -3,7 +3,8 @@ package com.foxcatgames.boggarton.scenes;
 public enum MenuItem {
 
     START("Start"), MODE("Mode", SceneItem.getAllSceneNames()), YUCKS("Yucks", YuckTypes.getAllYuckNames()), RANDOM_TYPE("Brick's appearance",
-            RandomTypes.getRandomTypeNames()), DIFFICULTY("Difficulty"), FIGURE_SIZE("Figure size"), PROGNOSIS("Prognosis"), ABOUT("About");
+            RandomTypes.getRandomTypeNames()), DIFFICULTY("Difficulty",
+                    DifficultyTypes.getAllDifficultyNames()), FIGURE_SIZE("Figure size"), PROGNOSIS("Prognosis"), ABOUT("About");
 
     final private String name;
     final private String[] values;

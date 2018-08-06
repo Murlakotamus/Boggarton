@@ -53,7 +53,7 @@ public class MenuScene extends AbstractLogoScene {
             brickSet[i] = new Brick(10 * Const.CURRENT_SET + 1 + i, layer);
 
         drawMenu();
-        drawPrognosis();
+        drawPrognosis(SceneItem.getSetSize());
         addKeyHandlers();
     }
 
@@ -87,7 +87,10 @@ public class MenuScene extends AbstractLogoScene {
                         bricks.setPosition(SceneItem.nextRandomType());
                     break;
                 case "DIFFICULTY":
-                    difficulty = setParam(value, MIN_DIFFICULTY, MAX_DIFFICULTY);
+                    final MenuItem difficulty = MenuItem.DIFFICULTY;
+                    SceneItem.dropDifficultyType();
+                    for (int i = 0; i < value; i++)
+                        difficulty.setPosition(SceneItem.nextDifficultyType());
                     break;
                 case "FIGURE_SIZE":
                     figureSize = setParam(value, MIN_SIZE, MAX_SIZE);
@@ -111,7 +114,7 @@ public class MenuScene extends AbstractLogoScene {
             props.setProperty(MenuItem.MODE.name(), "" + MenuItem.MODE.getPosition());
             props.setProperty(MenuItem.YUCKS.name(), "" + MenuItem.YUCKS.getPosition());
             props.setProperty(MenuItem.RANDOM_TYPE.name(), "" + MenuItem.RANDOM_TYPE.getPosition());
-            props.setProperty(MenuItem.DIFFICULTY.name(), "" + difficulty);
+            props.setProperty(MenuItem.DIFFICULTY.name(), "" + MenuItem.DIFFICULTY.getPosition());
             props.setProperty(MenuItem.FIGURE_SIZE.name(), "" + figureSize);
             props.setProperty(MenuItem.PROGNOSIS.name(), "" + prognosis);
 
@@ -146,12 +149,12 @@ public class MenuScene extends AbstractLogoScene {
         }
     }
 
-    private void drawPrognosis() {
+    private void drawPrognosis(int setSize) {
         if (forecast != null)
             forecast.unspawn();
 
         forecast = new MenuForecast(layer, new Vector2f(470 - BOX * figureSize + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 170), prognosis, figureSize,
-                difficulty);
+                setSize);
     }
 
     private void addKeyHandlers() {
@@ -207,16 +210,17 @@ public class MenuScene extends AbstractLogoScene {
                     drawMenu();
                     break;
                 case DIFFICULTY:
-                    difficulty = changeParam(difficulty, MIN_DIFFICULTY, MAX_DIFFICULTY);
-                    drawPrognosis();
+                    menuItem.setPosition(SceneItem.nextDifficultyType());
+                    drawMenu();
+                    drawPrognosis(SceneItem.getSetSize());
                     break;
                 case FIGURE_SIZE:
                     figureSize = changeParam(figureSize, MIN_SIZE, MAX_SIZE);
-                    drawPrognosis();
+                    drawPrognosis(SceneItem.getSetSize());
                     break;
                 case PROGNOSIS:
                     prognosis = changeParam(prognosis, MIN_PROGNOSIS, MAX_PROGNOSIS);
-                    drawPrognosis();
+                    drawPrognosis(SceneItem.getSetSize());
                     break;
                 default:
                     nextScene = SceneItem.ABOUT;

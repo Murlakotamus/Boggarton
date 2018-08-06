@@ -17,6 +17,7 @@ public enum SceneItem {
     private static final int[] PROGNOSIS = { AbstractScene.prognosis, AbstractScene.prognosis };
     private static YuckTypes yuckType = YuckTypes.RANDOM;
     private static RandomTypes randomType = RandomTypes.RANDOM;
+    private static DifficultyTypes difficultyType = DifficultyTypes.EASY;
     private static SceneItem currentGameScene = GAME;
 
     SceneItem() {
@@ -35,15 +36,15 @@ public enum SceneItem {
             return new MenuScene();
         case GAME:
         case PRACTICE:
-            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType);
+            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType, difficultyType);
         case ONE_PLAYER_DEMO:
-            return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType);
+            return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType, difficultyType);
         case PLAYER_VS_COMP:
-            return new PlayerVsCompGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType);
+            return new PlayerVsCompGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
         case TWO_PLAYERS_GAME:
-            return new TwoPlayersGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType);
+            return new TwoPlayersGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
         case TWO_PLAYERS_DEMO:
-            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.figureSize, yuckType, randomType);
+            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.figureSize, yuckType, randomType, difficultyType);
         case REPLAY_GAME:
             return new Replay(WIDTH, HEIGHT, 3, AbstractScene.figureSize);
         case OUTRO:
@@ -85,6 +86,19 @@ public enum SceneItem {
 
     public static void dropRandomType() {
         randomType = RandomTypes.RANDOM;
+    }
+
+    public static int getSetSize() {
+        return difficultyType.getSetSize();
+    }
+
+    public static int nextDifficultyType() {
+        difficultyType = difficultyType.next();
+        return difficultyType.ordinal();
+    }
+
+    public static void dropDifficultyType() {
+        difficultyType = DifficultyTypes.EASY;
     }
 
     public String getSceneName() {

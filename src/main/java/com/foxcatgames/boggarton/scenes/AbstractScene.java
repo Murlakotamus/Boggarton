@@ -14,7 +14,6 @@ abstract public class AbstractScene {
     private SceneItem scene;
     protected SceneItem nextScene;
 
-    protected volatile static int difficulty = 7;
     protected volatile static int prognosis = 3;
     protected static int figureSize = 3;
 

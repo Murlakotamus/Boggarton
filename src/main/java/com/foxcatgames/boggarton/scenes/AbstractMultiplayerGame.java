@@ -35,7 +35,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     protected IPlayer second;
 
     AbstractMultiplayerGame(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
-            YuckTypes yuckType, final RandomTypes randomType) {
+            YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
@@ -55,7 +55,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         game = new MultiplayerGame[numPlayers];
 
         for (int i = 0; i < numPlayers; i++) {
-            game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, Math.min(prognosis, forecast[i]), length, difficulty, Victories.getVictories(i),
+            game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, Math.min(prognosis, forecast[i]), length, difficulty.getSetSize(), Victories.getVictories(i),
                     yuckType, randomType); // FIXME => vic to player
 
             if (i < 4)

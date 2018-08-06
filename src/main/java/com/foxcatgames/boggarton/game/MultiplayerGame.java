@@ -26,19 +26,19 @@ public class MultiplayerGame extends AbstractGame {
     private final Vector2f yuckPosition;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final int victories, YuckTypes yuckType, final RandomTypes randomType) {
+            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType) {
 
-        super(layer, x, y, width, height, forecast, lenght, difficulty, randomType);
+        super(layer, x, y, width, height, forecast, lenght, setSize, randomType);
         this.yuckType = yuckType;
-        glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, difficulty);
+        glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, setSize);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
         showVictoies.spawn(new Vector2f(x + BOX * lenght + 20, y + BOX * height + 40));
         yuckPosition = new Vector2f(x + BOX * lenght + 20 + width * BOX + 15, y + BOX * height - BOX + 5);
         int num = 0;
         for (int i = 0; i < MAX_YUCKS; i++) {
             num = i;
-            if (i >= difficulty)
-                num = i % difficulty;
+            if (i >= setSize)
+                num = i % setSize;
             num = num + Const.CURRENT_SET * 10 + 1;
             yuckBricks[i] = new Brick(num, layer);
         }

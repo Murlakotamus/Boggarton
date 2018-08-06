@@ -12,15 +12,18 @@ import java.io.OutputStreamWriter;
 import java.util.Properties;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.openal.AL10;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.forecast.MenuForecast;
+import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 public class MenuScene extends AbstractLogoScene {
 
@@ -98,6 +101,12 @@ public class MenuScene extends AbstractLogoScene {
                 case "PROGNOSIS":
                     prognosis = setParam(value, MIN_PROGNOSIS, MAX_PROGNOSIS);
                     break;
+                case "SOUND":
+                    final MenuItem sound = MenuItem.SOUND;
+                    SceneItem.dropSoundType();
+                    for (int i = 0; i < value; i++)
+                        sound.setPosition(SceneItem.nextSoundType());
+                    break;
                 }
             }
         } catch (IOException e) {
@@ -117,6 +126,7 @@ public class MenuScene extends AbstractLogoScene {
             props.setProperty(MenuItem.DIFFICULTY.name(), "" + MenuItem.DIFFICULTY.getPosition());
             props.setProperty(MenuItem.FIGURE_SIZE.name(), "" + figureSize);
             props.setProperty(MenuItem.PROGNOSIS.name(), "" + prognosis);
+            props.setProperty(MenuItem.SOUND.name(), "" + MenuItem.SOUND.getPosition());
 
             props.store(bw, "");
         } catch (IOException e) {
@@ -167,6 +177,12 @@ public class MenuScene extends AbstractLogoScene {
     private void addKeyUp() {
         final KeyListener up = new KeyListener() {
             @Override
+            public void onKeyDown() {
+                if (SceneItem.getSound() == SoundTypes.ON)
+                    AL10.alSourcePlay(Sound.source.get(0));
+            }
+
+            @Override
             public void onKeyUp() {
                 if (--currentPosition < 0)
                     currentPosition = ITEMS_NUMBER - 1;
@@ -179,6 +195,12 @@ public class MenuScene extends AbstractLogoScene {
     private void addKeyDown() {
         final KeyListener down = new KeyListener() {
             @Override
+            public void onKeyDown() {
+                if (SceneItem.getSound() == SoundTypes.ON)
+                    AL10.alSourcePlay(Sound.source.get(0));
+            }
+
+            @Override
             public void onKeyUp() {
                 if (++currentPosition >= ITEMS_NUMBER)
                     currentPosition = 0;
@@ -190,6 +212,13 @@ public class MenuScene extends AbstractLogoScene {
 
     private void addKeyEnter() {
         final KeyListener enter = new KeyListener() {
+            @Override
+            public void onKeyDown() {
+                final MenuItem menuItem = ITEMS[currentPosition];
+                if (menuItem == MenuItem.SOUND || SceneItem.getSound() == SoundTypes.ON)
+                    AL10.alSourcePlay(Sound.source.get(1));
+            }
+
             @Override
             public void onKeyUp() {
                 final MenuItem menuItem = ITEMS[currentPosition];
@@ -222,6 +251,11 @@ public class MenuScene extends AbstractLogoScene {
                     prognosis = changeParam(prognosis, MIN_PROGNOSIS, MAX_PROGNOSIS);
                     drawPrognosis(SceneItem.getSetSize());
                     break;
+                case SOUND:
+                    menuItem.setPosition(SceneItem.nextSoundType());
+                    drawMenu();
+                    break;
+
                 default:
                     nextScene = SceneItem.ABOUT;
                 }

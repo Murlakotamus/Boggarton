@@ -3,6 +3,9 @@ package com.foxcatgames.boggarton.scenes;
 import com.foxcatgames.boggarton.players.virtual.EffectiveVirtualNonAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.Price;
+import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public class TwoPlayersDemo extends AbstractMultiplayerGame {
 

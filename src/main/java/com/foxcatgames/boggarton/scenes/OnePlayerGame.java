@@ -11,6 +11,8 @@ import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.SimpleGame;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.players.RealPlayer;
+import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 public class OnePlayerGame extends AbstractOnePlayerGame {
 

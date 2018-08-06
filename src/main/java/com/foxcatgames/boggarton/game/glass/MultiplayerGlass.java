@@ -6,8 +6,8 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.utils.Utils;
-import com.foxcatgames.boggarton.scenes.RandomTypes;
-import com.foxcatgames.boggarton.scenes.YuckTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public class MultiplayerGlass extends SimpleGlass {
 

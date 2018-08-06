@@ -1,4 +1,4 @@
-package com.foxcatgames.boggarton.scenes;
+package com.foxcatgames.boggarton.scenes.types;
 
 import java.util.ArrayList;
 import java.util.List;

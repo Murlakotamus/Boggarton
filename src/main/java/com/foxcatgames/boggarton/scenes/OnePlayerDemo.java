@@ -3,6 +3,8 @@ package com.foxcatgames.boggarton.scenes;
 import com.foxcatgames.boggarton.game.SimpleGame;
 import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.Price;
+import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 public class OnePlayerDemo extends AbstractOnePlayerGame {
 

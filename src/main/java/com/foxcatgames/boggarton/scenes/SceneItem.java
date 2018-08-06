@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.SoundTypes;
+import com.foxcatgames.boggarton.scenes.types.YuckTypes;
+
 public enum SceneItem {
     INTRO, MENU, GAME("Game"), PRACTICE("Practice"), ONE_PLAYER_DEMO("One player demo"), PLAYER_VS_COMP("Player vs. computer"), TWO_PLAYERS_GAME(
             "Two players game"), TWO_PLAYERS_DEMO("Two players demo"), REPLAY_GAME("Replay game"), ABOUT, OUTRO, FINISH_GAME;
@@ -18,6 +23,7 @@ public enum SceneItem {
     private static YuckTypes yuckType = YuckTypes.RANDOM;
     private static RandomTypes randomType = RandomTypes.RANDOM;
     private static DifficultyTypes difficultyType = DifficultyTypes.EASY;
+    private static SoundTypes soundType = SoundTypes.ON;
     private static SceneItem currentGameScene = GAME;
 
     SceneItem() {
@@ -104,6 +110,20 @@ public enum SceneItem {
     public String getSceneName() {
         return sceneName;
     }
+
+    public static SoundTypes getSound() {
+        return soundType;
+    }
+
+    public static int nextSoundType() {
+        soundType = soundType.next();
+        return soundType.ordinal();
+    }
+
+    public static void dropSoundType() {
+        soundType = SoundTypes.ON;
+    }
+
 
     public static String[] getAllSceneNames() {
         List<String> list = new ArrayList<>();

@@ -3,6 +3,9 @@ package com.foxcatgames.boggarton.scenes;
 import org.lwjgl.input.Keyboard;
 
 import com.foxcatgames.boggarton.players.RealPlayer;
+import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public class TwoPlayersGame extends AbstractMultiplayerGame {
 

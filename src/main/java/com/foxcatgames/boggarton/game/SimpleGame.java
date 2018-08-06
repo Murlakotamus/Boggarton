@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
-import com.foxcatgames.boggarton.scenes.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 public class SimpleGame extends AbstractGame {
 

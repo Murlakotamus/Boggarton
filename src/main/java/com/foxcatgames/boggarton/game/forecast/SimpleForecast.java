@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.game.figure.SimpleFigure;
-import com.foxcatgames.boggarton.scenes.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 public class SimpleForecast extends AbstractVisualForecast {
 

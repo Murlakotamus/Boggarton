@@ -14,6 +14,7 @@ public class Boggarton {
     }
 
     public static void main(String[] args) {
+        Sound.init();
         Graphics.init();
         Boggarton.run();
 
@@ -23,6 +24,7 @@ public class Boggarton {
             e.printStackTrace();
         }
 
+        Sound.destroy();
         Graphics.destroy();
     }
 }

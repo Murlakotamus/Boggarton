@@ -12,8 +12,8 @@ import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
-import com.foxcatgames.boggarton.scenes.RandomTypes;
-import com.foxcatgames.boggarton.scenes.YuckTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public class MultiplayerGame extends AbstractGame {
 

@@ -28,7 +28,7 @@ import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.AbstractScene;
-import com.foxcatgames.boggarton.scenes.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 /**
  * The Game is the Glass, Forecast and the all motion inside the Glass.

@@ -16,6 +16,9 @@ import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.IPlayer;
+import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.RandomTypes;
+import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 abstract public class AbstractMultiplayerGame extends AbstractGameScene {
 

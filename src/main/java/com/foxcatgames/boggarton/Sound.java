@@ -1,5 +1,10 @@
 package com.foxcatgames.boggarton;
 
+import static com.foxcatgames.boggarton.Const.SND_MOVE;
+import static com.foxcatgames.boggarton.Const.SND_SELECT;
+import static com.foxcatgames.boggarton.Const.WAV_MOVE;
+import static com.foxcatgames.boggarton.Const.WAV_SELECT;
+
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -8,6 +13,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
+
 
 public class Sound {
     static IntBuffer buffer = BufferUtils.createIntBuffer(2);
@@ -46,14 +52,12 @@ public class Sound {
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        WaveData waveFile = WaveData.create(Sound.class.getClass().getResource("/sounds/move.wav"));
-
-        AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
+        WaveData waveFile = WaveData.create(Sound.class.getClass().getResource(WAV_MOVE));
+        AL10.alBufferData(buffer.get(SND_MOVE), waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();
 
-        waveFile = WaveData.create(Sound.class.getClass().getResource("/sounds/select.wav"));
-
-        AL10.alBufferData(buffer.get(1), waveFile.format, waveFile.data, waveFile.samplerate);
+        waveFile = WaveData.create(Sound.class.getClass().getResource(WAV_SELECT));
+        AL10.alBufferData(buffer.get(SND_SELECT), waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();
 
         // Bind the buffer with the source.
@@ -62,17 +66,17 @@ public class Sound {
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        AL10.alSourcei(source.get(0), AL10.AL_BUFFER, buffer.get(0));
-        AL10.alSourcef(source.get(0), AL10.AL_PITCH, 1.0f);
-        AL10.alSourcef(source.get(0), AL10.AL_GAIN, 1.0f);
-        AL10.alSource(source.get(0), AL10.AL_POSITION, sourcePos);
-        AL10.alSource(source.get(0), AL10.AL_VELOCITY, sourceVel);
+        AL10.alSourcei(source.get(SND_MOVE), AL10.AL_BUFFER, buffer.get(SND_MOVE));
+        AL10.alSourcef(source.get(SND_MOVE), AL10.AL_PITCH, 1.0f);
+        AL10.alSourcef(source.get(SND_MOVE), AL10.AL_GAIN, 1.0f);
+        AL10.alSource(source.get(SND_MOVE), AL10.AL_POSITION, sourcePos);
+        AL10.alSource(source.get(SND_MOVE), AL10.AL_VELOCITY, sourceVel);
 
-        AL10.alSourcei(source.get(1), AL10.AL_BUFFER, buffer.get(1));
-        AL10.alSourcef(source.get(1), AL10.AL_PITCH, 1.0f);
-        AL10.alSourcef(source.get(1), AL10.AL_GAIN, 1.0f);
-        AL10.alSource(source.get(1), AL10.AL_POSITION, sourcePos);
-        AL10.alSource(source.get(1), AL10.AL_VELOCITY, sourceVel);
+        AL10.alSourcei(source.get(SND_SELECT), AL10.AL_BUFFER, buffer.get(SND_SELECT));
+        AL10.alSourcef(source.get(SND_SELECT), AL10.AL_PITCH, 1.0f);
+        AL10.alSourcef(source.get(SND_SELECT), AL10.AL_GAIN, 1.0f);
+        AL10.alSource(source.get(SND_SELECT), AL10.AL_POSITION, sourcePos);
+        AL10.alSource(source.get(SND_SELECT), AL10.AL_VELOCITY, sourceVel);
         
         // Do another error check and return.
         if (AL10.alGetError() == AL10.AL_NO_ERROR)
@@ -114,7 +118,7 @@ public class Sound {
         AL10.alGetError();
 
         if (loadALData() == AL10.AL_FALSE) {
-            System.out.println("Error loading data.");
+            Logger.err("Error loading data.");
             return;
         }
 

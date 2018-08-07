@@ -71,6 +71,14 @@ public class Const {
     public static final int FRAME_LOWER_BRIDGE = 112;
 
     public static final String FIGURE = "FIGURE: ";
-    public static final String YUCK   = "YUCK:   ";
+    public static final String YUCK = "YUCK:   ";
     public static final String GAMEOVER = "Game over!";
+
+    public static final int SND_MOVE = 0;
+    public static final int SND_SELECT = 1;
+
+    private static final String WAV_PATH = "/sounds/";
+    private static final String WAV_EXT = ".wav";
+    public static final String WAV_MOVE = WAV_PATH + "move" + WAV_EXT;
+    public static final String WAV_SELECT = WAV_PATH + "select" + WAV_EXT;
 }

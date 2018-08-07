@@ -179,7 +179,7 @@ public class MenuScene extends AbstractLogoScene {
             @Override
             public void onKeyDown() {
                 if (SceneItem.getSound() == SoundTypes.ON)
-                    AL10.alSourcePlay(Sound.source.get(0));
+                    AL10.alSourcePlay(Sound.source.get(SND_MOVE));
             }
 
             @Override
@@ -197,7 +197,7 @@ public class MenuScene extends AbstractLogoScene {
             @Override
             public void onKeyDown() {
                 if (SceneItem.getSound() == SoundTypes.ON)
-                    AL10.alSourcePlay(Sound.source.get(0));
+                    AL10.alSourcePlay(Sound.source.get(SND_MOVE));
             }
 
             @Override
@@ -216,7 +216,7 @@ public class MenuScene extends AbstractLogoScene {
             public void onKeyDown() {
                 final MenuItem menuItem = ITEMS[currentPosition];
                 if (menuItem == MenuItem.SOUND || SceneItem.getSound() == SoundTypes.ON)
-                    AL10.alSourcePlay(Sound.source.get(1));
+                    AL10.alSourcePlay(Sound.source.get(SND_SELECT));
             }
 
             @Override

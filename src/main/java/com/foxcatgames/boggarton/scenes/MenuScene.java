@@ -174,12 +174,16 @@ public class MenuScene extends AbstractLogoScene {
         addKeyEscape(SceneItem.OUTRO);
     }
 
+    private void playMove() {
+        if (SceneItem.getSound() == SoundTypes.ON)
+            AL10.alSourcePlay(Sound.source.get(SND_MOVE));
+    }
+
     private void addKeyUp() {
         final KeyListener up = new KeyListener() {
             @Override
             public void onKeyDown() {
-                if (SceneItem.getSound() == SoundTypes.ON)
-                    AL10.alSourcePlay(Sound.source.get(SND_MOVE));
+                playMove();
             }
 
             @Override
@@ -196,8 +200,7 @@ public class MenuScene extends AbstractLogoScene {
         final KeyListener down = new KeyListener() {
             @Override
             public void onKeyDown() {
-                if (SceneItem.getSound() == SoundTypes.ON)
-                    AL10.alSourcePlay(Sound.source.get(SND_MOVE));
+                playMove();
             }
 
             @Override

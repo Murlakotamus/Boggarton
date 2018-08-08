@@ -1,5 +1,6 @@
 package com.foxcatgames.boggarton.players;
 
+import com.foxcatgames.boggarton.GameOutcomeParams;
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.game.AbstractGame;

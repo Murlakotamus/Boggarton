@@ -1,4 +1,4 @@
-package com.foxcatgames.boggarton.players;
+package com.foxcatgames.boggarton;
 
 public class GameOutcomeParams {
 

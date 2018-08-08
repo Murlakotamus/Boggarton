@@ -1,5 +1,6 @@
 package com.foxcatgames.boggarton.players.virtual;
 
+import com.foxcatgames.boggarton.GameOutcomeParams;
 import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
@@ -9,7 +10,6 @@ import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
-import com.foxcatgames.boggarton.players.GameOutcomeParams;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
 import com.foxcatgames.boggarton.players.virtual.solver.Solution;
 import com.foxcatgames.boggarton.players.virtual.solver.Solver;

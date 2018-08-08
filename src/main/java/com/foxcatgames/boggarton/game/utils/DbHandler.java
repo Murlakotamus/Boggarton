@@ -11,8 +11,8 @@ import java.util.Date;
 
 import org.sqlite.JDBC;
 
+import com.foxcatgames.boggarton.GameOutcomeParams;
 import com.foxcatgames.boggarton.players.IPlayer;
-import com.foxcatgames.boggarton.players.GameOutcomeParams;
 
 public class DbHandler {
 

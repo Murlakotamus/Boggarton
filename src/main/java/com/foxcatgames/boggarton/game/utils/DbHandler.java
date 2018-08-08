@@ -83,9 +83,9 @@ public class DbHandler {
             final ResultSet rs = stmt.executeQuery("select max(ga_id) as id from games");
             final Integer gameId = rs.getInt("id");
 
-            executePreraredStatemnt(loserStmt, gameId, loser.getSurrogatePlayerParams());
+            executePreraredStatemnt(loserStmt, gameId, loser.getOutcomeGamesParams());
             if (winner != null)
-                executePreraredStatemnt(winnerStmt, gameId, winner.getSurrogatePlayerParams());
+                executePreraredStatemnt(winnerStmt, gameId, winner.getOutcomeGamesParams());
 
             rs.close();
             stmt.close();

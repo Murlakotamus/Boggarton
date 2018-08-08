@@ -60,11 +60,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
         for (int i = 0; i < numPlayers; i++) {
             game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, Math.min(prognosis, forecast[i]), length, difficulty.getSetSize(), Victories.getVictories(i),
                     yuckType, randomType); // FIXME => vic to player
-
-            if (i < 4)
-                game[i].setName(PLAYERS_NAMES[i]);
-            else
-                game[i].setName(i + " player");
+            game[i].setName(PLAYERS_NAMES[i]);
         }
 
         for (int i = 0; i < numPlayers; i++) {

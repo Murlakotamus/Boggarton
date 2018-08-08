@@ -14,8 +14,8 @@ public class TwoPlayersGame extends AbstractMultiplayerGame {
 
         super(SceneItem.PLAYER_VS_COMP, width, height, forecast, figureSize, 2, yuckType, randomType, difficulty);
 
-        new RealPlayer(game[0], Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_S, Keyboard.KEY_W);
-        new RealPlayer(game[1], Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
+        first = new RealPlayer(game[0], Keyboard.KEY_A, Keyboard.KEY_D, Keyboard.KEY_S, Keyboard.KEY_W);
+        second = new RealPlayer(game[1], Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
     }
 
     @Override

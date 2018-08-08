@@ -71,7 +71,7 @@ public class RealPlayer implements IPlayer {
     }
 
     @Override
-    public GameOutcomeParams getSurrogatePlayerParams() {
+    public GameOutcomeParams getOutcomeGamesParams() {
         final GameOutcomeParams.Builder builder = new GameOutcomeParams.Builder();
 
         builder.setPrognosisDebth(game.getForecast().getDepth());

@@ -16,8 +16,8 @@ public class PlayerVsCompGame extends AbstractMultiplayerGame {
 
         super(SceneItem.PLAYER_VS_COMP, width, height, forecast, figureSize, 2, yuckType, randomType, difficulty);
 
-        new EffectiveVirtualAdaptivePlayer(game[0], new Price());
-        new RealPlayer(game[1], Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
+        first = new EffectiveVirtualAdaptivePlayer(game[0], new Price());
+        second = new RealPlayer(game[1], Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
     }
 
     @Override

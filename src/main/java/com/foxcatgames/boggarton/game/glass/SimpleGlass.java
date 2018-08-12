@@ -13,6 +13,8 @@ import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.scenes.SceneItem;
+import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 public class SimpleGlass extends AbstractGlass {
 
@@ -188,7 +190,7 @@ public class SimpleGlass extends AbstractGlass {
         state.setBrick(i, j, getFigure().getBrick(num));
         addBrick(i, j);
 
-        getFigure().setNull(num, dropSound, false);
+        getFigure().setNull(num, dropSound, SceneItem.getSound() == SoundTypes.OFF);
         setChanges(true);
     }
 

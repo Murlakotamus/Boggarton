@@ -12,7 +12,7 @@ import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
 public class Sound {
-    static IntBuffer buffer = BufferUtils.createIntBuffer(17);
+    static IntBuffer buffer = BufferUtils.createIntBuffer(5);
 
     /** Sources are points emitting sound. */
     public static IntBuffer source = BufferUtils.createIntBuffer(17);
@@ -40,17 +40,12 @@ public class Sound {
         waveFile.dispose();
     }
 
-    private static void initPattern(int id) {
-        AL10.alSourcei(source.get(id), AL10.AL_BUFFER, buffer.get(id));
-        AL10.alSourcef(source.get(id), AL10.AL_PITCH, 1.0f);
-        AL10.alSourcef(source.get(id), AL10.AL_GAIN, 1.0f);
-        AL10.alSource(source.get(id), AL10.AL_POSITION, sourcePos);
-        AL10.alSource(source.get(id), AL10.AL_VELOCITY, sourceVel);
-    }
-
-    private static void initAllPatterns(int... ids) {
-        for (int id : ids)
-            initPattern(id);
+    private static void initPattern(final int bufferId, final int sourceId) {
+        AL10.alSourcei(source.get(sourceId), AL10.AL_BUFFER, buffer.get(bufferId));
+        AL10.alSourcef(source.get(sourceId), AL10.AL_PITCH, 1.0f);
+        AL10.alSourcef(source.get(sourceId), AL10.AL_GAIN, 1.0f);
+        AL10.alSource(source.get(sourceId), AL10.AL_POSITION, sourcePos);
+        AL10.alSource(source.get(sourceId), AL10.AL_VELOCITY, sourceVel);
     }
 
     /**
@@ -69,32 +64,35 @@ public class Sound {
 
         loadPattern(WAV_MOVE, SND_MOVE);
         loadPattern(WAV_SELECT, SND_SELECT);
-
-        loadPattern(WAV_DROP, SND_DROP0);
-        loadPattern(WAV_DROP, SND_DROP1);
-        loadPattern(WAV_DROP, SND_DROP2);
-        loadPattern(WAV_DROP, SND_DROP3);
-        loadPattern(WAV_DROP, SND_DROP4);
-
-        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT0);
-        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT1);
-        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT2);
-        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT3);
-        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT4);
-
-        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT0);
-        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT1);
-        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT2);
-        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT3);
-        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT4);
+        loadPattern(WAV_DROP, SND_DROP);
+        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT);
+        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT);
 
         // Bind the buffer with the source.
         AL10.alGenSources(source);
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        initAllPatterns(SND_MOVE, SND_SELECT, SND_DROP0, SND_DROP_LEFT0, SND_DROP_RIGHT0, SND_DROP1, SND_DROP_LEFT1, SND_DROP_RIGHT1, SND_DROP2, SND_DROP_LEFT2,
-                SND_DROP_RIGHT2, SND_DROP3, SND_DROP_LEFT3, SND_DROP_RIGHT3, SND_DROP4, SND_DROP_LEFT4, SND_DROP_RIGHT4);
+        initPattern(SND_MOVE, SND_MOVE);
+        initPattern(SND_SELECT, SND_SELECT);
+
+        initPattern(SND_DROP, SND_DROP0);
+        initPattern(SND_DROP, SND_DROP1);
+        initPattern(SND_DROP, SND_DROP2);
+        initPattern(SND_DROP, SND_DROP3);
+        initPattern(SND_DROP, SND_DROP4);
+
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT0);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT1);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT2);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT3);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT4);
+
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT0);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT1);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT2);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT3);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT4);
 
         // Do another error check and return.
         if (AL10.alGetError() == AL10.AL_NO_ERROR)

@@ -1,5 +1,6 @@
 package com.foxcatgames.boggarton.scenes;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.game.SimpleGame;
 import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.Price;
@@ -12,7 +13,7 @@ public class OnePlayerDemo extends AbstractOnePlayerGame {
             final DifficultyTypes difficulty) {
 
         super(SceneItem.ONE_PLAYER_DEMO);
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType, 2);
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType, Const.SND_DROP);
         game.setName("Virtual");
         game.initLogger();
         game.startGame();

@@ -12,10 +12,10 @@ import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 public class SimpleGame extends AbstractGame {
 
     public SimpleGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final RandomTypes randomType) {
+            final int difficulty, final RandomTypes randomType, final int... sounds) {
 
         super(layer, x, y, width, height, forecast, lenght, difficulty, randomType);
-        glass = new SimpleGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height);
+        glass = new SimpleGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, sounds);
     }
 
     @Override

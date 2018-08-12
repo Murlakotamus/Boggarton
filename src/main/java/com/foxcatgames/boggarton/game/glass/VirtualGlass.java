@@ -95,7 +95,7 @@ public class VirtualGlass extends AbstractGlass {
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, state.getFigure().getBrick(num));
         addBrick(i, j);
-        state.getFigure().setNull(num);
+        state.getFigure().setNull(num, 0, true);
         changes.setFlag(true);
     }
 

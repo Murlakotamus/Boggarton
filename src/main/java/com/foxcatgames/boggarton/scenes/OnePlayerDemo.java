@@ -12,7 +12,7 @@ public class OnePlayerDemo extends AbstractOnePlayerGame {
             final DifficultyTypes difficulty) {
 
         super(SceneItem.ONE_PLAYER_DEMO);
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType);
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType, 2);
         game.setName("Virtual");
         game.initLogger();
         game.startGame();

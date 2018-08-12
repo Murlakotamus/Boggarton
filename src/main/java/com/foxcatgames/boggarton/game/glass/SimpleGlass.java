@@ -25,8 +25,12 @@ public class SimpleGlass extends AbstractGlass {
     private boolean gamePaused;
     private int count; // figures counter
 
-    public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height) {
+    private int dropSound;
+
+    public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height, final int... sounds) {
         super(width, height);
+
+        dropSound = sounds[0];
 
         state.setBricks(new Brick[width][height]);
         frame = new Frame(layer, position, width, height, true, false);
@@ -38,8 +42,8 @@ public class SimpleGlass extends AbstractGlass {
         showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
     }
 
-    public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass) {
-        this(layer, position, width, height);
+    public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass, final int... sounds) {
+        this(layer, position, width, height, sounds);
 
         for (int i = 0; i < width; i++)
             for (int j = 0; j < height; j++)
@@ -183,7 +187,8 @@ public class SimpleGlass extends AbstractGlass {
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, getFigure().getBrick(num));
         addBrick(i, j);
-        getFigure().setNull(num);
+
+        getFigure().setNull(num, dropSound, false);
         setChanges(true);
     }
 

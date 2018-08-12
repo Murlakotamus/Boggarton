@@ -1,9 +1,6 @@
 package com.foxcatgames.boggarton;
 
-import static com.foxcatgames.boggarton.Const.SND_MOVE;
-import static com.foxcatgames.boggarton.Const.SND_SELECT;
-import static com.foxcatgames.boggarton.Const.WAV_MOVE;
-import static com.foxcatgames.boggarton.Const.WAV_SELECT;
+import static com.foxcatgames.boggarton.Const.*;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -14,12 +11,11 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
-
 public class Sound {
-    static IntBuffer buffer = BufferUtils.createIntBuffer(2);
+    static IntBuffer buffer = BufferUtils.createIntBuffer(17);
 
     /** Sources are points emitting sound. */
-    public static IntBuffer source = BufferUtils.createIntBuffer(2);
+    public static IntBuffer source = BufferUtils.createIntBuffer(17);
 
     /** Position of the source sound. */
     static FloatBuffer sourcePos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
@@ -38,6 +34,25 @@ public class Sound {
      */
     static FloatBuffer listenerOri = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
 
+    static void loadPattern(String filename, int id) {
+        WaveData waveFile = WaveData.create(Sound.class.getClass().getResource(filename));
+        AL10.alBufferData(buffer.get(id), waveFile.format, waveFile.data, waveFile.samplerate);
+        waveFile.dispose();
+    }
+
+    private static void initPattern(int id) {
+        AL10.alSourcei(source.get(id), AL10.AL_BUFFER, buffer.get(id));
+        AL10.alSourcef(source.get(id), AL10.AL_PITCH, 1.0f);
+        AL10.alSourcef(source.get(id), AL10.AL_GAIN, 1.0f);
+        AL10.alSource(source.get(id), AL10.AL_POSITION, sourcePos);
+        AL10.alSource(source.get(id), AL10.AL_VELOCITY, sourceVel);
+    }
+
+    private static void initAllPatterns(int... ids) {
+        for (int id : ids)
+            initPattern(id);
+    }
+
     /**
      * boolean LoadALData()
      *
@@ -52,32 +67,35 @@ public class Sound {
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        WaveData waveFile = WaveData.create(Sound.class.getClass().getResource(WAV_MOVE));
-        AL10.alBufferData(buffer.get(SND_MOVE), waveFile.format, waveFile.data, waveFile.samplerate);
-        waveFile.dispose();
+        loadPattern(WAV_MOVE, SND_MOVE);
+        loadPattern(WAV_SELECT, SND_SELECT);
 
-        waveFile = WaveData.create(Sound.class.getClass().getResource(WAV_SELECT));
-        AL10.alBufferData(buffer.get(SND_SELECT), waveFile.format, waveFile.data, waveFile.samplerate);
-        waveFile.dispose();
+        loadPattern(WAV_DROP, SND_DROP0);
+        loadPattern(WAV_DROP, SND_DROP1);
+        loadPattern(WAV_DROP, SND_DROP2);
+        loadPattern(WAV_DROP, SND_DROP3);
+        loadPattern(WAV_DROP, SND_DROP4);
+
+        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT0);
+        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT1);
+        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT2);
+        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT3);
+        loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT4);
+
+        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT0);
+        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT1);
+        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT2);
+        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT3);
+        loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT4);
 
         // Bind the buffer with the source.
         AL10.alGenSources(source);
-
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        AL10.alSourcei(source.get(SND_MOVE), AL10.AL_BUFFER, buffer.get(SND_MOVE));
-        AL10.alSourcef(source.get(SND_MOVE), AL10.AL_PITCH, 1.0f);
-        AL10.alSourcef(source.get(SND_MOVE), AL10.AL_GAIN, 1.0f);
-        AL10.alSource(source.get(SND_MOVE), AL10.AL_POSITION, sourcePos);
-        AL10.alSource(source.get(SND_MOVE), AL10.AL_VELOCITY, sourceVel);
+        initAllPatterns(SND_MOVE, SND_SELECT, SND_DROP0, SND_DROP_LEFT0, SND_DROP_RIGHT0, SND_DROP1, SND_DROP_LEFT1, SND_DROP_RIGHT1, SND_DROP2, SND_DROP_LEFT2,
+                SND_DROP_RIGHT2, SND_DROP3, SND_DROP_LEFT3, SND_DROP_RIGHT3, SND_DROP4, SND_DROP_LEFT4, SND_DROP_RIGHT4);
 
-        AL10.alSourcei(source.get(SND_SELECT), AL10.AL_BUFFER, buffer.get(SND_SELECT));
-        AL10.alSourcef(source.get(SND_SELECT), AL10.AL_PITCH, 1.0f);
-        AL10.alSourcef(source.get(SND_SELECT), AL10.AL_GAIN, 1.0f);
-        AL10.alSource(source.get(SND_SELECT), AL10.AL_POSITION, sourcePos);
-        AL10.alSource(source.get(SND_SELECT), AL10.AL_VELOCITY, sourceVel);
-        
         // Do another error check and return.
         if (AL10.alGetError() == AL10.AL_NO_ERROR)
             return AL10.AL_TRUE;

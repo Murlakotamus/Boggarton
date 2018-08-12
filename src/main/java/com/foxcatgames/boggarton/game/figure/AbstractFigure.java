@@ -1,5 +1,8 @@
 package com.foxcatgames.boggarton.game.figure;
 
+import org.lwjgl.openal.AL10;
+
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.game.IBrick;
 
 abstract public class AbstractFigure implements IFigure {
@@ -59,12 +62,32 @@ abstract public class AbstractFigure implements IFigure {
     }
 
     @Override
-    public void setNull(final int i) {
+    public void setNull(final int i, final int set, final boolean silent) {
         if (i < 0 || i >= lenght || bricks[i] == null)
             return;
 
         bricks[i] = null;
         number--;
+
+        if (silent)
+            return;
+
+        int sound;
+        switch (set) {
+        case 2:
+            sound = 2 + i;
+            AL10.alSourcePlay(Sound.source.get(sound));
+            break;
+        case 3:
+            sound = 7 + i;
+            AL10.alSourcePlay(Sound.source.get(sound));
+            break;
+        case 4:
+            sound = 12 + i;
+            AL10.alSourcePlay(Sound.source.get(sound));
+            break;
+        }
+
     }
 
     @Override

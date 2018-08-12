@@ -26,11 +26,11 @@ public class MultiplayerGame extends AbstractGame {
     private final Vector2f yuckPosition;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType) {
+            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final int... sounds) {
 
         super(layer, x, y, width, height, forecast, lenght, setSize, randomType);
         this.yuckType = yuckType;
-        glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, setSize);
+        glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, setSize, sounds);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
         showVictoies.spawn(new Vector2f(x + BOX * lenght + 20, y + BOX * height + 40));
         yuckPosition = new Vector2f(x + BOX * lenght + 20 + width * BOX + 15, y + BOX * height - BOX + 5);

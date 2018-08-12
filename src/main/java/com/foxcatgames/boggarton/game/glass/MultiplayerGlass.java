@@ -15,8 +15,8 @@ public class MultiplayerGlass extends SimpleGlass {
     private final int difficulty;
     private int count = 0;
 
-    public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty) {
-        super(layer, position, width, height);
+    public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty, final int... sounds) {
+        super(layer, position, width, height, sounds);
         this.layer = layer;
         this.difficulty = difficulty;
     }

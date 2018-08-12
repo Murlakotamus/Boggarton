@@ -7,6 +7,7 @@ import static com.foxcatgames.boggarton.Const.GAME_PAUSED;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.SimpleGame;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
@@ -24,7 +25,7 @@ public class OnePlayerGame extends AbstractOnePlayerGame {
         super(SceneItem.PRACTICE);
         gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType);
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType, Const.SND_DROP);
         game.setName("Human");
         game.startGame();
         player = new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);

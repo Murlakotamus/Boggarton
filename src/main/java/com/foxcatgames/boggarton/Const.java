@@ -77,8 +77,34 @@ public class Const {
     public static final int SND_MOVE = 0;
     public static final int SND_SELECT = 1;
 
+    public static final int SND_DROP = 2;
+    public static final int SND_DROP_LEFT = 3;
+    public static final int SND_DROP_RIGHT = 4;
+
+    public static final int SND_DROP0 = 2;
+    public static final int SND_DROP1 = 3;
+    public static final int SND_DROP2 = 4;
+    public static final int SND_DROP3 = 5;
+    public static final int SND_DROP4 = 6;
+
+    public static final int SND_DROP_LEFT0 = 7;
+    public static final int SND_DROP_LEFT1 = 8;
+    public static final int SND_DROP_LEFT2 = 9;
+    public static final int SND_DROP_LEFT3 = 10;
+    public static final int SND_DROP_LEFT4 = 11;
+
+    public static final int SND_DROP_RIGHT0 = 12;
+    public static final int SND_DROP_RIGHT1 = 13;
+    public static final int SND_DROP_RIGHT2 = 14;
+    public static final int SND_DROP_RIGHT3 = 15;
+    public static final int SND_DROP_RIGHT4 = 16;
+
     private static final String WAV_PATH = "/sounds/";
     private static final String WAV_EXT = ".wav";
+
     public static final String WAV_MOVE = WAV_PATH + "move" + WAV_EXT;
     public static final String WAV_SELECT = WAV_PATH + "select" + WAV_EXT;
+    public static final String WAV_DROP = WAV_PATH + "drop" + WAV_EXT;
+    public static final String WAV_DROP_LEFT = WAV_PATH + "drop_left" + WAV_EXT;
+    public static final String WAV_DROP_RIGHT = WAV_PATH + "drop_right" + WAV_EXT;
 }

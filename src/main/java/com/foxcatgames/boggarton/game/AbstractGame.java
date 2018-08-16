@@ -213,7 +213,6 @@ abstract public class AbstractGame {
             final GlassState state = glass.getGlassState();
             for (int k = 1; k <= diffCell; k++) {
                 position.setY((oldCell + k) * BOX + SCREEN_OFFSET_Y);
-                ((SimpleGlass) glass).addBrick(i, j + k);
                 state.setBrick(i, j + k, brick);
                 state.setBrick(i, j + k - 1, null);
                 final int z = j + k + 1;
@@ -242,7 +241,6 @@ abstract public class AbstractGame {
     protected void compress() {
         if (killedBricks) {
             glass.removeHoles();
-            glass.compressList();
             glass.addReaction();
             killedBricks = false;
             reactionDetected = true;

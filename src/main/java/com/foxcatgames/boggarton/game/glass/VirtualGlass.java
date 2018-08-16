@@ -73,28 +73,25 @@ public class VirtualGlass extends AbstractGlass {
 
     @Override
     public boolean removeHoles() {
-        final int oldNum = newBricks.size();
+        boolean holesFoundOverall = false;
         for (int i = 0; i < state.getWidth(); i++) {
-            boolean holesFound;
+            boolean holesFound = false;
             do {
-                holesFound = false;
                 for (int j = state.getHeight() - 2; j >= 0; j--)
                     if (state.getBrick(i, j) != null && state.getBrick(i, j + 1) == null) {
                         state.setBrick(i, j + 1, state.getBrick(i, j));
-                        addBrick(i, j + 1);
                         state.setBrick(i, j, null);
                         holesFound = true;
-
+                        holesFoundOverall = true;
                     }
             } while (holesFound);
         }
-        return oldNum < newBricks.size();
+        return holesFoundOverall;
     }
 
     @Override
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, state.getFigure().getBrick(num));
-        addBrick(i, j);
         state.getFigure().setNull(num, 0, true);
         changes.setFlag(true);
     }

@@ -49,11 +49,6 @@ public class MultiplayerGlass extends SimpleGlass {
             state.setBrick(i, state.getHeight() - 1, new Brick(brick, layer));
         }
 
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++)
-                if (state.getBrick(i, j) != null)
-                    addBrick(i, j);
-
         if (yuckType == YuckTypes.HARD) {
             int delta = difficulty - 4;
             count += delta;

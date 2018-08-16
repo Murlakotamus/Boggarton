@@ -19,7 +19,7 @@ public class GlassState implements IGlassState {
     protected IFigure figure;
 
     public void findHorizontals(final int i, final int j) {
-        if (i - 1 < 0 || i + 1 >= width || bricks[i - 1][j] == null || bricks[i + 1][j] == null)
+        if (bricks[i][j] == null || bricks[i - 1][j] == null || bricks[i + 1][j] == null)
             return;
 
         if (bricks[i - 1][j].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i + 1][j].getType()) {
@@ -31,11 +31,11 @@ public class GlassState implements IGlassState {
     }
 
     public void findVerticals(final int i, final int j) {
-        if (j + 2 >= height || bricks[i][j + 2] == null || bricks[i][j + 1] == null)
+        if (bricks[i][j] == null || bricks[i][j + 1] == null || bricks[i][j - 1] == null)
             return;
 
-        if (bricks[i][j + 2].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i][j + 1].getType()) {
-            bricks[i][j + 2].setKill();
+        if (bricks[i][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i][j + 1].getType()) {
+            bricks[i][j - 1].setKill();
             bricks[i][j].setKill();
             bricks[i][j + 1].setKill();
             score += VERTICAL * reaction;
@@ -43,7 +43,7 @@ public class GlassState implements IGlassState {
     }
 
     public void findMainDiags(final int i, final int j) {
-        if (j - 1 < 0 || i - 1 < 0 || j + 1 >= height || i + 1 >= width || bricks[i - 1][j - 1] == null || bricks[i + 1][j + 1] == null)
+        if (bricks[i][j] == null || bricks[i - 1][j - 1] == null || bricks[i + 1][j + 1] == null)
             return;
 
         if (bricks[i - 1][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i + 1][j + 1].getType()) {
@@ -55,7 +55,7 @@ public class GlassState implements IGlassState {
     }
 
     public void findAntiDiags(final int i, final int j) {
-        if (j - 1 < 0 || i + 1 >= width || j + 1 >= height || i - 1 < 0 || bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
+        if (bricks[i][j] == null ||  bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
             return;
 
         if (bricks[i + 1][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i - 1][j + 1].getType()) {

@@ -1,17 +1,12 @@
 package com.foxcatgames.boggarton.game.glass;
 
-import java.util.HashSet;
-import java.util.Iterator;
-
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.utils.Changes;
-import com.foxcatgames.boggarton.game.utils.Coords;
 
 abstract public class AbstractGlass implements IGlass {
 
     volatile protected boolean gameOver = false;
 
-    final protected HashSet<Coords> newBricks = new HashSet<>();
     final protected Changes changes = new Changes(false);
     final protected GlassState state = new GlassState();
 
@@ -20,65 +15,23 @@ abstract public class AbstractGlass implements IGlass {
         state.setHeight(height);
     }
 
-    public void addBrick(final int i, final int j) {
-        if (checkCoords(i, j))
-            newBricks.add(new Coords(i, j));
-
-        if (checkCoords(i - 1, j - 1))
-            newBricks.add(new Coords(i - 1, j - 1));
-
-        if (checkCoords(i - 1, j))
-            newBricks.add(new Coords(i - 1, j));
-
-        if (checkCoords(i - 1, j + 1))
-            newBricks.add(new Coords(i - 1, j + 1));
-
-        if (checkCoords(i, j - 1))
-            newBricks.add(new Coords(i, j - 1));
-
-        if (checkCoords(i + 1, j + 1))
-            newBricks.add(new Coords(i + 1, j + 1));
-
-        if (checkCoords(i + 1, j))
-            newBricks.add(new Coords(i + 1, j));
-
-        if (checkCoords(i + 1, j - 1))
-            newBricks.add(new Coords(i + 1, j - 1));
-    }
-
-    private boolean checkCoords(final int i, final int j) {
-        return !(i < 0 || i >= state.getWidth() || j < 0 || j >= state.getHeight() || (i < 0 && j < 0) || (i > state.getWidth() - 1 && j < 0)
-                || (i < 0 && j > state.getHeight() - 1) || (i > state.getWidth() - 1 && j > state.getHeight() - 1));
-    }
-
     @Override
     public boolean findChainsToKill() {
         final int oldScore = state.getScore();
-        compressList();
-        final Iterator<Coords> it = newBricks.iterator();
-        while (it.hasNext()) {
-            final Coords c = it.next();
-            final int i = c.i;
-            final int j = c.j;
+        for (int i = 1; i < state.getWidth() - 1; i++)
+            for (int j = 0; j < state.getHeight(); j++)
+                state.findHorizontals(i, j);
 
-            state.findHorizontals(i, j);
-            state.findVerticals(i, j);
-            state.findMainDiags(i, j);
-            state.findAntiDiags(i, j);
+        for (int i = 0; i < state.getWidth(); i++)
+            for (int j = 1; j < state.getHeight() - 1; j++)
+                state.findVerticals(i, j);
 
-            it.remove();
-        }
+        for (int i = 1; i < state.getWidth() - 1; i++)
+            for (int j = 1; j < state.getHeight() - 1; j++) {
+                state.findMainDiags(i, j);
+                state.findAntiDiags(i, j);
+            }
         return oldScore < state.getScore();
-    }
-
-    @Override
-    public void compressList() {
-        final Iterator<Coords> it = newBricks.iterator();
-        while (it.hasNext()) {
-            final Coords c = it.next();
-            if (state.getBrick(c.i, c.j) == null)
-                it.remove();
-        }
     }
 
     @Override
@@ -92,7 +45,6 @@ abstract public class AbstractGlass implements IGlass {
             killChains();
             while (removeHoles())
                 ;
-            compressList();
             addReaction();
         }
         cleanReactions();

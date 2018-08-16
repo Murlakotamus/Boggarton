@@ -108,7 +108,6 @@ public class SimpleGlass extends AbstractGlass {
                         final Brick brick = ((Brick) state.getBrick(i, k));
                         if (brick != null) {
                             brick.setCrashing(true);
-                            addBrick(i, k);
                             result = true;
                         }
                     }
@@ -188,8 +187,6 @@ public class SimpleGlass extends AbstractGlass {
     @Override
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, getFigure().getBrick(num));
-        addBrick(i, j);
-
         getFigure().setNull(num, dropSound, SceneItem.getSound() == SoundTypes.OFF);
         setChanges(true);
     }

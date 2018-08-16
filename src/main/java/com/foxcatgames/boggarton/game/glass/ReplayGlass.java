@@ -31,10 +31,5 @@ public class ReplayGlass extends SimpleGlass {
 
         for (int i = 0; i < state.getWidth(); i++)
             state.setBrick(i, state.getHeight() - 1, new Brick(Utils.parseBrick(yuckBricks, i), layer));
-
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++)
-                if (state.getBrick(i, j) != null)
-                    addBrick(i, j);
     }
 }

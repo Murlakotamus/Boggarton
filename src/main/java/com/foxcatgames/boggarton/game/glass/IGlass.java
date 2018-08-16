@@ -26,7 +26,6 @@ public interface IGlass {
     void removeBrick(int i, int j);
     void processGlass();
     boolean removeHoles();
-    void compressList();
 
     int getReactionLenght();
     void addReaction();

@@ -75,8 +75,9 @@ public class VirtualGlass extends AbstractGlass {
     public boolean removeHoles() {
         boolean holesFoundOverall = false;
         for (int i = 0; i < state.getWidth(); i++) {
-            boolean holesFound = false;
+            boolean holesFound;
             do {
+                holesFound = false;
                 for (int j = state.getHeight() - 2; j >= 0; j--)
                     if (state.getBrick(i, j) != null && state.getBrick(i, j + 1) == null) {
                         state.setBrick(i, j + 1, state.getBrick(i, j));

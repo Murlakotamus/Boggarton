@@ -17,7 +17,8 @@ import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public class MultiplayerGame extends AbstractGame {
 
-    public static final int MAX_YUCKS = 20;
+    private static final int MAX_YUCKS = 24; // 6 * 12 / 3 - theoretical limit
+
     public final YuckTypes yuckType;
     protected int yucks;
     private final Text showVictoies;

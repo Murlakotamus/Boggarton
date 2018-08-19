@@ -1,5 +1,7 @@
 package com.foxcatgames.boggarton.entity;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.lwjgl.opengl.GL11;
 
 import com.foxcatgames.boggarton.Const;
@@ -8,23 +10,19 @@ import com.foxcatgames.boggarton.game.IBrick;
 
 public class Brick extends AbstractAnimatedEntity implements IBrick {
 
+    private static AtomicInteger generatedId = new AtomicInteger(0);
+
     private boolean kill = false;
     private boolean crashing = false;
+    private int id;
 
     public Brick(final int type, Layer layer) {
         this.type = type;
         this.layer = layer;
+        id = generatedId.incrementAndGet();
         initEntity();
         stopAnimation();
         setRatio(1);
-    }
-
-    public void setCrashing(boolean crashing) {
-        this.crashing = crashing;
-    }
-
-    public boolean isCrashing() {
-        return crashing;
     }
 
     @Override
@@ -56,8 +54,7 @@ public class Brick extends AbstractAnimatedEntity implements IBrick {
         GL11.glLoadIdentity();
         GL11.glTranslatef(position.x, -position.y, Const.DEFAULT_Z);
         GL11.glRotatef(0, 0, 0, 1);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D,
-                animationTextures[(int) animationCursor].getTextureId());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, animationTextures[(int) animationCursor].getTextureId());
         coreDraw();
     }
 
@@ -72,4 +69,15 @@ public class Brick extends AbstractAnimatedEntity implements IBrick {
         return result;
     }
 
+    public void setCrashing(boolean crashing) {
+        this.crashing = crashing;
+    }
+
+    public boolean isCrashing() {
+        return crashing;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

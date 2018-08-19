@@ -18,7 +18,6 @@ import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 
 public class ReplayGame extends AbstractGame {
 
-    public static final int MAX_YUCKS = 24; // 6 * 12 / 3 - theoretical limit
     protected int yucks = 0;
     final List<String> events;
     int eventNum = 0;

@@ -57,7 +57,7 @@ public class GlassState implements IGlassState {
     }
 
     public void findAntiDiags(final int i, final int j) {
-        if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY ||  bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
+        if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY || bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
             return;
 
         if (bricks[i + 1][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i - 1][j + 1].getType()) {

@@ -10,14 +10,14 @@ public class Utils {
 
     static public int getBrick(final int difficulty, final int[] probabilities) {
         int total = 0;
-        for (int i = 0; i < probabilities.length && i < difficulty; i++)
+        for (int i = 0; i < difficulty; i++)
             total += probabilities[i];
 
         final double quantile = 1d / total;
         final double p = Math.random();
 
         double percenthile = 0;
-        for (int i = 0; i < probabilities.length && i < difficulty; i++) {
+        for (int i = 0; i < difficulty; i++) {
             percenthile += (quantile * probabilities[i]);
             if (p <= percenthile)
                 return getBrickType(i);

@@ -1,5 +1,7 @@
 package com.foxcatgames.boggarton.game.glass;
 
+import static com.foxcatgames.boggarton.Const.EMPTY;
+
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 
@@ -19,7 +21,7 @@ public class GlassState implements IGlassState {
     protected IFigure figure;
 
     public void findHorizontals(final int i, final int j) {
-        if (bricks[i][j] == null || bricks[i - 1][j] == null || bricks[i + 1][j] == null)
+        if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY || bricks[i - 1][j] == null || bricks[i + 1][j] == null)
             return;
 
         if (bricks[i - 1][j].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i + 1][j].getType()) {
@@ -31,7 +33,7 @@ public class GlassState implements IGlassState {
     }
 
     public void findVerticals(final int i, final int j) {
-        if (bricks[i][j] == null || bricks[i][j + 1] == null || bricks[i][j - 1] == null)
+        if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY || bricks[i][j + 1] == null || bricks[i][j - 1] == null)
             return;
 
         if (bricks[i][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i][j + 1].getType()) {
@@ -43,7 +45,7 @@ public class GlassState implements IGlassState {
     }
 
     public void findMainDiags(final int i, final int j) {
-        if (bricks[i][j] == null || bricks[i - 1][j - 1] == null || bricks[i + 1][j + 1] == null)
+        if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY || bricks[i - 1][j - 1] == null || bricks[i + 1][j + 1] == null)
             return;
 
         if (bricks[i - 1][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i + 1][j + 1].getType()) {
@@ -55,7 +57,7 @@ public class GlassState implements IGlassState {
     }
 
     public void findAntiDiags(final int i, final int j) {
-        if (bricks[i][j] == null ||  bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
+        if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY ||  bricks[i + 1][j - 1] == null || bricks[i - 1][j + 1] == null)
             return;
 
         if (bricks[i + 1][j - 1].getType() == bricks[i][j].getType() && bricks[i][j].getType() == bricks[i - 1][j + 1].getType()) {

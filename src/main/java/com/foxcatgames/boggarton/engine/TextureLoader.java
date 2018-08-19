@@ -55,6 +55,7 @@ public class TextureLoader implements ITextureLoader {
         animations[E] = loadAnimation("/data/bricks/E.png", 6, 1, 30, 30);
         animations[F] = loadAnimation("/data/bricks/F.png", 6, 1, 30, 30);
         animations[G] = loadAnimation("/data/bricks/G.png", 6, 1, 30, 30);
+        animations[EMPTY] = loadAnimation("/data/bricks/empty.png", 1, 1, 30, 30);
 
         // Fonts
         animations[DARK_FONT] = loadAnimation("/data/DarkFont.png", 16, 16, FONT_WIDTH, FONT_HEIGHT);

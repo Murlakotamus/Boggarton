@@ -41,6 +41,7 @@ public class MultiplayerGlass extends SimpleGlass {
                 break;
             case RANDOM:
                 brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
+                break;
             case NONE:
             default:
                 throw new IllegalStateException("Incredible situation!");

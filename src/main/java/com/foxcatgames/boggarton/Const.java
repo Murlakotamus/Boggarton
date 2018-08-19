@@ -52,6 +52,7 @@ public class Const {
     public static final int E = 15;
     public static final int F = 16;
     public static final int G = 17;
+    public static final int EMPTY = 18;
 
     // frame elements
     public static final int FRAME_UPPER = 101;

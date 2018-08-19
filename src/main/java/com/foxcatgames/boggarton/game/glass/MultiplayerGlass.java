@@ -33,8 +33,12 @@ public class MultiplayerGlass extends SimpleGlass {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < state.getWidth(); i++) {
             switch (yuckType) {
-            case PROBABILISTIC:
-                brick = Utils.getBrick(difficulty, RandomTypes.PROBABILISTIC.getRandomType());
+            case INCONSOLABLE:
+                brick = Utils.random(difficulty + 1);
+                if (brick == difficulty)
+                    brick = Const.EMPTY;
+                else
+                    brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
                 break;
             case HARD:
                 brick = getHardBrick();

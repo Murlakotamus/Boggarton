@@ -1,11 +1,15 @@
 package com.foxcatgames.boggarton.game.utils;
 
-import com.foxcatgames.boggarton.Const;
+import static com.foxcatgames.boggarton.Const.CURRENT_SET;;
 
 public class Utils {
 
-    static int getBrickType(int i) {
-        return i + Const.CURRENT_SET * 10 + 1;
+    static public int getBrickType(final int i) {
+        return i + CURRENT_SET * 10 + 1;
+    }
+
+    static public int random(final int number) {
+        return (int) (Math.random() * number);
     }
 
     static public int getBrick(final int difficulty, final int[] probabilities) {
@@ -26,7 +30,7 @@ public class Utils {
     }
 
     static public int parseBrick(final String str, final int index) {
-        return Integer.parseInt("" + str.charAt(index)) + Const.CURRENT_SET * 10;
+        return Integer.parseInt("" + str.charAt(index)) + CURRENT_SET * 10;
     }
 
 }

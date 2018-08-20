@@ -27,21 +27,10 @@ public class SimpleForecast extends AbstractVisualForecast {
 
         for (int i = 0; i < prognosis; i++)
             figures[i] = new SimpleFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), size, difficulty,
-                    randomType.getRandomType());
+                    randomType.getRandomType(), null);
     }
 
     @Override
-    public void setNext() {
-        for (int i = 0; i < prognosis - 1; i++) {
-            figures[i] = figures[i + 1];
-            ((SimpleFigure) figures[i]).shiftY(-BOX);
-        }
-
-        figures[prognosis - 1] = new SimpleFigure(frame.getLayer(),
-                new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER), size, difficulty,
-                randomType.getRandomType());
-    }
-
     public void setNext(final List<Pair<Integer, Integer>> pairs) {
         for (int i = 0; i < prognosis - 1; i++) {
             figures[i] = figures[i + 1];

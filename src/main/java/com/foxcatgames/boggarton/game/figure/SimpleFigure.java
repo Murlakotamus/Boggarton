@@ -11,16 +11,6 @@ import com.foxcatgames.boggarton.game.utils.Utils;
 
 public class SimpleFigure extends AbstractVisualFigure {
 
-    public SimpleFigure(final Layer layer, final Vector2f position, final int size, final int difficulty, final int[] randomType) {
-        super(size, position);
-
-        number = size;
-        for (int j = 0; j < size; j++)
-            bricks[j] = new Brick(Utils.getBrick(difficulty, randomType), layer);
-
-        respawn();
-    }
-
     public SimpleFigure(final Layer layer, final Vector2f position, final int size, final int difficulty, final int[] randomType,
             final List<Pair<Integer, Integer>> pairs) {
         super(size, position);
@@ -28,9 +18,12 @@ public class SimpleFigure extends AbstractVisualFigure {
         number = size;
         for (int j = 0; j < size; j++) {
             int value = Utils.getBrick(difficulty, randomType);
-            for (Pair<Integer, Integer> pair : pairs)
-                if (j == pair.getFirst())
-                    value = pair.getSecond();
+
+            if (pairs != null)
+                for (Pair<Integer, Integer> pair : pairs)
+                    if (j == pair.getFirst())
+                        value = pair.getSecond();
+
             bricks[j] = new Brick(value, layer);
         }
         respawn();

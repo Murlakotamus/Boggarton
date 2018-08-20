@@ -17,7 +17,6 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.IFigure;
-import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
 import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
@@ -120,28 +119,6 @@ abstract public class AbstractGame {
             nextStage();
     }
 
-    protected void charge() {
-        final AbstractVisualFigure figure = (AbstractVisualFigure) glass.getFigure();
-        final Vector2f figurePosition = figure.getPosition();
-        final float currentTime = getTime();
-        final float spentTime = (currentTime - previousTime) / 1000f;
-        final int currX = Math.round(figurePosition.getX());
-        final int newX = currX + Math.round(spentTime * CHARGE_SPEED);
-        final Vector2f framePosition = ((SimpleGlass) glass).getFrame().getPosition();
-
-        if (newX >= framePosition.getX() + targetPosition * BOX) {
-            figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
-            ((AbstractVisualForecast) forecast).setNext();
-            ((SimpleGlass) glass).respawn();
-            fillBuffer();
-            needNewFigure = true;
-            nextStage();
-            return;
-        }
-        figure.setPosition(new Vector2f(newX, figurePosition.getY()));
-        previousTime = currentTime;
-    }
-
     protected void charge(final List<Pair<Integer, Integer>> pairs) {
         final AbstractVisualFigure figure = (AbstractVisualFigure) glass.getFigure();
         final Vector2f figurePosition = figure.getPosition();
@@ -163,6 +140,10 @@ abstract public class AbstractGame {
         }
         figure.setPosition(new Vector2f(newX, figurePosition.getY()));
         previousTime = currentTime;
+    }
+
+    protected void charge() {
+        charge(null);
     }
 
     public void fall() {

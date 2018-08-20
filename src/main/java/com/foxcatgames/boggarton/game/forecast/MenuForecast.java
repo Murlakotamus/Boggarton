@@ -3,11 +3,14 @@ package com.foxcatgames.boggarton.game.forecast;
 import static com.foxcatgames.boggarton.Const.BORDER;
 import static com.foxcatgames.boggarton.Const.BOX;
 
+import java.util.List;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.game.figure.MenuFigure;
+import com.foxcatgames.boggarton.game.utils.Pair;
 
 public class MenuForecast extends AbstractVisualForecast {
 
@@ -20,6 +23,6 @@ public class MenuForecast extends AbstractVisualForecast {
     }
 
     @Override
-    public void setNext() {
+    public void setNext(final List<Pair<Integer, Integer>> pairs) {
     }
 }

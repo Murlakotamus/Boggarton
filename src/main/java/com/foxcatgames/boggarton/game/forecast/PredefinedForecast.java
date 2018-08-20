@@ -12,6 +12,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
+import com.foxcatgames.boggarton.game.utils.Pair;
 
 public class PredefinedForecast extends AbstractVisualForecast {
 
@@ -38,7 +39,7 @@ public class PredefinedForecast extends AbstractVisualForecast {
     }
 
     @Override
-    public void setNext() {
+    public void setNext(final List<Pair<Integer, Integer>> pairs) {
         final int newMax = predefinedFigures.size() - 1 - figuresCounter;
         int max = prognosis - 1;
         if (max > newMax)

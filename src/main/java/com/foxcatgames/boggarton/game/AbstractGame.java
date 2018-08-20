@@ -4,6 +4,7 @@ import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.game.StageItem.START;
 import static com.foxcatgames.boggarton.game.glass.SimpleGlass.SCREEN_OFFSET_Y;
 
+import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -134,6 +135,29 @@ abstract public class AbstractGame {
             ((SimpleGlass) glass).respawn();
             fillBuffer();
             needNewFigure = true;
+            nextStage();
+            return;
+        }
+        figure.setPosition(new Vector2f(newX, figurePosition.getY()));
+        previousTime = currentTime;
+    }
+
+    protected void charge(final List<Pair<Integer, Integer>> pairs) {
+        final AbstractVisualFigure figure = (AbstractVisualFigure) glass.getFigure();
+        final Vector2f figurePosition = figure.getPosition();
+        final float currentTime = getTime();
+        final float spentTime = (currentTime - previousTime) / 1000f;
+        final int currX = Math.round(figurePosition.getX());
+        final int newX = currX + Math.round(spentTime * CHARGE_SPEED);
+        final Vector2f framePosition = ((SimpleGlass) glass).getFrame().getPosition();
+
+        if (newX >= framePosition.getX() + targetPosition * BOX) {
+            figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
+            ((SimpleForecast) forecast).setNext(pairs);
+            ((SimpleGlass) glass).respawn();
+            fillBuffer();
+            needNewFigure = true;
+            // here it need to drop condition
             nextStage();
             return;
         }

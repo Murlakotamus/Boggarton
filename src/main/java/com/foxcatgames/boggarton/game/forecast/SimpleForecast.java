@@ -3,11 +3,14 @@ package com.foxcatgames.boggarton.game.forecast;
 import static com.foxcatgames.boggarton.Const.BORDER;
 import static com.foxcatgames.boggarton.Const.BOX;
 
+import java.util.List;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.game.figure.SimpleFigure;
+import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 public class SimpleForecast extends AbstractVisualForecast {
@@ -37,6 +40,17 @@ public class SimpleForecast extends AbstractVisualForecast {
         figures[prognosis - 1] = new SimpleFigure(frame.getLayer(),
                 new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER), size, difficulty,
                 randomType.getRandomType());
+    }
+
+    public void setNext(final List<Pair<Integer, Integer>> pairs) {
+        for (int i = 0; i < prognosis - 1; i++) {
+            figures[i] = figures[i + 1];
+            ((SimpleFigure) figures[i]).shiftY(-BOX);
+        }
+
+        figures[prognosis - 1] = new SimpleFigure(frame.getLayer(),
+                new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (prognosis - 1) * BOX + BORDER), size, difficulty,
+                randomType.getRandomType(), pairs);
     }
 
     public int getDifficulty() {

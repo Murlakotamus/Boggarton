@@ -33,8 +33,9 @@ public class SimpleGame extends AbstractGame {
                 IFigure figure = nextFigure();
                 needNewFigure = false;
                 logFigure(figure);
-            } else
-                charge();
+            } else {
+                charge(); // or charge(final List<Pair<Integer, Integer>> pairs) if condition's passed
+            }
             break;
         case APPEAR:
             executeCommand();

@@ -17,7 +17,7 @@ abstract public class AbstractScene {
     protected volatile static int prognosis = 3;
     protected static int figureSize = 3;
 
-    protected final Layer layer;
+    protected final Layer layer = new Layer();
     private static float lastTime = TIMER.getTime();
 
     public static float tick;
@@ -32,7 +32,6 @@ abstract public class AbstractScene {
     protected AbstractScene(final SceneItem scene) {
         this.scene = scene;
         nextScene = scene;
-        layer = new Layer();
     }
 
     public SceneItem play() {

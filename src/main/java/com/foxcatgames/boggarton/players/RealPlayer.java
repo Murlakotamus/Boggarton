@@ -98,8 +98,8 @@ public class RealPlayer implements IPlayer {
         return builder.build();
     }
 
+    @Override
     public String getName() {
         return game.getName();
     }
-
 }

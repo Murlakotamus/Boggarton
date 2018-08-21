@@ -21,7 +21,7 @@ import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-abstract public class AbstractMultiplayerGame extends AbstractGameScene {
+abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     protected static final int X = 90;
 
@@ -38,7 +38,7 @@ abstract public class AbstractMultiplayerGame extends AbstractGameScene {
     protected IPlayer first;
     protected IPlayer second;
 
-    AbstractMultiplayerGame(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
+    AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
             YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];

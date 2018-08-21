@@ -60,7 +60,6 @@ public class ReplayGame extends AbstractGame {
                     setGameOver();
                     break;
                 }
-                needNewFigure = false;
                 eventNum++;
             } else
                 charge();

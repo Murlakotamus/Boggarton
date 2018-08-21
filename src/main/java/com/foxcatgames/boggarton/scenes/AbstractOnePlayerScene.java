@@ -13,7 +13,7 @@ import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.players.IPlayer;
 
-abstract public class AbstractOnePlayerGame extends AbstractGameScene {
+abstract public class AbstractOnePlayerScene extends AbstractPlayingScene {
 
     protected static final int X = 355;
     protected SimpleEntity gameOver;
@@ -21,7 +21,7 @@ abstract public class AbstractOnePlayerGame extends AbstractGameScene {
 
     protected IPlayer player;
 
-    public AbstractOnePlayerGame(final SceneItem scene) {
+    public AbstractOnePlayerScene(final SceneItem scene) {
         super(scene);
     }
 

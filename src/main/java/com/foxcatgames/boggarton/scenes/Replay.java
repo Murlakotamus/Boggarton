@@ -11,10 +11,10 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.game.ReplayGame;
 import com.foxcatgames.boggarton.players.virtual.MovesExecutor;
 
-public class Replay extends AbstractOnePlayerGame {
+public class Replay extends AbstractOnePlayerScene {
 
     public Replay(final int width, final int height, final int forecast, final int lenght) {
-        super(SceneItem.REPLAY_GAME);
+        super(SceneItem.REPLAY);
 
         final StringBuilder moves = new StringBuilder();
         final List<String> events = new ArrayList<>();

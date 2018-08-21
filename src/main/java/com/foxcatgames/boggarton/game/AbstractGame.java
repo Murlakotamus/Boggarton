@@ -17,6 +17,7 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
 import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
@@ -107,6 +108,7 @@ abstract public class AbstractGame {
             diffScore.unspawn();
         }
         lastScore = getGlass().getGlassState().getScore();
+        needNewFigure = false;
         return figure;
     }
 
@@ -119,7 +121,7 @@ abstract public class AbstractGame {
             nextStage();
     }
 
-    protected void charge(final List<Pair<Integer, Integer>> pairs) {
+    protected void charge(final List<Pair<Integer, Integer>> pairs, ICommand satisfyCondition) {
         final AbstractVisualFigure figure = (AbstractVisualFigure) glass.getFigure();
         final Vector2f figurePosition = figure.getPosition();
         final float currentTime = getTime();
@@ -130,11 +132,12 @@ abstract public class AbstractGame {
 
         if (newX >= framePosition.getX() + targetPosition * BOX) {
             figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
-            ((SimpleForecast) forecast).setNext(pairs);
+            ((AbstractVisualForecast) forecast).setNext(pairs);
             ((SimpleGlass) glass).respawn();
             fillBuffer();
             needNewFigure = true;
-            // here it need to drop condition
+            if (pairs != null)
+                satisfyCondition.execute();
             nextStage();
             return;
         }
@@ -143,7 +146,7 @@ abstract public class AbstractGame {
     }
 
     protected void charge() {
-        charge(null);
+        charge(null, null);
     }
 
     public void fall() {

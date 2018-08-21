@@ -5,12 +5,12 @@ import org.lwjgl.input.Keyboard;
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 
-abstract public class AbstractGameScene extends AbstractScene {
+abstract public class AbstractPlayingScene extends AbstractScene {
 
     protected static final int Y = 160;
     protected boolean escapePressed = false;
 
-    AbstractGameScene(final SceneItem scene) {
+    AbstractPlayingScene(final SceneItem scene) {
         super(scene);
         addKeyEscape(SceneItem.MENU);
         addKeyPause();

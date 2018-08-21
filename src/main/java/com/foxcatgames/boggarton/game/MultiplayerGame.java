@@ -9,7 +9,6 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
-import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
@@ -49,11 +48,9 @@ public class MultiplayerGame extends AbstractGame {
     public void processStage() {
         switch (stage) {
         case NEXT:
-            if (needNewFigure) {
-                IFigure figure = nextFigure();
-                needNewFigure = false;
-                logFigure(figure);
-            } else
+            if (needNewFigure)
+                logFigure(nextFigure());
+            else
                 charge();
             break;
         case APPEAR:

@@ -13,10 +13,10 @@ import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public enum SceneItem {
-    INTRO, MENU, GAME("Game"), PRACTICE("Practice"), ONE_PLAYER_DEMO("One player demo"), PLAYER_VS_COMP("Player vs. computer"), TWO_PLAYERS_GAME(
-            "Two players game"), TWO_PLAYERS_DEMO("Two players demo"), REPLAY_GAME("Replay game"), ABOUT, OUTRO, FINISH_GAME;
+    INTRO, MENU, GAME("Game"), PRACTICE("Practice"), DEMO("Demo"), COMPETITION_PRACTICE("Practice with computer"), COMPETITION("Competition"), COMPETITION_DEMO(
+            "Competition demo"), REPLAY("Replay game"), ABOUT, OUTRO, FINISH_GAME;
 
-    private static List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, PLAYER_VS_COMP, TWO_PLAYERS_GAME, ONE_PLAYER_DEMO, TWO_PLAYERS_DEMO, REPLAY_GAME);
+    private static List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, COMPETITION, COMPETITION_PRACTICE, DEMO, COMPETITION_DEMO, REPLAY);
 
     private final String sceneName;
     private static final int[] PROGNOSIS = { AbstractScene.prognosis, AbstractScene.prognosis };
@@ -41,17 +41,18 @@ public enum SceneItem {
         case MENU:
             return new MenuScene();
         case GAME:
+            return new Game(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType, difficultyType);
         case PRACTICE:
-            return new OnePlayerGame(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType, difficultyType);
-        case ONE_PLAYER_DEMO:
-            return new OnePlayerDemo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType, difficultyType);
-        case PLAYER_VS_COMP:
-            return new PlayerVsCompGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
-        case TWO_PLAYERS_GAME:
-            return new TwoPlayersGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
-        case TWO_PLAYERS_DEMO:
-            return new TwoPlayersDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.figureSize, yuckType, randomType, difficultyType);
-        case REPLAY_GAME:
+            return new Practice(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType, difficultyType);
+        case DEMO:
+            return new Demo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType, difficultyType);
+        case COMPETITION_PRACTICE:
+            return new CompetitionPractice(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
+        case COMPETITION:
+            return new CompetitionGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
+        case COMPETITION_DEMO:
+            return new CompetitionDemo(WIDTH, HEIGHT, new int[] { 3, 2 }, AbstractScene.figureSize, yuckType, randomType, difficultyType);
+        case REPLAY:
             return new Replay(WIDTH, HEIGHT, 3, AbstractScene.figureSize);
         case OUTRO:
             return new OutroScene();
@@ -123,7 +124,6 @@ public enum SceneItem {
     public static void dropSoundType() {
         soundType = SoundTypes.ON;
     }
-
 
     public static String[] getAllSceneNames() {
         List<String> list = new ArrayList<>();

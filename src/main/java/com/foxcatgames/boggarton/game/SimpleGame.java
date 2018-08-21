@@ -5,7 +5,6 @@ import static com.foxcatgames.boggarton.Const.BOX;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.engine.Layer;
-import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
@@ -29,13 +28,10 @@ public class SimpleGame extends AbstractGame {
     public void processStage() {
         switch (stage) {
         case NEXT:
-            if (needNewFigure) {
-                IFigure figure = nextFigure();
-                needNewFigure = false;
-                logFigure(figure);
-            } else {
-                charge(); // or charge(final List<Pair<Integer, Integer>> pairs) if condition's passed
-            }
+            if (needNewFigure)
+                logFigure(nextFigure());
+            else
+                charge();
             break;
         case APPEAR:
             executeCommand();

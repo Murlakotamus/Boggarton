@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
-import com.foxcatgames.boggarton.game.glass.SimpleGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.game.utils.Utils;
@@ -37,7 +37,7 @@ public class RealGame extends AbstractOnePlayerGame {
             if (needNewFigure)
                 logFigure(nextFigure());
             else {
-                int emptyBrickLines = ((SimpleGlass) getGlass()).getCount() / FIGURES_FOR_NEXT_EMPTY_BRICK;
+                int emptyBrickLines = ((AbstractSimpleGlass) getGlass()).getCount() / FIGURES_FOR_NEXT_EMPTY_BRICK;
                 if (emptyBrickLines <= oldEmptyBrickLines)
                     charge();
                 else {

@@ -1,7 +1,7 @@
 package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.glass.SimpleGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
 public class MovesExecutor extends AbstractExecutor implements Runnable {
@@ -65,7 +65,7 @@ public class MovesExecutor extends AbstractExecutor implements Runnable {
                 });
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();
-                ((SimpleGlass) game.getGlass()).waitChanges();
+                ((AbstractSimpleGlass) game.getGlass()).waitChanges();
                 break;
 
             case NEXT:

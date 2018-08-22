@@ -9,7 +9,7 @@ import com.foxcatgames.boggarton.game.utils.Utils;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-public class MultiplayerGlass extends SimpleGlass {
+public class MultiplayerGlass extends AbstractSimpleGlass {
 
     private final Layer layer;
     private final int difficulty;

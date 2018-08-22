@@ -6,7 +6,7 @@ import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
-import com.foxcatgames.boggarton.game.glass.SimpleGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass;
 
 public class RealPlayer implements IPlayer {
 
@@ -85,8 +85,8 @@ public class RealPlayer implements IPlayer {
         if (game.getForecast() instanceof SimpleForecast)
             builder.setRandomName(((SimpleForecast) game.getForecast()).getRandomType().getName());
 
-        if (game.getGlass() instanceof SimpleGlass)
-            builder.setCount(((SimpleGlass) game.getGlass()).getCount());
+        if (game.getGlass() instanceof AbstractSimpleGlass)
+            builder.setCount(((AbstractSimpleGlass) game.getGlass()).getCount());
 
         builder.setPlayerName(getName());
 

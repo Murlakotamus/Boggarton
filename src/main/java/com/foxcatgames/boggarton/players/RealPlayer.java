@@ -1,6 +1,6 @@
 package com.foxcatgames.boggarton.players;
 
-import com.foxcatgames.boggarton.GameOutcomeParams;
+import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.game.AbstractGame;
@@ -72,8 +72,8 @@ public class RealPlayer implements IPlayer {
     }
 
     @Override
-    public GameOutcomeParams getOutcomeGamesParams() {
-        final GameOutcomeParams.Builder builder = new GameOutcomeParams.Builder();
+    public GameParams getGamesParams() {
+        final GameParams.Builder builder = new GameParams.Builder();
 
         builder.setPrognosisDebth(game.getForecast().getDepth());
         builder.setFigureSize(game.getForecast().getFigureSize());

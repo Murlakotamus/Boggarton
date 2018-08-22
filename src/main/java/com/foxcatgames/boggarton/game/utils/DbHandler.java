@@ -11,7 +11,7 @@ import java.util.Date;
 
 import org.sqlite.JDBC;
 
-import com.foxcatgames.boggarton.GameOutcomeParams;
+import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.players.IPlayer;
 
 public class DbHandler {
@@ -53,7 +53,7 @@ public class DbHandler {
         conn.setAutoCommit(false);
     }
 
-    private void executePreraredStatemnt(final PreparedStatement st, final Integer id, final GameOutcomeParams params) throws SQLException {
+    private void executePreraredStatemnt(final PreparedStatement st, final Integer id, final GameParams params) throws SQLException {
         st.setInt(1, id);
 
         st.setInt(2, params.getPrognosisDebth());
@@ -83,9 +83,9 @@ public class DbHandler {
             final ResultSet rs = stmt.executeQuery("select max(ga_id) as id from games");
             final Integer gameId = rs.getInt("id");
 
-            executePreraredStatemnt(loserStmt, gameId, loser.getOutcomeGamesParams());
+            executePreraredStatemnt(loserStmt, gameId, loser.getGamesParams());
             if (winner != null)
-                executePreraredStatemnt(winnerStmt, gameId, winner.getOutcomeGamesParams());
+                executePreraredStatemnt(winnerStmt, gameId, winner.getGamesParams());
 
             rs.close();
             stmt.close();

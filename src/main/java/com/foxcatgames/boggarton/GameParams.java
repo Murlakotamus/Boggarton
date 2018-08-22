@@ -1,6 +1,6 @@
 package com.foxcatgames.boggarton;
 
-public class GameOutcomeParams {
+public class GameParams {
 
     final private Integer prognosisDebth;
     final private Integer setSize;
@@ -15,7 +15,7 @@ public class GameOutcomeParams {
 
     final private Boolean virtual;
 
-    private GameOutcomeParams(final Integer prognosisDebth, final Integer setSize, final Integer figureSize, final Integer score, final Integer count,
+    private GameParams(final Integer prognosisDebth, final Integer setSize, final Integer figureSize, final Integer score, final Integer count,
             final String playerName, final String yuckName, String randomName, String priceName, final Boolean virtual) {
 
         this.prognosisDebth = prognosisDebth;
@@ -97,8 +97,8 @@ public class GameOutcomeParams {
             return this;
         }
 
-        public GameOutcomeParams build() {
-            return new GameOutcomeParams(prognosisDebth, setSize, figureSize, score, count, playerName, yuckName, randomName, priceName, virtual);
+        public GameParams build() {
+            return new GameParams(prognosisDebth, setSize, figureSize, score, count, playerName, yuckName, randomName, priceName, virtual);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.foxcatgames.boggarton.players.virtual;
 
-import com.foxcatgames.boggarton.GameOutcomeParams;
+import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
@@ -58,8 +58,8 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
     abstract protected void makeMoves(final char... moves) throws InterruptedException;
 
     @Override
-    public GameOutcomeParams getOutcomeGamesParams() {
-        final GameOutcomeParams.Builder builder = new GameOutcomeParams.Builder();
+    public GameParams getGamesParams() {
+        final GameParams.Builder builder = new GameParams.Builder();
 
         builder.setPrognosisDebth(game.getForecast().getDepth());
         builder.setFigureSize(game.getForecast().getFigureSize());

@@ -1,10 +1,10 @@
 package com.foxcatgames.boggarton.players;
 
-import com.foxcatgames.boggarton.GameOutcomeParams;
+import com.foxcatgames.boggarton.GameParams;
 
 public interface IPlayer {
 
-    GameOutcomeParams getOutcomeGamesParams();
+    GameParams getGamesParams();
 
     String getName();
 }

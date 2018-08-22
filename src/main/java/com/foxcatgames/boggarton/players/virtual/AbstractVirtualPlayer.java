@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
 import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
-import com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
@@ -72,8 +72,8 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
         if (game.getForecast() instanceof SimpleForecast)
             builder.setRandomName(((SimpleForecast) game.getForecast()).getRandomType().getName());
 
-        if (game.getGlass() instanceof AbstractSimpleGlass)
-            builder.setCount(((AbstractSimpleGlass) game.getGlass()).getCount());
+        if (game.getGlass() instanceof AbstractVisualGlass)
+            builder.setCount(((AbstractVisualGlass) game.getGlass()).getCount());
 
         builder.setPlayerName(getName());
 

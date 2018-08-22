@@ -13,7 +13,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
-import com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.IPlayer;
@@ -142,7 +142,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     @Override
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {
-            ((AbstractSimpleGlass) game[i].getGlass()).pauseOn();
+            ((AbstractVisualGlass) game[i].getGlass()).pauseOn();
             gamePaused[i].spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
         }
     }
@@ -151,7 +151,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     protected void showGlass() {
         for (int i = 0; i < numPlayers; i++) {
             gamePaused[i].unspawn();
-            ((AbstractSimpleGlass) game[i].getGlass()).pauseOff();
+            ((AbstractVisualGlass) game[i].getGlass()).pauseOff();
         }
     }
 }

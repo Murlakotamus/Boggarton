@@ -7,7 +7,7 @@ import static com.foxcatgames.boggarton.Const.GAME_PAUSED;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.SimpleEntity;
-import com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 
 abstract public class AbstractGameAndPractice extends AbstractOnePlayerScene {
 
@@ -21,7 +21,7 @@ abstract public class AbstractGameAndPractice extends AbstractOnePlayerScene {
     protected void hideGlass() {
         if (game.isGameOver())
             return;
-        ((AbstractSimpleGlass) game.getGlass()).pauseOn();
+        ((AbstractVisualGlass) game.getGlass()).pauseOn();
         gamePaused.spawn(new Vector2f(X + figureSize * 30 + 25, Y + BOX * 3 + BORDER));
     }
 
@@ -30,6 +30,6 @@ abstract public class AbstractGameAndPractice extends AbstractOnePlayerScene {
         if (game.isGameOver())
             return;
         gamePaused.unspawn();
-        ((AbstractSimpleGlass) game.getGlass()).pauseOff();
+        ((AbstractVisualGlass) game.getGlass()).pauseOff();
     }
 }

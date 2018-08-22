@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.utils.Utils;
 
-public class ReplayGlass extends AbstractSimpleGlass {
+public class ReplayGlass extends AbstractVisualGlass {
 
     private final Layer layer;
 

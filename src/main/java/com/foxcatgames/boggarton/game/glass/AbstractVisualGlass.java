@@ -16,7 +16,7 @@ import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
-abstract public class AbstractSimpleGlass extends AbstractGlass {
+abstract public class AbstractVisualGlass extends AbstractGlass {
 
     static public final int SCREEN_OFFSET_Y = 165;
 
@@ -29,7 +29,7 @@ abstract public class AbstractSimpleGlass extends AbstractGlass {
 
     private int dropSound;
 
-    public AbstractSimpleGlass(final Layer layer, final Vector2f position, final int width, final int height, final int... sounds) {
+    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final int... sounds) {
         super(width, height);
 
         dropSound = sounds[0];
@@ -44,7 +44,7 @@ abstract public class AbstractSimpleGlass extends AbstractGlass {
         showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
     }
 
-    public AbstractSimpleGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass, final int... sounds) {
+    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass, final int... sounds) {
         this(layer, position, width, height, sounds);
 
         for (int i = 0; i < width; i++)

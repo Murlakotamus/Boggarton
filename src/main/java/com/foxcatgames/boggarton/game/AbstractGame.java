@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.game;
 
 import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.game.StageItem.START;
-import static com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass.SCREEN_OFFSET_Y;
+import static com.foxcatgames.boggarton.game.glass.AbstractVisualGlass.SCREEN_OFFSET_Y;
 
 import java.util.List;
 import java.util.concurrent.locks.Condition;
@@ -24,7 +24,7 @@ import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
-import com.foxcatgames.boggarton.game.glass.AbstractSimpleGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
@@ -161,12 +161,12 @@ abstract public class AbstractGame {
         final float spentTime = (currentTime - previousTime) / 1000f;
         final int currX = Math.round(figurePosition.getX());
         final int newX = currX + Math.round(spentTime * CHARGE_SPEED);
-        final Vector2f framePosition = ((AbstractSimpleGlass) glass).getFrame().getPosition();
+        final Vector2f framePosition = ((AbstractVisualGlass) glass).getFrame().getPosition();
 
         if (newX >= framePosition.getX() + targetPosition * BOX) {
             figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
             ((AbstractVisualForecast) forecast).setNext(pairs);
-            ((AbstractSimpleGlass) glass).respawn();
+            ((AbstractVisualGlass) glass).respawn();
             fillBuffer();
             needNewFigure = true;
             if (pairs != null)
@@ -183,7 +183,7 @@ abstract public class AbstractGame {
     }
 
     public void fall() {
-        final AbstractSimpleGlass glass = (AbstractSimpleGlass) this.glass;
+        final AbstractVisualGlass glass = (AbstractVisualGlass) this.glass;
         if (glass.getY() % BOX == 0 && !glass.moveDown()) {
             nextStage();
             return;
@@ -218,7 +218,7 @@ abstract public class AbstractGame {
     }
 
     public void crashDown() {
-        if (((AbstractSimpleGlass) glass).allBricksFell()) {
+        if (((AbstractVisualGlass) glass).allBricksFell()) {
             nextStage();
             return;
         }
@@ -267,14 +267,14 @@ abstract public class AbstractGame {
         if (!glassProcessed) {
             killedBricks = glass.findChainsToKill();
             if (killedBricks)
-                ((AbstractSimpleGlass) glass).startAnimation();
+                ((AbstractVisualGlass) glass).startAnimation();
             glassProcessed = true;
         }
         if (!killedBricks)
             nextStage();
         if (enoughSleep(DISAPPEAR_PAUSE)) {
             glass.killChains();
-            ((AbstractSimpleGlass) glass).respawn();
+            ((AbstractVisualGlass) glass).respawn();
             nextStage();
         }
     }
@@ -297,7 +297,7 @@ abstract public class AbstractGame {
 
     public void setGameOver() {
         synchronized (buffer) {
-            ((AbstractSimpleGlass) glass).setGameOver();
+            ((AbstractVisualGlass) glass).setGameOver();
             buffer.notify();
             executeCommand();
         }

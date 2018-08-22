@@ -11,7 +11,7 @@ import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.game.utils.Utils;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class RealGame extends SimpleGame {
+public class RealGame extends AbstractOnePlayerGame {
 
     private static final int FIGURES_FOR_NEXT_EMPTY_BRICK = 5;
 

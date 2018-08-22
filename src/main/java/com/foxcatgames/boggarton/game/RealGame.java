@@ -45,30 +45,8 @@ public class RealGame extends AbstractOnePlayerGame {
                 }
             }
             break;
-        case APPEAR:
-            executeCommand();
-            if (!dropPressed)
-                stagePause(APPEAR_PAUSE);
-            else
-                nextStage();
-            break;
-        case FALL:
-            executeCommand();
-            fall();
-            break;
-        case SET:
-            stagePause(SET_PAUSE);
-            break;
-        case CRASH:
-            crashDown();
-            break;
-        case PROCESS:
-            processGlass();
-            break;
-        case COMPRESS:
-            compress();
-            break;
         default:
+            super.processStage();
         }
     }
 

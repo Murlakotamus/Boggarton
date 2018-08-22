@@ -64,29 +64,6 @@ public class ReplayGame extends AbstractGame {
             } else
                 charge();
             break;
-        case APPEAR:
-            executeCommand();
-            if (!dropPressed)
-                stagePause(APPEAR_PAUSE);
-            else
-                nextStage();
-            break;
-        case FALL:
-            executeCommand();
-            fall();
-            break;
-        case SET:
-            stagePause(SET_PAUSE);
-            break;
-        case CRASH:
-            crashDown();
-            break;
-        case PROCESS:
-            processGlass();
-            break;
-        case COMPRESS:
-            compress();
-            break;
         case YUCK:
             executeYuck(events.get(eventNum++).substring(YUCK.length()));
             break;
@@ -94,6 +71,7 @@ public class ReplayGame extends AbstractGame {
             stagePause(YUCK_PAUSE);
             break;
         default:
+            super.processStage();
         }
     }
 

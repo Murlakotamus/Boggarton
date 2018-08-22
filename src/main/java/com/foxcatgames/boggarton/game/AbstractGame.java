@@ -86,7 +86,40 @@ abstract public class AbstractGame {
 
     abstract protected void nextStage();
 
-    abstract public void processStage();
+    public void processStage() {
+        switch (stage) {
+        case NEXT:
+            if (needNewFigure)
+                logFigure(nextFigure());
+            else
+                charge();
+            break;
+        case APPEAR:
+            executeCommand();
+            if (!dropPressed)
+                stagePause(APPEAR_PAUSE);
+            else
+                nextStage();
+            break;
+        case FALL:
+            executeCommand();
+            fall();
+            break;
+        case SET:
+            stagePause(SET_PAUSE);
+            break;
+        case CRASH:
+            crashDown();
+            break;
+        case PROCESS:
+            processGlass();
+            break;
+        case COMPRESS:
+            compress();
+            break;
+        default:
+        }
+    }
 
     public IFigure nextFigure() {
         dropPressed = false;

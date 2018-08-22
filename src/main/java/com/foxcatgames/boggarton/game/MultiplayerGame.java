@@ -47,35 +47,6 @@ public class MultiplayerGame extends AbstractGame {
     @Override
     public void processStage() {
         switch (stage) {
-        case NEXT:
-            if (needNewFigure)
-                logFigure(nextFigure());
-            else
-                charge();
-            break;
-        case APPEAR:
-            executeCommand();
-            if (!dropPressed)
-                stagePause(APPEAR_PAUSE);
-            else
-                nextStage();
-            break;
-        case FALL:
-            executeCommand();
-            fall();
-            break;
-        case SET:
-            stagePause(SET_PAUSE);
-            break;
-        case CRASH:
-            crashDown();
-            break;
-        case PROCESS:
-            processGlass();
-            break;
-        case COMPRESS:
-            compress();
-            break;
         case YUCK:
             executeYuck();
             break;
@@ -83,6 +54,7 @@ public class MultiplayerGame extends AbstractGame {
             stagePause(YUCK_PAUSE);
             break;
         default:
+            super.processStage();
         }
     }
 

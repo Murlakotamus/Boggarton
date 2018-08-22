@@ -2,7 +2,12 @@ package com.foxcatgames.boggarton.players.virtual.solver;
 
 import static com.foxcatgames.boggarton.Const.WIDTH;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.foxcatgames.boggarton.game.AbstractGame;
+import com.foxcatgames.boggarton.game.IBrick;
+import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.IGlass;
@@ -31,6 +36,8 @@ public class Solver {
     private int depth;
     private int maxDepth;
     private int score;
+
+    private final Set<Integer> set = new HashSet<>();
 
     public class Vector {
 
@@ -146,14 +153,26 @@ public class Solver {
         return isFallen ? D : DN;
     }
 
+    private int getFigureSetSize(final IFigure figure) {
+        set.clear();
+        for (int i = 0; i < figure.getLenght(); i++) {
+            IBrick brick = figure.getBrick(i);
+            if (brick != null)
+                set.add(brick.getType());
+        }
+        return set.size();
+    }
+
     private void findSolutionRecursively(final IGlass glass, final StringBuilder result, final IPrice price) {
         if (game.isGameOver())
             return;
 
         final Vector shift = getSpace(glass);
         final int avail = glass.getFigure().getNumber() - 1;
+        final int bred = getFigureSetSize(glass.getFigure());
+        final int cycles = bred == 1 ? 1 : avail;
         for (int j = 0; j <= shift.getSpace(); j++)
-            for (int i = 0; i <= avail; i++) {
+            for (int i = 0; i < cycles; i++) {
 
                 final IGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
                 final StringBuilder currResult = new StringBuilder(result);

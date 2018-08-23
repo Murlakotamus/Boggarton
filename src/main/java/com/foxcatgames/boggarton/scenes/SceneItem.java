@@ -51,7 +51,7 @@ public enum SceneItem {
         case COMPETITION:
             return new CompetitionGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
         case COMPETITION_DEMO:
-            return new CompetitionDemo(WIDTH, HEIGHT, new int[] { 4, 3 }, AbstractScene.figureSize, yuckType, randomType, difficultyType);
+            return new CompetitionDemo(WIDTH, HEIGHT, new int[] { 4, 2 }, AbstractScene.figureSize, yuckType, randomType, difficultyType);
         case REPLAY:
             return new Replay(WIDTH, HEIGHT, 3, AbstractScene.figureSize);
         case OUTRO:

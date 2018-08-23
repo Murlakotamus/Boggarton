@@ -3,8 +3,8 @@ package com.foxcatgames.boggarton.players.virtual.solver;
 import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import java.util.HashSet;
-import java.util.Set;
 
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
@@ -37,7 +37,7 @@ public class Solver {
     private int maxDepth;
     private int score;
 
-    private final Set<Integer> set = new HashSet<>();
+    private final HashSet<Integer> set = new HashSet<>();
 
     public class Vector {
 
@@ -169,11 +169,12 @@ public class Solver {
 
         final Vector shift = getSpace(glass);
         final int avail = glass.getFigure().getNumber() - 1;
-        final int bred = getFigureSetSize(glass.getFigure());
-        final int cycles = bred == 1 ? 1 : avail;
+        int figureResidueSetSize = 0;
+        if (avail > 0)
+            figureResidueSetSize = getFigureSetSize(glass.getFigure());
+        final int cycles = figureResidueSetSize == 1 ? 0 : avail;
         for (int j = 0; j <= shift.getSpace(); j++)
-            for (int i = 0; i < cycles; i++) {
-
+            for (int i = 0; i <= cycles; i++) {
                 final IGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
                 final StringBuilder currResult = new StringBuilder(result);
                 currResult.append(cycle(virtualGlass, i));

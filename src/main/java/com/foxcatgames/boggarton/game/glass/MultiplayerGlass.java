@@ -1,5 +1,8 @@
 package com.foxcatgames.boggarton.game.glass;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
@@ -29,15 +32,17 @@ public class MultiplayerGlass extends AbstractVisualGlass {
                 removeBrick(i, j);
             }
 
-        int brick = 1;
-        StringBuilder result = new StringBuilder();
+        boolean yuckAdded = false;
+        final ArrayList<Integer> yuckBricks = new ArrayList<>(state.getWidth());
         for (int i = 0; i < state.getWidth(); i++) {
+            int brick;
             switch (yuckType) {
             case INCONSOLABLE:
                 brick = Utils.random(difficulty + 1);
-                if (brick == difficulty)
+                if (!yuckAdded && brick == difficulty) {
                     brick = Const.EMPTY;
-                else
+                    yuckAdded = true;
+                } else
                     brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
                 break;
             case HARD:
@@ -50,14 +55,23 @@ public class MultiplayerGlass extends AbstractVisualGlass {
             default:
                 throw new IllegalStateException("Incredible situation!");
             }
-            result.append(brick - Const.CURRENT_SET * 10);
-            state.setBrick(i, state.getHeight() - 1, new Brick(brick, layer));
+            yuckBricks.add(brick);
         }
 
-        if (yuckType == YuckTypes.HARD) {
-            int delta = difficulty - 4;
-            count += delta;
-        }
+        if (yuckType == YuckTypes.HARD)
+            count += difficulty - 4;
+
+        // to eliminate bias
+        if (yuckType == YuckTypes.INCONSOLABLE)
+            Collections.shuffle(yuckBricks);
+
+        for (int i = 0; i < state.getWidth(); i++)
+            state.setBrick(i, state.getHeight() - 1, new Brick(yuckBricks.get(i), layer));
+
+        final StringBuilder result = new StringBuilder(state.getWidth());
+        for (int i = 0; i < state.getWidth(); i++)
+            result.append(yuckBricks.get(i) - Const.CURRENT_SET * 10);
+
         return result.toString();
     }
 

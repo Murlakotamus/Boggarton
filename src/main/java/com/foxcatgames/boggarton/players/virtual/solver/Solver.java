@@ -4,7 +4,6 @@ import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import java.util.HashSet;
 
-import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
@@ -156,7 +155,7 @@ public class Solver {
     private int getFigureSetSize(final IFigure figure) {
         set.clear();
         for (int i = 0; i < figure.getLenght(); i++) {
-            IBrick brick = figure.getBrick(i);
+            final IBrick brick = figure.getBrick(i);
             if (brick != null)
                 set.add(brick.getType());
         }

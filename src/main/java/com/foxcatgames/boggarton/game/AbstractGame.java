@@ -5,9 +5,6 @@ import static com.foxcatgames.boggarton.game.StageItem.START;
 import static com.foxcatgames.boggarton.game.glass.AbstractVisualGlass.SCREEN_OFFSET_Y;
 
 import java.util.List;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -21,10 +18,10 @@ import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
 import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
@@ -328,32 +325,20 @@ abstract public class AbstractGame {
         }
     }
 
-    final Lock commandLock = new ReentrantLock();
-    final Condition bufferReady = commandLock.newCondition();
-
     protected void executeCommand() {
-        if (command.getCommand() != null) {
-            commandLock.lock();
-            try {
+        if (command.getCommand() != null)
+            synchronized (command) {
                 command.execute();
-                bufferReady.signal();
-            } finally {
-                commandLock.unlock();
+                command.notify();
             }
-        }
     }
 
-    public void sendCommand(ICommand cmd) {
-        commandLock.lock();
-        try {
+    public void sendCommand(ICommand cmd) throws InterruptedException {
+        synchronized (command) {
             while (command.getCommand() != null)
-                bufferReady.await();
+                command.wait();
             command.setCommand(cmd);
-            bufferReady.signal();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            commandLock.unlock();
+            command.notify();
         }
     }
 

@@ -40,7 +40,7 @@ public class GameLogger {
 
     public void close() {
         try {
-            logEvent("\n" + Const.GAMEOVER);
+            logEvent("\n" + Const.GAMEOVER_STR);
             isInit = false;
             bw.flush();
             bw.close();

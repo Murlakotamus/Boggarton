@@ -1,16 +1,19 @@
 package com.foxcatgames.boggarton.game;
 
 import static com.foxcatgames.boggarton.Const.BOX;
-import static com.foxcatgames.boggarton.Const.YUCK;
+import static com.foxcatgames.boggarton.Const.YUCK_STR;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
@@ -23,8 +26,8 @@ public class ReplayGame extends AbstractGame {
     int eventNum = 0;
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final List<String> events) {
-        super(layer, x, y, width, height, forecast, lenght, 0, null);
+            final List<String> events, final Map<String, Integer> sounds) {
+        super(layer, x, y, width, height, forecast, lenght, 0, null, sounds);
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, lenght, events);
         this.events = events;
 
@@ -47,7 +50,7 @@ public class ReplayGame extends AbstractGame {
             e.printStackTrace();
         }
 
-        glass = new ReplayGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, bricks);
+        glass = new ReplayGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, bricks, sounds);
     }
 
     @Override
@@ -65,7 +68,7 @@ public class ReplayGame extends AbstractGame {
                 charge();
             break;
         case YUCK:
-            executeYuck(events.get(eventNum++).substring(YUCK.length()));
+            executeYuck(events.get(eventNum++).substring(YUCK_STR.length()));
             break;
         case YUCK_PAUSE:
             stagePause(YUCK_PAUSE);
@@ -79,13 +82,14 @@ public class ReplayGame extends AbstractGame {
     protected void nextStage() {
         startTime = getTime();
         previousTime = startTime;
-        boolean executeYuck = eventNum < events.size() && events.get(eventNum).startsWith(YUCK);
+        boolean executeYuck = eventNum < events.size() && events.get(eventNum).startsWith(YUCK_STR);
         stage = stage.getNextStage(reactionDetected, executeYuck);
     }
 
     protected void executeYuck(final String yuckBricks) {
         ((ReplayGlass) glass).executeYuck(yuckBricks);
         ((ReplayGlass) glass).respawn();
+        Sound.play(sounds.get(Const.YUCK));
         nextStage();
     }
 }

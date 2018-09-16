@@ -3,9 +3,12 @@ package com.foxcatgames.boggarton.game;
 import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.Const.LIGHT_FONT;
 
+import java.util.Map;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
@@ -25,10 +28,12 @@ public class MultiplayerGame extends AbstractGame {
     private final Brick[] yuckBricks = new Brick[MAX_YUCKS];
     private final Vector2f yuckPosition;
 
-    public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final int... sounds) {
+    int oldYucks = 0;
 
-        super(layer, x, y, width, height, forecast, lenght, setSize, randomType);
+    public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
+            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
+
+        super(layer, x, y, width, height, forecast, lenght, setSize, randomType, sounds);
         this.yuckType = yuckType;
         glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, setSize, sounds);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
@@ -88,6 +93,7 @@ public class MultiplayerGame extends AbstractGame {
         logYuck(yuck);
         yucks--;
         ((MultiplayerGlass) glass).respawn();
+        Sound.play(sounds.get(Const.YUCK));
         drawYucks();
         nextStage();
     }
@@ -99,11 +105,16 @@ public class MultiplayerGame extends AbstractGame {
 
         for (int i = yucks - 1; i >= 0; i--)
             yuckBricks[i].spawn(new Vector2f(yuckPosition.x, yuckPosition.y - (i * BOX)));
+
+        oldYucks = yucks;
     }
 
     private int getYucks() {
         int result = enemyGlass.getGlassState().getReactionLenght() - 2;
         result = result > 0 ? result : 0;
+        if (result + yucks > oldYucks)
+            Sound.play(sounds.get(Const.ADDYUCK));
+
         return result + yucks;
     }
 

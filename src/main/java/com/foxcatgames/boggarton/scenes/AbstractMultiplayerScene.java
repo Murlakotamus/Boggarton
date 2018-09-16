@@ -59,9 +59,8 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
         game = new MultiplayerGame[numPlayers];
 
         for (int i = 0; i < numPlayers; i++) {
-            int dropSound = i == 0 ? Const.SND_DROP_LEFT : Const.SND_DROP_RIGHT;
             game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, forecast[i], length, difficulty.getSetSize(),
-                    Victories.getVictories(i), yuckType, randomType, dropSound);
+                    Victories.getVictories(i), yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
             game[i].setName(PLAYERS_NAMES[i]);
         }
 

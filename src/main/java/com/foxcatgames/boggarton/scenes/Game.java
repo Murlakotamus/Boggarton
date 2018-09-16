@@ -14,7 +14,7 @@ public class Game extends AbstractGameAndPractice {
 
         super(SceneItem.GAME);
 
-        game = new RealGame(layer, X, Y, width, height, forecast, figureSize, difficulty.getSetSize(), randomType, Const.SND_DROP);
+        game = new RealGame(layer, X, Y, width, height, forecast, figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS);
         game.setName("Human game");
         game.startGame();
         player = new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);

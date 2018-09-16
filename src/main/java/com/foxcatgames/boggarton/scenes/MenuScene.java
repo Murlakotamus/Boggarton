@@ -12,7 +12,6 @@ import java.io.OutputStreamWriter;
 import java.util.Properties;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.openal.AL10;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
@@ -23,7 +22,6 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.forecast.MenuForecast;
-import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 public class MenuScene extends AbstractLogoScene {
 
@@ -175,8 +173,7 @@ public class MenuScene extends AbstractLogoScene {
     }
 
     private void playMove() {
-        if (SceneItem.getSound() == SoundTypes.ON)
-            AL10.alSourcePlay(Sound.source.get(SND_MOVE));
+        Sound.playMove();
     }
 
     private void addKeyUp() {
@@ -217,9 +214,7 @@ public class MenuScene extends AbstractLogoScene {
         final KeyListener enter = new KeyListener() {
             @Override
             public void onKeyDown() {
-                final MenuItem menuItem = ITEMS[currentPosition];
-                if (menuItem == MenuItem.SOUND || SceneItem.getSound() == SoundTypes.ON)
-                    AL10.alSourcePlay(Sound.source.get(SND_SELECT));
+                Sound.playSelect();
             }
 
             @Override

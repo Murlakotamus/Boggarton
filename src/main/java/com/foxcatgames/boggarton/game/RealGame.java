@@ -2,6 +2,7 @@ package com.foxcatgames.boggarton.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
@@ -25,7 +26,7 @@ public class RealGame extends AbstractOnePlayerGame {
     };
 
     public RealGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght, final int difficulty,
-            final RandomTypes randomType, final int... sounds) {
+            final RandomTypes randomType, final Map<String, Integer> sounds) {
 
         super(layer, x, y, width, height, forecast, lenght, difficulty, randomType, sounds);
     }

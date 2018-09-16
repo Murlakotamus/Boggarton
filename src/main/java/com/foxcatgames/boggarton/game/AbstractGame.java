@@ -5,6 +5,7 @@ import static com.foxcatgames.boggarton.game.StageItem.START;
 import static com.foxcatgames.boggarton.game.glass.AbstractVisualGlass.SCREEN_OFFSET_Y;
 
 import java.util.List;
+import java.util.Map;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -71,11 +72,14 @@ abstract public class AbstractGame {
     protected boolean needNewFigure = true;
     protected int lastScore = 0;
 
+    final Map<String, Integer> sounds;
+
     public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
-            final int difficulty, final RandomTypes randomType) {
+            final int difficulty, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
         this.x = x;
         this.y = y;
+        this.sounds = sounds;
         if (forecast >= 1)
             this.forecast = new SimpleForecast(layer, new Vector2f(x, y), forecast, lenght, difficulty, randomType);
         diffScore = new Text("", Const.DARK_FONT, layer);
@@ -432,11 +436,11 @@ abstract public class AbstractGame {
 
     protected void logFigure(final IFigure figure) {
         if (figure != null)
-            logEvent(Const.FIGURE + figure);
+            logEvent(Const.FIGURE_STR + figure);
     }
 
     protected void logYuck(final String yuck) {
-        logEvent(Const.YUCK + yuck + "\n");
+        logEvent(Const.YUCK_STR + yuck + "\n");
     }
 
     private void logEvent(final String str) {

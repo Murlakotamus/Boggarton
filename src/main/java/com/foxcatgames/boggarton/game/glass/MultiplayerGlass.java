@@ -2,6 +2,7 @@ package com.foxcatgames.boggarton.game.glass;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -18,7 +19,7 @@ public class MultiplayerGlass extends AbstractVisualGlass {
     private final int difficulty;
     private int count = 0;
 
-    public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty, final int... sounds) {
+    public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty, final Map<String, Integer> sounds) {
         super(layer, position, width, height, sounds);
         this.layer = layer;
         this.difficulty = difficulty;

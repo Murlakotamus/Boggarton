@@ -75,15 +75,15 @@ abstract public class AbstractFigure implements IFigure {
         int sound;
         switch (set) {
         case 2:
-            sound = 2 + i;
+            sound = i <= 2 ? 2 + i : 26 + i;
             AL10.alSourcePlay(Sound.source.get(sound));
             break;
         case 3:
-            sound = 7 + i;
+            sound = 31 + i;
             AL10.alSourcePlay(Sound.source.get(sound));
             break;
         case 4:
-            sound = 12 + i;
+            sound = 36 + i;
             AL10.alSourcePlay(Sound.source.get(sound));
             break;
         }

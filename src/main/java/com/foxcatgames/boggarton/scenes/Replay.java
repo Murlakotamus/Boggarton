@@ -23,9 +23,9 @@ public class Replay extends AbstractOnePlayerScene {
         try (final BufferedReader in = new BufferedReader(new FileReader(new File(filename)))) {
             String line;
             while ((line = in.readLine()) != null)
-                if (line.startsWith(Const.FIGURE) || line.startsWith(Const.YUCK))
+                if (line.startsWith(Const.FIGURE_STR) || line.startsWith(Const.YUCK_STR))
                     events.add(line);
-                else if (Const.GAMEOVER.equals(line))
+                else if (Const.GAMEOVER_STR.equals(line))
                     break;
                 else
                     moves.append(line);
@@ -33,7 +33,7 @@ public class Replay extends AbstractOnePlayerScene {
             e.printStackTrace();
         }
 
-        game = new ReplayGame(layer, X, Y, width, height, 0, 3, events);
+        game = new ReplayGame(layer, X, Y, width, height, 0, 3, events, Const.SOUNDS);
         game.setName("Replay");
         game.startGame();
 

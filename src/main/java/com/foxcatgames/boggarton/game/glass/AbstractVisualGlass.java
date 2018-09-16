@@ -4,6 +4,8 @@ import static com.foxcatgames.boggarton.Const.BORDER;
 import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.Const.LIGHT_FONT;
 
+import java.util.Map;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
@@ -27,12 +29,12 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     private boolean gamePaused;
     private int count; // figures counter
 
-    private int dropSound;
+    final Map<String, Integer> sounds;
 
-    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final int... sounds) {
+    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final Map<String, Integer> sounds) {
         super(width, height);
 
-        dropSound = sounds[0];
+        this.sounds = sounds;
 
         state.setBricks(new Brick[width][height]);
         frame = new Frame(layer, position, width, height, true, false);
@@ -44,7 +46,7 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
         showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
     }
 
-    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass, final int... sounds) {
+    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass, final Map<String, Integer> sounds) {
         this(layer, position, width, height, sounds);
 
         for (int i = 0; i < width; i++)
@@ -187,7 +189,7 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     @Override
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, getFigure().getBrick(num));
-        getFigure().setNull(num, dropSound, SceneItem.getSound() == SoundTypes.OFF);
+        getFigure().setNull(num, sounds.get(Const.DROP), SceneItem.getSound() == SoundTypes.OFF);
         setChanges(true);
     }
 

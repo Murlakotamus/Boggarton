@@ -15,7 +15,7 @@ public class Practice extends AbstractGameAndPractice {
 
         super(SceneItem.PRACTICE);
 
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType, Const.SND_DROP);
+        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS);
         game.setName("Human practice");
         game.startGame();
         player = new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);

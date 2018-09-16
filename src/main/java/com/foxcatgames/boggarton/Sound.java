@@ -11,11 +11,14 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
+import com.foxcatgames.boggarton.scenes.SceneItem;
+import com.foxcatgames.boggarton.scenes.types.SoundTypes;
+
 public class Sound {
-    static IntBuffer buffer = BufferUtils.createIntBuffer(5);
+    static IntBuffer buffer = BufferUtils.createIntBuffer(29); // must be equals to number of sound files
 
     /** Sources are points emitting sound. */
-    public static IntBuffer source = BufferUtils.createIntBuffer(17);
+    public static IntBuffer source = BufferUtils.createIntBuffer(41);
 
     /** Position of the source sound. */
     static FloatBuffer sourcePos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
@@ -62,19 +65,66 @@ public class Sound {
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        loadPattern(WAV_MOVE, SND_MOVE);
-        loadPattern(WAV_SELECT, SND_SELECT);
+        loadPattern(WAV_ADDYUCK, SND_ADDYUCK);
+        loadPattern(WAV_ADDYUCK_LEFT, SND_ADDYUCK_LEFT);
+        loadPattern(WAV_ADDYUCK_RIGHT, SND_ADDYUCK_RIGHT);
+
+        loadPattern(WAV_CRASH, SND_CRASH);
+        loadPattern(WAV_CRASH_LEFT, SND_CRASH_LEFT);
+        loadPattern(WAV_CRASH_RIGHT, SND_CRASH_RIGHT);
+
+        loadPattern(WAV_CYCLE, SND_CYCLE);
+        loadPattern(WAV_CYCLE_LEFT, SND_CYCLE_LEFT);
+        loadPattern(WAV_CYCLE_RIGHT, SND_CYCLE_RIGHT);
+
+        loadPattern(WAV_DISAPPEAR, SND_DISAPPEAR);
+        loadPattern(WAV_DISAPPEAR_LEFT, SND_DISAPPEAR_LEFT);
+        loadPattern(WAV_DISAPPEAR_RIGHT, SND_DISAPPEAR_RIGHT);
+
         loadPattern(WAV_DROP, SND_DROP);
         loadPattern(WAV_DROP_LEFT, SND_DROP_LEFT);
         loadPattern(WAV_DROP_RIGHT, SND_DROP_RIGHT);
+
+        loadPattern(WAV_MOVE, SND_MOVE);
+
+        loadPattern(WAV_NEW, SND_NEW);
+        loadPattern(WAV_NEW_LEFT, SND_NEW_LEFT);
+        loadPattern(WAV_NEW_RIGHT, SND_NEW_RIGHT);
+
+        loadPattern(WAV_SCORE, SND_SCORE);
+        loadPattern(WAV_SCORE_LEFT, SND_SCORE_LEFT);
+        loadPattern(WAV_SCORE_RIGHT, SND_SCORE_RIGHT);
+
+        loadPattern(WAV_SELECT, SND_SELECT);
+
+        loadPattern(WAV_SHIFT, SND_SHIFT);
+        loadPattern(WAV_SHIFT_LEFT, SND_SHIFT_LEFT);
+        loadPattern(WAV_SHIFT_RIGHT, SND_SHIFT_RIGHT);
+
+        loadPattern(WAV_YUCK, SND_YUCK);
+        loadPattern(WAV_YUCK_LEFT, SND_YUCK_LEFT);
+        loadPattern(WAV_YUCK_RIGHT, SND_YUCK_RIGHT);
 
         // Bind the buffer with the source.
         AL10.alGenSources(source);
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        initPattern(SND_MOVE, SND_MOVE);
-        initPattern(SND_SELECT, SND_SELECT);
+        initPattern(SND_ADDYUCK, SND_ADDYUCK);
+        initPattern(SND_ADDYUCK_LEFT, SND_ADDYUCK_LEFT);
+        initPattern(SND_ADDYUCK_RIGHT, SND_ADDYUCK_RIGHT);
+
+        initPattern(SND_CRASH, SND_CRASH);
+        initPattern(SND_CRASH_LEFT, SND_CRASH_LEFT);
+        initPattern(SND_CRASH_RIGHT, SND_CRASH_RIGHT);
+
+        initPattern(SND_CYCLE, SND_CYCLE);
+        initPattern(SND_CYCLE_LEFT, SND_CYCLE_LEFT);
+        initPattern(SND_CYCLE_RIGHT, SND_CYCLE_RIGHT);
+
+        initPattern(SND_DISAPPEAR, SND_DISAPPEAR);
+        initPattern(SND_DISAPPEAR_LEFT, SND_DISAPPEAR_LEFT);
+        initPattern(SND_DISAPPEAR_RIGHT, SND_DISAPPEAR_RIGHT);
 
         initPattern(SND_DROP, SND_DROP0);
         initPattern(SND_DROP, SND_DROP1);
@@ -93,6 +143,26 @@ public class Sound {
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT2);
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT3);
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT4);
+
+        initPattern(SND_MOVE, SND_MOVE);
+
+        initPattern(SND_NEW, SND_NEW);
+        initPattern(SND_NEW_LEFT, SND_NEW_LEFT);
+        initPattern(SND_NEW_RIGHT, SND_NEW_RIGHT);
+
+        initPattern(SND_SCORE, SND_SCORE);
+        initPattern(SND_SCORE_LEFT, SND_SCORE_LEFT);
+        initPattern(SND_SCORE_RIGHT, SND_SCORE_RIGHT);
+
+        initPattern(SND_SELECT, SND_SELECT);
+
+        initPattern(SND_SHIFT, SND_SHIFT);
+        initPattern(SND_SHIFT_LEFT, SND_SHIFT_LEFT);
+        initPattern(SND_SHIFT_RIGHT, SND_SHIFT_RIGHT);
+
+        initPattern(SND_YUCK, SND_YUCK);
+        initPattern(SND_YUCK_LEFT, SND_YUCK_LEFT);
+        initPattern(SND_YUCK_RIGHT, SND_YUCK_RIGHT);
 
         // Do another error check and return.
         if (AL10.alGetError() == AL10.AL_NO_ERROR)
@@ -145,4 +215,18 @@ public class Sound {
         Sound.killALData();
         AL.destroy();
     }
+
+    public static void play(final int sound) {
+        if (SceneItem.getSound() == SoundTypes.ON)
+            AL10.alSourcePlay(source.get(sound));
+    }
+
+    public static void playMove() {
+        play(SND_MOVE);
+    }
+
+    public static void playSelect() {
+        play(SND_SELECT);
+    }
+
 }

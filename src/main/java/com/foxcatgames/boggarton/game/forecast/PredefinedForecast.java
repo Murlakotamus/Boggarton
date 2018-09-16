@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.game.forecast;
 
 import static com.foxcatgames.boggarton.Const.BORDER;
 import static com.foxcatgames.boggarton.Const.BOX;
-import static com.foxcatgames.boggarton.Const.FIGURE;
+import static com.foxcatgames.boggarton.Const.FIGURE_STR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ public class PredefinedForecast extends AbstractVisualForecast {
         frame = new Frame(layer, startPos, size, prognosis, false, true);
 
         for (String event : events)
-            if (event.startsWith(FIGURE))
-                predefinedFigures.add(event.substring(FIGURE.length()));
+            if (event.startsWith(FIGURE_STR))
+                predefinedFigures.add(event.substring(FIGURE_STR.length()));
 
         for (int i = 0; i < prognosis; i++) {
             if (i < predefinedFigures.size())

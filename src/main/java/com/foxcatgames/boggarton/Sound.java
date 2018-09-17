@@ -18,7 +18,7 @@ public class Sound {
     static IntBuffer buffer = BufferUtils.createIntBuffer(29); // must be equals to number of sound files
 
     /** Sources are points emitting sound. */
-    public static IntBuffer source = BufferUtils.createIntBuffer(41);
+    public static IntBuffer source = BufferUtils.createIntBuffer(56);
 
     /** Position of the source sound. */
     static FloatBuffer sourcePos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
@@ -131,18 +131,33 @@ public class Sound {
         initPattern(SND_DROP, SND_DROP2);
         initPattern(SND_DROP, SND_DROP3);
         initPattern(SND_DROP, SND_DROP4);
+        initPattern(SND_DROP, SND_DROP5);
+        initPattern(SND_DROP, SND_DROP6);
+        initPattern(SND_DROP, SND_DROP7);
+        initPattern(SND_DROP, SND_DROP8);
+        initPattern(SND_DROP, SND_DROP9);
 
         initPattern(SND_DROP_LEFT, SND_DROP_LEFT0);
         initPattern(SND_DROP_LEFT, SND_DROP_LEFT1);
         initPattern(SND_DROP_LEFT, SND_DROP_LEFT2);
         initPattern(SND_DROP_LEFT, SND_DROP_LEFT3);
         initPattern(SND_DROP_LEFT, SND_DROP_LEFT4);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT5);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT6);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT7);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT8);
+        initPattern(SND_DROP_LEFT, SND_DROP_LEFT9);
 
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT0);
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT1);
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT2);
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT3);
         initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT4);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT5);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT6);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT7);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT8);
+        initPattern(SND_DROP_RIGHT, SND_DROP_RIGHT9);
 
         initPattern(SND_MOVE, SND_MOVE);
 
@@ -214,6 +229,19 @@ public class Sound {
     public static void destroy() {
         Sound.killALData();
         AL.destroy();
+    }
+
+    public static void playDrop(final int sound) {
+        if (SceneItem.getSound() == SoundTypes.ON) {
+            int currentSound = sound;
+            while (currentSound < sound + 10 && AL10.alGetSourcei(source.get(currentSound), AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING)
+                currentSound++;
+
+            if (currentSound < sound + 10)
+                AL10.alSourcePlay(source.get(currentSound));
+            else
+                Logger.err("No source! " + currentSound);
+        }
     }
 
     public static void play(final int sound) {

@@ -83,60 +83,75 @@ public class Const {
     public static final int SND_MOVE = 0;
     public static final int SND_SELECT = 1;
 
-    public static final int SND_DROP = 2;
-    public static final int SND_DROP_LEFT = 3;
-    public static final int SND_DROP_RIGHT = 4;
+    public static final int SND_ADDYUCK = 2;
+    public static final int SND_ADDYUCK_LEFT = 3;
+    public static final int SND_ADDYUCK_RIGHT = 4;
 
-    public static final int SND_ADDYUCK = 5;
-    public static final int SND_ADDYUCK_LEFT = 6;
-    public static final int SND_ADDYUCK_RIGHT = 7;
+    public static final int SND_CRASH = 5;
+    public static final int SND_CRASH_LEFT = 6;
+    public static final int SND_CRASH_RIGHT = 7;
 
-    public static final int SND_CRASH = 8;
-    public static final int SND_CRASH_LEFT = 9;
-    public static final int SND_CRASH_RIGHT = 10;
+    public static final int SND_CYCLE = 8;
+    public static final int SND_CYCLE_LEFT = 9;
+    public static final int SND_CYCLE_RIGHT = 10;
 
-    public static final int SND_CYCLE = 11;
-    public static final int SND_CYCLE_LEFT = 12;
-    public static final int SND_CYCLE_RIGHT = 13;
+    public static final int SND_NEW = 11;
+    public static final int SND_NEW_LEFT = 12;
+    public static final int SND_NEW_RIGHT = 13;
 
-    public static final int SND_NEW = 14;
-    public static final int SND_NEW_LEFT = 15;
-    public static final int SND_NEW_RIGHT = 16;
+    public static final int SND_SCORE = 14;
+    public static final int SND_SCORE_LEFT = 15;
+    public static final int SND_SCORE_RIGHT = 16;
 
-    public static final int SND_SCORE = 17;
-    public static final int SND_SCORE_LEFT = 18;
-    public static final int SND_SCORE_RIGHT = 19;
+    public static final int SND_SHIFT = 17;
+    public static final int SND_SHIFT_LEFT = 18;
+    public static final int SND_SHIFT_RIGHT = 19;
 
-    public static final int SND_SHIFT = 20;
-    public static final int SND_SHIFT_LEFT = 21;
-    public static final int SND_SHIFT_RIGHT = 22;
+    public static final int SND_YUCK = 20;
+    public static final int SND_YUCK_LEFT = 21;
+    public static final int SND_YUCK_RIGHT = 22;
 
-    public static final int SND_YUCK = 23;
-    public static final int SND_YUCK_LEFT = 24;
-    public static final int SND_YUCK_RIGHT = 25;
+    public static final int SND_DISAPPEAR = 23;
+    public static final int SND_DISAPPEAR_LEFT = 24;
+    public static final int SND_DISAPPEAR_RIGHT = 25;
 
-    public static final int SND_DISAPPEAR = 26;
-    public static final int SND_DISAPPEAR_LEFT = 27;
-    public static final int SND_DISAPPEAR_RIGHT = 28;
+    public static final int SND_DROP = 26;
+    public static final int SND_DROP_LEFT = 27;
+    public static final int SND_DROP_RIGHT = 28;
 
     // sound sources
-    public static final int SND_DROP0 = 2;
-    public static final int SND_DROP1 = 3;
-    public static final int SND_DROP2 = 4;
+    public static final int SND_DROP0 = 26;
+    public static final int SND_DROP1 = 27;
+    public static final int SND_DROP2 = 28;
     public static final int SND_DROP3 = 29;
     public static final int SND_DROP4 = 30;
+    public static final int SND_DROP5 = 31;
+    public static final int SND_DROP6 = 32;
+    public static final int SND_DROP7 = 33;
+    public static final int SND_DROP8 = 34;
+    public static final int SND_DROP9 = 35;
 
-    public static final int SND_DROP_LEFT0 = 31;
-    public static final int SND_DROP_LEFT1 = 32;
-    public static final int SND_DROP_LEFT2 = 33;
-    public static final int SND_DROP_LEFT3 = 34;
-    public static final int SND_DROP_LEFT4 = 35;
+    public static final int SND_DROP_LEFT0 = 36;
+    public static final int SND_DROP_LEFT1 = 37;
+    public static final int SND_DROP_LEFT2 = 38;
+    public static final int SND_DROP_LEFT3 = 39;
+    public static final int SND_DROP_LEFT4 = 40;
+    public static final int SND_DROP_LEFT5 = 41;
+    public static final int SND_DROP_LEFT6 = 42;
+    public static final int SND_DROP_LEFT7 = 43;
+    public static final int SND_DROP_LEFT8 = 44;
+    public static final int SND_DROP_LEFT9 = 45;
 
-    public static final int SND_DROP_RIGHT0 = 36;
-    public static final int SND_DROP_RIGHT1 = 37;
-    public static final int SND_DROP_RIGHT2 = 38;
-    public static final int SND_DROP_RIGHT3 = 39;
-    public static final int SND_DROP_RIGHT4 = 40;
+    public static final int SND_DROP_RIGHT0 = 46;
+    public static final int SND_DROP_RIGHT1 = 47;
+    public static final int SND_DROP_RIGHT2 = 48;
+    public static final int SND_DROP_RIGHT3 = 49;
+    public static final int SND_DROP_RIGHT4 = 50;
+    public static final int SND_DROP_RIGHT5 = 51;
+    public static final int SND_DROP_RIGHT6 = 52;
+    public static final int SND_DROP_RIGHT7 = 53;
+    public static final int SND_DROP_RIGHT8 = 54;
+    public static final int SND_DROP_RIGHT9 = 55;
 
     // sound files
     private static final String WAV_PATH = "/sounds/";
@@ -202,7 +217,7 @@ public class Const {
         SOUNDS.put(CRASH, SND_CRASH);
         SOUNDS.put(CYCLE, SND_CYCLE);
         SOUNDS.put(DISAPPEAR, SND_DISAPPEAR);
-        SOUNDS.put(DROP, SND_DROP);
+        SOUNDS.put(DROP, SND_DROP0);
         SOUNDS.put(NEW, SND_NEW);
         SOUNDS.put(SCORE, SND_SCORE);
         SOUNDS.put(SHIFT, SND_SHIFT);
@@ -212,7 +227,7 @@ public class Const {
         SOUNDS_LEFT.put(CRASH, SND_CRASH_LEFT);
         SOUNDS_LEFT.put(CYCLE, SND_CYCLE_LEFT);
         SOUNDS_LEFT.put(DISAPPEAR, SND_DISAPPEAR_LEFT);
-        SOUNDS_LEFT.put(DROP, SND_DROP_LEFT);
+        SOUNDS_LEFT.put(DROP, SND_DROP_LEFT0);
         SOUNDS_LEFT.put(NEW, SND_NEW_LEFT);
         SOUNDS_LEFT.put(SCORE, SND_SCORE_LEFT);
         SOUNDS_LEFT.put(SHIFT, SND_SHIFT_LEFT);
@@ -222,7 +237,7 @@ public class Const {
         SOUNDS_RIGHT.put(CRASH, SND_CRASH_RIGHT);
         SOUNDS_RIGHT.put(CYCLE, SND_CYCLE_RIGHT);
         SOUNDS_RIGHT.put(DISAPPEAR, SND_DISAPPEAR_RIGHT);
-        SOUNDS_RIGHT.put(DROP, SND_DROP_RIGHT);
+        SOUNDS_RIGHT.put(DROP, SND_DROP_RIGHT0);
         SOUNDS_RIGHT.put(NEW, SND_NEW_RIGHT);
         SOUNDS_RIGHT.put(SCORE, SND_SCORE_RIGHT);
         SOUNDS_RIGHT.put(SHIFT, SND_SHIFT_RIGHT);

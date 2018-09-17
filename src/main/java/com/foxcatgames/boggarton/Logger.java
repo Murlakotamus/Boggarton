@@ -3,7 +3,7 @@ package com.foxcatgames.boggarton;
 public final class Logger {
     public static final boolean IS_ACTIVE = false;
 
-    private Logger(){
+    private Logger() {
     }
 
     public static void log(final Object obj) {
@@ -13,5 +13,9 @@ public final class Logger {
 
     public static void err(final String string) {
         System.err.println(string);
+    }
+
+    public static void debug(final String string) {
+        System.out.println(string);
     }
 }

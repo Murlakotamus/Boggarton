@@ -10,6 +10,7 @@ import java.util.Map;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
@@ -224,6 +225,7 @@ abstract public class AbstractGame {
             return;
         }
 
+        boolean fell = false;
         final float currentTime = getTime();
         final float spentTime = (currentTime - previousTime) / 1000f;
         final GlassState state = glass.getGlassState();
@@ -239,12 +241,15 @@ abstract public class AbstractGame {
                 if (newY == currY)
                     return;
 
-                crashDownBrick(brick, i, j, currY, newY);
+                fell = fell | crashDownBrick(brick, i, j, currY, newY);
             }
         previousTime = currentTime;
+        if (fell)
+            Sound.playDrop(sounds.get(Const.DROP));
     }
 
-    private void crashDownBrick(final Brick brick, final int i, final int j, final int currY, final int newY) {
+    private boolean crashDownBrick(final Brick brick, final int i, final int j, final int currY, final int newY) {
+        boolean fell = false;
         final int oldCell = currY / BOX;
         final int newCell = newY / BOX;
         final int diffCell = newCell - oldCell;
@@ -258,10 +263,13 @@ abstract public class AbstractGame {
                 state.setBrick(i, j + k, brick);
                 state.setBrick(i, j + k - 1, null);
                 final int z = j + k + 1;
-                if ((z == state.getHeight()) || state.getBrick(i, z) != null && !((Brick) state.getBrick(i, z)).isCrashing())
+                if ((z == state.getHeight()) || state.getBrick(i, z) != null && !((Brick) state.getBrick(i, z)).isCrashing()) {
+                    fell = true;
                     brick.setCrashing(false);
+                }
             }
         }
+        return fell;
     }
 
     public void processGlass() {

@@ -60,17 +60,12 @@ abstract public class AbstractFigure implements IFigure {
     }
 
     @Override
-    public void setNull(final int i, final int sound, final boolean silent) {
+    public void setNull(final int i) {
         if (i < 0 || i >= lenght || bricks[i] == null)
             return;
 
         bricks[i] = null;
         number--;
-
-        if (silent)
-            return;
-
-        Sound.playDrop(sound);
     }
 
     @Override

@@ -6,7 +6,7 @@ public interface IFigure {
 
     public void swapBricks(int i, int j);
     public void rotate();
-    public void setNull(int i, int set, boolean silent);
+    public void setNull(int i);
     public boolean isFallen();
 
     public int getFirstBrickNum();

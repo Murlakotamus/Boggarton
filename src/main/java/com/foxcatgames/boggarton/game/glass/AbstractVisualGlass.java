@@ -9,6 +9,7 @@ import java.util.Map;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Frame;
@@ -189,8 +190,9 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     @Override
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, getFigure().getBrick(num));
-        getFigure().setNull(num, sounds.get(Const.DROP), SceneItem.getSound() == SoundTypes.OFF);
+        getFigure().setNull(num);
         setChanges(true);
+        Sound.playDrop(sounds.get(Const.DROP));
     }
 
     @Override

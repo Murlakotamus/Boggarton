@@ -16,8 +16,6 @@ import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.IFigure;
-import com.foxcatgames.boggarton.scenes.SceneItem;
-import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 abstract public class AbstractVisualGlass extends AbstractGlass {
 

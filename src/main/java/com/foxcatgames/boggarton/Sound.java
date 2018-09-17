@@ -51,13 +51,6 @@ public class Sound {
         AL10.alSource(source.get(sourceId), AL10.AL_VELOCITY, sourceVel);
     }
 
-    /**
-     * boolean LoadALData()
-     *
-     * This function will load our sample data from the disk using the Alut utility
-     * and send the data into OpenAL as a buffer. A source is then also created to
-     * play that buffer.
-     */
     static int loadALData() {
         // Load wav data into a buffer.
         AL10.alGenBuffers(buffer);
@@ -187,8 +180,6 @@ public class Sound {
     }
 
     /**
-     * void setListenerValues()
-     *
      * We already defined certain values for the Listener, but we need to tell
      * OpenAL to use that data. This function does just that.
      */
@@ -199,8 +190,6 @@ public class Sound {
     }
 
     /**
-     * void killALData()
-     *
      * We have allocated memory for our buffers and sources which needs to be
      * returned to the system. This function frees that memory.
      */
@@ -232,21 +221,14 @@ public class Sound {
     }
 
     public static void playDrop(final int sound) {
-        if (SceneItem.getSound() == SoundTypes.ON) {
-            int currentSound = sound;
-            while (currentSound < sound + 10 && AL10.alGetSourcei(source.get(currentSound), AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING)
-                currentSound++;
+        int currentSound = sound;
+        while (currentSound < sound + 10 && isBusy(currentSound))
+            currentSound++;
 
-            if (currentSound < sound + 10)
-                AL10.alSourcePlay(source.get(currentSound));
-            else
-                Logger.err("No source! " + currentSound);
-        }
-    }
-
-    public static void play(final int sound) {
-        if (SceneItem.getSound() == SoundTypes.ON)
-            AL10.alSourcePlay(source.get(sound));
+        if (currentSound < sound + 10)
+            play(currentSound);
+        else
+            Logger.err("No source! " + currentSound);
     }
 
     public static void playMove() {
@@ -257,4 +239,12 @@ public class Sound {
         play(SND_SELECT);
     }
 
+    public static void play(final int sound) {
+        if (SceneItem.getSound() == SoundTypes.ON)
+            AL10.alSourcePlay(source.get(sound));
+    }
+
+    public static boolean isBusy(final int sound) {
+        return AL10.alGetSourcei(source.get(sound), AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING;
+    }
 }

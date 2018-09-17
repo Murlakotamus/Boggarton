@@ -1,6 +1,5 @@
 package com.foxcatgames.boggarton.game.figure;
 
-import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.game.IBrick;
 
 abstract public class AbstractFigure implements IFigure {

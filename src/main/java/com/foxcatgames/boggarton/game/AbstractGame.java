@@ -139,11 +139,13 @@ abstract public class AbstractGame {
         if (diff > 0) {
             diffScore.setString("+" + diff);
             diffScore.spawn(new Vector2f(x + BOX * 8, y - BOX * 2));
+            Sound.play(sounds.get(Const.SCORE));
         } else {
             diffScore.unspawn();
         }
         lastScore = getGlass().getGlassState().getScore();
         needNewFigure = false;
+        Sound.playDrop(sounds.get(Const.NEW));
         return figure;
     }
 
@@ -275,8 +277,10 @@ abstract public class AbstractGame {
     public void processGlass() {
         if (!glassProcessed) {
             killedBricks = glass.findChainsToKill();
-            if (killedBricks)
+            if (killedBricks) {
                 ((AbstractVisualGlass) glass).startAnimation();
+                Sound.playDrop(sounds.get(Const.DISAPPEAR));
+            }
             glassProcessed = true;
         }
         if (!killedBricks)

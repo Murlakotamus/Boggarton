@@ -29,7 +29,7 @@ public class Const {
     public static final int SCREEN_HEIGHT = 768;
 
     // Texture loader is used to load and server textures to entities on init
-    public static final ITextureLoader TEXTURE_LOADER = new TextureLoader();;
+    public static final ITextureLoader TEXTURE_LOADER = new TextureLoader();
 
     public static final int FONT_WIDTH = 14;
     public static final int FONT_HEIGHT = 28;
@@ -87,71 +87,67 @@ public class Const {
     public static final int SND_ADDYUCK_LEFT = 3;
     public static final int SND_ADDYUCK_RIGHT = 4;
 
-    public static final int SND_CRASH = 5;
-    public static final int SND_CRASH_LEFT = 6;
-    public static final int SND_CRASH_RIGHT = 7;
+    public static final int SND_CYCLE = 5;
+    public static final int SND_CYCLE_LEFT = 6;
+    public static final int SND_CYCLE_RIGHT = 7;
 
-    public static final int SND_CYCLE = 8;
-    public static final int SND_CYCLE_LEFT = 9;
-    public static final int SND_CYCLE_RIGHT = 10;
+    public static final int SND_NEW = 8;
+    public static final int SND_NEW_LEFT = 9;
+    public static final int SND_NEW_RIGHT = 10;
 
-    public static final int SND_NEW = 11;
-    public static final int SND_NEW_LEFT = 12;
-    public static final int SND_NEW_RIGHT = 13;
+    public static final int SND_SCORE = 11;
+    public static final int SND_SCORE_LEFT = 12;
+    public static final int SND_SCORE_RIGHT = 13;
 
-    public static final int SND_SCORE = 14;
-    public static final int SND_SCORE_LEFT = 15;
-    public static final int SND_SCORE_RIGHT = 16;
+    public static final int SND_SHIFT = 14;
+    public static final int SND_SHIFT_LEFT = 15;
+    public static final int SND_SHIFT_RIGHT = 16;
 
-    public static final int SND_SHIFT = 17;
-    public static final int SND_SHIFT_LEFT = 18;
-    public static final int SND_SHIFT_RIGHT = 19;
+    public static final int SND_YUCK = 17;
+    public static final int SND_YUCK_LEFT = 18;
+    public static final int SND_YUCK_RIGHT = 19;
 
-    public static final int SND_YUCK = 20;
-    public static final int SND_YUCK_LEFT = 21;
-    public static final int SND_YUCK_RIGHT = 22;
+    public static final int SND_DISAPPEAR = 20;
+    public static final int SND_DISAPPEAR_LEFT = 21;
+    public static final int SND_DISAPPEAR_RIGHT = 22;
 
-    public static final int SND_DISAPPEAR = 23;
-    public static final int SND_DISAPPEAR_LEFT = 24;
-    public static final int SND_DISAPPEAR_RIGHT = 25;
-
-    public static final int SND_DROP = 26;
-    public static final int SND_DROP_LEFT = 27;
-    public static final int SND_DROP_RIGHT = 28;
+    public static final int SND_DROP = 23;
+    public static final int SND_DROP_LEFT = 24;
+    public static final int SND_DROP_RIGHT = 25;
 
     // sound sources
-    public static final int SND_DROP0 = 26;
-    public static final int SND_DROP1 = 27;
-    public static final int SND_DROP2 = 28;
-    public static final int SND_DROP3 = 29;
-    public static final int SND_DROP4 = 30;
-    public static final int SND_DROP5 = 31;
-    public static final int SND_DROP6 = 32;
-    public static final int SND_DROP7 = 33;
-    public static final int SND_DROP8 = 34;
-    public static final int SND_DROP9 = 35;
+    public static final int SND_DROP0 = 23;
+    public static final int SND_DROP1 = 24;
+    public static final int SND_DROP2 = 25;
+    public static final int SND_DROP3 = 26;
+    public static final int SND_DROP4 = 27;
+    public static final int SND_DROP5 = 28;
+    public static final int SND_DROP6 = 29;
+    public static final int SND_DROP7 = 30;
+    public static final int SND_DROP8 = 31;
+    public static final int SND_DROP9 = 32;
 
-    public static final int SND_DROP_LEFT0 = 36;
-    public static final int SND_DROP_LEFT1 = 37;
-    public static final int SND_DROP_LEFT2 = 38;
-    public static final int SND_DROP_LEFT3 = 39;
-    public static final int SND_DROP_LEFT4 = 40;
-    public static final int SND_DROP_LEFT5 = 41;
-    public static final int SND_DROP_LEFT6 = 42;
-    public static final int SND_DROP_LEFT7 = 43;
-    public static final int SND_DROP_LEFT8 = 44;
-    public static final int SND_DROP_LEFT9 = 45;
+    public static final int SND_DROP_LEFT0 = 33;
+    public static final int SND_DROP_LEFT1 = 34;
+    public static final int SND_DROP_LEFT2 = 35;
+    public static final int SND_DROP_LEFT3 = 36;
+    public static final int SND_DROP_LEFT4 = 37;
+    public static final int SND_DROP_LEFT5 = 38;
+    public static final int SND_DROP_LEFT6 = 39;
+    public static final int SND_DROP_LEFT7 = 40;
+    public static final int SND_DROP_LEFT8 = 41;
+    public static final int SND_DROP_LEFT9 = 42;
 
-    public static final int SND_DROP_RIGHT0 = 46;
-    public static final int SND_DROP_RIGHT1 = 47;
-    public static final int SND_DROP_RIGHT2 = 48;
-    public static final int SND_DROP_RIGHT3 = 49;
-    public static final int SND_DROP_RIGHT4 = 50;
-    public static final int SND_DROP_RIGHT5 = 51;
-    public static final int SND_DROP_RIGHT6 = 52;
-    public static final int SND_DROP_RIGHT7 = 53;
-    public static final int SND_DROP_RIGHT8 = 54;
-    public static final int SND_DROP_RIGHT9 = 55;
+    public static final int SND_DROP_RIGHT0 = 43;
+    public static final int SND_DROP_RIGHT1 = 44;
+    public static final int SND_DROP_RIGHT2 = 45;
+    public static final int SND_DROP_RIGHT3 = 46;
+    public static final int SND_DROP_RIGHT4 = 47;
+    public static final int SND_DROP_RIGHT5 = 48;
+    public static final int SND_DROP_RIGHT6 = 49;
+    public static final int SND_DROP_RIGHT7 = 50;
+    public static final int SND_DROP_RIGHT8 = 51;
+    public static final int SND_DROP_RIGHT9 = 52;
 
     // sound files
     private static final String WAV_PATH = "/sounds/";
@@ -163,11 +159,6 @@ public class Const {
     public static final String WAV_ADDYUCK = WAV_PATH + ADDYUCK + WAV;
     public static final String WAV_ADDYUCK_LEFT = WAV_PATH + ADDYUCK + LEFT + WAV;
     public static final String WAV_ADDYUCK_RIGHT = WAV_PATH + ADDYUCK + RIGHT + WAV;
-
-    public static final String CRASH = "crash";
-    public static final String WAV_CRASH = WAV_PATH + CRASH + WAV;
-    public static final String WAV_CRASH_LEFT = WAV_PATH + CRASH + LEFT + WAV;
-    public static final String WAV_CRASH_RIGHT = WAV_PATH + CRASH + RIGHT + WAV;
 
     public static final String CYCLE = "cycle";
     public static final String WAV_CYCLE = WAV_PATH + CYCLE + WAV;
@@ -214,7 +205,6 @@ public class Const {
 
     static {
         SOUNDS.put(ADDYUCK, SND_ADDYUCK);
-        SOUNDS.put(CRASH, SND_CRASH);
         SOUNDS.put(CYCLE, SND_CYCLE);
         SOUNDS.put(DISAPPEAR, SND_DISAPPEAR);
         SOUNDS.put(DROP, SND_DROP0);
@@ -224,7 +214,6 @@ public class Const {
         SOUNDS.put(YUCK, SND_YUCK);
 
         SOUNDS_LEFT.put(ADDYUCK, SND_ADDYUCK_LEFT);
-        SOUNDS_LEFT.put(CRASH, SND_CRASH_LEFT);
         SOUNDS_LEFT.put(CYCLE, SND_CYCLE_LEFT);
         SOUNDS_LEFT.put(DISAPPEAR, SND_DISAPPEAR_LEFT);
         SOUNDS_LEFT.put(DROP, SND_DROP_LEFT0);
@@ -234,7 +223,6 @@ public class Const {
         SOUNDS_LEFT.put(YUCK, SND_YUCK_LEFT);
 
         SOUNDS_RIGHT.put(ADDYUCK, SND_ADDYUCK_RIGHT);
-        SOUNDS_RIGHT.put(CRASH, SND_CRASH_RIGHT);
         SOUNDS_RIGHT.put(CYCLE, SND_CYCLE_RIGHT);
         SOUNDS_RIGHT.put(DISAPPEAR, SND_DISAPPEAR_RIGHT);
         SOUNDS_RIGHT.put(DROP, SND_DROP_RIGHT0);

@@ -15,29 +15,29 @@ import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 public class Sound {
-    static IntBuffer buffer = BufferUtils.createIntBuffer(29); // must be equals to number of sound files
+    static IntBuffer buffer = BufferUtils.createIntBuffer(26); // must be equals to number of sound files
 
     /** Sources are points emitting sound. */
-    public static IntBuffer source = BufferUtils.createIntBuffer(56);
+    private static IntBuffer source = BufferUtils.createIntBuffer(53);
 
     /** Position of the source sound. */
-    static FloatBuffer sourcePos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static FloatBuffer sourcePos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
     /** Velocity of the source sound. */
-    static FloatBuffer sourceVel = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static FloatBuffer sourceVel = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
     /** Position of the listener. */
-    static FloatBuffer listenerPos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static FloatBuffer listenerPos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
     /** Velocity of the listener. */
-    static FloatBuffer listenerVel = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static FloatBuffer listenerVel = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
     /**
      * Orientation of the listener. (first 3 elements are "at", second 3 are "up")
      */
-    static FloatBuffer listenerOri = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
+    private static FloatBuffer listenerOri = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
 
-    static void loadPattern(String filename, int id) {
+    private static void loadPattern(final String filename, final int id) {
         WaveData waveFile = WaveData.create(Sound.class.getClass().getResource(filename));
         AL10.alBufferData(buffer.get(id), waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();
@@ -51,7 +51,7 @@ public class Sound {
         AL10.alSource(source.get(sourceId), AL10.AL_VELOCITY, sourceVel);
     }
 
-    static int loadALData() {
+    private static int loadALData() {
         // Load wav data into a buffer.
         AL10.alGenBuffers(buffer);
 
@@ -61,10 +61,6 @@ public class Sound {
         loadPattern(WAV_ADDYUCK, SND_ADDYUCK);
         loadPattern(WAV_ADDYUCK_LEFT, SND_ADDYUCK_LEFT);
         loadPattern(WAV_ADDYUCK_RIGHT, SND_ADDYUCK_RIGHT);
-
-        loadPattern(WAV_CRASH, SND_CRASH);
-        loadPattern(WAV_CRASH_LEFT, SND_CRASH_LEFT);
-        loadPattern(WAV_CRASH_RIGHT, SND_CRASH_RIGHT);
 
         loadPattern(WAV_CYCLE, SND_CYCLE);
         loadPattern(WAV_CYCLE_LEFT, SND_CYCLE_LEFT);
@@ -106,10 +102,6 @@ public class Sound {
         initPattern(SND_ADDYUCK, SND_ADDYUCK);
         initPattern(SND_ADDYUCK_LEFT, SND_ADDYUCK_LEFT);
         initPattern(SND_ADDYUCK_RIGHT, SND_ADDYUCK_RIGHT);
-
-        initPattern(SND_CRASH, SND_CRASH);
-        initPattern(SND_CRASH_LEFT, SND_CRASH_LEFT);
-        initPattern(SND_CRASH_RIGHT, SND_CRASH_RIGHT);
 
         initPattern(SND_CYCLE, SND_CYCLE);
         initPattern(SND_CYCLE_LEFT, SND_CYCLE_LEFT);
@@ -183,7 +175,7 @@ public class Sound {
      * We already defined certain values for the Listener, but we need to tell
      * OpenAL to use that data. This function does just that.
      */
-    static void setListenerValues() {
+    private static void setListenerValues() {
         AL10.alListener(AL10.AL_POSITION, listenerPos);
         AL10.alListener(AL10.AL_VELOCITY, listenerVel);
         AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
@@ -193,12 +185,12 @@ public class Sound {
      * We have allocated memory for our buffers and sources which needs to be
      * returned to the system. This function frees that memory.
      */
-    static void killALData() {
+    private static void killALData() {
         AL10.alDeleteSources(source);
         AL10.alDeleteBuffers(buffer);
     }
 
-    static public void init() {
+    public static void init() {
         try {
             AL.create();
         } catch (LWJGLException le) {
@@ -216,7 +208,7 @@ public class Sound {
     }
 
     public static void destroy() {
-        Sound.killALData();
+        killALData();
         AL.destroy();
     }
 

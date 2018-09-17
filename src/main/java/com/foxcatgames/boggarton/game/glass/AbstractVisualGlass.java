@@ -169,20 +169,26 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
 
     @Override
     public void rotate() {
-        if (!gamePaused)
+        if (!gamePaused) {
+            Sound.play(sounds.get(Const.CYCLE));
             getFigure().rotate();
+        }
     }
 
     @Override
     public void moveLeft() {
-        if (!gamePaused && canMoveLeft())
+        if (!gamePaused && canMoveLeft()) {
+            Sound.play(sounds.get(Const.SHIFT));
             setFigure(state.getI() - 1, state.getJ(), true);
+        }
     }
 
     @Override
     public void moveRight() {
-        if (!gamePaused && canMoveRight())
+        if (!gamePaused && canMoveRight()) {
+            Sound.play(sounds.get(Const.SHIFT));
             setFigure(state.getI() + 1, state.getJ(), true);
+        }
     }
 
     @Override

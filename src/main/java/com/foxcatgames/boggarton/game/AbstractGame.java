@@ -145,7 +145,7 @@ abstract public class AbstractGame {
         }
         lastScore = getGlass().getGlassState().getScore();
         needNewFigure = false;
-        Sound.playDrop(sounds.get(Const.NEW));
+        //Sound.playDrop(sounds.get(Const.NEW));
         return figure;
     }
 

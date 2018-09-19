@@ -134,7 +134,13 @@ abstract public class AbstractGame {
             setGameOver();
             return null;
         }
+        needNewFigure = false;
+        resumeScore();
+        // Sound.play(sounds.get(Const.NEW));
+        return figure;
+    }
 
+    public void resumeScore() {
         final int diff = getGlass().getGlassState().getScore() - lastScore;
         if (diff > 0) {
             diffScore.setString("+" + diff);
@@ -144,9 +150,7 @@ abstract public class AbstractGame {
             diffScore.unspawn();
         }
         lastScore = getGlass().getGlassState().getScore();
-        needNewFigure = false;
-        //Sound.playDrop(sounds.get(Const.NEW));
-        return figure;
+
     }
 
     private boolean enoughSleep(final float sleep) {

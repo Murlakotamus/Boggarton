@@ -53,6 +53,7 @@ public class MultiplayerGame extends AbstractGame {
     public void processStage() {
         switch (stage) {
         case YUCK:
+            resumeScore();
             executeYuck();
             break;
         case YUCK_PAUSE:

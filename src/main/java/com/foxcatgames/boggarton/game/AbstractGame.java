@@ -123,7 +123,7 @@ abstract public class AbstractGame {
         }
     }
 
-    public IFigure nextFigure() {
+    protected IFigure nextFigure() {
         dropPressed = false;
         IFigure figure = null;
         if (needNewFigure) {
@@ -140,7 +140,7 @@ abstract public class AbstractGame {
         return figure;
     }
 
-    public void resumeScore() {
+    protected void resumeScore() {
         final int diff = getGlass().getGlassState().getScore() - lastScore;
         if (diff > 0) {
             diffScore.setString("+" + diff);
@@ -190,7 +190,7 @@ abstract public class AbstractGame {
         charge(null, null);
     }
 
-    public void fall() {
+    private void fall() {
         final AbstractVisualGlass glass = (AbstractVisualGlass) this.glass;
         if (glass.getY() % BOX == 0 && !glass.moveDown()) {
             nextStage();
@@ -225,7 +225,7 @@ abstract public class AbstractGame {
         previousTime = currentTime;
     }
 
-    public void crashDown() {
+    private void crashDown() {
         if (((AbstractVisualGlass) glass).allBricksFell()) {
             nextStage();
             return;
@@ -278,7 +278,7 @@ abstract public class AbstractGame {
         return fell;
     }
 
-    public void processGlass() {
+    private void processGlass() {
         if (!glassProcessed) {
             killedBricks = glass.findChainsToKill();
             if (killedBricks) {
@@ -296,7 +296,7 @@ abstract public class AbstractGame {
         }
     }
 
-    protected void compress() {
+    private void compress() {
         if (killedBricks) {
             glass.removeHoles();
             glass.addReaction();
@@ -337,7 +337,7 @@ abstract public class AbstractGame {
         }
     }
 
-    public void fillBuffer() {
+    private void fillBuffer() {
         synchronized (buffer) {
             buffer.setFirst(glass.getGlassState());
             buffer.setSecond(new VirtualForecast(forecast));
@@ -345,7 +345,7 @@ abstract public class AbstractGame {
         }
     }
 
-    protected void executeCommand() {
+    private void executeCommand() {
         if (command.getCommand() != null)
             synchronized (command) {
                 command.execute();
@@ -366,7 +366,7 @@ abstract public class AbstractGame {
         nextStage();
     }
 
-    float getTime() {
+    protected float getTime() {
         return AbstractScene.TIMER.getTime();
     }
 
@@ -463,5 +463,4 @@ abstract public class AbstractGame {
         if (isLoggerInit)
             gameLogger.logEvent(str);
     }
-
 }

@@ -76,6 +76,8 @@ public class Const {
 
     // game log
     public static final String FIGURE_STR = "FIGURE: ";
+    public static final String SCORE_STR = "SCORE: ";
+    public static final String MOVES_STR = "MOVES: ";
     public static final String YUCK_STR = "YUCK:   ";
     public static final String GAMEOVER_STR = "Game over!";
 

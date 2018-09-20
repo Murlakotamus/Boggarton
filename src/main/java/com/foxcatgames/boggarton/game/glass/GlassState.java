@@ -2,6 +2,7 @@ package com.foxcatgames.boggarton.game.glass;
 
 import static com.foxcatgames.boggarton.Const.EMPTY;
 
+import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 
@@ -232,6 +233,7 @@ public class GlassState implements IGlassState {
     public String toString() {
 
         final StringBuffer sb = new StringBuffer();
+        sb.append("==============================================\n");
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++)
                 if (bricks[i][j] == null)
@@ -240,9 +242,17 @@ public class GlassState implements IGlassState {
                     sb.append((char) (bricks[i][j].getType() - 10 + 64));
             sb.append("\n");
         }
-        String result = figure.toString();
-        result = result + "\n\n";
+        sb.append("----------------------------------------------\n");
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++)
+                if (bricks[i][j] == null || !(bricks[i][j] instanceof Brick))
+                    sb.append("0, ");
+                else
+                    sb.append(((Brick) bricks[i][j]).getId() + ", ");
+            sb.append("\n");
+        }
+        sb.append("==============================================\n");
 
-        return result + sb.toString();
+        return sb.toString();
     }
 }

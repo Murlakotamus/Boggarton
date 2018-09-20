@@ -75,6 +75,8 @@ abstract public class AbstractGame {
 
     final Map<String, Integer> sounds;
 
+    private String oldGlassState;
+
     public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
             final int difficulty, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
@@ -91,9 +93,10 @@ abstract public class AbstractGame {
     public void processStage() {
         switch (stage) {
         case NEXT:
-            if (needNewFigure)
+            if (needNewFigure) {
                 logFigure(nextFigure());
-            else
+                logMoves();
+            } else
                 charge();
             break;
         case APPEAR:
@@ -136,6 +139,7 @@ abstract public class AbstractGame {
         }
         needNewFigure = false;
         resumeScore();
+        oldGlassState = glass.getGlassState().toString();
         // Sound.play(sounds.get(Const.NEW));
         return figure;
     }
@@ -145,6 +149,11 @@ abstract public class AbstractGame {
         if (diff > 0) {
             diffScore.setString("+" + diff);
             diffScore.spawn(new Vector2f(x + BOX * 8, y - BOX * 2));
+            logScore(diff);
+            if (diff > 100) {
+                logGlass(oldGlassState);
+                logGlass(glass.getGlassState().toString());
+            }
             Sound.play(sounds.get(Const.SCORE));
         } else {
             diffScore.unspawn();
@@ -453,6 +462,18 @@ abstract public class AbstractGame {
     protected void logFigure(final IFigure figure) {
         if (figure != null)
             logEvent(Const.FIGURE_STR + figure);
+    }
+
+    protected void logScore(final int diffScore) {
+        logEvent(Const.SCORE_STR + diffScore + "\n");
+    }
+
+    protected void logGlass(final String glassState) {
+        logEvent(glassState);
+    }
+
+    protected void logMoves() {
+        logEvent(Const.MOVES_STR);
     }
 
     protected void logYuck(final String yuck) {

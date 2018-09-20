@@ -27,7 +27,7 @@ public class Replay extends AbstractOnePlayerScene {
                     events.add(line);
                 else if (Const.GAMEOVER_STR.equals(line))
                     break;
-                else
+                else if (line.startsWith(Const.MOVES_STR))
                     moves.append(line);
         } catch (IOException e) {
             e.printStackTrace();

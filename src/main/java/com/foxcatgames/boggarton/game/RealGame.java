@@ -35,9 +35,10 @@ public class RealGame extends AbstractOnePlayerGame {
     public void processStage() {
         switch (stage) {
         case NEXT:
-            if (needNewFigure)
+            if (needNewFigure) {
                 logFigure(nextFigure());
-            else {
+                logMoves();
+            } else {
                 int emptyBrickLines = ((AbstractVisualGlass) getGlass()).getCount() / FIGURES_FOR_NEXT_EMPTY_BRICK;
                 if (emptyBrickLines <= oldEmptyBrickLines)
                     charge();

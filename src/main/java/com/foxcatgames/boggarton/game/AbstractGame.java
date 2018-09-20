@@ -309,11 +309,11 @@ abstract public class AbstractGame {
         if (killedBricks) {
             glass.removeHoles();
             glass.addReaction();
+            if (glass.getReactions() > 1)
+                yucksForEnemies++;
             killedBricks = false;
             reactionDetected = true;
         } else {
-            if (glass.getReactionLenght() > 2)
-                yucksForEnemies += glass.getReactionLenght() - 2;
             glass.cleanReactions();
             reactionDetected = false;
         }

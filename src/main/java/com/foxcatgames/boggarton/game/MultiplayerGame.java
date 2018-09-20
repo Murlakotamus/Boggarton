@@ -12,7 +12,6 @@ import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
-import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
@@ -24,7 +23,6 @@ public class MultiplayerGame extends AbstractGame {
     public final YuckTypes yuckType;
     protected int yucks;
     private final Text showVictoies;
-    private IGlass enemyGlass;
     private final Brick[] yuckBricks = new Brick[MAX_YUCKS];
     private final Vector2f yuckPosition;
 
@@ -71,15 +69,11 @@ public class MultiplayerGame extends AbstractGame {
     }
 
     public void addYuck(final int yuck) {
-        if (yuckType == YuckTypes.NONE)
+        if (yuck == 0 || yuckType == YuckTypes.NONE)
             return;
 
         yucks += yuck;
         drawYucks();
-    }
-
-    public void setEnemyGlass(IGlass glass) {
-        this.enemyGlass = glass;
     }
 
     @Override
@@ -100,23 +94,15 @@ public class MultiplayerGame extends AbstractGame {
     }
 
     private void drawYucks() {
-        int yucks = getYucks();
         for (int i = MAX_YUCKS - 1; i >= yucks; i--)
             yuckBricks[i].unspawn();
 
         for (int i = yucks - 1; i >= 0; i--)
             yuckBricks[i].spawn(new Vector2f(yuckPosition.x, yuckPosition.y - (i * BOX)));
 
-        oldYucks = yucks;
-    }
-
-    private int getYucks() {
-        int result = enemyGlass.getGlassState().getReactionLenght() - 2;
-        result = result > 0 ? result : 0;
-        if (result + yucks > oldYucks)
+        if (oldYucks < yucks)
             Sound.play(sounds.get(Const.ADDYUCK));
-
-        return result + yucks;
+        oldYucks = yucks;
     }
 
     public YuckTypes getYuckType() {

@@ -65,11 +65,6 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
         }
 
         for (int i = 0; i < numPlayers; i++) {
-            game[1 - i].initLogger();
-            game[1 - i].setEnemyGlass(game[i].getGlass());
-        }
-
-        for (int i = 0; i < numPlayers; i++) {
             game[i].initLogger();
             game[i].startGame();
         }

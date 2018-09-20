@@ -27,7 +27,7 @@ public interface IGlass {
     void processGlass();
     boolean removeHoles();
 
-    int getReactionLenght();
+    int getReactions();
     void addReaction();
     void cleanReactions();
 

@@ -64,7 +64,7 @@ abstract public class AbstractGlass implements IGlass {
     }
 
     @Override
-    public int getReactionLenght() {
+    public int getReactions() {
         return state.getReactionLenght();
     }
 

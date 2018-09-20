@@ -12,7 +12,7 @@ public class GlassState implements IGlassState {
     static private final int HORIZONTAL = 2;
     static private final int DIAGONAL = 3;
 
-    protected int reaction = 1;
+    protected int reaction = 0;
     protected int nextPosition;
     protected int score;
     protected int i, j; // first figure brick location (glass cell)
@@ -29,7 +29,7 @@ public class GlassState implements IGlassState {
             bricks[i - 1][j].setKill();
             bricks[i][j].setKill();
             bricks[i + 1][j].setKill();
-            score += HORIZONTAL * reaction;
+            score += HORIZONTAL * (reaction + 1);
         }
     }
 
@@ -41,7 +41,7 @@ public class GlassState implements IGlassState {
             bricks[i][j - 1].setKill();
             bricks[i][j].setKill();
             bricks[i][j + 1].setKill();
-            score += VERTICAL * reaction;
+            score += VERTICAL * (reaction + 1);
         }
     }
 
@@ -53,7 +53,7 @@ public class GlassState implements IGlassState {
             bricks[i + 1][j + 1].setKill();
             bricks[i][j].setKill();
             bricks[i - 1][j - 1].setKill();
-            score += DIAGONAL * reaction;
+            score += DIAGONAL * (reaction + 1);
         }
     }
 
@@ -65,7 +65,7 @@ public class GlassState implements IGlassState {
             bricks[i + 1][j - 1].setKill();
             bricks[i][j].setKill();
             bricks[i - 1][j + 1].setKill();
-            score += DIAGONAL * reaction;
+            score += DIAGONAL * (reaction + 1);
         }
     }
 
@@ -222,7 +222,7 @@ public class GlassState implements IGlassState {
     }
 
     public void cleanReactions() {
-        reaction = 1;
+        reaction = 0;
     }
 
     public IGlassState getGlassState() {

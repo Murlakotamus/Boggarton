@@ -21,6 +21,7 @@ public class OutroScene extends AbstractLogoScene {
         moveUp();
         if (y <= -Const.TITLE_HEIGHT)
             nextScene(SceneItem.FINISH_GAME);
+        title.spawn(new Vector2f(TITLE_X, y));
     }
 
     @Override

@@ -20,9 +20,11 @@ public class IntroScene extends AbstractLogoScene {
     @Override
     protected void changes() {
         moveUp();
-        if (y <= TITLE_Y)
+        if (y <= TITLE_Y) {
+            y = TITLE_Y;
             nextScene(SceneItem.MENU);
-
+        }
+        title.spawn(new Vector2f(TITLE_X, y));
     }
 
     @Override

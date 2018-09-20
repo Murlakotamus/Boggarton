@@ -7,21 +7,28 @@ import com.foxcatgames.boggarton.entity.SimpleEntity;
 
 abstract public class AbstractLogoScene extends AbstractScene {
 
-    static public final int TICK = 1000 / 60;
-
     static protected final int TITLE_X = Const.SCREEN_WIDTH / 2 - 560 / 2;
     static protected final int TITLE_Y = 115;
 
     protected int y;
     protected SimpleEntity title;
 
+    private float startTime = TIMER.getTime();
+    private float previousTime = startTime;
+
+    private static final int TITLE_SPEED = 300000;
+
     AbstractLogoScene(final SceneItem scene) {
         super(scene);
     }
 
     protected void moveUp() {
-        y = y - 1;
-        title.spawn(new Vector2f(TITLE_X, y));
+        final Vector2f position = title.position;
+        final float currentTime = TIMER.getTime();
+        final float spentTime = (currentTime - previousTime) / 1000f;
+        final int currY = Math.round(position.getY());
+        y = currY - Math.round(spentTime * TITLE_SPEED);
+        previousTime = currentTime;
     }
 
     @Override

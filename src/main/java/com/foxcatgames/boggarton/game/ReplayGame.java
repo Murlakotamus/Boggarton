@@ -87,7 +87,7 @@ public class ReplayGame extends AbstractGame {
     }
 
     protected void executeYuck(final String yuckBricks) {
-        ((ReplayGlass) glass).executeYuck(yuckBricks);
+        ((ReplayGlass) glass).executeYuck(yuckBricks.trim());
         ((ReplayGlass) glass).respawn();
         Sound.play(sounds.get(Const.YUCK));
         nextStage();

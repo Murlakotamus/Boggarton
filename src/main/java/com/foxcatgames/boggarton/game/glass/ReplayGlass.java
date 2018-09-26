@@ -22,7 +22,7 @@ public class ReplayGlass extends AbstractVisualGlass {
         this.layer = layer;
     }
 
-    public void executeYuck(String yuckBricks) {
+    public void executeYuck(final String yuckBricks) {
         for (int i = 0; i < state.getWidth(); i++)
             for (int j = 0; j < state.getHeight(); j++) {
                 if (j > 0)

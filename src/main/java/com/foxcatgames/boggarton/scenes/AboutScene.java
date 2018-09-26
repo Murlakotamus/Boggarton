@@ -10,7 +10,6 @@ import com.foxcatgames.boggarton.entity.SimpleEntity;
 
 public class AboutScene extends AbstractLogoScene {
 
-    private final SimpleEntity title;
     private final SimpleEntity about;
 
     public AboutScene() {

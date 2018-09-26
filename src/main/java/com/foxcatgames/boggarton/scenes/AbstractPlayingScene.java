@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
+import com.foxcatgames.boggarton.game.AbstractGame;
 
 abstract public class AbstractPlayingScene extends AbstractScene {
 
@@ -51,5 +52,9 @@ abstract public class AbstractPlayingScene extends AbstractScene {
     protected void setGameOver() {
         if (TIMER.isPaused())
             TIMER.resume();
+    }
+
+    protected int getFigureSize(AbstractGame game) {
+        return game.getGlass().getFigure().getLenght();
     }
 }

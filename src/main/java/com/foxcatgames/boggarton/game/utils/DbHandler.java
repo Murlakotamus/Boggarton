@@ -120,4 +120,12 @@ public class DbHandler {
             e.printStackTrace();
         }
     }
+
+    public static void close() {
+        try {
+            DbHandler.getInstance().closeHandler();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

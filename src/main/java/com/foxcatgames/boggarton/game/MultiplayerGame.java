@@ -28,10 +28,10 @@ public class MultiplayerGame extends AbstractGame {
 
     int oldYucks = 0;
 
-    public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
+    public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int lenght,
             final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
-        super(layer, x, y, width, height, forecast, lenght, setSize, randomType, sounds);
+        super(layer, x, y, width, height, prognosis, lenght, setSize, randomType, sounds);
         this.yuckType = yuckType;
         glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, setSize, sounds);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);

@@ -13,7 +13,7 @@ import com.foxcatgames.boggarton.players.virtual.MovesExecutor;
 
 public class Replay extends AbstractOnePlayerScene {
 
-    public Replay(final int width, final int height, final int forecast, final int lenght) {
+    public Replay(final int width, final int height, final int figureSize) {
         super(SceneItem.REPLAY);
 
         final StringBuilder moves = new StringBuilder();

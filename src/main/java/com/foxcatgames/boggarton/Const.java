@@ -8,6 +8,8 @@ import com.foxcatgames.boggarton.engine.TextureLoader;
 
 public class Const {
 
+    public static final String CONFIG = "config.ini";
+
     public static final int BOX = 30;
     public static final int BORDER = 5;
 

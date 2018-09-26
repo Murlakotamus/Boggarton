@@ -38,14 +38,14 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     protected IPlayer first;
     protected IPlayer second;
 
-    AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] forecast, final int length, final int numPlayers,
+    AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] prognosis, final int figureSize, final int numPlayers,
             YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty) {
         super(scene);
         gamePaused = new SimpleEntity[numPlayers];
         for (int i = 0; i < numPlayers; i++)
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);
 
-        if (width < length)
+        if (width < figureSize)
             throw new RuntimeException("Glass too narrow for figures");
 
         if (numPlayers > 2)
@@ -59,8 +59,8 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
         game = new MultiplayerGame[numPlayers];
 
         for (int i = 0; i < numPlayers; i++) {
-            game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, forecast[i], length, difficulty.getSetSize(),
-                    Victories.getVictories(i), yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
+            game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(), Victories.getVictories(i),
+                    yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
             game[i].setName(PLAYERS_NAMES[i]);
         }
 
@@ -72,9 +72,10 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     abstract protected void checkAuto();
 
-    private void losersAndWinners(final int looserNumber) {
+    private void losersAndWinners(final int loserNumber) {
         for (int i = 0; i < numPlayers; i++) {
-            if (i == looserNumber) {
+            final int figureSize = getFigureSize(game[i]);
+            if (i == loserNumber) {
                 loser = new SimpleEntity(LOSER, layer);
                 loser.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
             } else {
@@ -137,7 +138,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     protected void hideGlass() {
         for (int i = 0; i < numPlayers; i++) {
             ((AbstractVisualGlass) game[i].getGlass()).pauseOn();
-            gamePaused[i].spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
+            gamePaused[i].spawn(new Vector2f(game[i].getX() + getFigureSize(game[i]) * BOX + 25, Y + BOX * 3 + BORDER));
         }
     }
 

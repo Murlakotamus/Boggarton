@@ -37,7 +37,7 @@ abstract public class AbstractOnePlayerScene extends AbstractPlayingScene {
     protected void changes() {
         if (game.isGameOver() && gameOver == null) {
             gameOver = new SimpleEntity(GAME_OVER, layer);
-            gameOver.spawn(new Vector2f(X + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
+            gameOver.spawn(new Vector2f(X + getFigureSize(game) * BOX + 25, Y + BOX * 3 + BORDER));
             saveOutcome();
         } else if (game.isGameOn())
             game.processStage();

@@ -18,8 +18,14 @@ public enum SceneItem {
 
     private static List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, COMPETITION, COMPETITION_PRACTICE, DEMO, COMPETITION_DEMO, REPLAY);
 
+    public static int prognosis = 3;
+    public static int figureSize = 3;
+
     private final String sceneName;
-    private static final int[] PROGNOSIS = { AbstractScene.prognosis, AbstractScene.prognosis };
+    private static final int[] PROGNOSIS = { prognosis, prognosis };
+    private static final int PROGNOSIS_EFFECTIVE = 4;
+    private static final int PROGNOSIS_COMPLEX = 2;
+
     private static YuckTypes yuckType = YuckTypes.RANDOM;
     private static RandomTypes randomType = RandomTypes.RANDOM;
     private static DifficultyTypes difficultyType = DifficultyTypes.EASY;
@@ -41,19 +47,19 @@ public enum SceneItem {
         case MENU:
             return new MenuScene();
         case GAME:
-            return new Game(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType, difficultyType);
+            return new Game(WIDTH, HEIGHT, prognosis, figureSize, randomType, difficultyType);
         case PRACTICE:
-            return new Practice(WIDTH, HEIGHT, AbstractScene.prognosis, AbstractScene.figureSize, randomType, difficultyType);
+            return new Practice(WIDTH, HEIGHT, prognosis, figureSize, randomType, difficultyType);
         case DEMO:
-            return new Demo(WIDTH, HEIGHT, 2, AbstractScene.figureSize, randomType, difficultyType);
+            return new Demo(WIDTH, HEIGHT, PROGNOSIS_COMPLEX, figureSize, randomType, difficultyType);
         case COMPETITION_PRACTICE:
-            return new CompetitionPractice(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
+            return new CompetitionPractice(WIDTH, HEIGHT, PROGNOSIS, figureSize, yuckType, randomType, difficultyType);
         case COMPETITION:
-            return new CompetitionGame(WIDTH, HEIGHT, PROGNOSIS, AbstractScene.figureSize, yuckType, randomType, difficultyType);
+            return new CompetitionGame(WIDTH, HEIGHT, PROGNOSIS, figureSize, yuckType, randomType, difficultyType);
         case COMPETITION_DEMO:
-            return new CompetitionDemo(WIDTH, HEIGHT, new int[] { 4, 2 }, AbstractScene.figureSize, yuckType, randomType, difficultyType);
+            return new CompetitionDemo(WIDTH, HEIGHT, new int[] { PROGNOSIS_EFFECTIVE, PROGNOSIS_COMPLEX }, figureSize, yuckType, randomType, difficultyType);
         case REPLAY:
-            return new Replay(WIDTH, HEIGHT, 3, AbstractScene.figureSize);
+            return new Replay(WIDTH, HEIGHT, figureSize);
         case OUTRO:
             return new OutroScene();
         default:

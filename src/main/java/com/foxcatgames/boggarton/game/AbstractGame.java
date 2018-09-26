@@ -77,14 +77,14 @@ abstract public class AbstractGame {
 
     private String oldGlassState;
 
-    public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
+    public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
             final int difficulty, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
         this.x = x;
         this.y = y;
         this.sounds = sounds;
-        if (forecast >= 1)
-            this.forecast = new SimpleForecast(layer, new Vector2f(x, y), forecast, lenght, difficulty, randomType);
+        if (prognosis >= 1)
+            forecast = new SimpleForecast(layer, new Vector2f(x, y), prognosis, figureSize, difficulty, randomType);
         diffScore = new Text("", Const.DARK_FONT, layer);
     }
 

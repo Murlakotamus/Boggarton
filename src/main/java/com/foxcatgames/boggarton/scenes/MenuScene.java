@@ -25,8 +25,6 @@ import com.foxcatgames.boggarton.game.forecast.MenuForecast;
 
 public class MenuScene extends AbstractLogoScene {
 
-    static private final String CONFIG = "config.ini";
-
     static private final MenuItem[] ITEMS = MenuItem.values();
     static private final int ITEMS_NUMBER = MenuItem.values().length;
     static private final int Y_POS_MENU = 200;
@@ -94,10 +92,10 @@ public class MenuScene extends AbstractLogoScene {
                         difficulty.setPosition(SceneItem.nextDifficultyType());
                     break;
                 case "FIGURE_SIZE":
-                    figureSize = setParam(value, MIN_SIZE, MAX_SIZE);
+                    SceneItem.figureSize = setValue(value, MIN_SIZE, MAX_SIZE);
                     break;
                 case "PROGNOSIS":
-                    prognosis = setParam(value, MIN_PROGNOSIS, MAX_PROGNOSIS);
+                    SceneItem.prognosis = setValue(value, MIN_PROGNOSIS, MAX_PROGNOSIS);
                     break;
                 case "SOUND":
                     final MenuItem sound = MenuItem.SOUND;
@@ -122,8 +120,8 @@ public class MenuScene extends AbstractLogoScene {
             props.setProperty(MenuItem.YUCKS.name(), "" + MenuItem.YUCKS.getPosition());
             props.setProperty(MenuItem.RANDOM_TYPE.name(), "" + MenuItem.RANDOM_TYPE.getPosition());
             props.setProperty(MenuItem.DIFFICULTY.name(), "" + MenuItem.DIFFICULTY.getPosition());
-            props.setProperty(MenuItem.FIGURE_SIZE.name(), "" + figureSize);
-            props.setProperty(MenuItem.PROGNOSIS.name(), "" + prognosis);
+            props.setProperty(MenuItem.FIGURE_SIZE.name(), "" + SceneItem.figureSize);
+            props.setProperty(MenuItem.PROGNOSIS.name(), "" + SceneItem.prognosis);
             props.setProperty(MenuItem.SOUND.name(), "" + MenuItem.SOUND.getPosition());
 
             props.store(bw, "");
@@ -161,7 +159,7 @@ public class MenuScene extends AbstractLogoScene {
         if (forecast != null)
             forecast.unspawn();
 
-        forecast = new MenuForecast(layer, new Vector2f(470 - BOX * figureSize + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 170), prognosis, figureSize,
+        forecast = new MenuForecast(layer, new Vector2f(470 - BOX * SceneItem.figureSize + 10, ITEMS_NUMBER * Y_INTERVAL + BOX + Y_POS_MENU - 170), SceneItem.prognosis, SceneItem.figureSize,
                 setSize);
     }
 
@@ -242,11 +240,11 @@ public class MenuScene extends AbstractLogoScene {
                     drawPrognosis(SceneItem.getSetSize());
                     break;
                 case FIGURE_SIZE:
-                    figureSize = changeParam(figureSize, MIN_SIZE, MAX_SIZE);
+                    SceneItem.figureSize = nextValue(SceneItem.figureSize, MIN_SIZE, MAX_SIZE);
                     drawPrognosis(SceneItem.getSetSize());
                     break;
                 case PROGNOSIS:
-                    prognosis = changeParam(prognosis, MIN_PROGNOSIS, MAX_PROGNOSIS);
+                    SceneItem.prognosis = nextValue(SceneItem.prognosis, MIN_PROGNOSIS, MAX_PROGNOSIS);
                     drawPrognosis(SceneItem.getSetSize());
                     break;
                 case SOUND:
@@ -263,13 +261,13 @@ public class MenuScene extends AbstractLogoScene {
         EventManager.getInstance().addListener(Keyboard.KEY_RETURN, enter);
     }
 
-    private int changeParam(int param, final int min, final int max) {
+    private int nextValue(int param, final int min, final int max) {
         if (++param > max)
             param = min;
         return param;
     }
 
-    private int setParam(int param, final int min, final int max) {
+    private int setValue(int param, final int min, final int max) {
         if (param > max)
             param = min;
         return param;

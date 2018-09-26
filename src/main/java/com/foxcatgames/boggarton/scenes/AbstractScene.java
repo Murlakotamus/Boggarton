@@ -14,9 +14,6 @@ abstract public class AbstractScene {
     private SceneItem scene;
     protected SceneItem nextScene;
 
-    protected volatile static int prognosis = 3;
-    protected static int figureSize = 3;
-
     protected final Layer layer = new Layer();
     private static float lastTime = TIMER.getTime();
 

@@ -10,12 +10,12 @@ import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 public class Practice extends AbstractGameAndPractice {
 
-    public Practice(final int width, final int height, final int forecast, final int figureSize, final RandomTypes randomType,
+    public Practice(final int width, final int height, final int prognosis, final int figureSize, final RandomTypes randomType,
             final DifficultyTypes difficulty) {
 
         super(SceneItem.PRACTICE);
 
-        game = new SimpleGame(layer, X, Y, width, height, Math.min(prognosis, forecast), figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS);
+        game = new SimpleGame(layer, X, Y, width, height, prognosis, figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS);
         game.setName("Human practice");
         game.startGame();
         player = new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);

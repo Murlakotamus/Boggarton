@@ -53,7 +53,7 @@ public class VirtualGlass extends AbstractGlass {
         else
             state.setNextPosition(0);
         count++;
-        setChanges(true); // ???
+        setChanges(true);
         return 0;
     }
 
@@ -112,11 +112,6 @@ public class VirtualGlass extends AbstractGlass {
     public void removeBrick(final int i, final int j) {
         if (state.getBrick(i, j) != null)
             state.setBrick(i, j, null);
-    }
-
-    @Override
-    public void dropChanges() {
-        changes.setFlag(false);
     }
 
     private boolean moveDownTrue() {

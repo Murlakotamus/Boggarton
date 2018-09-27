@@ -84,124 +84,103 @@ public class Const {
     public static final String GAMEOVER_STR = "Game over!";
 
     // sounds ids
-    public static final int SND_MOVE = 0;
-    public static final int SND_SELECT = 1;
-
-    public static final int SND_ADDYUCK = 2;
-    public static final int SND_ADDYUCK_LEFT = 3;
-    public static final int SND_ADDYUCK_RIGHT = 4;
-
-    public static final int SND_CYCLE = 5;
-    public static final int SND_CYCLE_LEFT = 6;
-    public static final int SND_CYCLE_RIGHT = 7;
-
-    public static final int SND_NEW = 8;
-    public static final int SND_NEW_LEFT = 9;
-    public static final int SND_NEW_RIGHT = 10;
-
-    public static final int SND_SCORE = 11;
-    public static final int SND_SCORE_LEFT = 12;
-    public static final int SND_SCORE_RIGHT = 13;
-
-    public static final int SND_SHIFT = 14;
-    public static final int SND_SHIFT_LEFT = 15;
-    public static final int SND_SHIFT_RIGHT = 16;
-
-    public static final int SND_YUCK = 17;
-    public static final int SND_YUCK_LEFT = 18;
-    public static final int SND_YUCK_RIGHT = 19;
-
-    public static final int SND_DISAPPEAR = 20;
-    public static final int SND_DISAPPEAR_LEFT = 21;
-    public static final int SND_DISAPPEAR_RIGHT = 22;
-
-    public static final int SND_DROP = 23;
-    public static final int SND_DROP_LEFT = 24;
-    public static final int SND_DROP_RIGHT = 25;
+    public static final int SND_ADDYUCK = 0;
+    public static final int SND_CYCLE = 1;
+    public static final int SND_DISAPPEAR = 2;
+    public static final int SND_MOVE = 3;
+    public static final int SND_NEW = 4;
+    public static final int SND_SCORE = 5;
+    public static final int SND_SELECT = 6;
+    public static final int SND_SHIFT = 7;
+    public static final int SND_YUCK = 8;
+    public static final int SND_DROP = 9;
 
     // sound sources
-    public static final int SND_DROP0 = 23;
-    public static final int SND_DROP1 = 24;
-    public static final int SND_DROP2 = 25;
-    public static final int SND_DROP3 = 26;
-    public static final int SND_DROP4 = 27;
-    public static final int SND_DROP5 = 28;
-    public static final int SND_DROP6 = 29;
-    public static final int SND_DROP7 = 30;
-    public static final int SND_DROP8 = 31;
-    public static final int SND_DROP9 = 32;
+    public static final int SND_DROP0 = 9;
+    public static final int SND_DROP1 = 10;
+    public static final int SND_DROP2 = 11;
+    public static final int SND_DROP3 = 12;
+    public static final int SND_DROP4 = 13;
+    public static final int SND_DROP5 = 14;
+    public static final int SND_DROP6 = 15;
+    public static final int SND_DROP7 = 16;
+    public static final int SND_DROP8 = 17;
+    public static final int SND_DROP9 = 18;
 
-    public static final int SND_DROP_LEFT0 = 33;
-    public static final int SND_DROP_LEFT1 = 34;
-    public static final int SND_DROP_LEFT2 = 35;
-    public static final int SND_DROP_LEFT3 = 36;
-    public static final int SND_DROP_LEFT4 = 37;
-    public static final int SND_DROP_LEFT5 = 38;
-    public static final int SND_DROP_LEFT6 = 39;
-    public static final int SND_DROP_LEFT7 = 40;
-    public static final int SND_DROP_LEFT8 = 41;
-    public static final int SND_DROP_LEFT9 = 42;
+    public static final int SND_DROP_LEFT0 = 19;
+    public static final int SND_DROP_LEFT1 = 20;
+    public static final int SND_DROP_LEFT2 = 21;
+    public static final int SND_DROP_LEFT3 = 22;
+    public static final int SND_DROP_LEFT4 = 23;
+    public static final int SND_DROP_LEFT5 = 24;
+    public static final int SND_DROP_LEFT6 = 25;
+    public static final int SND_DROP_LEFT7 = 26;
+    public static final int SND_DROP_LEFT8 = 27;
+    public static final int SND_DROP_LEFT9 = 28;
 
-    public static final int SND_DROP_RIGHT0 = 43;
-    public static final int SND_DROP_RIGHT1 = 44;
-    public static final int SND_DROP_RIGHT2 = 45;
-    public static final int SND_DROP_RIGHT3 = 46;
-    public static final int SND_DROP_RIGHT4 = 47;
-    public static final int SND_DROP_RIGHT5 = 48;
-    public static final int SND_DROP_RIGHT6 = 49;
-    public static final int SND_DROP_RIGHT7 = 50;
-    public static final int SND_DROP_RIGHT8 = 51;
-    public static final int SND_DROP_RIGHT9 = 52;
+    public static final int SND_DROP_RIGHT0 = 29;
+    public static final int SND_DROP_RIGHT1 = 30;
+    public static final int SND_DROP_RIGHT2 = 31;
+    public static final int SND_DROP_RIGHT3 = 32;
+    public static final int SND_DROP_RIGHT4 = 33;
+    public static final int SND_DROP_RIGHT5 = 34;
+    public static final int SND_DROP_RIGHT6 = 35;
+    public static final int SND_DROP_RIGHT7 = 36;
+    public static final int SND_DROP_RIGHT8 = 37;
+    public static final int SND_DROP_RIGHT9 = 38;
+
+    public static final int SND_ADDYUCK_LEFT = 39;
+    public static final int SND_ADDYUCK_RIGHT = 40;
+
+    public static final int SND_CYCLE_LEFT = 41;
+    public static final int SND_CYCLE_RIGHT = 42;
+
+    public static final int SND_DISAPPEAR_LEFT = 43;
+    public static final int SND_DISAPPEAR_RIGHT = 44;
+
+    public static final int SND_NEW_LEFT = 45;
+    public static final int SND_NEW_RIGHT = 46;
+
+    public static final int SND_SCORE_LEFT = 47;
+    public static final int SND_SCORE_RIGHT = 48;
+
+    public static final int SND_SHIFT_LEFT = 49;
+    public static final int SND_SHIFT_RIGHT = 50;
+
+    public static final int SND_YUCK_LEFT = 51;
+    public static final int SND_YUCK_RIGHT = 52;
 
     // sound files
     private static final String WAV_PATH = "/sounds/";
-    private static final String LEFT = "_left";
-    private static final String RIGHT = "_right";
     private static final String WAV = ".wav";
 
     public static final String ADDYUCK = "addyuck";
     public static final String WAV_ADDYUCK = WAV_PATH + ADDYUCK + WAV;
-    public static final String WAV_ADDYUCK_LEFT = WAV_PATH + ADDYUCK + LEFT + WAV;
-    public static final String WAV_ADDYUCK_RIGHT = WAV_PATH + ADDYUCK + RIGHT + WAV;
 
     public static final String CYCLE = "cycle";
     public static final String WAV_CYCLE = WAV_PATH + CYCLE + WAV;
-    public static final String WAV_CYCLE_LEFT = WAV_PATH + CYCLE + LEFT + WAV;
-    public static final String WAV_CYCLE_RIGHT = WAV_PATH + CYCLE + RIGHT + WAV;
 
     public static final String DISAPPEAR = "disappear";
     public static final String WAV_DISAPPEAR = WAV_PATH + DISAPPEAR + WAV;
-    public static final String WAV_DISAPPEAR_LEFT = WAV_PATH + DISAPPEAR + LEFT + WAV;
-    public static final String WAV_DISAPPEAR_RIGHT = WAV_PATH + DISAPPEAR + RIGHT + WAV;
 
     public static final String DROP = "drop";
     public static final String WAV_DROP = WAV_PATH + DROP + WAV;
-    public static final String WAV_DROP_LEFT = WAV_PATH + DROP + LEFT + WAV;
-    public static final String WAV_DROP_RIGHT = WAV_PATH + DROP + RIGHT + WAV;
 
     public static final String WAV_MOVE = WAV_PATH + "move" + WAV;
 
     public static final String NEW = "new";
     public static final String WAV_NEW = WAV_PATH + NEW + WAV;
-    public static final String WAV_NEW_LEFT = WAV_PATH + NEW + LEFT + WAV;
-    public static final String WAV_NEW_RIGHT = WAV_PATH + NEW + RIGHT + WAV;
 
     public static final String SCORE = "score";
     public static final String WAV_SCORE = WAV_PATH + SCORE + WAV;
-    public static final String WAV_SCORE_LEFT = WAV_PATH + SCORE + LEFT + WAV;
-    public static final String WAV_SCORE_RIGHT = WAV_PATH + SCORE + RIGHT + WAV;
 
     public static final String WAV_SELECT = WAV_PATH + "select" + WAV;
 
     public static final String SHIFT = "shift";
     public static final String WAV_SHIFT = WAV_PATH + SHIFT + WAV;
-    public static final String WAV_SHIFT_LEFT = WAV_PATH + SHIFT + LEFT + WAV;
-    public static final String WAV_SHIFT_RIGHT = WAV_PATH + SHIFT + RIGHT + WAV;
 
     public static final String YUCK = "yuck";
     public static final String WAV_YUCK = WAV_PATH + YUCK + WAV;
-    public static final String WAV_YUCK_LEFT = WAV_PATH + YUCK + LEFT + WAV;
-    public static final String WAV_YUCK_RIGHT = WAV_PATH + YUCK + RIGHT + WAV;
 
     public static final Map<String, Integer> SOUNDS = new HashMap<>();
     public static final Map<String, Integer> SOUNDS_LEFT = new HashMap<>();

@@ -33,7 +33,7 @@ public class Boggarton {
         Boggarton.run();
 
         DbHandler.close();
-        Sound.destroy();
         Graphics.destroy();
+        Sound.destroy();
     }
 }

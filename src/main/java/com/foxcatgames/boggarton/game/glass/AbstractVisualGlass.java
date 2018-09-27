@@ -241,23 +241,6 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
                     brick(i, j).stopAnimation();
     }
 
-    public void waitChanges() {
-        synchronized (changes) {
-            try {
-                while (!changes.isFlag() && !gameOver)
-                    changes.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            changes.notify();
-        }
-    }
-
-    @Override
-    public void dropChanges() {
-        setChanges(false);
-    }
-
     public Frame getFrame() {
         return frame;
     }

@@ -1,7 +1,6 @@
 package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
 
@@ -51,7 +50,7 @@ abstract public class AbstractVirtualNonAdaptivePlayer extends AbstractVirtualPl
                 });
                 game.getGlass().dropChanges();
                 game.setMaxSpeed();
-                ((AbstractVisualGlass) game.getGlass()).waitChanges();
+                game.getGlass().waitChanges();
                 break;
 
             // non-adaptive algorithm

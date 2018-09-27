@@ -34,6 +34,8 @@ public interface IGlass {
 
     void dropChanges();
     boolean hasChanges();
+    void waitChanges();
+
     int getFullness();
     int getCount();
 

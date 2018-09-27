@@ -152,4 +152,10 @@ public class VirtualGlass extends AbstractGlass {
         if (!forSearchingSolution)
             super.setChanges(flag);
     }
+
+    @Override
+    public void waitChanges() {
+        if (!forSearchingSolution)
+            super.waitChanges();
+    }
 }

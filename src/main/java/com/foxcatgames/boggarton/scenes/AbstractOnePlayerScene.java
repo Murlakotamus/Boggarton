@@ -4,8 +4,6 @@ import static com.foxcatgames.boggarton.Const.BORDER;
 import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.Const.GAME_OVER;
 
-import java.sql.SQLException;
-
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.SimpleEntity;
@@ -25,12 +23,8 @@ abstract public class AbstractOnePlayerScene extends AbstractPlayingScene {
         super(scene);
     }
 
-    protected void saveOutcome() {
-        try {
-            DbHandler.getInstance().saveGameOutcome(player);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    protected void saveOutcome(IPlayer player) {
+        DbHandler.saveOutcome(player);
     }
 
     @Override
@@ -38,7 +32,7 @@ abstract public class AbstractOnePlayerScene extends AbstractPlayingScene {
         if (game.isGameOver() && gameOver == null) {
             gameOver = new SimpleEntity(GAME_OVER, layer);
             gameOver.spawn(new Vector2f(X + getFigureSize(game) * BOX + 25, Y + BOX * 3 + BORDER));
-            saveOutcome();
+            saveOutcome(player);
         } else if (game.isGameOn())
             game.processStage();
     }

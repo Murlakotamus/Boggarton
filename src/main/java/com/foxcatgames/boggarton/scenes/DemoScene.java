@@ -7,9 +7,9 @@ import com.foxcatgames.boggarton.players.virtual.solver.Price;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class Demo extends AbstractOnePlayerScene {
+public class DemoScene extends AbstractOnePlayerScene {
 
-    public Demo(final int width, final int height, final int prognosis, final int figureSize, final RandomTypes randomType,
+    public DemoScene(final int width, final int height, final int prognosis, final int figureSize, final RandomTypes randomType,
             final DifficultyTypes difficulty) {
 
         super(SceneItem.DEMO);

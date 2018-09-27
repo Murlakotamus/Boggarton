@@ -1,57 +1,24 @@
 package com.foxcatgames.boggarton.game;
 
-import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.game.StageItem.START;
-import static com.foxcatgames.boggarton.game.glass.AbstractVisualGlass.SCREEN_OFFSET_Y;
-
-import java.util.List;
-import java.util.Map;
-
-import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
-import com.foxcatgames.boggarton.Sound;
-import com.foxcatgames.boggarton.engine.Layer;
-import com.foxcatgames.boggarton.entity.Brick;
-import com.foxcatgames.boggarton.entity.Text;
-import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.IFigure;
-import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
-import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
-import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
-import com.foxcatgames.boggarton.scenes.AbstractScene;
-import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 /**
- * The Game is the Glass, Forecast and the all motion inside the Glass.
+ * The game is a glass, a forecast and the all motion inside the Glass.
  */
 abstract public class AbstractGame {
 
-    protected int x, y;
     protected IGlass glass;
     protected IForecast forecast;
-
-    protected static final float APPEAR_PAUSE = 1f;
-    protected static final float DISAPPEAR_PAUSE = 1f;
-    protected static final float SET_PAUSE = 0.1f;
-    protected static final float YUCK_PAUSE = 0.5f;
-
-    protected static final int DROPPING_SPEED = 500000;
-    protected static final int CRASH_SPEED = 150000;
-    protected static final int MOVING_SPEED = 3000;
-    protected static final int CHARGE_SPEED = 300000;
-    volatile protected int currentSpeed = MOVING_SPEED;
-
-    protected float startTime = getTime();
-    protected float previousTime = startTime;
 
     protected int yucksForEnemies;
     protected boolean glassProcessed;
@@ -61,70 +28,21 @@ abstract public class AbstractGame {
 
     protected String name = "default";
     protected StageItem stage = START;
-    private boolean isLoggerInit = false;
+    protected boolean isLoggerInit = false;
 
-    private GameLogger gameLogger = null;
+    protected GameLogger gameLogger = null;
 
     final protected Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
-    final private OuterCommand command = new OuterCommand();
-    final protected Text diffScore;
+    final protected OuterCommand command = new OuterCommand();
     protected int targetPosition = 0;
 
     protected boolean needNewFigure = true;
     protected int lastScore = 0;
 
-    final Map<String, Integer> sounds;
+    protected String oldGlassState;
 
-    private String oldGlassState;
-
-    public AbstractGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
-            final int difficulty, final RandomTypes randomType, final Map<String, Integer> sounds) {
-
-        this.x = x;
-        this.y = y;
-        this.sounds = sounds;
-        if (prognosis >= 1)
-            forecast = new SimpleForecast(layer, new Vector2f(x, y), prognosis, figureSize, difficulty, randomType);
-        diffScore = new Text("", Const.DARK_FONT, layer);
-    }
-
+    abstract public void processStage();
     abstract protected void nextStage();
-
-    public void processStage() {
-        switch (stage) {
-        case NEXT:
-            if (needNewFigure) {
-                logFigure(nextFigure());
-                logMoves();
-            } else
-                charge();
-            break;
-        case APPEAR:
-            executeCommand();
-            if (!dropPressed)
-                stagePause(APPEAR_PAUSE);
-            else
-                nextStage();
-            break;
-        case FALL:
-            executeCommand();
-            fall();
-            break;
-        case SET:
-            stagePause(SET_PAUSE);
-            break;
-        case CRASH:
-            crashDown();
-            break;
-        case PROCESS:
-            processGlass();
-            break;
-        case COMPRESS:
-            compress();
-            break;
-        default:
-        }
-    }
 
     protected IFigure nextFigure() {
         dropPressed = false;
@@ -140,172 +58,12 @@ abstract public class AbstractGame {
         needNewFigure = false;
         resumeScore();
         oldGlassState = glass.getGlassState().toString();
-        // Sound.play(sounds.get(Const.NEW));
         return figure;
     }
 
-    protected void resumeScore() {
-        final int diff = getGlass().getGlassState().getScore() - lastScore;
-        if (diff > 0) {
-            diffScore.setString("+" + diff);
-            diffScore.spawn(new Vector2f(x + BOX * 8, y - BOX * 2));
-            logScore(diff);
-            if (diff > 100) {
-                logGlass(oldGlassState);
-                logGlass(glass.getGlassState().toString());
-            }
-            Sound.play(sounds.get(Const.SCORE));
-        } else {
-            diffScore.unspawn();
-        }
-        lastScore = getGlass().getGlassState().getScore();
+    abstract protected void resumeScore();
 
-    }
-
-    private boolean enoughSleep(final float sleep) {
-        return startTime + sleep < getTime();
-    }
-
-    protected void stagePause(final float pause) {
-        if (enoughSleep(pause))
-            nextStage();
-    }
-
-    protected void charge(final List<Pair<Integer, Integer>> pairs, ICommand satisfyCondition) {
-        final AbstractVisualFigure figure = (AbstractVisualFigure) glass.getFigure();
-        final Vector2f figurePosition = figure.getPosition();
-        final float currentTime = getTime();
-        final float spentTime = (currentTime - previousTime) / 1000f;
-        final int currX = Math.round(figurePosition.getX());
-        final int newX = currX + Math.round(spentTime * CHARGE_SPEED);
-        final Vector2f framePosition = ((AbstractVisualGlass) glass).getFrame().getPosition();
-
-        if (newX >= framePosition.getX() + targetPosition * BOX) {
-            figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
-            ((AbstractVisualForecast) forecast).setNext(pairs);
-            ((AbstractVisualGlass) glass).respawn();
-            fillBuffer();
-            needNewFigure = true;
-            if (pairs != null)
-                satisfyCondition.execute();
-            nextStage();
-            return;
-        }
-        figure.setPosition(new Vector2f(newX, figurePosition.getY()));
-        previousTime = currentTime;
-    }
-
-    protected void charge() {
-        charge(null, null);
-    }
-
-    private void fall() {
-        final AbstractVisualGlass glass = (AbstractVisualGlass) this.glass;
-        if (glass.getY() % BOX == 0 && !glass.moveDown()) {
-            nextStage();
-            return;
-        }
-
-        final float currentTime = getTime();
-        final float spentTime = (currentTime - previousTime) / 1000f;
-        final int currY = glass.getY(); // staring Y is 0
-        final int newY = currY + Math.round(spentTime * currentSpeed);
-
-        if (newY == currY)
-            return;
-
-        final int oldCell = currY / BOX;
-        final int newCell = newY / BOX;
-        final int diffCell = newCell - oldCell;
-
-        if (diffCell == 0) {
-            glass.setY(newY);
-            glass.getGlassState().setJ((int) ((newY + BOX) / BOX));
-        } else {
-            for (int i = 1; i <= diffCell; i++) {
-                glass.setY((oldCell + i) * BOX);
-                if (!glass.moveDown()) {
-                    nextStage();
-                    return;
-                }
-            }
-            glass.setY(newY);
-        }
-        previousTime = currentTime;
-    }
-
-    private void crashDown() {
-        if (((AbstractVisualGlass) glass).allBricksFell()) {
-            nextStage();
-            return;
-        }
-
-        boolean fell = false;
-        final float currentTime = getTime();
-        final float spentTime = (currentTime - previousTime) / 1000f;
-        final GlassState state = glass.getGlassState();
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = state.getHeight() - 2; j >= 0; j--) {
-
-                final Brick brick = (Brick) state.getBrick(i, j);
-                if (brick == null || !brick.isCrashing())
-                    continue;
-
-                final int currY = (int) brick.position.getY() - SCREEN_OFFSET_Y;
-                final int newY = currY + Math.round(spentTime * CRASH_SPEED);
-                if (newY == currY)
-                    return;
-
-                fell = fell | crashDownBrick(brick, i, j, currY, newY);
-            }
-        previousTime = currentTime;
-        if (fell)
-            Sound.playDrop(sounds.get(Const.DROP));
-    }
-
-    private boolean crashDownBrick(final Brick brick, final int i, final int j, final int currY, final int newY) {
-        boolean fell = false;
-        final int oldCell = currY / BOX;
-        final int newCell = newY / BOX;
-        final int diffCell = newCell - oldCell;
-        final Vector2f position = brick.position;
-        if (diffCell == 0)
-            position.setY(newY + SCREEN_OFFSET_Y);
-        else {
-            final GlassState state = glass.getGlassState();
-            for (int k = 1; k <= diffCell; k++) {
-                position.setY((oldCell + k) * BOX + SCREEN_OFFSET_Y);
-                state.setBrick(i, j + k, brick);
-                state.setBrick(i, j + k - 1, null);
-                final int z = j + k + 1;
-                if ((z == state.getHeight()) || state.getBrick(i, z) != null && !((Brick) state.getBrick(i, z)).isCrashing()) {
-                    fell = true;
-                    brick.setCrashing(false);
-                }
-            }
-        }
-        return fell;
-    }
-
-    private void processGlass() {
-        if (!glassProcessed) {
-            killedBricks = glass.findChainsToKill();
-            if (killedBricks) {
-                ((AbstractVisualGlass) glass).startAnimation();
-                Sound.playDrop(sounds.get(Const.DISAPPEAR));
-            }
-            glassProcessed = true;
-        }
-        if (!killedBricks)
-            nextStage();
-        if (enoughSleep(DISAPPEAR_PAUSE)) {
-            glass.killChains();
-            ((AbstractVisualGlass) glass).respawn();
-            nextStage();
-        }
-    }
-
-    private void compress() {
+    protected void compress() {
         if (killedBricks) {
             glass.removeHoles();
             glass.addReaction();
@@ -323,7 +81,7 @@ abstract public class AbstractGame {
 
     public void setGameOver() {
         synchronized (buffer) {
-            ((AbstractVisualGlass) glass).setGameOver();
+            glass.setGameOver();
             buffer.notify();
             executeCommand();
         }
@@ -346,7 +104,7 @@ abstract public class AbstractGame {
         }
     }
 
-    private void fillBuffer() {
+    protected void fillBuffer() {
         synchronized (buffer) {
             buffer.setFirst(glass.getGlassState());
             buffer.setSecond(new VirtualForecast(forecast));
@@ -354,7 +112,7 @@ abstract public class AbstractGame {
         }
     }
 
-    private void executeCommand() {
+    protected void executeCommand() {
         if (command.getCommand() != null)
             synchronized (command) {
                 command.execute();
@@ -373,18 +131,6 @@ abstract public class AbstractGame {
 
     public void startGame() {
         nextStage();
-    }
-
-    protected float getTime() {
-        return AbstractScene.TIMER.getTime();
-    }
-
-    public void restoreSpeed() {
-        currentSpeed = MOVING_SPEED;
-    }
-
-    public void setMaxSpeed() {
-        currentSpeed = DROPPING_SPEED;
     }
 
     public boolean isGameOver() {
@@ -421,14 +167,6 @@ abstract public class AbstractGame {
 
     public IGlass getGlass() {
         return glass;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public IForecast getForecast() {
@@ -484,4 +222,8 @@ abstract public class AbstractGame {
         if (isLoggerInit)
             gameLogger.logEvent(str);
     }
+
+    abstract public void restoreSpeed();
+
+    abstract public void setMaxSpeed();
 }

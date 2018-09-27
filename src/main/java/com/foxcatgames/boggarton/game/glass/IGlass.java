@@ -19,6 +19,7 @@ public interface IGlass {
     void rotate();
 
     void setChanges(int i, int x, int y);
+    void setGameOver();
     boolean moveDown();
     boolean isGameOver();
     boolean findChainsToKill();
@@ -34,6 +35,7 @@ public interface IGlass {
     void dropChanges();
     boolean hasChanges();
     int getFullness();
+    int getCount();
 
     IFigure getFigure();
 }

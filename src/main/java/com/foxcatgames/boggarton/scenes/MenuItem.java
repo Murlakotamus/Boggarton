@@ -18,18 +18,18 @@ public enum MenuItem {
 
     final private String name;
     final private String[] values;
-    private int position;
+    private int submenuElementPosition;
 
     MenuItem(final String name) {
         this.name = name;
         values = null;
-        position = -1;
+        submenuElementPosition = -1;
     }
 
     MenuItem(final String name, final String... values) {
         this.name = name;
         this.values = values;
-        this.position = 0;
+        this.submenuElementPosition = 0;
     }
 
     public String getName() {
@@ -40,12 +40,12 @@ public enum MenuItem {
         return values;
     }
 
-    public int getPosition() {
-        return position;
+    public int getSubmenuElementPosition() {
+        return submenuElementPosition;
     }
 
-    public void setPosition(final int position) {
-        this.position = position;
+    public void setSubmenuElementPosition(final int position) {
+        this.submenuElementPosition = position;
     }
 
 }

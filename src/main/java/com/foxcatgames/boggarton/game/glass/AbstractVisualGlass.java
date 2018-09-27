@@ -26,7 +26,6 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     private final Frame frame;
 
     private boolean gamePaused;
-    private int count; // figures counter
 
     final Map<String, Integer> sounds;
 
@@ -233,13 +232,13 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
         }
     }
 
+    @Override
     public void setGameOver() {
-        gameOver = true;
+        super.setGameOver();
         for (int j = 0; j < state.getHeight(); j++)
             for (int i = 0; i < state.getWidth(); i++)
                 if (state.getBrick(i, j) != null && brick(i, j).isAnimated())
                     brick(i, j).stopAnimation();
-        setChanges(true);
     }
 
     public void waitChanges() {
@@ -254,13 +253,6 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
         }
     }
 
-    private void setChanges(final boolean flag) {
-        synchronized (changes) {
-            changes.setFlag(flag);
-            changes.notify();
-        }
-    }
-
     @Override
     public void dropChanges() {
         setChanges(false);
@@ -270,7 +262,4 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
         return frame;
     }
 
-    public int getCount() {
-        return count;
-    }
 }

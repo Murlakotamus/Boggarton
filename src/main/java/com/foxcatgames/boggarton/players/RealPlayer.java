@@ -5,8 +5,6 @@ import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
-import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 
 public class RealPlayer implements IPlayer {
 
@@ -78,22 +76,14 @@ public class RealPlayer implements IPlayer {
         builder.setPrognosisDebth(game.getForecast().getDepth());
         builder.setFigureSize(game.getForecast().getFigureSize());
         builder.setScore(game.getGlass().getGlassState().getScore());
-
-        if (game.getForecast() instanceof SimpleForecast)
-            builder.setSetSize(((SimpleForecast) game.getForecast()).getDifficulty());
-
-        if (game.getForecast() instanceof SimpleForecast)
-            builder.setRandomName(((SimpleForecast) game.getForecast()).getRandomType().getName());
-
-        if (game.getGlass() instanceof AbstractVisualGlass)
-            builder.setCount(((AbstractVisualGlass) game.getGlass()).getCount());
-
+        builder.setSetSize(game.getForecast().getDifficulty());
+        builder.setRandomName(game.getForecast().getRandomType().getName());
+        builder.setCount(game.getGlass().getCount());
         builder.setPlayerName(getName());
+        builder.setVirtual(false);
 
         if (game instanceof MultiplayerGame)
             builder.setYuckName(((MultiplayerGame) game).getYuckType().getName());
-
-        builder.setVirtual(false);
 
         return builder.build();
     }

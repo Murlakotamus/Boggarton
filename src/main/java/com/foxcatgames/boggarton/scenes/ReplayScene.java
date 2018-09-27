@@ -9,11 +9,12 @@ import java.util.List;
 
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.game.ReplayGame;
+import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.MovesExecutor;
 
-public class Replay extends AbstractOnePlayerScene {
+public class ReplayScene extends AbstractOnePlayerScene {
 
-    public Replay(final int width, final int height, final int figureSize) {
+    public ReplayScene(final int width, final int height, final int figureSize) {
         super(SceneItem.REPLAY);
 
         final StringBuilder moves = new StringBuilder();
@@ -41,7 +42,7 @@ public class Replay extends AbstractOnePlayerScene {
     }
 
     @Override
-    protected void saveOutcome() {
+    protected void saveOutcome(IPlayer player) {
     }
 
     @Override

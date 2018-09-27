@@ -8,9 +8,9 @@ import com.foxcatgames.boggarton.players.RealPlayer;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class Game extends AbstractGameAndPractice {
+public class GameScene extends AbstractGameAndPracticeScene {
 
-    public Game(final int width, final int height, final int forecast, final int figureSize, final RandomTypes randomType, final DifficultyTypes difficulty) {
+    public GameScene(final int width, final int height, final int forecast, final int figureSize, final RandomTypes randomType, final DifficultyTypes difficulty) {
 
         super(SceneItem.GAME);
 

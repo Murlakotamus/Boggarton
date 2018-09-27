@@ -9,11 +9,11 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 
-abstract public class AbstractGameAndPractice extends AbstractOnePlayerScene {
+abstract public class AbstractGameAndPracticeScene extends AbstractOnePlayerScene {
 
     private final SimpleEntity gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
-    public AbstractGameAndPractice(final SceneItem scene) {
+    public AbstractGameAndPracticeScene(final SceneItem scene) {
         super(scene);
     }
 

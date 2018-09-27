@@ -19,7 +19,7 @@ import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 
-public class ReplayGame extends AbstractGame {
+public class ReplayGame extends AbstractVisualGame {
 
     protected int yucks = 0;
     final List<String> events;

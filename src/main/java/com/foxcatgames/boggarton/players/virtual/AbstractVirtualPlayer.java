@@ -5,9 +5,7 @@ import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
-import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
@@ -65,22 +63,14 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
         builder.setFigureSize(game.getForecast().getFigureSize());
         builder.setScore(game.getGlass().getGlassState().getScore());
         builder.setPriceName(price.getName());
-
-        if (game.getForecast() instanceof SimpleForecast)
-            builder.setSetSize(((SimpleForecast) game.getForecast()).getDifficulty());
-
-        if (game.getForecast() instanceof SimpleForecast)
-            builder.setRandomName(((SimpleForecast) game.getForecast()).getRandomType().getName());
-
-        if (game.getGlass() instanceof AbstractVisualGlass)
-            builder.setCount(((AbstractVisualGlass) game.getGlass()).getCount());
-
+        builder.setSetSize(game.getForecast().getDifficulty());
+        builder.setRandomName(game.getForecast().getRandomType().getName());
+        builder.setCount(game.getGlass().getCount());
         builder.setPlayerName(getName());
+        builder.setVirtual(true);
 
         if (game instanceof MultiplayerGame)
             builder.setYuckName(((MultiplayerGame) game).getYuckType().getName());
-
-        builder.setVirtual(true);
 
         return builder.build();
     }

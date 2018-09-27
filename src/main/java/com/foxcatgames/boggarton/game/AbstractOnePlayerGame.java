@@ -10,7 +10,7 @@ import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-abstract public class AbstractOnePlayerGame extends AbstractGame {
+abstract public class AbstractOnePlayerGame extends AbstractVisualGame {
     public AbstractOnePlayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
             final int difficulty, final RandomTypes randomType, final Map<String, Integer> sounds) {
 

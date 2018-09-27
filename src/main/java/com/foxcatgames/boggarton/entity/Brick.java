@@ -77,6 +77,7 @@ public class Brick extends AbstractAnimatedEntity implements IBrick {
         return crashing;
     }
 
+    @Override
     public int getId() {
         return id;
     }

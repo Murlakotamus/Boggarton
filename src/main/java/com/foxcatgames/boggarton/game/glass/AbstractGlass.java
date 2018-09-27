@@ -6,6 +6,7 @@ import com.foxcatgames.boggarton.game.utils.Changes;
 abstract public class AbstractGlass implements IGlass {
 
     volatile protected boolean gameOver = false;
+    volatile protected int count = 0; // figures counter
 
     final protected Changes changes = new Changes(false);
     final protected GlassState state = new GlassState();
@@ -63,6 +64,19 @@ abstract public class AbstractGlass implements IGlass {
         return gameOver;
     }
 
+    protected void setChanges(final boolean flag) {
+        synchronized (changes) {
+            changes.setFlag(flag);
+            changes.notify();
+        }
+    }
+
+    @Override
+    public void setGameOver() {
+        gameOver = true;
+        setChanges(true);
+    }
+
     @Override
     public int getReactions() {
         return state.getReactionLenght();
@@ -111,5 +125,10 @@ abstract public class AbstractGlass implements IGlass {
     @Override
     public int getSpaceRight() {
         return state.getSpaceRight();
+    }
+
+    @Override
+    public int getCount() {
+        return count;
     }
 }

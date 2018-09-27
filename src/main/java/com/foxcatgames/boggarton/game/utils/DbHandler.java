@@ -34,17 +34,22 @@ public class DbHandler {
     private static PreparedStatement winnerStmt;
     private static PreparedStatement gameStmt;
 
-    public static synchronized DbHandler getInstance() throws SQLException {
-        if (instance == null)
-            instance = new DbHandler();
+    public static synchronized DbHandler getInstance() {
+        try {
+            if (instance == null)
+                instance = new DbHandler();
 
-        initDb(instance);
+            initDb(instance);
 
-        gameStmt = instance.conn.prepareStatement(GAME);
-        loserStmt = instance.conn.prepareStatement(LOSER);
-        winnerStmt = instance.conn.prepareStatement(WINNER);
+            gameStmt = instance.conn.prepareStatement(GAME);
+            loserStmt = instance.conn.prepareStatement(LOSER);
+            winnerStmt = instance.conn.prepareStatement(WINNER);
 
-        return instance;
+            return instance;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private DbHandler() throws SQLException {
@@ -113,6 +118,14 @@ public class DbHandler {
         st.close();
     }
 
+    public static void saveOutcome(IPlayer player) {
+        try {
+            DbHandler.getInstance().saveGameOutcome(player);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void closeHandler() {
         try {
             conn.close();
@@ -122,10 +135,6 @@ public class DbHandler {
     }
 
     public static void close() {
-        try {
-            DbHandler.getInstance().closeHandler();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DbHandler.getInstance().closeHandler();
     }
 }

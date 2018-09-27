@@ -1,5 +1,6 @@
 package com.foxcatgames.boggarton.game.glass;
 
+import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.VirtualBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.figure.VirtualFigure;
@@ -7,6 +8,7 @@ import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 public class VirtualGlass extends AbstractGlass {
 
     private boolean moveDown;
+    private boolean forSearchingSolution = true;
 
     public VirtualGlass(final IGlassState glass, final boolean moveDown) {
         super(glass.getWidth(), glass.getHeight());
@@ -26,6 +28,13 @@ public class VirtualGlass extends AbstractGlass {
         state.setJ(glass.getJ());
     }
 
+    public VirtualGlass(final int width, final int height) {
+        super(width, height);
+        moveDown = true;
+        forSearchingSolution = false;
+        state.setBricks(new Brick[width][height]);
+    }
+
     @Override
     public void setFigure(final int x, final int y, final boolean setChanges) {
         state.setI(x);
@@ -43,6 +52,8 @@ public class VirtualGlass extends AbstractGlass {
             state.setNextPosition(state.getWidth() - figure.getLenght());
         else
             state.setNextPosition(0);
+        count++;
+        setChanges(true); // ???
         return 0;
     }
 
@@ -134,5 +145,11 @@ public class VirtualGlass extends AbstractGlass {
 
         setFigure(state.getI(), state.getJ() + 1, false);
         return true;
+    }
+
+    @Override
+    protected void setChanges(final boolean flag) {
+        if (!forSearchingSolution)
+            super.setChanges(flag);
     }
 }

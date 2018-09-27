@@ -6,8 +6,6 @@ import static com.foxcatgames.boggarton.Const.GAME_PAUSED;
 import static com.foxcatgames.boggarton.Const.LOSER;
 import static com.foxcatgames.boggarton.Const.WINNER;
 
-import java.sql.SQLException;
-
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
@@ -27,7 +25,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     protected static final String[] PLAYERS_NAMES = { "First", "Second" };
 
-    protected final int numPlayers;
+    protected static final int PLAYERS = 2;
     private final SimpleEntity[] winners;
     private SimpleEntity loser;
 
@@ -38,33 +36,26 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     protected IPlayer first;
     protected IPlayer second;
 
-    AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] prognosis, final int figureSize, final int numPlayers,
+    AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] prognosis, final int figureSize,
             YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty) {
         super(scene);
-        gamePaused = new SimpleEntity[numPlayers];
-        for (int i = 0; i < numPlayers; i++)
+        gamePaused = new SimpleEntity[PLAYERS];
+        for (int i = 0; i < PLAYERS; i++)
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);
 
         if (width < figureSize)
             throw new RuntimeException("Glass too narrow for figures");
 
-        if (numPlayers > 2)
-            throw new RuntimeException("Not implemented yet");
+        winners = new SimpleEntity[PLAYERS];
+        game = new MultiplayerGame[PLAYERS];
 
-        if (numPlayers < 2)
-            throw new RuntimeException("Not a multiplayer game");
-
-        this.numPlayers = numPlayers;
-        winners = new SimpleEntity[numPlayers];
-        game = new MultiplayerGame[numPlayers];
-
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < PLAYERS; i++) {
             game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(), Victories.getVictories(i),
                     yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
             game[i].setName(PLAYERS_NAMES[i]);
         }
 
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < PLAYERS; i++) {
             game[i].initLogger();
             game[i].startGame();
         }
@@ -73,7 +64,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     abstract protected void checkAuto();
 
     private void losersAndWinners(final int loserNumber) {
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < PLAYERS; i++) {
             final int figureSize = getFigureSize(game[i]);
             if (i == loserNumber) {
                 loser = new SimpleEntity(LOSER, layer);
@@ -89,19 +80,15 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     }
 
     protected void saveOutcome(final int loserNumber) {
-        try {
-            if (loserNumber == 0)
-                DbHandler.getInstance().saveGameOutcome(second, first);
-            else
-                DbHandler.getInstance().saveGameOutcome(first, second);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        if (loserNumber == 0)
+            DbHandler.getInstance().saveGameOutcome(second, first);
+        else
+            DbHandler.getInstance().saveGameOutcome(first, second);
     }
 
     @Override
     protected void changes() {
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < PLAYERS; i++)
             if (game[i].isGameOver() && loser == null) {
                 losersAndWinners(i);
                 saveOutcome(i);
@@ -113,14 +100,14 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
         if (loser != null)
             return;
 
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < PLAYERS; i++) {
             game[i].processStage();
             getYucks(i);
         }
     }
 
     private void getYucks(final int n) {
-        for (int j = 0; j < numPlayers; j++)
+        for (int j = 0; j < PLAYERS; j++)
             if (n != j)
                 game[n].addYuck(game[j].getYuckForEnemy());
     }
@@ -128,7 +115,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     @Override
     protected void setGameOver() {
         super.setGameOver();
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < PLAYERS; i++) {
             game[i].setGameOver();
             game[i].closeLogger();
         }
@@ -136,7 +123,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     @Override
     protected void hideGlass() {
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < PLAYERS; i++) {
             ((AbstractVisualGlass) game[i].getGlass()).pauseOn();
             gamePaused[i].spawn(new Vector2f(game[i].getX() + getFigureSize(game[i]) * BOX + 25, Y + BOX * 3 + BORDER));
         }
@@ -144,7 +131,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     @Override
     protected void showGlass() {
-        for (int i = 0; i < numPlayers; i++) {
+        for (int i = 0; i < PLAYERS; i++) {
             gamePaused[i].unspawn();
             ((AbstractVisualGlass) game[i].getGlass()).pauseOff();
         }

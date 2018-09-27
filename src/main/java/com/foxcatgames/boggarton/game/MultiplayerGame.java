@@ -16,7 +16,7 @@ import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-public class MultiplayerGame extends AbstractGame {
+public class MultiplayerGame extends AbstractVisualGame {
 
     private static final int MAX_YUCKS = 24; // 6 * 12 / 3 - theoretical limit
 

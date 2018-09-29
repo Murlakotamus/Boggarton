@@ -112,38 +112,14 @@ public class Sound {
         initPatternLeft(SND_DISAPPEAR, SND_DISAPPEAR_LEFT);
         initPatternRight(SND_DISAPPEAR, SND_DISAPPEAR_RIGHT);
 
-        initPattern(SND_DROP, SND_DROP0);
-        initPattern(SND_DROP, SND_DROP1);
-        initPattern(SND_DROP, SND_DROP2);
-        initPattern(SND_DROP, SND_DROP3);
-        initPattern(SND_DROP, SND_DROP4);
-        initPattern(SND_DROP, SND_DROP5);
-        initPattern(SND_DROP, SND_DROP6);
-        initPattern(SND_DROP, SND_DROP7);
-        initPattern(SND_DROP, SND_DROP8);
-        initPattern(SND_DROP, SND_DROP9);
+        for (int i = SND_DROP0; i < SND_DROP0 + 10; i++)
+            initPattern(SND_DROP, i);
 
-        initPatternLeft(SND_DROP, SND_DROP_LEFT0);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT1);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT2);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT3);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT4);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT5);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT6);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT7);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT8);
-        initPatternLeft(SND_DROP, SND_DROP_LEFT9);
+        for (int i = SND_DROP_LEFT0; i < SND_DROP_LEFT0 + 10; i++)
+            initPatternLeft(SND_DROP, i);
 
-        initPatternRight(SND_DROP, SND_DROP_RIGHT0);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT1);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT2);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT3);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT4);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT5);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT6);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT7);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT8);
-        initPatternRight(SND_DROP, SND_DROP_RIGHT9);
+        for (int i = SND_DROP_RIGHT0; i < SND_DROP_RIGHT0 + 10; i++)
+            initPatternRight(SND_DROP, i);
 
         initPattern(SND_MOVE, SND_MOVE);
 

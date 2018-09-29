@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.foxcatgames.boggarton.engine.ITextureLoader;
 import com.foxcatgames.boggarton.engine.TextureLoader;
+import com.foxcatgames.boggarton.players.virtual.solver.Price;
 
 public class Const {
 
@@ -83,6 +84,8 @@ public class Const {
     public static final String YUCK_STR = "YUCK: ";
     public static final String GAMEOVER_STR = "Game over!";
 
+    public static final Price PRICE = new Price();
+
     // sounds ids
     public static final int SND_ADDYUCK = 0;
     public static final int SND_CYCLE = 1;
@@ -97,37 +100,8 @@ public class Const {
 
     // sound sources
     public static final int SND_DROP0 = 9;
-    public static final int SND_DROP1 = 10;
-    public static final int SND_DROP2 = 11;
-    public static final int SND_DROP3 = 12;
-    public static final int SND_DROP4 = 13;
-    public static final int SND_DROP5 = 14;
-    public static final int SND_DROP6 = 15;
-    public static final int SND_DROP7 = 16;
-    public static final int SND_DROP8 = 17;
-    public static final int SND_DROP9 = 18;
-
     public static final int SND_DROP_LEFT0 = 19;
-    public static final int SND_DROP_LEFT1 = 20;
-    public static final int SND_DROP_LEFT2 = 21;
-    public static final int SND_DROP_LEFT3 = 22;
-    public static final int SND_DROP_LEFT4 = 23;
-    public static final int SND_DROP_LEFT5 = 24;
-    public static final int SND_DROP_LEFT6 = 25;
-    public static final int SND_DROP_LEFT7 = 26;
-    public static final int SND_DROP_LEFT8 = 27;
-    public static final int SND_DROP_LEFT9 = 28;
-
     public static final int SND_DROP_RIGHT0 = 29;
-    public static final int SND_DROP_RIGHT1 = 30;
-    public static final int SND_DROP_RIGHT2 = 31;
-    public static final int SND_DROP_RIGHT3 = 32;
-    public static final int SND_DROP_RIGHT4 = 33;
-    public static final int SND_DROP_RIGHT5 = 34;
-    public static final int SND_DROP_RIGHT6 = 35;
-    public static final int SND_DROP_RIGHT7 = 36;
-    public static final int SND_DROP_RIGHT8 = 37;
-    public static final int SND_DROP_RIGHT9 = 38;
 
     public static final int SND_ADDYUCK_LEFT = 39;
     public static final int SND_ADDYUCK_RIGHT = 40;

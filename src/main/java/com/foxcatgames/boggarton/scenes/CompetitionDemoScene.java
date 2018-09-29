@@ -1,8 +1,8 @@
 package com.foxcatgames.boggarton.scenes;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.players.virtual.EffectiveVirtualNonAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
-import com.foxcatgames.boggarton.players.virtual.solver.Price;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
@@ -16,8 +16,8 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
 
         super(SceneItem.COMPETITION_DEMO, width, height, prognosis, figureSize, yuckType, randomType, difficulty);
 
-        first = new EffectiveVirtualNonAdaptivePlayer(game[0], new Price());
-        second = new VirtualAdaptivePlayer(game[1], new Price());
+        first = new EffectiveVirtualNonAdaptivePlayer(game[0], Const.PRICE);
+        second = new VirtualAdaptivePlayer(game[1], Const.PRICE);
     }
 
     @Override

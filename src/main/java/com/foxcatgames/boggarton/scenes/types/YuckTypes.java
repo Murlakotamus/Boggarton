@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum YuckTypes {
-    NONE("None"), RANDOM("Random"), INCONSOLABLE("Inconsolable"), HARD("Hard");
+    NONE("None"), RANDOM("Additional random line"), HARD("Additional hard line"), NASTY("Nasty bricks");
 
     private String name;
 
@@ -19,10 +19,10 @@ public enum YuckTypes {
     public YuckTypes next() {
         switch(this) {
         case RANDOM:
-            return INCONSOLABLE;
-        case INCONSOLABLE:
             return HARD;
         case HARD:
+            return NASTY;
+        case NASTY:
             return NONE;
         case NONE:
         default:

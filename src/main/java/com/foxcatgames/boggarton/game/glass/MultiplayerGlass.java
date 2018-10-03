@@ -1,7 +1,6 @@
 package com.foxcatgames.boggarton.game.glass;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 
 import org.lwjgl.util.vector.Vector2f;
@@ -9,6 +8,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.game.utils.Utils;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
@@ -19,33 +19,21 @@ public class MultiplayerGlass extends AbstractVisualGlass {
     private final int difficulty;
     private int count = 0;
 
-    public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty, final Map<String, Integer> sounds) {
+    public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty,
+            final Map<String, Integer> sounds) {
         super(layer, position, width, height, sounds);
         this.layer = layer;
         this.difficulty = difficulty;
     }
 
     public String executeYuck(YuckTypes yuckType) {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++) {
-                if (j > 0)
-                    state.setBrick(i, j - 1, state.getBrick(i, j));
-                removeBrick(i, j);
-            }
+        if (yuckType == YuckTypes.NASTY)
+            return nastyBrick();
 
-        boolean yuckAdded = false;
         final ArrayList<Integer> yuckBricks = new ArrayList<>(state.getWidth());
         for (int i = 0; i < state.getWidth(); i++) {
             int brick;
             switch (yuckType) {
-            case INCONSOLABLE:
-                brick = Utils.random(difficulty + 1);
-                if (!yuckAdded && brick == difficulty) {
-                    brick = Const.EMPTY;
-                    yuckAdded = true;
-                } else
-                    brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
-                break;
             case HARD:
                 brick = getHardBrick();
                 break;
@@ -62,10 +50,7 @@ public class MultiplayerGlass extends AbstractVisualGlass {
         if (yuckType == YuckTypes.HARD)
             count += difficulty - 4;
 
-        // to eliminate bias
-        if (yuckType == YuckTypes.INCONSOLABLE)
-            Collections.shuffle(yuckBricks);
-
+        raiseBricks();
         for (int i = 0; i < state.getWidth(); i++)
             state.setBrick(i, state.getHeight() - 1, new Brick(yuckBricks.get(i), layer));
 
@@ -74,6 +59,36 @@ public class MultiplayerGlass extends AbstractVisualGlass {
             result.append(yuckBricks.get(i) - Const.CURRENT_SET * 10);
 
         return result.toString();
+    }
+
+    private void raiseBricks() {
+        for (int i = 0; i < state.getWidth(); i++)
+            for (int j = 0; j < state.getHeight(); j++) {
+                if (j > 0)
+                    state.setBrick(i, j - 1, state.getBrick(i, j));
+                removeBrick(i, j);
+            }
+    }
+
+    private String nastyBrick() {
+        final ArrayList<Pair<Integer, Integer>> places = new ArrayList<>();
+        for (int i = 0; i < state.getWidth(); i++) {
+            final int fullness = state.getEmptyHeight(i);
+            if (fullness >= 0)
+                places.add(new Pair<Integer, Integer>(i, fullness));
+        }
+        int brick;
+        final int size = places.size();
+        if (size > 0) {
+            final Pair<Integer, Integer> place = places.get(Utils.random(size));
+            if (Utils.random(difficulty + 1) == difficulty)
+                brick = Const.EMPTY;
+            else
+                brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
+            state.setBrick(place.getFirst(), place.getSecond(), new Brick(brick, layer));
+            return "" + place.getFirst() + ", " + place.getSecond() + ", " + brick;
+        } else
+            return "";
     }
 
     private int getHardBrick() {

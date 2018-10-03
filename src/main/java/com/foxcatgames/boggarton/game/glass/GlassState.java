@@ -137,6 +137,13 @@ public class GlassState implements IGlassState {
         return height;
     }
 
+    public int getEmptyHeight(int i) {
+        for (int j = 0; j < height; j++)
+            if (bricks[i][j] != null)
+                return j - 1;
+        return height - 1;
+    }
+
     public void setNextPosition(final int nextPosition) {
         this.nextPosition = nextPosition;
     }

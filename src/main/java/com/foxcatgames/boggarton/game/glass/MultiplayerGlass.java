@@ -61,15 +61,6 @@ public class MultiplayerGlass extends AbstractVisualGlass {
         return result.toString();
     }
 
-    private void raiseBricks() {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++) {
-                if (j > 0)
-                    state.setBrick(i, j - 1, state.getBrick(i, j));
-                removeBrick(i, j);
-            }
-    }
-
     private String nastyBrick() {
         final ArrayList<Pair<Integer, Integer>> places = new ArrayList<>();
         for (int i = 0; i < state.getWidth(); i++) {

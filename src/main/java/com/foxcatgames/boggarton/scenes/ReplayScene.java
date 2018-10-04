@@ -29,7 +29,7 @@ public class ReplayScene extends AbstractOnePlayerScene {
                 else if (Const.GAMEOVER_STR.equals(line))
                     break;
                 else if (line.startsWith(Const.MOVES_STR))
-                    moves.append(line);
+                    moves.append(line.substring(line.indexOf(" ")).trim());
         } catch (IOException e) {
             e.printStackTrace();
         }

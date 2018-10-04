@@ -144,6 +144,15 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
         return true;
     }
 
+    protected void raiseBricks() {
+        for (int i = 0; i < state.getWidth(); i++)
+            for (int j = 0; j < state.getHeight(); j++) {
+                if (j > 0)
+                    state.setBrick(i, j - 1, state.getBrick(i, j));
+                removeBrick(i, j);
+            }
+    }
+
     @Override
     public int newFigure(final IFigure newFigure) {
         if (getFigure() != null)

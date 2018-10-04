@@ -23,13 +23,15 @@ public class ReplayGlass extends AbstractVisualGlass {
     }
 
     public void executeYuck(final String yuckBricks) {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++) {
-                if (j > 0)
-                    state.setBrick(i, j - 1, state.getBrick(i, j));
-                removeBrick(i, j);
-            }
+        if (yuckBricks.length() == 0)
+            return;
 
+        if (yuckBricks.contains(",")) { // nasty brick
+            String[] yuck = yuckBricks.split(", ");
+            state.setBrick(Integer.parseInt(yuck[0]), Integer.parseInt(yuck[1]), new Brick(Integer.parseInt(yuck[2]), layer));
+            return;
+        }
+        raiseBricks();
         for (int i = 0; i < state.getWidth(); i++)
             state.setBrick(i, state.getHeight() - 1, new Brick(Utils.parseBrick(yuckBricks, i), layer));
     }

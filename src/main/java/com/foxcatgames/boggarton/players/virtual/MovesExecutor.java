@@ -25,53 +25,22 @@ public class MovesExecutor extends AbstractExecutor implements Runnable {
         }
     }
 
-    private void makeMoves(final char... moves) throws InterruptedException {
-        for (int i = 0; i < moves.length && game.isGameOn(); i++)
-            switch (moves[i]) {
-            case LEFT:
-                game.sendCommand(new ICommand() {
-                    @Override
-                    public void execute() {
-                        game.moveLeft();
-                    }
-                });
-                break;
-
-            case RIGHT:
-                game.sendCommand(new ICommand() {
-                    @Override
-                    public void execute() {
-                        game.moveRight();
-                    }
-                });
-                break;
-
-            case CYCLE:
-                game.sendCommand(new ICommand() {
-                    @Override
-                    public void execute() {
-                        game.rotateFigure();
-                    }
-                });
-                break;
-
-            case DOWN:
-                game.sendCommand(new ICommand() {
-                    @Override
-                    public void execute() {
-                        game.dropFigure();
-                    }
-                });
-                game.getGlass().dropChanges();
-                game.setMaxSpeed();
-                game.getGlass().waitChanges();
-                break;
-
-            case NEXT:
-                game.clearBuffer();
-                game.getBuffer();
-                game.restoreSpeed();
-                break;
-            }
+    @Override
+    protected boolean executeMove(final char move, final boolean finishTurn) throws InterruptedException {
+        switch (move) {
+        case DOWN:
+            game.sendCommand(new ICommand() {
+                @Override
+                public void execute() {
+                    game.dropFigure();
+                }
+            });
+            game.getGlass().dropChanges();
+            game.setMaxSpeed();
+            game.getGlass().waitChanges();
+            return true;
+        default:
+            return super.executeMove(move, finishTurn);
+        }
     }
 }

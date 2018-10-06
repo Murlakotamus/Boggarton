@@ -53,8 +53,6 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
         }
     }
 
-    abstract protected void makeMoves(final char... moves) throws InterruptedException;
-
     @Override
     public GameParams getGamesParams() {
         final GameParams.Builder builder = new GameParams.Builder();

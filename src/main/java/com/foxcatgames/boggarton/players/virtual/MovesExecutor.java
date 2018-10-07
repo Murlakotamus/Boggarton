@@ -1,7 +1,6 @@
 package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.utils.ICommand;
 
 public class MovesExecutor extends AbstractExecutor implements Runnable {
 
@@ -19,28 +18,10 @@ public class MovesExecutor extends AbstractExecutor implements Runnable {
 
     public void run() {
         try {
-            makeMoves(moves);
+            for (int i = 0; i < moves.length && game.isGameOn(); i++)
+                executeMove(moves[i]);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected boolean executeMove(final char move, final boolean finishTurn) throws InterruptedException {
-        switch (move) {
-        case DOWN:
-            game.sendCommand(new ICommand() {
-                @Override
-                public void execute() {
-                    game.dropFigure();
-                }
-            });
-            game.getGlass().dropChanges();
-            game.setMaxSpeed();
-            game.getGlass().waitChanges();
-            return true;
-        default:
-            return super.executeMove(move, finishTurn);
         }
     }
 }

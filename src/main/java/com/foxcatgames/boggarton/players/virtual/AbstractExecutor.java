@@ -17,13 +17,7 @@ abstract public class AbstractExecutor implements Runnable {
         this.game = game;
     }
 
-    protected void makeMoves(final char... moves) throws InterruptedException {
-        for (int i = 0; i < moves.length && game.isGameOn(); i++)
-            if (!executeMove(moves[i], i + 1 < moves.length && moves[i + 1] == NEXT))
-                break;
-    }
-
-    protected boolean executeMove(final char move, final boolean finishTurn) throws InterruptedException {
+    protected void executeMove(final char move) throws InterruptedException {
         switch (move) {
         case LEFT:
             game.sendCommand(new ICommand() {
@@ -57,8 +51,6 @@ abstract public class AbstractExecutor implements Runnable {
                 @Override
                 public void execute() {
                     game.dropFigure();
-                    if (finishTurn)
-                        game.waitNextFigure(); // for log only
                 }
             });
             game.getGlass().dropChanges();
@@ -66,14 +58,12 @@ abstract public class AbstractExecutor implements Runnable {
             game.getGlass().waitChanges();
             break;
 
-        // non-adaptive algorithm
         case NEXT:
             game.clearBuffer();
             game.getBuffer();
             game.restoreSpeed();
-            break;
+            break; // non-adaptive algorithm
         }
-        return true;
     }
 
 }

@@ -10,16 +10,15 @@ abstract public class AbstractVirtualAdaptivePlayer extends AbstractVirtualPlaye
     }
 
     @Override
-    protected boolean executeMove(final char move, final boolean finishTurn)  throws InterruptedException {
-            switch (move) {
-            // adaptive algorithm
-            case NEXT:
-                game.clearBuffer();
-                game.getBuffer();
-                game.restoreSpeed();
-                return false;
-            default:
-                return super.executeMove(move, finishTurn);
-            }
+    protected boolean executeVirtualPlayerMove(final char move, final boolean finishTurn) throws InterruptedException {
+        switch (move) {
+        case NEXT:
+            game.clearBuffer();
+            game.getBuffer();
+            game.restoreSpeed();
+            return false; // adaptive algorithm
+        default:
+            return super.executeVirtualPlayerMove(move, finishTurn);
+        }
     }
 }

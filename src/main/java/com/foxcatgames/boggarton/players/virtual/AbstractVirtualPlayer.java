@@ -6,6 +6,7 @@ import com.foxcatgames.boggarton.game.AbstractGame;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
+import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
@@ -44,13 +45,40 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
                 final int depth = glassState.getFullness();
                 final char[] moves = getMoves(depth);
                 if (moves.length > 0)
-                    makeMoves(moves);
+                    makeVirtualPlayerMoves(moves);
                 else
                     game.clearBuffer();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void makeVirtualPlayerMoves(final char... moves) throws InterruptedException {
+        for (int i = 0; i < moves.length && game.isGameOn(); i++)
+            if (!executeVirtualPlayerMove(moves[i], i + 1 < moves.length && moves[i + 1] == NEXT))
+                break;
+    }
+
+    protected boolean executeVirtualPlayerMove(final char move, final boolean finishTurn) throws InterruptedException {
+        switch (move) {
+        case DOWN:
+            game.sendCommand(new ICommand() {
+                @Override
+                public void execute() {
+                    game.dropFigure();
+                    if (finishTurn)
+                        game.waitNextFigure(); // for log only
+                }
+            });
+            game.getGlass().dropChanges();
+            game.setMaxSpeed();
+            game.getGlass().waitChanges();
+            break;
+        default:
+            super.executeMove(move);
+        }
+        return true;
     }
 
     @Override

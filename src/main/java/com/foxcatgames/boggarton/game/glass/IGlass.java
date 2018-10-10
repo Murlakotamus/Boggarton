@@ -1,12 +1,17 @@
 package com.foxcatgames.boggarton.game.glass;
 
+import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 
-public interface IGlass {
+public interface IGlass<B extends IBrick, F extends IFigure<B>> {
 
-    GlassState getGlassState();
+    B brick(int i, int j);
+    F figure();
+    GlassState<B, F> getGlassState();
+    int width();
+    int height();
     void setFigure(int x, int y, boolean setChanges);
-    int newFigure(IFigure f);
+    int newFigure(F f);
 
     int getSpaceLeft();
     int getSpaceRight();
@@ -38,6 +43,4 @@ public interface IGlass {
 
     int getFullness();
     int getCount();
-
-    IFigure getFigure();
 }

@@ -73,7 +73,7 @@ public enum SceneItem {
             return new CompetitionDemoScene(WIDTH, HEIGHT, new int[] { PROGNOSIS_EFFECTIVE, PROGNOSIS_COMPLEX }, figureSize, yuckType, randomType,
                     difficultyType);
         case REPLAY:
-            return new ReplayScene(WIDTH, HEIGHT, figureSize);
+            return new ReplayScene(WIDTH, HEIGHT);
         case OUTRO:
             return new OutroScene();
         default:

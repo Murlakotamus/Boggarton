@@ -4,19 +4,22 @@ import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import java.util.HashSet;
 
-import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.IBrick;
-import com.foxcatgames.boggarton.game.figure.IFigure;
-import com.foxcatgames.boggarton.game.forecast.IForecast;
+import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.VirtualBrick;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.figure.VirtualFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
-import com.foxcatgames.boggarton.game.glass.IGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.glass.VirtualGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 
-public class Solver {
+public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>> {
 
-    private static final int DEFAULT_SIZE = 48;
+    private static final int DEFAULT_SIZE = 16; // CCLLLDCRRRDLLLDN (16)
     private static final String D = "D";
     private static final String DN = "DN";
 
@@ -27,35 +30,16 @@ public class Solver {
     private final Vector[] MOVES_TO_LEFT;
     private final Vector[] MOVES_TO_RIGHT;
 
-    private final AbstractGame game;
+    private final AbstractVisualGame<B, F, G, P> game;
     private final boolean moveDown;
-    private IGlass initGlass;
-    private IForecast forecast;
+    private VirtualGlass initGlass;
+    private VirtualForecast forecast;
     private Solution solution;
     private int depth;
     private int maxDepth;
     private int score;
 
     private final HashSet<Integer> set = new HashSet<>();
-
-    public class Vector {
-
-        private boolean direction;
-        private int space;
-
-        private Vector(final boolean direction, final int space) {
-            this.direction = direction;
-            this.space = space;
-        }
-
-        public int getSpace() {
-            return space;
-        }
-
-        public boolean getDirection() {
-            return direction;
-        }
-    }
 
     private String getRepeat(final int count, final char baseShift) {
         final StringBuilder sb = new StringBuilder(SIZE);
@@ -65,7 +49,7 @@ public class Solver {
         return sb.toString();
     }
 
-    public Solver(final AbstractGame game, final boolean moveDown, final int figureSize) {
+    public Solver(final AbstractVisualGame<B, F, G, P> game, final boolean moveDown, final int figureSize) {
         this.game = game;
         this.moveDown = moveDown;
         SIZE = WIDTH - figureSize + 1;
@@ -96,12 +80,12 @@ public class Solver {
     public Solution getSolution(final int dept, final IPrice price) {
         solution = new Solution();
         try {
-            final Pair<IGlassState, IForecast> pair = game.getBuffer();
+            final Pair<IGlassState<B, F>, P> pair = game.getBuffer();
             initGlass = new VirtualGlass(pair.getFirst(), moveDown);
-            forecast = new VirtualForecast(pair.getSecond());
+            forecast = new VirtualForecast((SimpleForecast)pair.getSecond());
             maxDepth = Math.min(forecast.getDepth(), dept);
             score = initGlass.getGlassState().getScore();
-            findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE), price);
+            findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)), price);
 
             if (solution.getScore() <= 0)
                 findDropRecursively(initGlass, new StringBuilder(DEFAULT_SIZE));
@@ -113,7 +97,7 @@ public class Solver {
         }
     }
 
-    private Vector getSpace(final IGlass glass) {
+    private Vector getSpace(final VirtualGlass glass) {
         final int lSpace = glass.getSpaceLeft();
         final int rSpace = glass.getSpaceRight();
         if (lSpace >= rSpace)
@@ -122,14 +106,14 @@ public class Solver {
         return MOVES_TO_RIGHT[rSpace - 1];
     }
 
-    private String cycle(final IGlass glass, final int i) {
+    private String cycle(final VirtualGlass glass, final int i) {
         for (int r = 0; r < i; r++)
             glass.rotate();
 
         return CYCLES[i];
     }
 
-    private String move(final IGlass glass, final boolean direction, final int j) {
+    private String move(final VirtualGlass glass, final boolean direction, final int j) {
         if (direction) {
             for (int s = 0; s < j; s++)
                 glass.moveRight();
@@ -142,7 +126,7 @@ public class Solver {
         return SHIFTS_LEFT[j];
     }
 
-    private String drop(final IGlass glass) {
+    private String drop(final VirtualGlass glass) {
         glass.dropChanges();
         boolean isFallen = false;
         do {
@@ -152,35 +136,35 @@ public class Solver {
         return isFallen ? D : DN;
     }
 
-    private int getFigureSetSize(final IFigure figure) {
+    private int getFigureSetSize(final VirtualFigure figure) {
         set.clear();
         for (int i = 0; i < figure.getLenght(); i++) {
-            final IBrick brick = figure.getBrick(i);
+            final VirtualBrick brick = figure.getBrick(i);
             if (brick != null)
                 set.add(brick.getType());
         }
         return set.size();
     }
 
-    private void findSolutionRecursively(final IGlass glass, final StringBuilder result, final IPrice price) {
+    private void findSolutionRecursively(final VirtualGlass glass, final StringBuilder result, final IPrice price) {
         if (game.isGameOver())
             return;
 
         final Vector shift = getSpace(glass);
-        final int avail = glass.getFigure().getNumber() - 1;
+        final int avail = glass.figure().getNumber() - 1;
         int figureResidueSetSize = 0;
         if (avail > 0)
-            figureResidueSetSize = getFigureSetSize(glass.getFigure());
+            figureResidueSetSize = getFigureSetSize(glass.figure());
         final int cycles = figureResidueSetSize == 1 ? 0 : avail;
         for (int j = 0; j <= shift.getSpace(); j++)
             for (int i = 0; i <= cycles; i++) {
-                final IGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
+                final VirtualGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
                 final StringBuilder currResult = new StringBuilder(result);
                 currResult.append(cycle(virtualGlass, i));
                 currResult.append(move(virtualGlass, shift.getDirection(), j));
                 currResult.append(drop(virtualGlass));
 
-                if (!virtualGlass.getFigure().isFallen())
+                if (!virtualGlass.figure().isFallen())
                     findSolutionRecursively(virtualGlass, currResult, price);
                 else {
                     virtualGlass.processGlass();
@@ -202,15 +186,15 @@ public class Solver {
             }
     }
 
-    private void findDropRecursively(final IGlass glass, final StringBuilder result) {
-        final int avail = glass.getFigure().getNumber() - 1;
+    private void findDropRecursively(final VirtualGlass glass, final StringBuilder result) {
+        final int avail = glass.figure().getNumber() - 1;
         for (int i = 0; i <= avail; i++) {
 
-            final IGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
+            final VirtualGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
             final StringBuilder currResult = new StringBuilder(result);
             currResult.append(drop(virtualGlass));
 
-            if (!virtualGlass.getFigure().isFallen())
+            if (!virtualGlass.figure().isFallen())
                 findDropRecursively(virtualGlass, currResult);
             else {
                 virtualGlass.processGlass();

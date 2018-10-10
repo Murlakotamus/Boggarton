@@ -7,12 +7,12 @@ import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.Brick;
 
-abstract public class AbstractVisualFigure extends AbstractFigure {
+abstract public class AbstractVisualFigure<B extends Brick> extends AbstractFigure<B> {
 
     private final Vector2f position;
 
-    public AbstractVisualFigure(final int lenght, final Vector2f position) {
-        super(lenght);
+    public AbstractVisualFigure(final B[] bricks, final Vector2f position) {
+        super(bricks);
         this.position = position;
     }
 
@@ -38,16 +38,14 @@ abstract public class AbstractVisualFigure extends AbstractFigure {
     }
 
     final public void respawn() {
-        for (int i = 0; i < lenght; i++)
-            if (bricks[i] != null) {
-                final Brick brick = (Brick) bricks[i];
-                brick.spawn(new Vector2f(position.getX() + i * BOX + BORDER, position.getY()));
-            }
+        for (int i = 0; i < figureSize; i++)
+            if (bricks[i] != null)
+                bricks[i].spawn(new Vector2f(position.getX() + i * BOX + BORDER, position.getY()));
     }
 
     public void unspawn() {
-        for (int i = 0; i < lenght; i++)
+        for (int i = 0; i < figureSize; i++)
             if (bricks[i] != null)
-                ((Brick) bricks[i]).unspawn();
+                bricks[i].unspawn();
     }
 }

@@ -8,15 +8,18 @@ import java.util.Map;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Text;
+import com.foxcatgames.boggarton.game.figure.SimpleFigure;
+import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-public class MultiplayerGame extends AbstractVisualGame {
+public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, MultiplayerGlass, SimpleForecast> {
 
     private static final int MAX_YUCKS = 24; // 6 * 12 / 3 - theoretical limit
 
@@ -28,15 +31,16 @@ public class MultiplayerGame extends AbstractVisualGame {
 
     int oldYucks = 0;
 
-    public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int lenght,
+    public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
             final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
-        super(layer, x, y, width, height, prognosis, lenght, setSize, randomType, sounds);
+        super(layer, x, y, width, height, prognosis, figureSize, setSize, randomType, sounds);
         this.yuckType = yuckType;
-        glass = new MultiplayerGlass(layer, new Vector2f(x + lenght * BOX + 20, y), width, height, setSize, sounds);
+        glass = new MultiplayerGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, setSize, sounds);
+        forecast = new SimpleForecast(layer, new Vector2f(x, y), prognosis, figureSize, setSize, randomType);
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
-        showVictoies.spawn(new Vector2f(x + BOX * lenght + 20, y + BOX * height + 40));
-        yuckPosition = new Vector2f(x + BOX * lenght + 20 + width * BOX + 15, y + BOX * height - BOX + 5);
+        showVictoies.spawn(new Vector2f(x + BOX * figureSize + 20, y + BOX * height + 40));
+        yuckPosition = new Vector2f(x + BOX * figureSize + 20 + width * BOX + 15, y + BOX * height - BOX + 5);
         int num = 0;
         for (int i = 0; i < MAX_YUCKS; i++) {
             num = i;
@@ -84,10 +88,10 @@ public class MultiplayerGame extends AbstractVisualGame {
     }
 
     protected void executeYuck() {
-        String yuck = ((MultiplayerGlass) glass).executeYuck(yuckType);
+        String yuck = glass.executeYuck(yuckType);
         logYuck(yuck);
         yucks--;
-        ((MultiplayerGlass) glass).respawn();
+        glass.respawn();
         Sound.play(sounds.get(Const.YUCK));
         drawYucks();
         nextStage();
@@ -107,5 +111,13 @@ public class MultiplayerGame extends AbstractVisualGame {
 
     public YuckTypes getYuckType() {
         return yuckType;
+    }
+    
+    @Override
+    public GameParams.Builder buildParams() {
+        final GameParams.Builder builder = super.buildParams();
+        builder.setYuckName(getYuckType().getName());
+
+        return builder;
     }
 }

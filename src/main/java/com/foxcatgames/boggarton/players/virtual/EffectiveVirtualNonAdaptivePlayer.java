@@ -1,11 +1,16 @@
 package com.foxcatgames.boggarton.players.virtual;
 
-import com.foxcatgames.boggarton.game.AbstractGame;
+import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
 
-public class EffectiveVirtualNonAdaptivePlayer extends AbstractVirtualNonAdaptivePlayer {
+public class EffectiveVirtualNonAdaptivePlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
+        extends AbstractVirtualNonAdaptivePlayer<B, F, G, P> {
 
-    public EffectiveVirtualNonAdaptivePlayer(final AbstractGame game, final IPrice price) {
+    public EffectiveVirtualNonAdaptivePlayer(final AbstractVisualGame<B, F, G, P> game, final IPrice price) {
         super(game, price, false);
     }
 

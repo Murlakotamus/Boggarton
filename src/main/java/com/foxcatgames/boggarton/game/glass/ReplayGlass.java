@@ -4,21 +4,25 @@ import java.util.Map;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
 import com.foxcatgames.boggarton.game.utils.Utils;
 
-public class ReplayGlass extends AbstractVisualGlass {
+public class ReplayGlass extends AbstractVisualGlass<Brick, PredefinedFigure> {
 
     private final Layer layer;
 
-    public ReplayGlass(final Layer layer, final Vector2f position, final int width, final int height, final Map<String, Integer> sounds) {
-        super(layer, position, width, height, sounds);
-        this.layer = layer;
-    }
-
     public ReplayGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] bricks, final Map<String, Integer> sounds) {
-        super(layer, position, width, height, bricks, sounds);
+        super(new Brick[width][height], layer, position, width, height, sounds);
+
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
+                if (bricks[i][j] > 0)
+                    state.setBrick(i, j, new Brick(bricks[i][j] + Const.CURRENT_SET * 10, layer));
+
+        respawn();
         this.layer = layer;
     }
 
@@ -32,7 +36,7 @@ public class ReplayGlass extends AbstractVisualGlass {
             return;
         }
         raiseBricks();
-        for (int i = 0; i < state.getWidth(); i++)
-            state.setBrick(i, state.getHeight() - 1, new Brick(Utils.parseBrick(yuckBricks, i), layer));
+        for (int i = 0; i < width(); i++)
+            state.setBrick(i, height() - 1, new Brick(Utils.parseBrick(yuckBricks, i), layer));
     }
 }

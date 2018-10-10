@@ -15,19 +15,20 @@ import org.lwjgl.util.vector.Vector2f;
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.Layer;
-import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 
-public class ReplayGame extends AbstractVisualGame {
+public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> {
 
     protected int yucks = 0;
     final List<String> events;
     int eventNum = 0;
 
-    public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght,
+    public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int lenght,
             final List<String> events, final Map<String, Integer> sounds) {
-        super(layer, x, y, width, height, forecast, lenght, 0, null, sounds);
+        super(layer, x, y, width, height, prognosis, lenght, 0, null, sounds);
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, lenght, events);
         this.events = events;
 
@@ -58,7 +59,7 @@ public class ReplayGame extends AbstractVisualGame {
         switch (stage) {
         case NEXT:
             if (needNewFigure) {
-                IFigure figure = nextFigure();
+                PredefinedFigure figure = nextFigure();
                 if (figure == null || figure.getNumber() == 0) {
                     setGameOver();
                     break;
@@ -68,6 +69,7 @@ public class ReplayGame extends AbstractVisualGame {
                 charge();
             break;
         case YUCK:
+            resumeScore();
             executeYuck(events.get(eventNum++).substring(YUCK_STR.length()));
             break;
         case YUCK_PAUSE:
@@ -87,8 +89,8 @@ public class ReplayGame extends AbstractVisualGame {
     }
 
     protected void executeYuck(final String yuckBricks) {
-        ((ReplayGlass) glass).executeYuck(yuckBricks.trim());
-        ((ReplayGlass) glass).respawn();
+        glass.executeYuck(yuckBricks.trim());
+        glass.respawn();
         Sound.play(sounds.get(Const.YUCK));
         nextStage();
     }

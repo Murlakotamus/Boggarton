@@ -1,15 +1,16 @@
 package com.foxcatgames.boggarton.game.glass;
 
-import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.IBrick;
+import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.utils.Changes;
 
-abstract public class AbstractGlass implements IGlass {
+abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B>> implements IGlass<B, F> {
 
     volatile protected boolean gameOver = false;
     volatile protected int count = 0; // figures counter
 
     final protected Changes changes = new Changes(false);
-    final protected GlassState state = new GlassState();
+    final protected GlassState<B, F> state = new GlassState<>();
 
     public AbstractGlass(final int width, final int height) {
         state.setWidth(width);
@@ -19,16 +20,16 @@ abstract public class AbstractGlass implements IGlass {
     @Override
     public boolean findChainsToKill() {
         final int oldScore = state.getScore();
-        for (int i = 1; i < state.getWidth() - 1; i++)
-            for (int j = 0; j < state.getHeight(); j++)
+        for (int i = 1; i < width() - 1; i++)
+            for (int j = 0; j < height(); j++)
                 state.findHorizontals(i, j);
 
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 1; j < state.getHeight() - 1; j++)
+        for (int i = 0; i < width(); i++)
+            for (int j = 1; j < height() - 1; j++)
                 state.findVerticals(i, j);
 
-        for (int i = 1; i < state.getWidth() - 1; i++)
-            for (int j = 1; j < state.getHeight() - 1; j++) {
+        for (int i = 1; i < width() - 1; i++)
+            for (int j = 1; j < height() - 1; j++) {
                 state.findMainDiags(i, j);
                 state.findAntiDiags(i, j);
             }
@@ -53,9 +54,9 @@ abstract public class AbstractGlass implements IGlass {
 
     @Override
     public void killChains() {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++)
-                if (state.getBrick(i, j) != null && state.getBrick(i, j).isKill())
+        for (int i = 0; i < width(); i++)
+            for (int j = 0; j < height(); j++)
+                if (brick(i, j) != null && brick(i, j).isKill())
                     removeBrick(i, j);
     }
 
@@ -116,13 +117,28 @@ abstract public class AbstractGlass implements IGlass {
     }
 
     @Override
-    public GlassState getGlassState() {
+    public GlassState<B, F> getGlassState() {
         return state;
     }
 
     @Override
-    public IFigure getFigure() {
+    public B brick(final int i, final int j) {
+        return state.getBrick(i, j);
+    }
+
+    @Override
+    public F figure() {
         return state.getFigure();
+    }
+
+    @Override
+    public int width() {
+        return state.getWidth();
+    }
+
+    @Override
+    public int height() {
+        return state.getHeight();
     }
 
     @Override

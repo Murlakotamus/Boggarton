@@ -2,9 +2,11 @@ package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.Logger;
-import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.MultiplayerGame;
-import com.foxcatgames.boggarton.game.forecast.IForecast;
+import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
@@ -13,15 +15,16 @@ import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
 import com.foxcatgames.boggarton.players.virtual.solver.Solution;
 import com.foxcatgames.boggarton.players.virtual.solver.Solver;
 
-abstract public class AbstractVirtualPlayer extends AbstractExecutor implements IPlayer {
+abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
+        extends AbstractExecutor<B, F, G, P> implements IPlayer {
 
-    private final Solver solver;
+    private final Solver<B, F, G, P> solver;
     private final IPrice price;
 
-    public AbstractVirtualPlayer(final AbstractGame game, final String name, final IPrice price, final boolean moveDown) {
+    public AbstractVirtualPlayer(final AbstractVisualGame<B, F, G, P> game, final String name, final IPrice price, final boolean moveDown) {
         super(game);
         this.price = price;
-        solver = new Solver(game, moveDown, game.getForecast().getFigureSize());
+        solver = new Solver<>(game, moveDown, game.getForecast().getFigureSize());
         final Thread thread = new Thread(this);
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.setName(game.getName() + ", " + thread.getId());
@@ -37,8 +40,8 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
     public void run() {
         try {
             while (game.isGameOn()) {
-                final Pair<IGlassState, IForecast> buffer = game.getBuffer();
-                final IGlassState glassState = buffer.getFirst();
+                final Pair<IGlassState<B, F>, P> buffer = game.getBuffer();
+                final IGlassState<B, F> glassState = buffer.getFirst();
                 if (glassState == null)
                     break;
 
@@ -83,21 +86,10 @@ abstract public class AbstractVirtualPlayer extends AbstractExecutor implements 
 
     @Override
     public GameParams getGamesParams() {
-        final GameParams.Builder builder = new GameParams.Builder();
+        final GameParams.Builder builder = game.buildParams();
 
-        builder.setPrognosisDebth(game.getForecast().getDepth());
-        builder.setFigureSize(game.getForecast().getFigureSize());
-        builder.setScore(game.getGlass().getGlassState().getScore());
-        builder.setPriceName(price.getName());
-        builder.setSetSize(game.getForecast().getDifficulty());
-        builder.setRandomName(game.getForecast().getRandomType().getName());
-        builder.setCount(game.getGlass().getCount());
         builder.setPlayerName(getName());
         builder.setVirtual(true);
-
-        if (game instanceof MultiplayerGame)
-            builder.setYuckName(((MultiplayerGame) game).getYuckType().getName());
-
         return builder.build();
     }
 }

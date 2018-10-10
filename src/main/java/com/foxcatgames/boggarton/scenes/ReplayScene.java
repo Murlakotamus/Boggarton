@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.ReplayGame;
+import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
+import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
+import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.MovesExecutor;
 
-public class ReplayScene extends AbstractOnePlayerScene {
+public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> {
 
-    public ReplayScene(final int width, final int height, final int figureSize) {
+    public ReplayScene(final int width, final int height) {
         super(SceneItem.REPLAY);
 
         final StringBuilder moves = new StringBuilder();
@@ -34,7 +38,14 @@ public class ReplayScene extends AbstractOnePlayerScene {
             e.printStackTrace();
         }
 
-        game = new ReplayGame(layer, X, Y, width, height, 0, 3, events, Const.SOUNDS);
+        int figureSize = 3;
+        for (String event : events)
+            if (event.startsWith(Const.FIGURE_STR)) {
+                figureSize = events.get(0).substring(Const.FIGURE_STR.length()).length();
+                break;
+            }
+
+        game = new ReplayGame(layer, X, Y, width, height, 0, figureSize, events, Const.SOUNDS);
         game.setName("Replay");
         game.startGame();
 

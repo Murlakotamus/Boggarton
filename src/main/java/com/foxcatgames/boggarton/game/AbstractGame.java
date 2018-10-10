@@ -3,9 +3,9 @@ package com.foxcatgames.boggarton.game;
 import static com.foxcatgames.boggarton.game.StageItem.START;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
-import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.utils.ICommand;
@@ -15,15 +15,17 @@ import com.foxcatgames.boggarton.game.utils.Pair;
 /**
  * The game is a glass, a forecast and the all motion inside the Glass.
  */
-abstract public class AbstractGame {
+abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G extends IGlass<B, F>, P extends IForecast<B, F>> {
 
-    protected IGlass glass;
-    protected IForecast forecast;
+    protected G glass;
+    protected P forecast;
 
     protected int yucksForEnemies;
     protected boolean glassProcessed;
-    protected boolean reactionDetected = false;
     protected boolean killedBricks;
+    protected String oldGlassState;
+
+    protected boolean reactionDetected = false;
     protected boolean dropPressed = false;
 
     protected String name = "default";
@@ -32,21 +34,22 @@ abstract public class AbstractGame {
 
     protected GameLogger gameLogger = null;
 
-    final protected Pair<IGlassState, IForecast> buffer = new Pair<>(null, null);
+    final protected Pair<IGlassState<B, F>, P> buffer = new Pair<>(null, null);
     final protected OuterCommand command = new OuterCommand();
     protected int targetPosition = 0;
 
     protected boolean needNewFigure = true;
     protected int lastScore = 0;
 
-    protected String oldGlassState;
-
     abstract public void processStage();
+
     abstract protected void nextStage();
 
-    protected IFigure nextFigure() {
+    abstract protected void resumeScore();
+
+    protected F nextFigure() {
         dropPressed = false;
-        IFigure figure = null;
+        F figure = null;
         if (needNewFigure) {
             figure = forecast.getForecast();
             targetPosition = glass.newFigure(figure);
@@ -60,8 +63,6 @@ abstract public class AbstractGame {
         oldGlassState = glass.getGlassState().toString();
         return figure;
     }
-
-    abstract protected void resumeScore();
 
     protected void compress() {
         if (killedBricks) {
@@ -87,7 +88,7 @@ abstract public class AbstractGame {
         }
     }
 
-    public Pair<IGlassState, IForecast> getBuffer() throws InterruptedException {
+    public Pair<IGlassState<B, F>, P> getBuffer() throws InterruptedException {
         synchronized (buffer) {
             while (buffer.isEmpty() && isGameOn())
                 buffer.wait();
@@ -107,7 +108,7 @@ abstract public class AbstractGame {
     protected void fillBuffer() {
         synchronized (buffer) {
             buffer.setFirst(glass.getGlassState());
-            buffer.setSecond(new VirtualForecast(forecast));
+            buffer.setSecond(forecast);
             buffer.notify();
         }
     }
@@ -165,11 +166,11 @@ abstract public class AbstractGame {
         logEvent("N\n");
     }
 
-    public IGlass getGlass() {
+    public G getGlass() {
         return glass;
     }
 
-    public IForecast getForecast() {
+    public P getForecast() {
         return forecast;
     }
 
@@ -197,7 +198,7 @@ abstract public class AbstractGame {
         }
     }
 
-    protected void logFigure(final IFigure figure) {
+    protected void logFigure(final F figure) {
         if (figure != null)
             logEvent(Const.FIGURE_STR + figure);
     }
@@ -223,7 +224,16 @@ abstract public class AbstractGame {
             gameLogger.logEvent(str);
     }
 
-    abstract public void restoreSpeed();
+    public GameParams.Builder buildParams() {
+        final GameParams.Builder builder = new GameParams.Builder();
 
-    abstract public void setMaxSpeed();
+        builder.setPrognosisDebth(getForecast().getDepth());
+        builder.setFigureSize(getForecast().getFigureSize());
+        builder.setScore(getGlass().getGlassState().getScore());
+        builder.setSetSize(getForecast().getDifficulty());
+        builder.setRandomName(getForecast().getRandomType().getName());
+        builder.setCount(getGlass().getCount());
+
+        return builder;
+    }
 }

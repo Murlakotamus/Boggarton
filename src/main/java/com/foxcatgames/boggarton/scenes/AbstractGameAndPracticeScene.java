@@ -6,10 +6,13 @@ import static com.foxcatgames.boggarton.Const.GAME_PAUSED;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
+import com.foxcatgames.boggarton.game.figure.SimpleFigure;
+import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
+import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 
-abstract public class AbstractGameAndPracticeScene extends AbstractOnePlayerScene {
+abstract public class AbstractGameAndPracticeScene extends AbstractOnePlayerScene<Brick, SimpleFigure, SimpleGlass, SimpleForecast> {
 
     private final SimpleEntity gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 
@@ -21,7 +24,7 @@ abstract public class AbstractGameAndPracticeScene extends AbstractOnePlayerScen
     protected void hideGlass() {
         if (game.isGameOver())
             return;
-        ((AbstractVisualGlass) game.getGlass()).pauseOn();
+        game.getGlass().pauseOn();
         gamePaused.spawn(new Vector2f(X + getFigureSize(game) * 30 + 25, Y + BOX * 3 + BORDER));
     }
 
@@ -30,6 +33,6 @@ abstract public class AbstractGameAndPracticeScene extends AbstractOnePlayerScen
         if (game.isGameOver())
             return;
         gamePaused.unspawn();
-        ((AbstractVisualGlass) game.getGlass()).pauseOff();
+        game.getGlass().pauseOff();
     }
 }

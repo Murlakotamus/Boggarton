@@ -9,9 +9,12 @@ import static com.foxcatgames.boggarton.Const.WINNER;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
+import com.foxcatgames.boggarton.game.figure.SimpleFigure;
+import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
+import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.IPlayer;
@@ -19,7 +22,7 @@ import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
+abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Brick, SimpleFigure, MultiplayerGlass, SimpleForecast> {
 
     protected static final int X = 90;
 
@@ -44,7 +47,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);
 
         if (width < figureSize)
-            throw new RuntimeException("Glass too narrow for figures");
+            throw new IllegalStateException("Glass too narrow for figures");
 
         winners = new SimpleEntity[PLAYERS];
         game = new MultiplayerGame[PLAYERS];
@@ -124,7 +127,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     @Override
     protected void hideGlass() {
         for (int i = 0; i < PLAYERS; i++) {
-            ((AbstractVisualGlass) game[i].getGlass()).pauseOn();
+            game[i].getGlass().pauseOn();
             gamePaused[i].spawn(new Vector2f(game[i].getX() + getFigureSize(game[i]) * BOX + 25, Y + BOX * 3 + BORDER));
         }
     }
@@ -133,7 +136,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     protected void showGlass() {
         for (int i = 0; i < PLAYERS; i++) {
             gamePaused[i].unspawn();
-            ((AbstractVisualGlass) game[i].getGlass()).pauseOff();
+            game[i].getGlass().pauseOff();
         }
     }
 }

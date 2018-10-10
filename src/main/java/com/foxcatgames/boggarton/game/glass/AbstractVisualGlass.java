@@ -15,9 +15,8 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
-import com.foxcatgames.boggarton.game.figure.IFigure;
 
-abstract public class AbstractVisualGlass extends AbstractGlass {
+abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVisualFigure<B>> extends AbstractGlass<B, F> {
 
     static public final int SCREEN_OFFSET_Y = 165;
 
@@ -29,12 +28,12 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
 
     final Map<String, Integer> sounds;
 
-    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final Map<String, Integer> sounds) {
+    public AbstractVisualGlass(B[][] bricks, final Layer layer, final Vector2f position, final int width, final int height, final Map<String, Integer> sounds) {
         super(width, height);
 
         this.sounds = sounds;
 
-        state.setBricks(new Brick[width][height]);
+        state.setBricks(bricks);
         frame = new Frame(layer, position, width, height, true, false);
 
         showScore = new Text("Score: " + state.getScore(), LIGHT_FONT, layer);
@@ -44,36 +43,17 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
         showCount.spawn(new Vector2f(position.getX(), position.getY() + height * BOX + 15));
     }
 
-    public AbstractVisualGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] glass, final Map<String, Integer> sounds) {
-        this(layer, position, width, height, sounds);
-
-        for (int i = 0; i < width; i++)
-            for (int j = 0; j < height; j++)
-                if (glass[i][j] > 0)
-                    state.setBrick(i, j, new Brick(glass[i][j] + Const.CURRENT_SET * 10, layer));
-
-        respawn();
-    }
-
-    private Brick brick(final int i, final int j) {
-        return (Brick) state.getBrick(i, j);
-    }
-
-    private AbstractVisualFigure figure() {
-        return (AbstractVisualFigure) state.getFigure();
-    }
-
     public void startAnimation() {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++)
-                if (state.getBrick(i, j) != null && state.getBrick(i, j).isKill())
+        for (int i = 0; i < width(); i++)
+            for (int j = 0; j < height(); j++)
+                if (brick(i, j) != null && brick(i, j).isKill())
                     brick(i, j).startLoopedAnimation();
     }
 
     public void pauseOn() {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++)
-                if (state.getBrick(i, j) != null)
+        for (int i = 0; i < width(); i++)
+            for (int j = 0; j < height(); j++)
+                if (brick(i, j) != null)
                     brick(i, j).unspawn();
         figure().unspawn();
         gamePaused = true;
@@ -86,26 +66,26 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
 
     public void respawn() {
         final Vector2f position = frame.getPosition();
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++)
-                if (state.getBrick(i, j) != null)
+        for (int i = 0; i < width(); i++)
+            for (int j = 0; j < height(); j++)
+                if (brick(i, j) != null)
                     brick(i, j).spawn(new Vector2f(position.getX() + i * BOX + BORDER, position.getY() + j * BOX + BORDER));
         if (figure() != null)
             figure().respawn();
         showScore.setString("Score: " + state.getScore());
 
         showCount.setString("Figures: " + count);
-        showCount.spawn(new Vector2f(position.getX(), position.getY() + state.height * BOX + 15));
+        showCount.spawn(new Vector2f(position.getX(), position.getY() + height() * BOX + 15));
     }
 
     @Override
     public boolean removeHoles() {
         boolean result = false;
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = state.getHeight() - 2; j >= 0; j--)
-                if (state.getBrick(i, j) != null && state.getBrick(i, j + 1) == null) {
+        for (int i = 0; i < width(); i++)
+            for (int j = height() - 2; j >= 0; j--)
+                if (brick(i, j) != null && brick(i, j + 1) == null) {
                     for (int k = j; k >= 0; k--) {
-                        final Brick brick = ((Brick) state.getBrick(i, k));
+                        final B brick = brick(i, k);
                         if (brick != null) {
                             brick.setCrashing(true);
                             result = true;
@@ -125,40 +105,38 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     }
 
     public void setX(final int x) {
-        final AbstractVisualFigure figure = figure();
-        figure.getPosition().setX(x);
-        figure.respawn();
+        figure().getPosition().setX(x);
+        figure().respawn();
     }
 
     public void setY(final int y) {
-        final AbstractVisualFigure figure = figure();
-        figure.getPosition().setY(y + SCREEN_OFFSET_Y);
-        figure.respawn();
+        figure().getPosition().setY(y + SCREEN_OFFSET_Y);
+        figure().respawn();
     }
 
     public boolean allBricksFell() {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = state.getHeight() - 2; j >= 0; j--)
-                if (state.getBrick(i, j) != null && ((Brick) state.getBrick(i, j)).isCrashing())
+        for (int i = 0; i < width(); i++)
+            for (int j = height() - 2; j >= 0; j--)
+                if (brick(i, j) != null && brick(i, j).isCrashing())
                     return false;
         return true;
     }
 
     protected void raiseBricks() {
-        for (int i = 0; i < state.getWidth(); i++)
-            for (int j = 0; j < state.getHeight(); j++) {
+        for (int i = 0; i < width(); i++)
+            for (int j = 0; j < height(); j++) {
                 if (j > 0)
-                    state.setBrick(i, j - 1, state.getBrick(i, j));
+                    state.setBrick(i, j - 1, brick(i, j));
                 removeBrick(i, j);
             }
     }
 
     @Override
-    public int newFigure(final IFigure newFigure) {
-        if (getFigure() != null)
+    public int newFigure(final F newFigure) {
+        if (figure() != null)
             figure().unspawn();
 
-        final IFigure figure = newFigure;
+        final F figure = newFigure;
         state.setFigure(figure);
         state.setI(state.getNextPosition());
         state.setJ(0);
@@ -166,7 +144,7 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
         // figures will appear from left and right side by rotation
         int currentPosition = state.getNextPosition();
         if (state.getNextPosition() == 0)
-            state.setNextPosition(state.getWidth() - figure.getLenght());
+            state.setNextPosition(width() - figure.getLenght());
         else
             state.setNextPosition(0);
 
@@ -179,7 +157,7 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     public void rotate() {
         if (!gamePaused) {
             Sound.play(sounds.get(Const.CYCLE));
-            getFigure().rotate();
+            figure().rotate();
         }
     }
 
@@ -201,8 +179,8 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
 
     @Override
     public void setChanges(final int num, final int i, final int j) {
-        state.setBrick(i, j, getFigure().getBrick(num));
-        getFigure().setNull(num);
+        state.setBrick(i, j, figure().getBrick(num));
+        figure().setNull(num);
         setChanges(true);
         Sound.playDrop(sounds.get(Const.DROP));
     }
@@ -220,13 +198,13 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     public boolean moveDown() {
         boolean changes = false;
         state.setJ((int) (getY() / BOX));
-        for (int i = 0; i < getFigure().getLenght(); i++)
-            if (getFigure().getBrick(i) != null)
-                if (state.getJ() + 1 == state.getHeight() || state.getBrick(state.getI() + i, state.getJ() + 1) != null) {
+        for (int i = 0; i < figure().getLenght(); i++)
+            if (figure().getBrick(i) != null)
+                if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null) {
                     changes = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
-        if (getFigure().isFallen())
+        if (figure().isFallen())
             return false;
 
         setFigure(state.getI(), state.getJ(), changes);
@@ -235,7 +213,7 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
 
     @Override
     public void removeBrick(final int i, final int j) {
-        if (state.getBrick(i, j) != null) {
+        if (brick(i, j) != null) {
             brick(i, j).unspawn();
             state.setBrick(i, j, null);
         }
@@ -244,14 +222,13 @@ abstract public class AbstractVisualGlass extends AbstractGlass {
     @Override
     public void setGameOver() {
         super.setGameOver();
-        for (int j = 0; j < state.getHeight(); j++)
-            for (int i = 0; i < state.getWidth(); i++)
-                if (state.getBrick(i, j) != null && brick(i, j).isAnimated())
+        for (int j = 0; j < height(); j++)
+            for (int i = 0; i < width(); i++)
+                if (brick(i, j) != null && brick(i, j).isAnimated())
                     brick(i, j).stopAnimation();
     }
 
     public Frame getFrame() {
         return frame;
     }
-
 }

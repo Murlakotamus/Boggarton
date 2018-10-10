@@ -2,23 +2,24 @@ package com.foxcatgames.boggarton.game.figure;
 
 import com.foxcatgames.boggarton.game.IBrick;
 
-abstract public class AbstractFigure implements IFigure {
+abstract public class AbstractFigure<B extends IBrick> implements IFigure<B> {
 
     static final protected int REASON_TO_RORATE = 2;
 
-    final protected IBrick[] bricks;
-    final protected int lenght;
+    final protected B[] bricks;
+    final protected int figureSize;
 
     protected int number; // number of bricks that still fall
 
-    public AbstractFigure(int lenght) {
-        this.lenght = lenght;
-        bricks = new IBrick[lenght];
+    public AbstractFigure(B[] bricks) {
+        figureSize = bricks.length;
+        number = figureSize;
+        this.bricks = bricks;
     }
 
     @Override
     public int getFirstBrickNum() {
-        for (int i = 0; i < lenght; i++)
+        for (int i = 0; i < figureSize; i++)
             if (bricks[i] != null)
                 return i;
         return -1;
@@ -26,7 +27,7 @@ abstract public class AbstractFigure implements IFigure {
 
     @Override
     public int getLastBrickNum() {
-        for (int i = lenght - 1; i >= 0; i--)
+        for (int i = figureSize - 1; i >= 0; i--)
             if (bricks[i] != null)
                 return i;
         return -1;
@@ -34,13 +35,13 @@ abstract public class AbstractFigure implements IFigure {
 
     @Override
     public void swapBricks(final int i, final int j) {
-        final IBrick tmp = bricks[i];
+        final B tmp = bricks[i];
         bricks[i] = bricks[j];
         bricks[j] = tmp;
     }
 
     @Override
-    public IBrick getBrick(final int i) {
+    public B getBrick(final int i) {
         return bricks[i];
     }
 
@@ -53,14 +54,14 @@ abstract public class AbstractFigure implements IFigure {
         if (firstBrick == -1)
             return;
 
-        for (int i = firstBrick + 1; i < lenght; i++)
+        for (int i = firstBrick + 1; i < figureSize; i++)
             if (bricks[i] != null)
                 swapBricks(i, firstBrick);
     }
 
     @Override
     public void setNull(final int i) {
-        if (i < 0 || i >= lenght || bricks[i] == null)
+        if (i < 0 || i >= figureSize || bricks[i] == null)
             return;
 
         bricks[i] = null;
@@ -74,7 +75,7 @@ abstract public class AbstractFigure implements IFigure {
 
     @Override
     public int getLenght() {
-        return lenght;
+        return figureSize;
     }
 
     @Override
@@ -85,7 +86,7 @@ abstract public class AbstractFigure implements IFigure {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < lenght; i++) {
+        for (int i = 0; i < figureSize; i++) {
             if (bricks[i] == null)
                 sb.append('x');
             else

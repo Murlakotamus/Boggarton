@@ -1,16 +1,22 @@
-package com.foxcatgames.boggarton.players;
+package com.foxcatgames.boggarton.players.real;
 
 import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
-import com.foxcatgames.boggarton.game.AbstractGame;
-import com.foxcatgames.boggarton.game.MultiplayerGame;
+import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
+import com.foxcatgames.boggarton.players.IPlayer;
 
-public class RealPlayer implements IPlayer {
+abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
+        implements IPlayer {
 
-    private final AbstractGame game;
+    protected final AbstractVisualGame<B, F, G, P> game;
 
-    public RealPlayer(final AbstractGame game, final int keyLeft, final int keyRight, final int keyDown, final int keyRotate) {
+    public AbstractRealPlayer(final AbstractVisualGame<B, F, G, P> game, final int keyLeft, final int keyRight,
+            final int keyDown, final int keyRotate) {
         this.game = game;
         addKeyListeners(keyLeft, keyRight, keyDown, keyRotate);
     }
@@ -70,26 +76,16 @@ public class RealPlayer implements IPlayer {
     }
 
     @Override
-    public GameParams getGamesParams() {
-        final GameParams.Builder builder = new GameParams.Builder();
+    public String getName() {
+        return game.getName();
+    }
 
-        builder.setPrognosisDebth(game.getForecast().getDepth());
-        builder.setFigureSize(game.getForecast().getFigureSize());
-        builder.setScore(game.getGlass().getGlassState().getScore());
-        builder.setSetSize(game.getForecast().getDifficulty());
-        builder.setRandomName(game.getForecast().getRandomType().getName());
-        builder.setCount(game.getGlass().getCount());
+    protected GameParams.Builder buildParams() {
+        final GameParams.Builder builder = game.buildParams();
+
         builder.setPlayerName(getName());
         builder.setVirtual(false);
 
-        if (game instanceof MultiplayerGame)
-            builder.setYuckName(((MultiplayerGame) game).getYuckType().getName());
-
-        return builder.build();
-    }
-
-    @Override
-    public String getName() {
-        return game.getName();
+        return builder;
     }
 }

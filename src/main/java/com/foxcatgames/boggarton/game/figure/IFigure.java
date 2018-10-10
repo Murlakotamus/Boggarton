@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.game.figure;
 
 import com.foxcatgames.boggarton.game.IBrick;
 
-public interface IFigure {
+public interface IFigure<B extends IBrick> {
 
     public void swapBricks(int i, int j);
     public void rotate();
@@ -14,5 +14,5 @@ public interface IFigure {
 
     public int getLenght();
     public int getNumber();
-    public IBrick getBrick(int i);
+    public B getBrick(int i);
 }

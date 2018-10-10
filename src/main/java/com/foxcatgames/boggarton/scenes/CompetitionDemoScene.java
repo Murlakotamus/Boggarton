@@ -16,8 +16,8 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
 
         super(SceneItem.COMPETITION_DEMO, width, height, prognosis, figureSize, yuckType, randomType, difficulty);
 
-        first = new EffectiveVirtualNonAdaptivePlayer(game[0], Const.PRICE);
-        second = new VirtualAdaptivePlayer(game[1], Const.PRICE);
+        first = new EffectiveVirtualNonAdaptivePlayer<>(game[0], Const.PRICE);
+        second = new VirtualAdaptivePlayer<>(game[1], Const.PRICE);
     }
 
     @Override

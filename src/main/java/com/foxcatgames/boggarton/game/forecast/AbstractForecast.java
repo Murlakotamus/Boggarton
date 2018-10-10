@@ -1,47 +1,47 @@
 package com.foxcatgames.boggarton.game.forecast;
 
-import com.foxcatgames.boggarton.game.figure.IFigure;
+import java.util.List;
+
+import com.foxcatgames.boggarton.game.IBrick;
+import com.foxcatgames.boggarton.game.figure.AbstractFigure;
+import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-abstract public class AbstractForecast implements IForecast {
+abstract public class AbstractForecast<B extends IBrick, F extends AbstractFigure<B>> implements IForecast<B, F> {
 
-    final protected int prognosis; // dept
-    final protected int size; // length of figure
-    final protected IFigure[] figures;
+    final protected F[] figures;
     final protected int difficulty;
     final protected RandomTypes randomType;
 
-    public AbstractForecast(final int prognosis, final int size) {
-        this(prognosis, size, 0, null);
+    abstract public void setNext(final List<Pair<Integer, Integer>> pairs);
+
+    public AbstractForecast(final F[] figures) {
+        this(figures, 0, null);
     }
 
-    public AbstractForecast(final int prognosis, final int size, final int difficulties, final RandomTypes randomType) {
-        this.prognosis = prognosis;
-        this.size = size;
+    public AbstractForecast(final F[] figures, final int difficulties, final RandomTypes randomType) {
+        this.figures = figures;
         this.difficulty = difficulties;
         this.randomType = randomType;
-        figures = initFigures();
     }
-
-    abstract protected IFigure[] initFigures();
 
     @Override
     public int getDepth() {
-        return prognosis;
+        return figures.length;
     }
 
     @Override
     public int getFigureSize() {
-        return size;
+        return figures[0].getLenght();
     }
 
     @Override
-    public IFigure getForecast() {
+    public F getForecast() {
         return getForecast(0);
     }
 
     @Override
-    public IFigure getForecast(final int i) {
+    public F getForecast(final int i) {
         return figures[i];
     }
 

@@ -1,11 +1,11 @@
 package com.foxcatgames.boggarton.game;
 
-import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.VirtualGlass;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class VirtualGame extends AbstractGame {
+public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, VirtualGlass, VirtualForecast> {
 
     public VirtualGame(final int width, final int height, final int prognosis, final int figureSize, final int difficulty, final RandomTypes randomType) {
         forecast = new VirtualForecast(prognosis, figureSize, difficulty, randomType);
@@ -45,9 +45,9 @@ public class VirtualGame extends AbstractGame {
         }
     }
 
-    protected IFigure nextFigure() {
+    protected VirtualFigure nextFigure() {
         dropPressed = false;
-        IFigure figure = null;
+        VirtualFigure figure = null;
         if (needNewFigure) {
             figure = forecast.getForecast();
             targetPosition = glass.newFigure(figure);
@@ -90,13 +90,5 @@ public class VirtualGame extends AbstractGame {
         
         glass.killChains();
         nextStage();
-    }
-
-    @Override
-    public void restoreSpeed() {
-    }
-
-    @Override
-    public void setMaxSpeed() {
     }
 }

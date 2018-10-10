@@ -4,9 +4,13 @@ import org.lwjgl.input.Keyboard;
 
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
-import com.foxcatgames.boggarton.game.AbstractGame;
+import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 
-abstract public class AbstractPlayingScene extends AbstractScene {
+abstract public class AbstractPlayingScene<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>> extends AbstractScene {
 
     protected static final int Y = 160;
     protected boolean escapePressed = false;
@@ -54,7 +58,7 @@ abstract public class AbstractPlayingScene extends AbstractScene {
             TIMER.resume();
     }
 
-    protected int getFigureSize(AbstractGame game) {
-        return game.getGlass().getFigure().getLenght();
+    protected int getFigureSize(AbstractVisualGame<B, F, G, P> game) {
+        return game.getGlass().figure().getLenght();
     }
 }

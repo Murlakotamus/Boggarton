@@ -102,7 +102,6 @@ public class DbHandler {
             } catch (SQLException sqlEx) {
                 sqlEx.printStackTrace();
             }
-
         }
     }
 

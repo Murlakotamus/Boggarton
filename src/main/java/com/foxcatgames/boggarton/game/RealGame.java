@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.game.utils.Utils;
@@ -25,10 +24,10 @@ public class RealGame extends AbstractOnePlayerGame {
         }
     };
 
-    public RealGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int lenght, final int difficulty,
+    public RealGame(final Layer layer, final int x, final int y, final int width, final int height, final int forecast, final int figureSize, final int setSize,
             final RandomTypes randomType, final Map<String, Integer> sounds) {
 
-        super(layer, x, y, width, height, forecast, lenght, difficulty, randomType, sounds);
+        super(layer, x, y, width, height, forecast, figureSize, setSize, randomType, sounds);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class RealGame extends AbstractOnePlayerGame {
                 logFigure(nextFigure());
                 logMoves();
             } else {
-                int emptyBrickLines = ((AbstractVisualGlass) getGlass()).getCount() / FIGURES_FOR_NEXT_EMPTY_BRICK;
+                int emptyBrickLines = getGlass().getCount() / FIGURES_FOR_NEXT_EMPTY_BRICK;
                 if (emptyBrickLines <= oldEmptyBrickLines)
                     charge();
                 else {

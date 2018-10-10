@@ -1,9 +1,14 @@
 package com.foxcatgames.boggarton.players.virtual;
 
-import com.foxcatgames.boggarton.game.AbstractGame;
+import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
-abstract public class AbstractExecutor implements Runnable {
+abstract public class AbstractExecutor<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
+        implements Runnable {
 
     protected static final char LEFT = 'L';
     protected static final char RIGHT = 'R';
@@ -11,15 +16,16 @@ abstract public class AbstractExecutor implements Runnable {
     protected static final char DOWN = 'D';
     protected static final char NEXT = 'N';
 
-    protected final AbstractGame game;
+    protected final AbstractVisualGame<B, F, G, P> game;
 
-    public AbstractExecutor(final AbstractGame game) {
+    public AbstractExecutor(final AbstractVisualGame<B, F, G, P> game) {
         this.game = game;
     }
 
     protected void executeMove(final char move) throws InterruptedException {
         switch (move) {
         case LEFT:
+            game.restoreSpeed();
             game.sendCommand(new ICommand() {
                 @Override
                 public void execute() {
@@ -29,6 +35,7 @@ abstract public class AbstractExecutor implements Runnable {
             break;
 
         case RIGHT:
+            game.restoreSpeed();
             game.sendCommand(new ICommand() {
                 @Override
                 public void execute() {
@@ -38,6 +45,7 @@ abstract public class AbstractExecutor implements Runnable {
             break;
 
         case CYCLE:
+            game.restoreSpeed();
             game.sendCommand(new ICommand() {
                 @Override
                 public void execute() {
@@ -47,6 +55,7 @@ abstract public class AbstractExecutor implements Runnable {
             break;
 
         case DOWN:
+            game.restoreSpeed();
             game.sendCommand(new ICommand() {
                 @Override
                 public void execute() {
@@ -65,5 +74,4 @@ abstract public class AbstractExecutor implements Runnable {
             break; // non-adaptive algorithm
         }
     }
-
 }

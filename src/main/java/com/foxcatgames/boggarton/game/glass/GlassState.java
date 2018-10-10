@@ -2,11 +2,10 @@ package com.foxcatgames.boggarton.game.glass;
 
 import static com.foxcatgames.boggarton.Const.EMPTY;
 
-import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 
-public class GlassState implements IGlassState {
+public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlassState<B, F> {
 
     static private final int VERTICAL = 1;
     static private final int HORIZONTAL = 2;
@@ -18,8 +17,8 @@ public class GlassState implements IGlassState {
     protected int i, j; // first figure brick location (glass cell)
     protected int width, height; // glass size in bricks
 
-    protected IBrick[][] bricks;
-    protected IFigure figure;
+    protected B[][] bricks;
+    protected F figure;
 
     public void findHorizontals(final int i, final int j) {
         if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY || bricks[i - 1][j] == null || bricks[i + 1][j] == null)
@@ -129,6 +128,7 @@ public class GlassState implements IGlassState {
         return result;
     }
 
+    @Override
     public int getFullness() {
         for (int j = 0; j < height; j++)
             for (int i = 0; i < width; i++)
@@ -144,10 +144,12 @@ public class GlassState implements IGlassState {
         return height - 1;
     }
 
+    @Override
     public void setNextPosition(final int nextPosition) {
         this.nextPosition = nextPosition;
     }
 
+    @Override
     public void setScore(final int score) {
         this.score = score;
     }
@@ -168,11 +170,12 @@ public class GlassState implements IGlassState {
         this.height = height;
     }
 
-    public void setBricks(final IBrick[][] bricks) {
+    public void setBricks(final B[][] bricks) {
         this.bricks = bricks;
     }
 
-    public void setFigure(final IFigure figure) {
+    @Override
+    public void setFigure(final F figure) {
         this.figure = figure;
     }
 
@@ -192,16 +195,16 @@ public class GlassState implements IGlassState {
     }
 
     @Override
-    public IFigure getFigure() {
+    public F getFigure() {
         return figure;
     }
 
     @Override
-    public IBrick getBrick(final int i, final int j) {
+    public B getBrick(final int i, final int j) {
         return bricks[i][j];
     }
 
-    public void setBrick(final int i, final int j, final IBrick brick) {
+    public void setBrick(final int i, final int j, final B brick) {
         bricks[i][j] = brick;
     }
 
@@ -232,7 +235,8 @@ public class GlassState implements IGlassState {
         reaction = 0;
     }
 
-    public IGlassState getGlassState() {
+    @Override
+    public IGlassState<B, F> getGlassState() {
         return this;
     }
 
@@ -252,10 +256,10 @@ public class GlassState implements IGlassState {
         sb.append("----------------------------------------------\n");
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++)
-                if (bricks[i][j] == null || !(bricks[i][j] instanceof Brick))
+                if (bricks[i][j] == null)
                     sb.append("0, ");
                 else
-                    sb.append(((Brick) bricks[i][j]).getId() + ", ");
+                    sb.append(bricks[i][j].getId() + ", ");
             sb.append("\n");
         }
         sb.append("==============================================\n");

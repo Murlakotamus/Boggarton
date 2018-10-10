@@ -1,10 +1,6 @@
 package com.foxcatgames.boggarton.game;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class VirtualBrick implements IBrick {
-
-    private static AtomicInteger generatedId = new AtomicInteger(0);
 
     private final int type;
     private boolean kill = false;

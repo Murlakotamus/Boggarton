@@ -4,7 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.game.SimpleGame;
-import com.foxcatgames.boggarton.players.RealPlayer;
+import com.foxcatgames.boggarton.players.real.RealSingleplayer;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
@@ -18,7 +18,7 @@ public class PracticeScene extends AbstractGameAndPracticeScene {
         game = new SimpleGame(layer, X, Y, width, height, prognosis, figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS);
         game.setName("Human practice");
         game.startGame();
-        player = new RealPlayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
+        player = new RealSingleplayer(game, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
     }
 
     @Override

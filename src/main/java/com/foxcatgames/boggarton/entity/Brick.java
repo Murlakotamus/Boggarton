@@ -1,7 +1,5 @@
 package com.foxcatgames.boggarton.entity;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.lwjgl.opengl.GL11;
 
 import com.foxcatgames.boggarton.Const;
@@ -9,8 +7,6 @@ import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.game.IBrick;
 
 public class Brick extends AbstractAnimatedEntity implements IBrick {
-
-    private static AtomicInteger generatedId = new AtomicInteger(0);
 
     private boolean kill = false;
     private boolean crashing = false;

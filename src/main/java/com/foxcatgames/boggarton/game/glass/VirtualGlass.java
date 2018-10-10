@@ -1,38 +1,38 @@
 package com.foxcatgames.boggarton.game.glass;
 
-import com.foxcatgames.boggarton.entity.Brick;
+import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.VirtualBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 
-public class VirtualGlass extends AbstractGlass {
+public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
 
     private boolean moveDown;
     private boolean forSearchingSolution = true;
 
-    public VirtualGlass(final IGlassState glass, final boolean moveDown) {
-        super(glass.getWidth(), glass.getHeight());
+    public <B extends IBrick, F extends IFigure<B>> VirtualGlass(final IGlassState<B, F> glassState, final boolean moveDown) {
+        super(glassState.getWidth(), glassState.getHeight());
         this.moveDown = moveDown;
 
-        state.setBricks(new VirtualBrick[glass.getWidth()][glass.getHeight()]);
+        state.setBricks(new VirtualBrick[glassState.getWidth()][glassState.getHeight()]);
 
-        for (int i = 0; i < glass.getWidth(); i++)
-            for (int j = 0; j < glass.getHeight(); j++)
-                if (glass.getBrick(i, j) != null)
-                    state.setBrick(i, j, new VirtualBrick(glass.getBrick(i, j).getType()));
+        for (int i = 0; i < glassState.getWidth(); i++)
+            for (int j = 0; j < glassState.getHeight(); j++)
+                if (glassState.getBrick(i, j) != null)
+                    state.setBrick(i, j, new VirtualBrick(glassState.getBrick(i, j).getType()));
 
-        state.setFigure(new VirtualFigure(glass.getFigure()));
-        state.setNextPosition(glass.getNextPosition());
-        state.setScore(glass.getScore());
-        state.setI(glass.getI());
-        state.setJ(glass.getJ());
+        state.setFigure(new VirtualFigure(glassState.getFigure()));
+        state.setNextPosition(glassState.getNextPosition());
+        state.setScore(glassState.getScore());
+        state.setI(glassState.getI());
+        state.setJ(glassState.getJ());
     }
 
     public VirtualGlass(final int width, final int height) {
         super(width, height);
         moveDown = true;
         forSearchingSolution = false;
-        state.setBricks(new Brick[width][height]);
+        state.setBricks(new VirtualBrick[width][height]);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class VirtualGlass extends AbstractGlass {
     }
 
     @Override
-    public int newFigure(final IFigure figure) {
+    public int newFigure(final VirtualFigure figure) {
         state.setFigure(new VirtualFigure(figure));
 
         // figures will appear from left and right side by rotation
@@ -85,13 +85,13 @@ public class VirtualGlass extends AbstractGlass {
     @Override
     public boolean removeHoles() {
         boolean holesFoundOverall = false;
-        for (int i = 0; i < state.getWidth(); i++) {
+        for (int i = 0; i < width(); i++) {
             boolean holesFound;
             do {
                 holesFound = false;
-                for (int j = state.getHeight() - 2; j >= 0; j--)
-                    if (state.getBrick(i, j) != null && state.getBrick(i, j + 1) == null) {
-                        state.setBrick(i, j + 1, state.getBrick(i, j));
+                for (int j = height() - 2; j >= 0; j--)
+                    if (brick(i, j) != null && brick(i, j + 1) == null) {
+                        state.setBrick(i, j + 1, brick(i, j));
                         state.setBrick(i, j, null);
                         holesFound = true;
                         holesFoundOverall = true;
@@ -103,26 +103,26 @@ public class VirtualGlass extends AbstractGlass {
 
     @Override
     public void setChanges(final int num, final int i, final int j) {
-        state.setBrick(i, j, state.getFigure().getBrick(num));
-        state.getFigure().setNull(num);
+        state.setBrick(i, j, figure().getBrick(num));
+        figure().setNull(num);
         changes.setFlag(true);
     }
 
     @Override
     public void removeBrick(final int i, final int j) {
-        if (state.getBrick(i, j) != null)
+        if (brick(i, j) != null)
             state.setBrick(i, j, null);
     }
 
     private boolean moveDownTrue() {
         boolean changes = false;
-        for (int i = 0; i < state.getFigure().getLenght(); i++)
-            if (state.getFigure().getBrick(i) != null)
-                if (state.getJ() + 1 == state.getHeight() || state.getBrick(state.getI() + i, state.getJ() + 1) != null) {
+        for (int i = 0; i < figure().getLenght(); i++)
+            if (figure().getBrick(i) != null)
+                if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null) {
                     changes = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
-        if (state.getFigure().isFallen())
+        if (figure().isFallen())
             return false;
 
         setFigure(state.getI(), state.getJ() + 1, changes);
@@ -130,12 +130,12 @@ public class VirtualGlass extends AbstractGlass {
     }
 
     private boolean moveDownEffective() {
-        for (int i = 0; i < state.getFigure().getLenght(); i++)
-            if (state.getFigure().getBrick(i) != null)
-                if (state.getJ() + 1 == state.getHeight() || state.getBrick(state.getI() + i, state.getJ() + 1) != null)
+        for (int i = 0; i < figure().getLenght(); i++)
+            if (figure().getBrick(i) != null)
+                if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null)
                     setChanges(i, state.getI() + i, state.getJ());
 
-        if (state.getFigure().isFallen())
+        if (figure().isFallen())
             return false;
 
         setFigure(state.getI(), state.getJ() + 1, false);

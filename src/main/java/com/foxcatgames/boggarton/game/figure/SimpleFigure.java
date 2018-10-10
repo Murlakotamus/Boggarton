@@ -9,15 +9,14 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.game.utils.Utils;
 
-public class SimpleFigure extends AbstractVisualFigure {
+public class SimpleFigure extends AbstractVisualFigure<Brick> {
 
-    public SimpleFigure(final Layer layer, final Vector2f position, final int size, final int difficulty, final int[] randomType,
+    public SimpleFigure(final Layer layer, final Vector2f position, final int figureSize, final int setSize, final int[] randomType,
             final List<Pair<Integer, Integer>> pairs) {
-        super(size, position);
+        super(new Brick[figureSize], position);
 
-        number = size;
-        for (int j = 0; j < size; j++) {
-            int value = Utils.getBrick(difficulty, randomType);
+        for (int j = 0; j < figureSize; j++) {
+            int value = Utils.getBrick(setSize, randomType);
 
             if (pairs != null)
                 for (Pair<Integer, Integer> pair : pairs)
@@ -28,5 +27,4 @@ public class SimpleFigure extends AbstractVisualFigure {
         }
         respawn();
     }
-
 }

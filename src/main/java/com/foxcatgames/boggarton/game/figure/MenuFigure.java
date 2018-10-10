@@ -6,10 +6,10 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 
-public class MenuFigure extends AbstractVisualFigure {
+public class MenuFigure extends AbstractVisualFigure<Brick> {
 
     public MenuFigure(final Layer layer, final Vector2f position, final int size, final int difficulty) {
-        super(size, position);
+        super(new Brick[size], position);
 
         for (int j = difficulty, i = 0; j > difficulty - size; j--, i++) {
             int value = difficulty - i % difficulty;

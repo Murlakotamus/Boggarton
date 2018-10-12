@@ -4,6 +4,6 @@ import com.foxcatgames.boggarton.GameParams;
 
 public interface IPlayer {
 
-    GameParams getGamesParams();
+    GameParams getGameParams();
     String getName();
 }

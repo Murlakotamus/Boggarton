@@ -85,7 +85,7 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
     }
 
     @Override
-    public GameParams getGamesParams() {
+    public GameParams getGameParams() {
         final GameParams.Builder builder = game.buildParams();
 
         builder.setPlayerName(getName());

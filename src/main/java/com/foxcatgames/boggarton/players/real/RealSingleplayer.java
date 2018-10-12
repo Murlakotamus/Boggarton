@@ -1,6 +1,5 @@
 package com.foxcatgames.boggarton.players.real;
 
-import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.figure.SimpleFigure;
@@ -12,11 +11,5 @@ public class RealSingleplayer extends AbstractRealPlayer<Brick, SimpleFigure, Si
     public RealSingleplayer(final AbstractVisualGame<Brick, SimpleFigure, SimpleGlass, SimpleForecast> game, final int keyLeft, final int keyRight,
             final int keyDown, final int keyRotate) {
         super(game, keyLeft, keyRight, keyDown, keyRotate);
-    }
-
-    @Override
-    public GameParams getGamesParams() {
-        final GameParams.Builder builder = buildParams();
-        return builder.build();
     }
 }

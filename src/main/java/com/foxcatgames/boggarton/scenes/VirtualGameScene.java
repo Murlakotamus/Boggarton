@@ -21,5 +21,4 @@ public class VirtualGameScene {
     protected void saveOutcome() {
         //DbHandler.saveOutcome(player);
     }
-
 }

@@ -43,7 +43,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private final Text diffScore;
     protected final Map<String, Integer> sounds;
 
-    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
+    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final int figureSize,
             final int setSize, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
         this.x = x;

@@ -28,7 +28,7 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int lenght,
             final List<String> events, final Map<String, Integer> sounds) {
-        super(layer, x, y, width, height, prognosis, lenght, 0, null, sounds);
+        super(layer, x, y, width, height, lenght, 0, null, sounds);
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, lenght, events);
         this.events = events;
 

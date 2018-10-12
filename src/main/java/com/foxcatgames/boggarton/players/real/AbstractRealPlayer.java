@@ -80,12 +80,13 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
         return game.getName();
     }
 
-    protected GameParams.Builder buildParams() {
+    @Override
+    public GameParams getGameParams() {
         final GameParams.Builder builder = game.buildParams();
 
         builder.setPlayerName(getName());
         builder.setVirtual(false);
 
-        return builder;
+        return builder.build();
     }
 }

@@ -13,7 +13,7 @@ public class VirtualBrick implements IBrick {
     public VirtualBrick(final int type, final boolean withId) {
         this(type);
         if (withId)
-            id = generatedId.incrementAndGet();
+            id = ID_GENERATOR.incrementAndGet();
     }
 
     @Override

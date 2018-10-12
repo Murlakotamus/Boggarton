@@ -105,7 +105,7 @@ public class Frame {
     }
 
     public void unspawn() {
-        for (SimpleEntity fe : frameElements)
+        for (final SimpleEntity fe : frameElements)
             if (fe != null)
                 fe.unspawn();
     }

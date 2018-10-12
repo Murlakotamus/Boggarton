@@ -8,7 +8,7 @@ import com.foxcatgames.boggarton.entity.AbstractEntity;
 
 public class Layer {
 
-    final public ArrayList<AbstractEntity> entities = new ArrayList<AbstractEntity>(300);
+    public final ArrayList<AbstractEntity> entities = new ArrayList<AbstractEntity>(300);
 
     public Layer() {
     }
@@ -49,5 +49,4 @@ public class Layer {
             result += entity;
         return result;
     }
-
 }

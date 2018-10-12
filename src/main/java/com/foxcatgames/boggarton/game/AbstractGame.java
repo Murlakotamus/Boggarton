@@ -1,7 +1,5 @@
 package com.foxcatgames.boggarton.game;
 
-import static com.foxcatgames.boggarton.game.StageItem.START;
-
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.game.figure.IFigure;
@@ -29,7 +27,7 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
     protected boolean dropPressed = false;
 
     protected String name = "default";
-    protected StageItem stage = START;
+    protected StageItem stage = StageItem.START;
     protected boolean isLoggerInit = false;
 
     protected GameLogger gameLogger = null;
@@ -48,16 +46,18 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
     abstract protected void resumeScore();
 
     protected F nextFigure() {
-        dropPressed = false;
-        F figure = null;
+        final F figure;
         if (needNewFigure) {
             figure = forecast.getForecast();
             targetPosition = glass.newFigure(figure);
-        }
+        } else
+            figure = null;
+
         if (!glass.getGlassState().canTakeNewFigure(targetPosition)) {
             setGameOver();
             return null;
         }
+        dropPressed = false;
         needNewFigure = false;
         resumeScore();
         oldGlassState = glass.getGlassState().toString();
@@ -121,7 +121,7 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
             }
     }
 
-    public void sendCommand(ICommand cmd) throws InterruptedException {
+    public void sendCommand(final ICommand cmd) throws InterruptedException {
         synchronized (command) {
             while (command.getCommand() != null)
                 command.wait();
@@ -216,7 +216,8 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
     }
 
     protected void logYuck(final String yuck) {
-        logEvent(Const.YUCK_STR + yuck + "\n");
+        if (yuck != null)
+            logEvent(Const.YUCK_STR + yuck + "\n");
     }
 
     private void logEvent(final String str) {

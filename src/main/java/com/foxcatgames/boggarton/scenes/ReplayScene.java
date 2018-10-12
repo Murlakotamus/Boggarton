@@ -34,12 +34,12 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
                     break;
                 else if (line.startsWith(Const.MOVES_STR))
                     moves.append(line.substring(line.indexOf(" ")).trim());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
 
         int figureSize = 3;
-        for (String event : events)
+        for (final String event : events)
             if (event.startsWith(Const.FIGURE_STR)) {
                 figureSize = events.get(0).substring(Const.FIGURE_STR.length()).length();
                 break;
@@ -53,7 +53,7 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
     }
 
     @Override
-    protected void saveOutcome(IPlayer player) {
+    protected void saveOutcome(final IPlayer player) {
     }
 
     @Override

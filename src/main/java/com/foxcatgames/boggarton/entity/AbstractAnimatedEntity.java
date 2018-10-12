@@ -19,12 +19,12 @@ abstract public class AbstractAnimatedEntity extends AbstractEntity {
     }
 
     public void startAnimation() {
-        this.displayAnimation = true;
+        displayAnimation = true;
     }
 
     public void startLoopedAnimation() {
         looped = true;
-        this.displayAnimation = true;
+        displayAnimation = true;
     }
 
     public boolean isAnimated() {
@@ -32,8 +32,8 @@ abstract public class AbstractAnimatedEntity extends AbstractEntity {
     }
 
     public void stopAnimation() {
-        this.displayAnimation = false;
-        this.animationCursor = 0;
+        displayAnimation = false;
+        animationCursor = 0;
     }
 
     public boolean isLooped() {

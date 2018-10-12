@@ -11,8 +11,8 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
 
     private static final long GAMEOVER_PAUSE = 3000;
 
-    public CompetitionDemoScene(final int width, final int height, final int[] prognosis, final int figureSize, final YuckTypes yuckType, final RandomTypes randomType,
-            final DifficultyTypes difficulty) {
+    public CompetitionDemoScene(final int width, final int height, final int[] prognosis, final int figureSize, final YuckTypes yuckType,
+            final RandomTypes randomType, final DifficultyTypes difficulty) {
 
         super(SceneItem.COMPETITION_DEMO, width, height, prognosis, figureSize, yuckType, randomType, difficulty);
 

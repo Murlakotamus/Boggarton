@@ -57,7 +57,7 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
         }
     }
 
-    private void makeVirtualPlayerMoves(final char... moves) throws InterruptedException {
+    private void makeVirtualPlayerMoves(final char[] moves) throws InterruptedException {
         for (int i = 0; i < moves.length && game.isGameOn(); i++)
             if (!executeVirtualPlayerMove(moves[i], i + 1 < moves.length && moves[i + 1] == NEXT))
                 break;

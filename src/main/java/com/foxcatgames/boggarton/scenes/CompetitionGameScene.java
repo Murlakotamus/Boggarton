@@ -9,8 +9,8 @@ import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public class CompetitionGameScene extends AbstractMultiplayerScene {
 
-    public CompetitionGameScene(final int width, final int height, final int[] prognosis, final int figureSize, final YuckTypes yuckType, final RandomTypes randomType,
-            final DifficultyTypes difficulty) {
+    public CompetitionGameScene(final int width, final int height, final int[] prognosis, final int figureSize, final YuckTypes yuckType,
+            final RandomTypes randomType, final DifficultyTypes difficulty) {
 
         super(SceneItem.COMPETITION_PRACTICE, width, height, prognosis, figureSize, yuckType, randomType, difficulty);
 

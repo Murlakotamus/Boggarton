@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.game.utils;
 
 public class Changes {
 
-    public Changes(boolean flag) {
+    public Changes(final boolean flag) {
         this.flag = flag;
     }
 
@@ -12,7 +12,7 @@ public class Changes {
         return flag;
     }
 
-    public void setFlag(boolean flag) {
+    public void setFlag(final boolean flag) {
         this.flag = flag;
     }
 }

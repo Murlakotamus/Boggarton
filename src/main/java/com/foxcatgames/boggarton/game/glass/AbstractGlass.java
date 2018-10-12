@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.game.utils.Changes;
 abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B>> implements IGlass<B, F> {
 
     volatile protected boolean gameOver = false;
-    volatile protected int count = 0; // figures counter
+    protected int count = 0; // figures counter
 
     final protected Changes changes = new Changes(false);
     final protected GlassState<B, F> state = new GlassState<>();
@@ -78,7 +78,7 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
             try {
                 while (!changes.isFlag() && !gameOver)
                     changes.wait();
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
             changes.notify();

@@ -29,7 +29,7 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
     private final Brick[] yuckBricks = new Brick[MAX_YUCKS];
     private final Vector2f yuckPosition;
 
-    int oldYucks = 0;
+    private int oldYucks = 0;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
             final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
@@ -66,10 +66,12 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
         }
     }
 
-    public int getYuckForEnemy() {
-        final int result = yucksForEnemies;
-        yucksForEnemies = 0;
-        return result;
+    public int getYucksForEnemy() {
+        try {
+            return yucksForEnemies;
+        } finally {
+            yucksForEnemies = 0;
+        }
     }
 
     public void addYuck(final int yuck) {
@@ -88,7 +90,7 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
     }
 
     protected void executeYuck() {
-        String yuck = glass.executeYuck(yuckType);
+        final String yuck = glass.executeYuck(yuckType);
         logYuck(yuck);
         yucks--;
         glass.respawn();

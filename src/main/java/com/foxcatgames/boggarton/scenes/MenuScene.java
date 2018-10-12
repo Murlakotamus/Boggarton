@@ -72,7 +72,7 @@ public class MenuScene extends AbstractLogoScene {
         }
     }
 
-    private void drawPrognosis(int setSize) {
+    private void drawPrognosis(final int setSize) {
         if (forecast != null)
             forecast.unspawn();
 
@@ -168,7 +168,6 @@ public class MenuScene extends AbstractLogoScene {
                     menuItem.setSubmenuElementPosition(SceneItem.nextSoundType());
                     drawMenu();
                     break;
-
                 default:
                     nextScene = SceneItem.ABOUT;
                 }

@@ -15,13 +15,8 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
 
     protected final AbstractVisualGame<B, F, G, P> game;
 
-    public AbstractRealPlayer(final AbstractVisualGame<B, F, G, P> game, final int keyLeft, final int keyRight,
-            final int keyDown, final int keyRotate) {
+    public AbstractRealPlayer(final AbstractVisualGame<B, F, G, P> game, final int keyLeft, final int keyRight, final int keyDown, final int keyRotate) {
         this.game = game;
-        addKeyListeners(keyLeft, keyRight, keyDown, keyRotate);
-    }
-
-    private void addKeyListeners(final int keyLeft, final int keyRight, final int keyDown, final int keyRotate) {
         addMoveLeft(keyLeft);
         addMoveRight(keyRight);
         addMoveDown(keyDown);
@@ -60,7 +55,6 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
             public void onKeyUp() {
                 game.restoreSpeed();
             }
-
         };
         EventManager.getInstance().addListener(keyDown, moveDown);
     }
@@ -86,7 +80,6 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
 
         builder.setPlayerName(getName());
         builder.setVirtual(false);
-
         return builder.build();
     }
 }

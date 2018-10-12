@@ -25,7 +25,7 @@ abstract public class AbstractPlayingScene<B extends Brick, F extends AbstractVi
 
     abstract protected void showGlass();
 
-    protected void addKeyEscape(SceneItem sceneItem) {
+    protected void addKeyEscape(final SceneItem sceneItem) {
         final KeyListener escape = new KeyListener() {
             @Override
             public void onKeyUp() {
@@ -58,7 +58,7 @@ abstract public class AbstractPlayingScene<B extends Brick, F extends AbstractVi
             TIMER.resume();
     }
 
-    protected int getFigureSize(AbstractVisualGame<B, F, G, P> game) {
+    protected int getFigureSize(final AbstractVisualGame<B, F, G, P> game) {
         return game.getGlass().figure().getLenght();
     }
 }

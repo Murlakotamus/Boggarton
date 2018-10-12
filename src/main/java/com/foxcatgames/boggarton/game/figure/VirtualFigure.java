@@ -20,7 +20,7 @@ public class VirtualFigure extends AbstractFigure<VirtualBrick> {
         super(new VirtualBrick[size]);
 
         for (int j = 0; j < size; j++) {
-            int value = Utils.getBrick(difficulty, randomType);
+            final int value = Utils.getBrick(difficulty, randomType);
             bricks[j] = new VirtualBrick(value, true);
         }
     }

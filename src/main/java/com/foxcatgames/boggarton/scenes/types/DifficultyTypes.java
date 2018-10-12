@@ -6,10 +6,10 @@ import java.util.List;
 public enum DifficultyTypes {
     EASY(4, "Easy"), NORMAL(5, "Normal"), HARD(6, "Hard"), IMPOSSIBLE(7, "Impossible");
 
-    private int setSize;
-    private String name;
+    private final int setSize;
+    private final String name;
 
-    private DifficultyTypes(int setSize, String name) {
+    private DifficultyTypes(final int setSize, final String name) {
         this.setSize = setSize;
         this.name = name;
     }
@@ -37,10 +37,10 @@ public enum DifficultyTypes {
     }
 
     public static String[] getAllDifficultyNames() {
-        List<String> list = new ArrayList<>();
-        for (DifficultyTypes difficulty : DifficultyTypes.values())
+        final List<String> list = new ArrayList<>();
+        for (final DifficultyTypes difficulty : DifficultyTypes.values())
             list.add(difficulty.getName());
-        String result[] = new String[list.size()];
+        final String result[] = new String[list.size()];
         return list.toArray(result);
     }
 

@@ -20,6 +20,10 @@ abstract public class AbstractScene {
     public static float tick;
     public static float fadeAlpha;
 
+    abstract protected void changes();
+
+    abstract protected void start();
+
     static public void heartBeat() {
         Timer.tick();
         tick = TIMER.getTime() - lastTime;
@@ -38,8 +42,6 @@ abstract public class AbstractScene {
 
         return nextScene;
     }
-
-    abstract protected void changes();
 
     private void renderScene() {
         if (!TIMER.isPaused())
@@ -62,8 +64,6 @@ abstract public class AbstractScene {
         }
     }
 
-    protected abstract void start();
-
     protected void nextScene(final SceneItem scene) {
         nextScene = scene;
     }
@@ -82,5 +82,4 @@ abstract public class AbstractScene {
         };
         EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
     }
-
 }

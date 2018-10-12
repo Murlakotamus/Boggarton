@@ -45,23 +45,6 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
         }
     }
 
-    protected VirtualFigure nextFigure() {
-        dropPressed = false;
-        VirtualFigure figure = null;
-        if (needNewFigure) {
-            figure = forecast.getForecast();
-            targetPosition = glass.newFigure(figure);
-        }
-        if (!glass.getGlassState().canTakeNewFigure(targetPosition)) {
-            setGameOver();
-            return null;
-        }
-        needNewFigure = false;
-        resumeScore();
-        oldGlassState = glass.getGlassState().toString();
-        return figure;
-    }
-
     protected void resumeScore() {
         final int diff = getGlass().getGlassState().getScore() - lastScore;
         if (diff > 0) {

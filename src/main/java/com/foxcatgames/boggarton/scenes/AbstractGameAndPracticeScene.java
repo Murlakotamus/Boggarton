@@ -25,7 +25,7 @@ abstract public class AbstractGameAndPracticeScene extends AbstractOnePlayerScen
         if (game.isGameOver())
             return;
         game.getGlass().pauseOn();
-        gamePaused.spawn(new Vector2f(X + getFigureSize(game) * 30 + 25, Y + BOX * 3 + BORDER));
+        gamePaused.spawn(new Vector2f(X + getFigureSize(game) * BOX + 25, Y + BOX * 3 + BORDER)); // @FIXME 25 - ???
     }
 
     @Override

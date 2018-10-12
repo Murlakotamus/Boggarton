@@ -63,25 +63,21 @@ public class Graphics {
     }
 
     private static ByteBuffer convertImageData(BufferedImage bufferedImage, int square) {
-        ByteBuffer imageBuffer;
-        WritableRaster raster;
-        BufferedImage texImage;
-
-        ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false,
+        final ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false,
                 Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
 
-        raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, bufferedImage.getWidth(), bufferedImage.getHeight(), 4, null);
-        texImage = new BufferedImage(glAlphaColorModel, raster, true, new Hashtable<>());
+        final WritableRaster raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, bufferedImage.getWidth(), bufferedImage.getHeight(), 4, null);
+        final BufferedImage texImage = new BufferedImage(glAlphaColorModel, raster, true, new Hashtable<>());
 
         // copy the source image into the produced image
-        java.awt.Graphics g = texImage.getGraphics();
+        final java.awt.Graphics g = texImage.getGraphics();
         g.drawImage(bufferedImage, 0, 0, null);
 
         // build a byte buffer from the temporary image
         // that be used by OpenGL to produce a texture.
-        byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
+        final byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
 
-        imageBuffer = ByteBuffer.allocateDirect(data.length);
+        final ByteBuffer imageBuffer = ByteBuffer.allocateDirect(data.length);
         imageBuffer.order(ByteOrder.nativeOrder());
         imageBuffer.put(data, 0, data.length);
         imageBuffer.flip();
@@ -93,9 +89,9 @@ public class Graphics {
      * create OpenGL window
      */
     private static void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
-        Application application = Application.getApplication();
+        final Application application = Application.getApplication();
         if (application != null) {
-            Image image = Toolkit.getDefaultToolkit().getImage(Graphics.class.getResource("/icons/boggarton128.png"));
+            final Image image = Toolkit.getDefaultToolkit().getImage(Graphics.class.getResource("/icons/boggarton128.png"));
             application.setDockIconImage(image);
         }
 
@@ -104,7 +100,7 @@ public class Graphics {
             Display.setLocation(300, 300);
             Display.setTitle("Boggarton");
 
-            ByteBuffer[] list = new ByteBuffer[3];
+            final ByteBuffer[] list = new ByteBuffer[3];
             list[0] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton128.png")), 128);
             list[1] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton32.png")), 32);
             list[2] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton16.png")), 16);

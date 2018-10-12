@@ -7,10 +7,10 @@ public enum RandomTypes {
     RANDOM("Random", new int[] { 1, 1, 1, 1, 1, 1, 1 }), PROBABILISTIC("Probabilistic", new int[] { 64, 32, 16, 8, 4, 2, 1 }), MAD("Mad",
             new int[] { 500, 500, 500, 100, 50, 10, 1 });
 
-    private String name;
-    private int[] probabilities;
+    private final String name;
+    private final int[] probabilities;
 
-    private RandomTypes(String name, int[] probabilities) {
+    private RandomTypes(final String name, final int[] probabilities) {
         this.name = name;
         this.probabilities = probabilities;
     }
@@ -36,10 +36,10 @@ public enum RandomTypes {
     }
 
     public static String[] getRandomTypeNames() {
-        List<String> list = new ArrayList<>();
-        for (RandomTypes bricks : RandomTypes.values())
+        final List<String> list = new ArrayList<>();
+        for (final RandomTypes bricks : RandomTypes.values())
             list.add(bricks.getName());
-        String result[] = new String[list.size()];
+        final String result[] = new String[list.size()];
         return list.toArray(result);
     }
 }

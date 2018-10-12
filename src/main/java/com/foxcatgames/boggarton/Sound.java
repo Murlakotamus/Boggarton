@@ -15,33 +15,33 @@ import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 public class Sound {
-    static IntBuffer buffer = BufferUtils.createIntBuffer(10); // must be equals to number of sound files
+    private static final IntBuffer BUFFER = BufferUtils.createIntBuffer(10); // must be equals to number of sound files
 
     /** Sources are points emitting sound. */
-    private static IntBuffer source = BufferUtils.createIntBuffer(53);
+    private static final IntBuffer SOURCE = BufferUtils.createIntBuffer(53);
 
     /** Position of the source sound. */
-    private static FloatBuffer sourcePos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
-    private static FloatBuffer sourcePosLeft = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { -1.0f, 0.0f, 0.0f }).rewind();
-    private static FloatBuffer sourcePosRight = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 1.0f, 0.0f, 0.0f }).rewind();
+    private static final FloatBuffer SOURCE_POS = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static final FloatBuffer SOURCE_LEFT = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { -1.0f, 0.0f, 0.0f }).rewind();
+    private static final FloatBuffer SOURCE_RIGHT = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 1.0f, 0.0f, 0.0f }).rewind();
 
     /** Velocity of the source sound. */
-    private static FloatBuffer sourceVel = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static final FloatBuffer SOURCE_VEL = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
     /** Position of the listener. */
-    private static FloatBuffer listenerPos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static final FloatBuffer LISTENER_POS = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
     /** Velocity of the listener. */
-    private static FloatBuffer listenerVel = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
+    private static final FloatBuffer LISTENER_VEL = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
     /**
      * Orientation of the listener. (first 3 elements are "at", second 3 are "up")
      */
-    private static FloatBuffer listenerOri = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
+    private static final FloatBuffer LISTENER_ORI = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
 
     private static void loadPattern(final String filename, final int id) {
         WaveData waveFile = WaveData.create(Sound.class.getClass().getResource(filename));
-        AL10.alBufferData(buffer.get(id), waveFile.format, waveFile.data, waveFile.samplerate);
+        AL10.alBufferData(BUFFER.get(id), waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();
     }
 
@@ -50,36 +50,36 @@ public class Sound {
      * OpenAL to use that data. This function does just that.
      */
     private static void setListenerValues() {
-        AL10.alListener(AL10.AL_POSITION, listenerPos);
-        AL10.alListener(AL10.AL_VELOCITY, listenerVel);
-        AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
+        AL10.alListener(AL10.AL_POSITION, LISTENER_POS);
+        AL10.alListener(AL10.AL_VELOCITY, LISTENER_VEL);
+        AL10.alListener(AL10.AL_ORIENTATION, LISTENER_ORI);
     }
 
     private static void initPatternCommon(final int bufferId, final int sourceId) {
-        AL10.alSourcei(source.get(sourceId), AL10.AL_BUFFER, buffer.get(bufferId));
-        AL10.alSourcef(source.get(sourceId), AL10.AL_PITCH, 1.0f);
-        AL10.alSourcef(source.get(sourceId), AL10.AL_GAIN, 1.0f);
-        AL10.alSource(source.get(sourceId), AL10.AL_VELOCITY, sourceVel);
+        AL10.alSourcei(SOURCE.get(sourceId), AL10.AL_BUFFER, BUFFER.get(bufferId));
+        AL10.alSourcef(SOURCE.get(sourceId), AL10.AL_PITCH, 1.0f);
+        AL10.alSourcef(SOURCE.get(sourceId), AL10.AL_GAIN, 1.0f);
+        AL10.alSource(SOURCE.get(sourceId), AL10.AL_VELOCITY, SOURCE_VEL);
     }
 
     private static void initPattern(final int bufferId, final int sourceId) {
         initPatternCommon(bufferId, sourceId);
-        AL10.alSource(source.get(sourceId), AL10.AL_POSITION, sourcePos);
+        AL10.alSource(SOURCE.get(sourceId), AL10.AL_POSITION, SOURCE_POS);
     }
 
     private static void initPatternLeft(final int bufferId, final int sourceId) {
         initPatternCommon(bufferId, sourceId);
-        AL10.alSource(source.get(sourceId), AL10.AL_POSITION, sourcePosLeft);
+        AL10.alSource(SOURCE.get(sourceId), AL10.AL_POSITION, SOURCE_LEFT);
     }
 
     private static void initPatternRight(final int bufferId, final int sourceId) {
         initPatternCommon(bufferId, sourceId);
-        AL10.alSource(source.get(sourceId), AL10.AL_POSITION, sourcePosRight);
+        AL10.alSource(SOURCE.get(sourceId), AL10.AL_POSITION, SOURCE_RIGHT);
     }
 
     private static int loadALData() {
         // Load wav data into a buffer.
-        AL10.alGenBuffers(buffer);
+        AL10.alGenBuffers(BUFFER);
 
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
@@ -96,7 +96,7 @@ public class Sound {
         loadPattern(WAV_YUCK, SND_YUCK);
 
         // Bind the buffer with the source.
-        AL10.alGenSources(source);
+        AL10.alGenSources(SOURCE);
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
@@ -153,8 +153,8 @@ public class Sound {
      * returned to the system. This function frees that memory.
      */
     private static void killALData() {
-        AL10.alDeleteSources(source);
-        AL10.alDeleteBuffers(buffer);
+        AL10.alDeleteSources(SOURCE);
+        AL10.alDeleteBuffers(BUFFER);
     }
 
     public static void init() {
@@ -200,10 +200,10 @@ public class Sound {
 
     public static void play(final int sound) {
         if (SceneItem.getSound() == SoundTypes.ON)
-            AL10.alSourcePlay(source.get(sound));
+            AL10.alSourcePlay(SOURCE.get(sound));
     }
 
     public static boolean isBusy(final int sound) {
-        return AL10.alGetSourcei(source.get(sound), AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING;
+        return AL10.alGetSourcei(SOURCE.get(sound), AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING;
     }
 }

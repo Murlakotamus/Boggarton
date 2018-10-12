@@ -7,7 +7,7 @@ public class KeyListener {
     private int keyMonitored;
     private boolean keyMonitoredWasPressed;
 
-    public void setKeyMonitored(int keyMonitored) {
+    public void setKeyMonitored(final int keyMonitored) {
         this.keyMonitored = keyMonitored;
     }
 

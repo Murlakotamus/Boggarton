@@ -10,12 +10,12 @@ public class Brick extends AbstractAnimatedEntity implements IBrick {
 
     private boolean kill = false;
     private boolean crashing = false;
-    private int id;
+    private final int id;
 
     public Brick(final int type, Layer layer) {
         this.type = type;
         this.layer = layer;
-        id = generatedId.incrementAndGet();
+        id = ID_GENERATOR.incrementAndGet();
         initEntity();
         stopAnimation();
         setRatio(1);
@@ -65,7 +65,7 @@ public class Brick extends AbstractAnimatedEntity implements IBrick {
         return result;
     }
 
-    public void setCrashing(boolean crashing) {
+    public void setCrashing(final boolean crashing) {
         this.crashing = crashing;
     }
 

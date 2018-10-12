@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.entity.SimpleEntity;
 
 abstract public class AbstractLogoScene extends AbstractScene {
 
-    static protected final int TITLE_X = Const.SCREEN_WIDTH / 2 - 560 / 2;
+    static protected final int TITLE_X = Const.SCREEN_WIDTH / 2 - 560 / 2; // @FIXME 560 - ???
     static protected final int TITLE_Y = 115;
 
     protected int y;

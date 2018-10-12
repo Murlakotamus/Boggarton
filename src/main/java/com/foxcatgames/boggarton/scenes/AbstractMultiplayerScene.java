@@ -29,28 +29,24 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
     protected static final String[] PLAYERS_NAMES = { "First", "Second" };
 
     protected static final int PLAYERS = 2;
-    private final SimpleEntity[] winners;
+    private final SimpleEntity[] winners = new SimpleEntity[PLAYERS];
     private SimpleEntity loser;
 
-    protected long pauseBetweenGames;
-    protected MultiplayerGame[] game;
-    private final SimpleEntity gamePaused[];
+    protected final MultiplayerGame[] game = new MultiplayerGame[PLAYERS];
+    private final SimpleEntity gamePaused[] = new SimpleEntity[PLAYERS];
 
     protected IPlayer first;
     protected IPlayer second;
+    protected long pauseBetweenGames;
 
     AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] prognosis, final int figureSize,
             YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty) {
         super(scene);
-        gamePaused = new SimpleEntity[PLAYERS];
         for (int i = 0; i < PLAYERS; i++)
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);
 
         if (width < figureSize)
             throw new IllegalStateException("Glass too narrow for figures");
-
-        winners = new SimpleEntity[PLAYERS];
-        game = new MultiplayerGame[PLAYERS];
 
         for (int i = 0; i < PLAYERS; i++) {
             game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(), Victories.getVictories(i),
@@ -112,7 +108,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
     private void getYucks(final int n) {
         for (int j = 0; j < PLAYERS; j++)
             if (n != j)
-                game[n].addYuck(game[j].getYuckForEnemy());
+                game[n].addYuck(game[j].getYucksForEnemy());
     }
 
     @Override

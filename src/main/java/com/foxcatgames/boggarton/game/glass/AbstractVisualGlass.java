@@ -28,7 +28,9 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     final Map<String, Integer> sounds;
 
-    public AbstractVisualGlass(B[][] bricks, final Layer layer, final Vector2f position, final int width, final int height, final Map<String, Integer> sounds) {
+    public AbstractVisualGlass(final B[][] bricks, final Layer layer, final Vector2f position, final int width, final int height,
+            final Map<String, Integer> sounds) {
+
         super(width, height);
 
         this.sounds = sounds;
@@ -142,7 +144,7 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
         state.setJ(0);
 
         // figures will appear from left and right side by rotation
-        int currentPosition = state.getNextPosition();
+        final int currentPosition = state.getNextPosition();
         if (state.getNextPosition() == 0)
             state.setNextPosition(width() - figure.getLenght());
         else
@@ -179,10 +181,10 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     @Override
     public void setChanges(final int num, final int i, final int j) {
+        Sound.playDrop(sounds.get(Const.DROP));
         state.setBrick(i, j, figure().getBrick(num));
         figure().setNull(num);
         setChanges(true);
-        Sound.playDrop(sounds.get(Const.DROP));
     }
 
     @Override

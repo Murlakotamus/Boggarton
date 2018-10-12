@@ -23,12 +23,12 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
     private static final String D = "D";
     private static final String DN = "DN";
 
-    private final int SIZE;
-    private final String[] CYCLES;
-    private final String[] SHIFTS_LEFT;
-    private final String[] SHIFTS_RIGHT;
-    private final Vector[] MOVES_TO_LEFT;
-    private final Vector[] MOVES_TO_RIGHT;
+    private final int spaceAvail;
+    private final String[] cycles;
+    private final String[] shiftsLeft;
+    private final String[] shiftsRight;
+    private final Vector[] movesToLeft;
+    private final Vector[] movesToRight;
 
     private final AbstractVisualGame<B, F, G, P> game;
     private final boolean moveDown;
@@ -42,7 +42,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
     private final HashSet<Integer> set = new HashSet<>();
 
     private String getRepeat(final int count, final char baseShift) {
-        final StringBuilder sb = new StringBuilder(SIZE);
+        final StringBuilder sb = new StringBuilder(spaceAvail);
         for (int i = 0; i < count; i++)
             sb.append(baseShift);
 
@@ -52,29 +52,29 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
     public Solver(final AbstractVisualGame<B, F, G, P> game, final boolean moveDown, final int figureSize) {
         this.game = game;
         this.moveDown = moveDown;
-        SIZE = WIDTH - figureSize + 1;
+        spaceAvail = WIDTH - figureSize + 1;
 
-        SHIFTS_LEFT = new String[SIZE];
-        for (int i = 0; i < SIZE; i++)
-            SHIFTS_LEFT[i] = getRepeat(i, 'L');
+        shiftsLeft = new String[spaceAvail];
+        for (int i = 0; i < spaceAvail; i++)
+            shiftsLeft[i] = getRepeat(i, 'L');
 
-        SHIFTS_RIGHT = new String[SIZE];
-        for (int i = 0; i < SIZE; i++)
-            SHIFTS_RIGHT[i] = getRepeat(i, 'R');
+        shiftsRight = new String[spaceAvail];
+        for (int i = 0; i < spaceAvail; i++)
+            shiftsRight[i] = getRepeat(i, 'R');
 
-        CYCLES = new String[figureSize];
+        cycles = new String[figureSize];
         for (int i = 0; i < figureSize; i++)
-            CYCLES[i] = getRepeat(i, 'C');
+            cycles[i] = getRepeat(i, 'C');
 
         final int size = WIDTH - figureSize;
 
-        MOVES_TO_LEFT = new Vector[size + 1];
+        movesToLeft = new Vector[size + 1];
         for (int i = 0; i <= size; i++)
-            MOVES_TO_LEFT[i] = new Vector(false, i);
+            movesToLeft[i] = new Vector(false, i);
 
-        MOVES_TO_RIGHT = new Vector[size];
+        movesToRight = new Vector[size];
         for (int i = 0; i < size; i++)
-            MOVES_TO_RIGHT[i] = new Vector(true, i + 1);
+            movesToRight[i] = new Vector(true, i + 1);
     }
 
     public Solution getSolution(final int dept, final IPrice price) {
@@ -91,7 +91,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
                 findDropRecursively(initGlass, new StringBuilder(DEFAULT_SIZE));
             game.clearBuffer();
             return solution;
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             e.printStackTrace();
             return solution;
         }
@@ -101,29 +101,29 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         final int lSpace = glass.getSpaceLeft();
         final int rSpace = glass.getSpaceRight();
         if (lSpace >= rSpace)
-            return MOVES_TO_LEFT[lSpace];
+            return movesToLeft[lSpace];
 
-        return MOVES_TO_RIGHT[rSpace - 1];
+        return movesToRight[rSpace - 1];
     }
 
     private String cycle(final VirtualGlass glass, final int i) {
         for (int r = 0; r < i; r++)
             glass.rotate();
 
-        return CYCLES[i];
+        return cycles[i];
     }
 
     private String move(final VirtualGlass glass, final boolean direction, final int j) {
         if (direction) {
             for (int s = 0; s < j; s++)
                 glass.moveRight();
-            return SHIFTS_RIGHT[j];
+            return shiftsRight[j];
         }
 
         for (int s = 0; s < j; s++)
             glass.moveLeft();
 
-        return SHIFTS_LEFT[j];
+        return shiftsLeft[j];
     }
 
     private String drop(final VirtualGlass glass) {

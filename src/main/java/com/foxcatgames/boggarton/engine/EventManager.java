@@ -5,31 +5,31 @@ import java.util.List;
 
 public final class EventManager {
 
-    private static EventManager instance = new EventManager();
-    private static List<KeyListener> listeners = new ArrayList<KeyListener>();
+    private static final EventManager INST = new EventManager();
+    private static final List<KeyListener> LISTENERS = new ArrayList<KeyListener>();
 
     private EventManager() {
     }
 
     public static EventManager getInstance() {
-        return instance;
+        return INST;
     }
 
     public void addListener(final int key, final KeyListener listener) {
         listener.setKeyMonitored(key);
-        listeners.add(listener);
+        LISTENERS.add(listener);
     }
 
     public void removeListener(final KeyListener listener) {
-        listeners.remove(listener);
+        LISTENERS.remove(listener);
     }
 
     public void clear() {
-        listeners.clear();
+        LISTENERS.clear();
     }
 
     public void checkEvents() {
-        for (final KeyListener listener : listeners) {
+        for (final KeyListener listener : LISTENERS) {
             listener.checkKey();
         }
     }

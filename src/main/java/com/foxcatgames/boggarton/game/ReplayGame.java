@@ -39,15 +39,15 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
             String line;
             while ((line = in.readLine()) != null) {
                 for (int i = 0; i < width; i++) {
-                    char c = line.charAt(i);
+                    final char c = line.charAt(i);
                     if (c >= 'A' && c <= 'J')
-                        bricks[i][j] = (int) (c - 64);
+                        bricks[i][j] = (int) (c - '@');
                     else
                         bricks[i][j] = 0;
                 }
                 j++;
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
 
@@ -59,7 +59,7 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
         switch (stage) {
         case NEXT:
             if (needNewFigure) {
-                PredefinedFigure figure = nextFigure();
+                final PredefinedFigure figure = nextFigure();
                 if (figure == null || figure.getNumber() == 0) {
                     setGameOver();
                     break;
@@ -84,7 +84,7 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
     protected void nextStage() {
         startTime = getTime();
         previousTime = startTime;
-        boolean executeYuck = eventNum < events.size() && events.get(eventNum).startsWith(YUCK_STR);
+        final boolean executeYuck = eventNum < events.size() && events.get(eventNum).startsWith(YUCK_STR);
         stage = stage.getNextStage(reactionDetected, executeYuck);
     }
 

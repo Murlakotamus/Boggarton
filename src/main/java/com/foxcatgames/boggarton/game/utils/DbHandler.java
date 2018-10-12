@@ -46,7 +46,7 @@ public class DbHandler {
             winnerStmt = instance.conn.prepareStatement(WINNER);
 
             return instance;
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
             return null;
         }
@@ -58,7 +58,7 @@ public class DbHandler {
         conn.setAutoCommit(false);
     }
 
-    private void executePreraredStatemnt(final PreparedStatement st, final Integer id, final GameParams params) throws SQLException {
+    private void saveGameOutcome(final PreparedStatement st, final Integer id, final GameParams params) throws SQLException {
         st.setInt(1, id);
 
         st.setInt(2, params.getPrognosisDebth());
@@ -78,28 +78,23 @@ public class DbHandler {
     }
 
     public void saveGameOutcome(final IPlayer winner, final IPlayer loser) {
-        try {
-            final Statement stmt = conn.createStatement();
-            final String date = DATE_FORMAT.format(new Date());
+        try (final ResultSet rs = conn.createStatement().executeQuery("select max(ga_id) as id from games")) {
 
-            gameStmt.setString(1, date);
+            gameStmt.setString(1, DATE_FORMAT.format(new Date()));
             gameStmt.executeUpdate();
 
-            final ResultSet rs = stmt.executeQuery("select max(ga_id) as id from games");
             final Integer gameId = rs.getInt("id");
 
-            executePreraredStatemnt(loserStmt, gameId, loser.getGameParams());
+            saveGameOutcome(loserStmt, gameId, loser.getGameParams());
             if (winner != null)
-                executePreraredStatemnt(winnerStmt, gameId, winner.getGameParams());
+                saveGameOutcome(winnerStmt, gameId, winner.getGameParams());
 
-            rs.close();
-            stmt.close();
             conn.commit();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
             try {
                 conn.rollback();
-            } catch (SQLException sqlEx) {
+            } catch (final SQLException sqlEx) {
                 sqlEx.printStackTrace();
             }
         }
@@ -117,10 +112,10 @@ public class DbHandler {
         st.close();
     }
 
-    public static void saveOutcome(IPlayer player) {
+    public static void saveOutcome(final IPlayer player) {
         try {
             DbHandler.getInstance().saveGameOutcome(player);
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         }
     }
@@ -128,7 +123,7 @@ public class DbHandler {
     public void closeHandler() {
         try {
             conn.close();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
         }
     }

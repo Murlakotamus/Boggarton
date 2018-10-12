@@ -38,11 +38,11 @@ public class RealGame extends AbstractOnePlayerGame {
                 logFigure(nextFigure());
                 logMoves();
             } else {
-                int emptyBrickLines = getGlass().getCount() / FIGURES_FOR_NEXT_EMPTY_BRICK;
+                final int emptyBrickLines = getGlass().getCount() / FIGURES_FOR_NEXT_EMPTY_BRICK;
                 if (emptyBrickLines <= oldEmptyBrickLines)
                     charge();
                 else {
-                    charge(getPairs(), satisfyCondition);
+                    charge(getEmptyBricks(), satisfyCondition);
                 }
             }
             break;
@@ -51,8 +51,8 @@ public class RealGame extends AbstractOnePlayerGame {
         }
     }
 
-    private List<Pair<Integer, Integer>> getPairs() {
-        List<Pair<Integer, Integer>> list = new ArrayList<>();
+    private List<Pair<Integer, Integer>> getEmptyBricks() {
+        final List<Pair<Integer, Integer>> list = new ArrayList<>();
         list.add(new Pair<>(Utils.random(getForecast().getFigureSize()), Const.EMPTY));
         return list;
     }

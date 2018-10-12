@@ -65,7 +65,7 @@ abstract public class AbstractEntity {
     }
 
     // kill an entity from the layer
-    // killing make the reference invalid and it will be cleaned up by gc
+    // killing makes the reference invalid and it will be cleaned up by gc
     public boolean unspawn() {
         if (layer == null)
             return false;
@@ -119,7 +119,7 @@ abstract public class AbstractEntity {
         return layer;
     }
 
-    public void setLayer(Layer layer) {
+    public void setLayer(final Layer layer) {
         this.layer = layer;
     }
 

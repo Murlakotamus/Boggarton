@@ -18,7 +18,7 @@ public class GameLogger {
     private FileOutputStream fos = null;
     private BufferedWriter bw = null;
 
-    public GameLogger(String name) {
+    public GameLogger(final String name) {
 
         final SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
         final SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("HH-mm-ss");
@@ -33,7 +33,7 @@ public class GameLogger {
             fos = new FileOutputStream(file);
             bw = new BufferedWriter(new OutputStreamWriter(fos));
             isInit = true;
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -46,9 +46,7 @@ public class GameLogger {
             bw.close();
             fos.flush();
             fos.close();
-            bw = null;
-            fos = null;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -56,7 +54,7 @@ public class GameLogger {
     public void logEvent(final String str) {
         try {
             bw.write(str);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }

@@ -2,13 +2,13 @@ package com.foxcatgames.boggarton.game.utils;
 
 public class Victories {
 
-    private static final int[] victories = { 0, 0 };
+    private static final int[] VICTORY = { 0, 0 };
 
-    public static void addVictory(int i) {
-        victories[i]++;
+    public static void addVictory(final int i) {
+        VICTORY[i]++;
     }
 
-    public static int getVictories(int i) {
-        return victories[i];
+    public static int getVictories(final int i) {
+        return VICTORY[i];
     }
 }

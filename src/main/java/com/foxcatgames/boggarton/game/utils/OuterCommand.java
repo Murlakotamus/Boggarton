@@ -13,7 +13,7 @@ public class OuterCommand {
         return command;
     }
 
-    public void setCommand(ICommand command) {
+    public void setCommand(final ICommand command) {
         this.command = command;
     }
 }

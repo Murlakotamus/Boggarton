@@ -4,15 +4,15 @@ import com.foxcatgames.boggarton.game.IBrick;
 
 public interface IFigure<B extends IBrick> {
 
-    public void swapBricks(int i, int j);
-    public void rotate();
-    public void setNull(int i);
-    public boolean isFallen();
+    void swapBricks(int i, int j);
+    void rotate();
+    void setNull(int i);
+    boolean isFallen();
 
-    public int getFirstBrickNum();
-    public int getLastBrickNum();
+    int getFirstBrickNum();
+    int getLastBrickNum();
 
-    public int getLenght();
-    public int getNumber();
-    public B getBrick(int i);
+    int getLenght();
+    int getNumber();
+    B getBrick(int i);
 }

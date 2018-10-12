@@ -79,7 +79,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             stagePause(SET_PAUSE);
             break;
         case CRASH:
-            crashDown();
+            crashBricks();
             break;
         case PROCESS:
             processGlass();
@@ -92,20 +92,9 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     }
 
     protected F nextFigure() {
-        dropPressed = false;
-        F figure = null;
-        if (needNewFigure) {
-            figure = forecast.getForecast();
-            targetPosition = glass.newFigure(figure);
-        }
-        if (!glass.getGlassState().canTakeNewFigure(targetPosition)) {
-            setGameOver();
-            return null;
-        }
-        needNewFigure = false;
-        resumeScore();
-        oldGlassState = glass.getGlassState().toString();
-        // Sound.play(sounds.get(Const.NEW));
+        final F figure = super.nextFigure();
+        if (figure != null)
+            Sound.play(sounds.get(Const.NEW));
         return figure;
     }
 
@@ -135,7 +124,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             nextStage();
     }
 
-    protected void charge(final List<Pair<Integer, Integer>> pairs, ICommand satisfyCondition) {
+    protected void charge(final List<Pair<Integer, Integer>> scpecialBricks, final ICommand satisfyCondition) {
         final F figure = glass.figure();
         final Vector2f figurePosition = figure.getPosition();
         final float currentTime = getTime();
@@ -146,11 +135,11 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
         if (newX >= framePosition.getX() + targetPosition * BOX) {
             figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
-            forecast.setNext(pairs);
+            forecast.setNext(scpecialBricks);
             glass.respawn();
             fillBuffer();
             needNewFigure = true;
-            if (pairs != null)
+            if (scpecialBricks != null)
                 satisfyCondition.execute();
             nextStage();
             return;
@@ -198,7 +187,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
         previousTime = currentTime;
     }
 
-    private void crashDown() {
+    private void crashBricks() {
         if (glass.allBricksFell()) {
             nextStage();
             return;
@@ -220,15 +209,15 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
                 if (newY == currY)
                     return;
 
-                fell = fell | crashDownBrick(brick, i, j, currY, newY);
+                fell = fell | crashBrick(brick, i, j, currY, newY);
             }
         previousTime = currentTime;
         if (fell)
             Sound.playDrop(sounds.get(Const.DROP));
     }
 
-    private boolean crashDownBrick(final B brick, final int i, final int j, final int currY, final int newY) {
-        boolean fell = false;
+    private boolean crashBrick(final B brick, final int i, final int j, final int currY, final int newY) {
+        boolean isFallen = false;
         final int oldCell = currY / BOX;
         final int newCell = newY / BOX;
         final int diffCell = newCell - oldCell;
@@ -243,12 +232,12 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
                 state.setBrick(i, j + k - 1, null);
                 final int z = j + k + 1;
                 if ((z == state.getHeight()) || state.getBrick(i, z) != null && !state.getBrick(i, z).isCrashing()) {
-                    fell = true;
+                    isFallen = true;
                     brick.setCrashing(false);
                 }
             }
         }
-        return fell;
+        return isFallen;
     }
 
     private void processGlass() {

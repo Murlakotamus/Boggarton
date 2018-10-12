@@ -6,9 +6,9 @@ import java.util.List;
 public enum YuckTypes {
     NONE("None"), RANDOM("Additional random line"), HARD("Additional hard line"), NASTY("Nasty bricks");
 
-    private String name;
+    private final String name;
 
-    private YuckTypes(String name) {
+    private YuckTypes(final String name) {
         this.name = name;
     }
     
@@ -31,11 +31,10 @@ public enum YuckTypes {
     }
     
     public static String[] getAllYuckNames() {
-        List<String> list = new ArrayList<>();
-        for (YuckTypes yuck : YuckTypes.values())
+        final List<String> list = new ArrayList<>();
+        for (final YuckTypes yuck : YuckTypes.values())
             list.add(yuck.getName());
-        String result[] = new String[list.size()];
+        final String result[] = new String[list.size()];
         return list.toArray(result);
     }
-
 }

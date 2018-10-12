@@ -4,10 +4,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public interface IBrick {
 
-    static AtomicInteger generatedId = new AtomicInteger(0);
+    static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
-    public boolean isKill();
-    public void setKill();
-    public int getType();
+    boolean isKill();
+    void setKill();
+    int getType();
     int getId();
 }

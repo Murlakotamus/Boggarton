@@ -68,7 +68,7 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         }
     }
 
-    public boolean canTakeNewFigure(int targetPosition) {
+    public boolean canTakeNewFigure(final int targetPosition) {
         if (figure == null)
             return true; // game's not started yet
 
@@ -137,7 +137,7 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         return height;
     }
 
-    public int getEmptyHeight(int i) {
+    public int getEmptyHeight(final int i) {
         for (int j = 0; j < height; j++)
             if (bricks[i][j] != null)
                 return j - 1;

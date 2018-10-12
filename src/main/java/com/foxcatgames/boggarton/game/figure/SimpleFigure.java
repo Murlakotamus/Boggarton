@@ -19,7 +19,7 @@ public class SimpleFigure extends AbstractVisualFigure<Brick> {
             int value = Utils.getBrick(setSize, randomType);
 
             if (pairs != null)
-                for (Pair<Integer, Integer> pair : pairs)
+                for (final Pair<Integer, Integer> pair : pairs)
                     if (j == pair.getFirst())
                         value = pair.getSecond();
 

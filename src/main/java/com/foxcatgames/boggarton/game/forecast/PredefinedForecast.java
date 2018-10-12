@@ -20,13 +20,13 @@ public class PredefinedForecast extends AbstractVisualForecast<Brick, Predefined
     private int forecastCounter = 0;
     private int figuresCounter = 0;
 
-    private List<String> predefinedFigures = new ArrayList<>();
+    final private List<String> predefinedFigures = new ArrayList<>();
 
     public PredefinedForecast(final Layer layer, final Vector2f startPos, final int prognosis, final int size, final List<String> events) {
         super(new PredefinedFigure[prognosis]);
         frame = new Frame(layer, startPos, size, prognosis, false, true);
 
-        for (String event : events)
+        for (final String event : events)
             if (event.startsWith(FIGURE_STR))
                 predefinedFigures.add(event.substring(FIGURE_STR.length()));
 
@@ -56,6 +56,6 @@ public class PredefinedForecast extends AbstractVisualForecast<Brick, Predefined
                     predefinedFigures.get(forecastCounter++));
         else
             figures[figures.length - 1] = new PredefinedFigure(frame.getLayer(),
-                    new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (figures.length - 1) * BOX + BORDER), 0, "");
+                    new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (figures.length - 1) * BOX + BORDER));
     }
 }

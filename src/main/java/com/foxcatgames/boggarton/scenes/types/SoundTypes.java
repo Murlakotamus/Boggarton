@@ -17,10 +17,10 @@ public enum SoundTypes {
     }
     
     public static String[] getAllYuckNames() {
-        List<String> list = new ArrayList<>();
-        for (YuckTypes yuck : YuckTypes.values())
+        final List<String> list = new ArrayList<>();
+        for (final YuckTypes yuck : YuckTypes.values())
             list.add(yuck.getName());
-        String result[] = new String[list.size()];
+        final String result[] = new String[list.size()];
         return list.toArray(result);
     }
 

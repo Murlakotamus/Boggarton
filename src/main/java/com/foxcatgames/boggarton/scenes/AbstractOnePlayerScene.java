@@ -19,7 +19,7 @@ abstract public class AbstractOnePlayerScene<B extends Brick, F extends Abstract
         extends AbstractPlayingScene<B, F, G, P> {
 
     protected static final int X = 355;
-    protected SimpleEntity gameOver;
+    protected final SimpleEntity gameOver = new SimpleEntity(GAME_OVER, layer);;
     protected AbstractVisualGame<B, F, G, P> game;
 
     protected IPlayer player;
@@ -28,14 +28,13 @@ abstract public class AbstractOnePlayerScene<B extends Brick, F extends Abstract
         super(scene);
     }
 
-    protected void saveOutcome(IPlayer player) {
+    protected void saveOutcome(final IPlayer player) {
         DbHandler.saveOutcome(player);
     }
 
     @Override
     protected void changes() {
         if (game.isGameOver() && gameOver == null) {
-            gameOver = new SimpleEntity(GAME_OVER, layer);
             gameOver.spawn(new Vector2f(X + getFigureSize(game) * BOX + 25, Y + BOX * 3 + BORDER));
             saveOutcome(player);
         } else if (game.isGameOn())

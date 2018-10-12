@@ -98,7 +98,7 @@ public enum SceneItem {
             final Properties props = new Properties();
             props.load(in);
             for (final String key : props.stringPropertyNames()) {
-                int value = Integer.parseInt(props.getProperty(key));
+                final int value = Integer.parseInt(props.getProperty(key));
                 switch (key) {
                 case "MODE":
                     final MenuItem mode = MenuItem.MODE;
@@ -145,7 +145,7 @@ public enum SceneItem {
 
     protected static void saveSettings() {
         final File file = new File(CONFIG);
-        try (FileOutputStream fos = new FileOutputStream(file); BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos))) {
+        try (final FileOutputStream fos = new FileOutputStream(file); final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos))) {
             file.createNewFile();
             final Properties props = new Properties();
 
@@ -158,7 +158,7 @@ public enum SceneItem {
             props.setProperty(MenuItem.SOUND.name(), "" + MenuItem.SOUND.getSubmenuElementPosition());
 
             props.store(bw, "");
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -226,10 +226,10 @@ public enum SceneItem {
     }
 
     public static String[] getAllSceneNames() {
-        List<String> list = new ArrayList<>();
-        for (SceneItem sceneItem : gameScenes)
+        final List<String> list = new ArrayList<>();
+        for (final SceneItem sceneItem : gameScenes)
             list.add(sceneItem.getSceneName());
-        String result[] = new String[list.size()];
+        final String result[] = new String[list.size()];
         return list.toArray(result);
     }
 };

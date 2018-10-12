@@ -14,10 +14,10 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
         super(glassState.getWidth(), glassState.getHeight());
         this.moveDown = moveDown;
 
-        state.setBricks(new VirtualBrick[glassState.getWidth()][glassState.getHeight()]);
+        state.setBricks(new VirtualBrick[width()][height()]);
 
-        for (int i = 0; i < glassState.getWidth(); i++)
-            for (int j = 0; j < glassState.getHeight(); j++)
+        for (int i = 0; i < width(); i++)
+            for (int j = 0; j < height(); j++)
                 if (glassState.getBrick(i, j) != null)
                     state.setBrick(i, j, new VirtualBrick(glassState.getBrick(i, j).getType()));
 

@@ -13,7 +13,7 @@ public enum MenuItem {
     YUCKS("Yucks", YuckTypes.getAllYuckNames()),
     FIGURE_SIZE("Figure size"),
     PROGNOSIS("Prognosis"),
-    SOUND("Sound", "On", "Off"),
+    SOUND("Sound", new String[] {"On", "Off"}),
     ABOUT("About");
 
     final private String name;
@@ -26,7 +26,7 @@ public enum MenuItem {
         submenuElementPosition = -1;
     }
 
-    MenuItem(final String name, final String... values) {
+    MenuItem(final String name, final String[] values) {
         this.name = name;
         this.values = values;
         this.submenuElementPosition = 0;

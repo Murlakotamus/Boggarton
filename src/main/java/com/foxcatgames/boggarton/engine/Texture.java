@@ -12,7 +12,7 @@ public class Texture {
         return textureHeight;
     }
 
-    public void setTextureHeight(int textureHeight) {
+    public void setTextureHeight(final int textureHeight) {
         this.textureHeight = textureHeight;
     }
 
@@ -20,7 +20,7 @@ public class Texture {
         return textureId;
     }
 
-    public void setTextureId(int textureId) {
+    public void setTextureId(final int textureId) {
         this.textureId = textureId;
     }
 
@@ -28,8 +28,7 @@ public class Texture {
         return textureWidth;
     }
 
-    public void setTextureWidth(int textureWidth) {
+    public void setTextureWidth(final int textureWidth) {
         this.textureWidth = textureWidth;
     }
-
 }

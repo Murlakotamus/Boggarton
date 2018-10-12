@@ -27,13 +27,13 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
         this.difficulty = difficulty;
     }
 
-    public String executeYuck(YuckTypes yuckType) {
+    public String executeYuck(final YuckTypes yuckType) {
         if (yuckType == YuckTypes.NASTY)
             return nastyBrick();
 
         final ArrayList<Integer> yuckBricks = new ArrayList<>(state.getWidth());
         for (int i = 0; i < width(); i++) {
-            int brick;
+            final int brick;
             switch (yuckType) {
             case HARD:
                 brick = getHardBrick();
@@ -69,18 +69,19 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
             if (fullness >= 0)
                 places.add(new Pair<Integer, Integer>(i, fullness));
         }
-        int brick;
+
         final int size = places.size();
         if (size > 0) {
+            final int brick;
             final Pair<Integer, Integer> place = places.get(Utils.random(size));
             if (Utils.random(difficulty + 1) == difficulty)
                 brick = Const.EMPTY;
             else
                 brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
             state.setBrick(place.getFirst(), place.getSecond(), new Brick(brick, layer));
-            return "" + place.getFirst() + ", " + place.getSecond() + ", " + brick;
-        } else
-            return "";
+            return place.getFirst() + ", " + place.getSecond() + ", " + brick;
+        }
+        return null;
     }
 
     private int getHardBrick() {

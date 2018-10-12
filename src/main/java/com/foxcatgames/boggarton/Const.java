@@ -36,8 +36,8 @@ public class Const {
 
     public static final int FONT_WIDTH = 14;
     public static final int FONT_HEIGHT = 28;
-
     public static final int TITLE_HEIGHT = 150;
+
     // decorations
     public static final int ABOUT = 1;
     public static final int GAME_OVER = 2;

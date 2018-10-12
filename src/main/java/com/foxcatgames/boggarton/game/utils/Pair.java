@@ -7,12 +7,12 @@ public class Pair<F, S> {
     protected Pair() {
     }
 
-    public Pair(F first, S second) {
+    public Pair(final F first, final S second) {
         this.first = first;
         this.second = second;
     }
 
-    public void setFirst(F first) {
+    public void setFirst(final F first) {
         this.first = first;
     }
 
@@ -20,7 +20,7 @@ public class Pair<F, S> {
         return first;
     }
 
-    public void setSecond(S second) {
+    public void setSecond(final S second) {
         this.second = second;
     }
 
@@ -29,7 +29,7 @@ public class Pair<F, S> {
     }
 
     @Override
-    public boolean equals(Object src) {
+    public boolean equals(final Object src) {
         if (src instanceof Pair) {
             return equals((Pair<?, ?>) src);
         } else {
@@ -37,7 +37,7 @@ public class Pair<F, S> {
         }
     }
 
-    public static <O1, O2> Pair<O1, O2> create(O1 first, O2 second) {
+    public static <O1, O2> Pair<O1, O2> create(final O1 first, final O2 second) {
         return new Pair<O1, O2>(first, second);
     }
 

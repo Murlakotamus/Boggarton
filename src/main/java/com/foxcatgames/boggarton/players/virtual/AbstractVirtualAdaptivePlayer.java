@@ -15,15 +15,8 @@ abstract public class AbstractVirtualAdaptivePlayer<B extends Brick, F extends A
     }
 
     @Override
-    protected boolean executeVirtualPlayerMove(final char move, final boolean finishTurn) throws InterruptedException {
-        switch (move) {
-        case NEXT:
-            game.clearBuffer();
-            game.getBuffer();
-            game.restoreSpeed();
-            return false; // adaptive algorithm
-        default:
-            return super.executeVirtualPlayerMove(move, finishTurn);
-        }
+    protected String getSolution(final int dept) {
+        String moves = super.getSolution(dept);
+        return moves.substring(0, moves.indexOf(NEXT));
     }
 }

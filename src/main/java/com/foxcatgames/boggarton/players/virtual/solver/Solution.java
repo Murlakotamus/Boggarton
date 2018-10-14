@@ -21,8 +21,8 @@ public class Solution {
         this.chainLenght = 0;
     }
 
-    public char[] getMoves() {
-        return turns.toCharArray();
+    public String getMoves() {
+        return turns;
     }
 
     public int getScore() {

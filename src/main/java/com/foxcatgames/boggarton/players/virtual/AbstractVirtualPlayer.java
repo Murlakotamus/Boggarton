@@ -12,7 +12,6 @@ import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
-import com.foxcatgames.boggarton.players.virtual.solver.Solution;
 import com.foxcatgames.boggarton.players.virtual.solver.Solver;
 
 abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
@@ -31,10 +30,14 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
         thread.start();
     }
 
-    protected char[] getMoves(final int dept) {
-        final Solution solution = solver.getSolution(dept, price);
-        Logger.log(Thread.currentThread().getName() + ", " + solution);
-        return solution.getMoves();
+    protected String getMoves(final int dept) {
+        final String moves = getSolution(dept);
+        Logger.log(Thread.currentThread().getName() + ", " + moves);
+        return moves;
+    }
+
+    protected String getSolution(final int dept) {
+        return solver.getSolution(dept, price).getMoves();
     }
 
     public void run() {
@@ -46,7 +49,7 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
                     break;
 
                 final int depth = glassState.getFullness();
-                final char[] moves = getMoves(depth);
+                final char[] moves = getMoves(depth).toCharArray();
                 if (moves.length > 0)
                     makeVirtualPlayerMoves(moves);
                 else
@@ -59,11 +62,10 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
 
     private void makeVirtualPlayerMoves(final char[] moves) throws InterruptedException {
         for (int i = 0; i < moves.length && game.isGameOn(); i++)
-            if (!executeVirtualPlayerMove(moves[i], i + 1 < moves.length && moves[i + 1] == NEXT))
-                break;
+            executeVirtualPlayerMove(moves[i], i + 1 < moves.length && moves[i + 1] == NEXT);
     }
 
-    protected boolean executeVirtualPlayerMove(final char move, final boolean finishTurn) throws InterruptedException {
+    protected void executeVirtualPlayerMove(final char move, final boolean finishTurn) throws InterruptedException {
         switch (move) {
         case DOWN:
             game.sendCommand(new ICommand() {
@@ -81,7 +83,6 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
         default:
             super.executeMove(move);
         }
-        return true;
     }
 
     @Override

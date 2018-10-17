@@ -45,7 +45,7 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
                 break;
             }
 
-        game = new ReplayGame(layer, X, Y, width, height, 0, figureSize, events, Const.SOUNDS);
+        game = new ReplayGame(layer, X, Y, width, height, figureSize, events, Const.SOUNDS);
         game.setName("Replay");
         game.startGame();
 

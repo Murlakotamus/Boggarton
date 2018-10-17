@@ -15,7 +15,7 @@ import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 public class Sound {
-    private static final IntBuffer BUFFER = BufferUtils.createIntBuffer(10); // must be equals to number of sound files
+    public static final IntBuffer BUFFER = BufferUtils.createIntBuffer(10); // must be equals to number of sound files
 
     /** Sources are points emitting sound. */
     private static final IntBuffer SOURCE = BufferUtils.createIntBuffer(53);
@@ -38,12 +38,6 @@ public class Sound {
      * Orientation of the listener. (first 3 elements are "at", second 3 are "up")
      */
     private static final FloatBuffer LISTENER_ORI = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
-
-    private static void loadPattern(final String filename, final int id) {
-        WaveData waveFile = WaveData.create(Sound.class.getClass().getResource(filename));
-        AL10.alBufferData(BUFFER.get(id), waveFile.format, waveFile.data, waveFile.samplerate);
-        waveFile.dispose();
-    }
 
     /**
      * We already defined certain values for the Listener, but we need to tell
@@ -84,16 +78,17 @@ public class Sound {
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
 
-        loadPattern(WAV_ADDYUCK, SND_ADDYUCK);
-        loadPattern(WAV_CYCLE, SND_CYCLE);
-        loadPattern(WAV_DISAPPEAR, SND_DISAPPEAR);
-        loadPattern(WAV_DROP, SND_DROP);
-        loadPattern(WAV_MOVE, SND_MOVE);
-        loadPattern(WAV_NEW, SND_NEW);
-        loadPattern(WAV_SCORE, SND_SCORE);
-        loadPattern(WAV_SELECT, SND_SELECT);
-        loadPattern(WAV_SHIFT, SND_SHIFT);
-        loadPattern(WAV_YUCK, SND_YUCK);
+        SoundLoader sl = new SoundLoader();
+        sl.loadPattern(WAV_ADDYUCK, SND_ADDYUCK);
+        sl.loadPattern(WAV_CYCLE, SND_CYCLE);
+        sl.loadPattern(WAV_DISAPPEAR, SND_DISAPPEAR);
+        sl.loadPattern(WAV_DROP, SND_DROP);
+        sl.loadPattern(WAV_MOVE, SND_MOVE);
+        sl.loadPattern(WAV_NEW, SND_NEW);
+        sl.loadPattern(WAV_SCORE, SND_SCORE);
+        sl.loadPattern(WAV_SELECT, SND_SELECT);
+        sl.loadPattern(WAV_SHIFT, SND_SHIFT);
+        sl.loadPattern(WAV_YUCK, SND_YUCK);
 
         // Bind the buffer with the source.
         AL10.alGenSources(SOURCE);
@@ -205,5 +200,14 @@ public class Sound {
 
     public static boolean isBusy(final int sound) {
         return AL10.alGetSourcei(SOURCE.get(sound), AL10.AL_SOURCE_STATE) == AL10.AL_PLAYING;
+    }
+}
+
+class SoundLoader {
+
+    public void loadPattern(final String filename, final int id) {
+        WaveData waveFile = WaveData.create(this.getClass().getResource(filename));
+        AL10.alBufferData(Sound.BUFFER.get(id), waveFile.format, waveFile.data, waveFile.samplerate);
+        waveFile.dispose();
     }
 }

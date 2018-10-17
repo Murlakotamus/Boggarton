@@ -20,7 +20,6 @@ import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.AbstractScene;
-import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
         extends AbstractGame<B, F, G, P> {
@@ -43,9 +42,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private final Text diffScore;
     protected final Map<String, Integer> sounds;
 
-    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final int figureSize,
-            final int setSize, final RandomTypes randomType, final Map<String, Integer> sounds) {
-
+    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final Map<String, Integer> sounds) {
         this.x = x;
         this.y = y;
         this.sounds = sounds;

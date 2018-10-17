@@ -18,7 +18,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.foxcatgames.boggarton.Logger;
 
-public class TextureLoader implements ITextureLoader {
+public class TextureLoader {
 
     private static final Texture[] TEXTURE = new Texture[1024];
     private static final Texture[][] ANIMATION = new Texture[1024][1024];

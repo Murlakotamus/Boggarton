@@ -3,7 +3,6 @@ package com.foxcatgames.boggarton;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.foxcatgames.boggarton.engine.ITextureLoader;
 import com.foxcatgames.boggarton.engine.TextureLoader;
 import com.foxcatgames.boggarton.players.virtual.solver.Price;
 
@@ -32,7 +31,7 @@ public class Const {
     public static final int SCREEN_HEIGHT = 768;
 
     // Texture loader is used to load and server textures to entities on init
-    public static final ITextureLoader TEXTURE_LOADER = new TextureLoader();
+    public static final TextureLoader TEXTURE_LOADER = new TextureLoader();
 
     public static final int FONT_WIDTH = 14;
     public static final int FONT_HEIGHT = 28;

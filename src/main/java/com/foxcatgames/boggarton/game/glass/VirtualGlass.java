@@ -144,7 +144,9 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
 
     @Override
     protected void setChanges(final boolean flag) {
-        if (!forSearchingSolution)
+        if (forSearchingSolution)
+            changes.setFlag(flag);
+        else
             super.setChanges(flag);
     }
 

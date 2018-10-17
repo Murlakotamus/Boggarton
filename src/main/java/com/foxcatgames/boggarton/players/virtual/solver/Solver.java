@@ -10,7 +10,6 @@ import com.foxcatgames.boggarton.game.VirtualBrick;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
-import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.glass.IGlassState;
@@ -82,7 +81,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         try {
             final Pair<IGlassState<B, F>, P> pair = game.getBuffer();
             initGlass = new VirtualGlass(pair.getFirst(), moveDown);
-            forecast = new VirtualForecast((SimpleForecast)pair.getSecond());
+            forecast = new VirtualForecast(pair.getSecond());
             maxDepth = Math.min(forecast.getDepth(), dept);
             score = initGlass.getGlassState().getScore();
             findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)), price);

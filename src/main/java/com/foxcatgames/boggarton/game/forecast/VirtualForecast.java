@@ -14,7 +14,7 @@ public class VirtualForecast extends AbstractForecast<VirtualBrick, VirtualFigur
     public <B extends IBrick, F extends IFigure<B>> VirtualForecast(final IForecast<B, F> forecast) {
         super(new VirtualFigure[forecast.getDepth()]);
         for (int i = 0; i < forecast.getDepth(); i++)
-            figures[forecast.getDepth() - 1 - i] = new VirtualFigure(forecast.getForecast(i));
+            figures[i] = new VirtualFigure(forecast.getForecast(i));
     }
 
     public VirtualForecast(final int prognosis, final int size, final int difficulty, final RandomTypes randomType) {

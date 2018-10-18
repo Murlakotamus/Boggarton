@@ -14,7 +14,6 @@ public class PracticeScene extends AbstractGameAndPracticeScene {
             final DifficultyTypes difficulty) {
 
         super(SceneItem.PRACTICE);
-
         game = new SimpleGame(layer, X, Y, width, height, prognosis, figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS);
         game.setName("Human practice");
         game.startGame();

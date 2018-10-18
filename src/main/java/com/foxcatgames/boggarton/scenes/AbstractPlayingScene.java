@@ -14,6 +14,7 @@ abstract public class AbstractPlayingScene<B extends Brick, F extends AbstractVi
 
     protected static final int Y = 160;
     protected boolean escapePressed = false;
+    protected boolean gameOver = false;
 
     AbstractPlayingScene(final SceneItem scene) {
         super(scene);

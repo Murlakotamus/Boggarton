@@ -189,7 +189,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         final int avail = glass.figure().getNumber() - 1;
         for (int i = 0; i <= avail; i++) {
 
-            final VirtualGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
+            final VirtualGlass virtualGlass = new VirtualGlass(glass.getGlassState(), false);
             final StringBuilder currResult = new StringBuilder(result);
             currResult.append(drop(virtualGlass));
 
@@ -205,7 +205,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
                 }
 
                 if (depth == maxDepth) {
-                    solution = new Solution(currResult.toString(), 0, virtualGlass.getFullness(), 0);
+                    solution = new Solution(currResult.toString(), 0, 0, 0);
                     return;
                 }
             }

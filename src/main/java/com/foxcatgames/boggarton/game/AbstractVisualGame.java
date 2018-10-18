@@ -63,10 +63,10 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             break;
         case APPEAR:
             executeCommand();
-            if (!dropPressed)
-                stagePause(APPEAR_PAUSE);
-            else
+            if (dropPressed)
                 nextStage();
+            else
+                stagePause(APPEAR_PAUSE);
             break;
         case FALL:
             executeCommand();
@@ -260,6 +260,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     }
 
     public void restoreSpeed() {
+        dropPressed = false;
         currentSpeed = MOVING_SPEED;
     }
 

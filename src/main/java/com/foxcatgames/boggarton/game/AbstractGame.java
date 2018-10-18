@@ -57,7 +57,6 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
             setGameOver();
             return null;
         }
-        dropPressed = false;
         needNewFigure = false;
         resumeScore();
         oldGlassState = glass.getGlassState().toString();

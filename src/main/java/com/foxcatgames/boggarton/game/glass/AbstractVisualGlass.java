@@ -157,7 +157,7 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     @Override
     public void rotate() {
-        if (!gamePaused) {
+        if (!gamePaused && !gameOver) {
             Sound.play(sounds.get(Const.CYCLE));
             figure().rotate();
         }
@@ -165,7 +165,7 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     @Override
     public void moveLeft() {
-        if (!gamePaused && canMoveLeft()) {
+        if (!gamePaused && !gameOver && canMoveLeft()) {
             Sound.play(sounds.get(Const.SHIFT));
             setFigure(state.getI() - 1, state.getJ(), true);
         }
@@ -173,7 +173,7 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     @Override
     public void moveRight() {
-        if (!gamePaused && canMoveRight()) {
+        if (!gamePaused && !gameOver && canMoveRight()) {
             Sound.play(sounds.get(Const.SHIFT));
             setFigure(state.getI() + 1, state.getJ(), true);
         }

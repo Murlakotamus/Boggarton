@@ -29,15 +29,15 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
     protected static final String[] PLAYERS_NAMES = { "First", "Second" };
 
     protected static final int PLAYERS = 2;
-    private final SimpleEntity[] winners = new SimpleEntity[PLAYERS];
-    private SimpleEntity loser;
+    private final SimpleEntity winner = new SimpleEntity(WINNER, layer);
+    private final SimpleEntity loser = new SimpleEntity(LOSER, layer);
 
     protected final MultiplayerGame[] game = new MultiplayerGame[PLAYERS];
     private final SimpleEntity gamePaused[] = new SimpleEntity[PLAYERS];
 
     protected IPlayer first;
     protected IPlayer second;
-    protected long pauseBetweenGames;
+    protected long pauseBetweenGames = 0;
 
     AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] prognosis, final int figureSize,
             YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty) {
@@ -65,12 +65,10 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
     private void losersAndWinners(final int loserNumber) {
         for (int i = 0; i < PLAYERS; i++) {
             final int figureSize = getFigureSize(game[i]);
-            if (i == loserNumber) {
-                loser = new SimpleEntity(LOSER, layer);
+            if (i == loserNumber)
                 loser.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
-            } else {
-                winners[i] = new SimpleEntity(WINNER, layer);
-                winners[i].spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
+            else {
+                winner.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
                 Victories.addVictory(i);
             }
             game[i].setGameOver();
@@ -87,16 +85,20 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
 
     @Override
     protected void changes() {
+        checkAuto();
+
+        if (gameOver)
+            return;
+
         for (int i = 0; i < PLAYERS; i++)
-            if (game[i].isGameOver() && loser == null) {
+            if (game[i].isGameOver()) {
+                gameOver = true;
                 losersAndWinners(i);
                 saveOutcome(i);
                 pauseBetweenGames = System.currentTimeMillis();
             }
 
-        checkAuto();
-
-        if (loser != null)
+        if (gameOver)
             return;
 
         for (int i = 0; i < PLAYERS; i++) {

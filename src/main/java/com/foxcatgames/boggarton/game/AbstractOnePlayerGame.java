@@ -21,7 +21,6 @@ abstract public class AbstractOnePlayerGame extends AbstractVisualGame<Brick, Si
         super(layer, x, y, width, height, sounds);
         glass = new SimpleGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, sounds);
         forecast = new SimpleForecast(layer, new Vector2f(x, y), prognosis, figureSize, setSize, randomType);
-
     }
 
     @Override

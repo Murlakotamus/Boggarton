@@ -84,7 +84,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             final int initScore = initGlass.getGlassState().getScore();
 
             solution = new Solution(initScore);
-            maxDepth = 2;//Math.min(initForecast.getDepth(), dept);
+            maxDepth = Math.min(initForecast.getDepth(), dept);
 
             findSolutionRecursively(initGlass, initForecast, 0, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)));
 

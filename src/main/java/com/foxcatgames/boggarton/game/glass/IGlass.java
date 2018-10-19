@@ -30,12 +30,12 @@ public interface IGlass<B extends IBrick, F extends IFigure<B>> {
     boolean findChainsToKill();
     void killChains();
     void removeBrick(int i, int j);
-    void processGlass();
+    int processGlass();
     boolean removeHoles();
 
     int getReactions();
     void addReaction();
-    void cleanReactions();
+    int cleanReactions();
 
     void dropChanges();
     boolean hasChanges();

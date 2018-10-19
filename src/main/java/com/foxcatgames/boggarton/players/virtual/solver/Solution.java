@@ -2,23 +2,23 @@ package com.foxcatgames.boggarton.players.virtual.solver;
 
 public class Solution {
 
-    private String turns;
-    private int score;
-    private int fullness;
-    private int chainLenght;
+    private final String turns;
+    private final int score;
+    private final int fullness;
+    private final int reactions;
 
-    public Solution(final String turns, final int score, final int fullness, final int chainLenght) {
-        this.turns = turns;
+    public Solution(final StringBuilder turns, final int score, final int fullness, final int reactions) {
+        this.turns = turns.toString();
         this.score = score;
         this.fullness = fullness;
-        this.chainLenght = chainLenght;
+        this.reactions = reactions;
     }
 
-    public Solution() {
+    public Solution(final int score) {
         this.turns = "";
-        this.score = -1;
-        this.fullness = 0;
-        this.chainLenght = 0;
+        this.score = score;
+        this.fullness = 0; // full, the worst state
+        this.reactions = 0;
     }
 
     public String getMoves() {
@@ -33,8 +33,8 @@ public class Solution {
         return fullness;
     }
 
-    public int getChainLenght() {
-        return chainLenght;
+    public int getReactions() {
+        return reactions;
     }
 
     @Override

@@ -11,19 +11,19 @@ import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
-import com.foxcatgames.boggarton.players.virtual.solver.IPrice;
+import com.foxcatgames.boggarton.players.virtual.solver.IEater;
 import com.foxcatgames.boggarton.players.virtual.solver.Solver;
 
 abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
         extends AbstractExecutor<B, F, G, P> implements IPlayer {
 
-    private final Solver<B, F, G, P> solver;
-    private final IPrice price;
+    private final IEater eater;
+    private final boolean moveDown;
 
-    public AbstractVirtualPlayer(final AbstractVisualGame<B, F, G, P> game, final String name, final IPrice price, final boolean moveDown) {
+    public AbstractVirtualPlayer(final AbstractVisualGame<B, F, G, P> game, final String name, final IEater eater, final boolean moveDown) {
         super(game);
-        this.price = price;
-        solver = new Solver<>(game, moveDown, game.getForecast().getFigureSize());
+        this.eater = eater;
+        this.moveDown = moveDown;
         final Thread thread = new Thread(this);
         thread.setPriority(Thread.MIN_PRIORITY);
         thread.setName(game.getName() + ", " + thread.getId());
@@ -37,7 +37,8 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
     }
 
     protected String getSolution(final int dept) {
-        return solver.getSolution(dept, price).getMoves();
+        final Solver<B, F, G, P> solver = new Solver<>(game, moveDown, game.getForecast().getFigureSize(), eater);
+        return solver.getSolution(dept).getMoves();
     }
 
     public void run() {

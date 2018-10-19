@@ -4,6 +4,7 @@ import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import java.util.HashSet;
 
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.VirtualBrick;
@@ -31,12 +32,10 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
 
     private final AbstractVisualGame<B, F, G, P> game;
     private final boolean moveDown;
-    private VirtualGlass initGlass;
-    private VirtualForecast forecast;
     private Solution solution;
     private int depth;
     private int maxDepth;
-    private int score;
+    private final IEater eater;
 
     private final HashSet<Integer> set = new HashSet<>();
 
@@ -48,9 +47,10 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return sb.toString();
     }
 
-    public Solver(final AbstractVisualGame<B, F, G, P> game, final boolean moveDown, final int figureSize) {
+    public Solver(final AbstractVisualGame<B, F, G, P> game, final boolean moveDown, final int figureSize, final IEater eater) {
         this.game = game;
         this.moveDown = moveDown;
+        this.eater = eater;
         spaceAvail = WIDTH - figureSize + 1;
 
         shiftsLeft = new String[spaceAvail];
@@ -76,23 +76,30 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             movesToRight[i] = new Vector(true, i + 1);
     }
 
-    public Solution getSolution(final int dept, final IPrice price) {
-        solution = new Solution();
+    public Solution getSolution(final int dept) {
         try {
             final Pair<IGlassState<B, F>, P> pair = game.getBuffer();
-            initGlass = new VirtualGlass(pair.getFirst(), moveDown);
-            forecast = new VirtualForecast(pair.getSecond());
-            maxDepth = Math.min(forecast.getDepth(), dept);
-            score = initGlass.getGlassState().getScore();
-            findSolutionRecursively(initGlass, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)), price);
+            final VirtualGlass initGlass = new VirtualGlass(pair.getFirst(), moveDown);
+            final VirtualForecast initForecast = new VirtualForecast(pair.getSecond());
+            final int initScore = initGlass.getGlassState().getScore();
 
-            if (solution.getScore() <= 0)
-                findDropRecursively(initGlass, new StringBuilder(DEFAULT_SIZE));
-            game.clearBuffer();
+            solution = new Solution(initScore);
+            maxDepth = 2;//Math.min(initForecast.getDepth(), dept);
+
+            findSolutionRecursively(initGlass, initForecast, 0, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)));
+
+            if (eater.getPrice(solution) <= eater.getPrice(new Solution(initScore))) {
+                Logger.debug("Instead of " + solution);
+                findDropRecursively(initGlass, initForecast, new StringBuilder(DEFAULT_SIZE));
+                Logger.debug("Use this " + solution);
+            }
+
             return solution;
         } catch (final InterruptedException e) {
             e.printStackTrace();
             return solution;
+        } finally {
+            game.clearBuffer();
         }
     }
 
@@ -145,7 +152,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return set.size();
     }
 
-    private void findSolutionRecursively(final VirtualGlass glass, final StringBuilder result, final IPrice price) {
+    private void findSolutionRecursively(final VirtualGlass glass, final VirtualForecast initForecast, int reactions, final StringBuilder result) {
         if (game.isGameOver())
             return;
 
@@ -164,28 +171,26 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
                 currResult.append(drop(virtualGlass));
 
                 if (!virtualGlass.figure().isFallen())
-                    findSolutionRecursively(virtualGlass, currResult, price);
+                    findSolutionRecursively(virtualGlass, initForecast, reactions, currResult);
                 else {
-                    virtualGlass.processGlass();
+                    reactions += virtualGlass.processGlass();
 
                     if (depth < maxDepth && virtualGlass.getFullness() > 0) {
-                        virtualGlass.newFigure(forecast.getForecast(depth++));
-                        findSolutionRecursively(virtualGlass, currResult, price);
+                        virtualGlass.newFigure(initForecast.getForecast(depth++));
+                        findSolutionRecursively(virtualGlass, initForecast, reactions, currResult);
                         depth--;
                     }
 
                     if (depth == maxDepth) {
-                        if (!virtualGlass.isGameOver() && virtualGlass.getFullness() > 0) {
-                            final int scoreDifference = virtualGlass.getGlassState().getScore() - score;
-                            if (price.getPrice(new Solution(null, scoreDifference, virtualGlass.getFullness(), 0)) > price.getPrice(solution))
-                                solution = new Solution(currResult.toString(), scoreDifference, virtualGlass.getFullness(), 0);
-                        }
+                        if (!virtualGlass.isGameOver() && virtualGlass.getFullness() > 0)
+                            solution = eater.chooseBest(solution,
+                                    new Solution(currResult, virtualGlass.getGlassState().getScore(), virtualGlass.getFullness(), reactions));
                     }
                 }
             }
     }
 
-    private void findDropRecursively(final VirtualGlass glass, final StringBuilder result) {
+    private void findDropRecursively(final VirtualGlass glass, final VirtualForecast initForecast, final StringBuilder result) {
         final int avail = glass.figure().getNumber() - 1;
         for (int i = 0; i <= avail; i++) {
 
@@ -194,18 +199,18 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             currResult.append(drop(virtualGlass));
 
             if (!virtualGlass.figure().isFallen())
-                findDropRecursively(virtualGlass, currResult);
+                findDropRecursively(virtualGlass, initForecast, currResult);
             else {
                 virtualGlass.processGlass();
 
                 if (depth < maxDepth && virtualGlass.getFullness() >= 0) {
-                    virtualGlass.newFigure(forecast.getForecast(depth++));
-                    findDropRecursively(virtualGlass, currResult);
+                    virtualGlass.newFigure(initForecast.getForecast(depth++));
+                    findDropRecursively(virtualGlass, initForecast, currResult);
                     depth--;
                 }
 
                 if (depth == maxDepth) {
-                    solution = new Solution(currResult.toString(), 0, 0, 0);
+                    solution = new Solution(currResult, 0, 0, 0);
                     return;
                 }
             }

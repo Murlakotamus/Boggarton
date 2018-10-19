@@ -42,14 +42,14 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     }
 
     @Override
-    public void processGlass() {
+    public int processGlass() {
         while (findChainsToKill()) {
             killChains();
             while (removeHoles())
                 ;
             addReaction();
         }
-        cleanReactions();
+        return cleanReactions();
     }
 
     @Override
@@ -107,8 +107,8 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     }
 
     @Override
-    public void cleanReactions() {
-        state.cleanReactions();
+    public int cleanReactions() {
+        return state.cleanReactions();
     }
 
     @Override

@@ -134,7 +134,7 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
             for (int i = 0; i < width; i++)
                 if (bricks[i][j] != null)
                     return j;
-        return height;
+        return height; // empty, the best state
     }
 
     public int getEmptyHeight(final int i) {
@@ -231,8 +231,12 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         reaction++;
     }
 
-    public void cleanReactions() {
-        reaction = 0;
+    public int cleanReactions() {
+        try {
+            return reaction;
+        } finally {
+            reaction = 0;
+        }
     }
 
     @Override

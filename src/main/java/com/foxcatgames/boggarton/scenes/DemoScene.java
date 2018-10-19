@@ -20,7 +20,7 @@ public class DemoScene extends AbstractOnePlayerScene<Brick, SimpleFigure, Simpl
         game.setName("Virtual");
         game.initLogger();
         game.startGame();
-        player = new VirtualAdaptivePlayer<>(game, Const.PRICE);
+        player = new VirtualAdaptivePlayer<>(game, Const.FULLNESS_EATER);
     }
 
     @Override

@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.foxcatgames.boggarton.engine.TextureLoader;
-import com.foxcatgames.boggarton.players.virtual.solver.Price;
+import com.foxcatgames.boggarton.players.virtual.solver.FullnessEater;
+import com.foxcatgames.boggarton.players.virtual.solver.IEater;
+import com.foxcatgames.boggarton.players.virtual.solver.ReactionsEater;
 
 public class Const {
 
@@ -83,7 +85,8 @@ public class Const {
     public static final String YUCK_STR = "YUCK: ";
     public static final String GAMEOVER_STR = "Game over!";
 
-    public static final Price PRICE = new Price();
+    public static final IEater FULLNESS_EATER = new FullnessEater();
+    public static final IEater REACTIONS_EATER = new ReactionsEater();
 
     // sounds ids
     public static final int SND_ADDYUCK = 0;

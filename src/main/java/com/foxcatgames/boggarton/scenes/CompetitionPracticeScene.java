@@ -16,7 +16,7 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
 
         super(SceneItem.COMPETITION_PRACTICE, width, height, prognosis, figureSize, yuckType, randomType, difficulty);
 
-        first = new EffectiveVirtualAdaptivePlayer<>(game[0], Const.PRICE);
+        first = new EffectiveVirtualAdaptivePlayer<>(game[0], Const.FULLNESS_EATER);
         second = new RealMultiplayer(game[1], Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
     }
 

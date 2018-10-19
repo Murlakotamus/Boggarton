@@ -71,7 +71,6 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
                 winner.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
                 Victories.addVictory(i);
             }
-            game[i].setGameOver();
             game[i].closeLogger();
         }
     }
@@ -98,8 +97,11 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
                 pauseBetweenGames = System.currentTimeMillis();
             }
 
-        if (gameOver)
+        if (gameOver) {
+            for (int i = 0; i < PLAYERS; i++)
+                game[i].setGameOver();
             return;
+        }
 
         for (int i = 0; i < PLAYERS; i++) {
             game[i].processStage();

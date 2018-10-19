@@ -22,14 +22,19 @@ import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, MultiplayerGlass, SimpleForecast> {
 
     private static final int MAX_YUCKS = 24; // 6 * 12 / 3 - theoretical limit
+    private static final String YUCKS_TOTAL = "Yucks: ";
 
     public final YuckTypes yuckType;
     protected int yucks;
+    protected int yucksTotal;
+    private final Text showYucks;
     private final Text showVictoies;
+
     private final Brick[] yuckBricks = new Brick[MAX_YUCKS];
     private final Vector2f yuckPosition;
 
-    private int oldYucks = 0;
+    private int oldYucks;
+    private int xYuck, yYuck;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
             final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
@@ -38,8 +43,14 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
         this.yuckType = yuckType;
         glass = new MultiplayerGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, setSize, sounds);
         forecast = new SimpleForecast(layer, new Vector2f(x, y), prognosis, figureSize, setSize, randomType);
+
+        xYuck = x + BOX * figureSize + 20;
+        yYuck = y + BOX * height + 40;
+        showYucks = new Text(YUCKS_TOTAL + yucksTotal, LIGHT_FONT, layer);
+        showYucks.spawn(new Vector2f(xYuck, yYuck));
+
         showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
-        showVictoies.spawn(new Vector2f(x + BOX * figureSize + 20, y + BOX * height + 40));
+        showVictoies.spawn(new Vector2f(x + BOX * figureSize + 20, y + BOX * height + 65));
         yuckPosition = new Vector2f(x + BOX * figureSize + 20 + width * BOX + 15, y + BOX * height - BOX + 5);
         int num = 0;
         for (int i = 0; i < MAX_YUCKS; i++) {
@@ -92,10 +103,13 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
     protected void executeYuck() {
         final String yuck = glass.executeYuck(yuckType);
         logYuck(yuck);
+        yucksTotal++;
         yucks--;
         glass.respawn();
         Sound.play(sounds.get(Const.YUCK));
         drawYucks();
+        showYucks.setString(YUCKS_TOTAL + yucksTotal);
+        showYucks.spawn(new Vector2f(xYuck, yYuck));
         nextStage();
     }
 

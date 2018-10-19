@@ -1,6 +1,5 @@
 package com.foxcatgames.boggarton.players.virtual;
 
-import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
@@ -19,9 +18,9 @@ abstract public class AbstractVirtualAdaptivePlayer<B extends Brick, F extends A
     protected String getSolution(final int dept) {
         String moves = super.getSolution(dept);
         int lastIndex = moves.indexOf(NEXT);
+        String result = moves;
         if (lastIndex > 0)
-            return moves.substring(0, lastIndex);
-        Logger.err("Solver failed: " + moves);
-        return moves;
+            result = moves.substring(0, lastIndex + 1);
+        return result;
     }
 }

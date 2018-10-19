@@ -134,10 +134,10 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             figure.setPosition(new Vector2f(framePosition.getX() + targetPosition * BOX, figurePosition.getY()));
             forecast.setNext(scpecialBricks);
             glass.respawn();
-            fillBuffer();
             needNewFigure = true;
             if (scpecialBricks != null)
                 satisfyCondition.execute();
+            fillBuffer();
             nextStage();
             return;
         }

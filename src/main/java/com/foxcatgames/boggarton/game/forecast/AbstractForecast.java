@@ -54,4 +54,12 @@ abstract public class AbstractForecast<B extends IBrick, F extends AbstractFigur
     public RandomTypes getRandomType() {
         return randomType;
     }
+
+    @Override
+    public String toString() {
+        String result = "Forecast:\n";
+        for (F figure : figures)
+            result += figure;
+        return result;
+    }
 }

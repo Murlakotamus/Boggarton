@@ -11,7 +11,7 @@ public interface IGlass<B extends IBrick, F extends IFigure<B>> {
     int width();
     int height();
     void setFigure(int x, int y, boolean setChanges);
-    int newFigure(F f);
+    int newFigure(F figure);
 
     int getSpaceLeft();
     int getSpaceRight();

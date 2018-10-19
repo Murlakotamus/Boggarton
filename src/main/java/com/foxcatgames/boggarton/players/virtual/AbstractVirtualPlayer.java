@@ -52,8 +52,6 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
                 final char[] moves = getMoves(depth).toCharArray();
                 if (moves.length > 0)
                     makeVirtualPlayerMoves(moves);
-                else
-                    game.clearBuffer();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

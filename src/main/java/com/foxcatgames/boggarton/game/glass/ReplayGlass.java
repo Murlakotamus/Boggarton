@@ -15,7 +15,7 @@ public class ReplayGlass extends AbstractVisualGlass<Brick, PredefinedFigure> {
     private final Layer layer;
 
     public ReplayGlass(final Layer layer, final Vector2f position, final int width, final int height, final int[][] bricks, final Map<String, Integer> sounds) {
-        super(new Brick[width][height], layer, position, width, height, sounds);
+        super(new Brick[width][height], layer, position, width, height, sounds, 0);
 
         for (int i = 0; i < width; i++)
             for (int j = 0; j < height; j++)

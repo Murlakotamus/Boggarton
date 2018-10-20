@@ -11,6 +11,6 @@ import com.foxcatgames.boggarton.game.figure.SimpleFigure;
 public class SimpleGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
 
     public SimpleGlass(final Layer layer, final Vector2f position, final int width, final int height, final Map<String, Integer> sounds) {
-        super(new Brick[width][height], layer, position, width, height, sounds);
+        super(new Brick[width][height], layer, position, width, height, sounds, 0);
     }
 }

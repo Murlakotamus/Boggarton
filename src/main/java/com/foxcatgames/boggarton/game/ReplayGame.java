@@ -2,6 +2,7 @@ package com.foxcatgames.boggarton.game;
 
 import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.Const.YUCK_STR;
+import static com.foxcatgames.boggarton.Const.SCORE_STR;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -85,6 +86,13 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
     protected void nextStage() {
         startTime = getTime();
         previousTime = startTime;
+        if (eventNum < events.size() && events.get(eventNum).startsWith(SCORE_STR)) { // #122
+            eventNum++;
+            if (events.get(eventNum - 2).startsWith(YUCK_STR)) {
+                stage = StageItem.PROCESS;
+                return;
+            }
+        }
         final boolean executeYuck = eventNum < events.size() && events.get(eventNum).startsWith(YUCK_STR);
         stage = stage.getNextStage(reactionDetected, executeYuck);
     }

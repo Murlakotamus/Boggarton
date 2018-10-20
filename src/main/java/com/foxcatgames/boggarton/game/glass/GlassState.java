@@ -11,7 +11,7 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
     static private final int HORIZONTAL = 2;
     static private final int DIAGONAL = 3;
 
-    protected int reaction = 0;
+    protected int reaction;
     protected int nextPosition;
     protected int score;
     protected int i, j; // first figure brick location (glass cell)
@@ -19,6 +19,10 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
 
     protected B[][] bricks;
     protected F figure;
+
+    public GlassState(int nextPosition) {
+        this.nextPosition = nextPosition;
+    }
 
     public void findHorizontals(final int i, final int j) {
         if (bricks[i][j] == null || bricks[i][j].getType() == EMPTY || bricks[i - 1][j] == null || bricks[i + 1][j] == null)

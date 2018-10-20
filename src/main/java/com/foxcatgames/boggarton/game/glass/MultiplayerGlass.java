@@ -22,7 +22,7 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
 
     public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty,
             final Map<String, Integer> sounds) {
-        super(new Brick[width][height], layer, position, width, height, sounds);
+        super(new Brick[width][height], layer, position, width, height, sounds, 0);
         this.layer = layer;
         this.difficulty = difficulty;
     }

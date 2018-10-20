@@ -10,9 +10,10 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     protected int count = 0; // figures counter
 
     final protected Changes changes = new Changes(false);
-    final protected GlassState<B, F> state = new GlassState<>();
+    final protected GlassState<B, F> state;
 
-    public AbstractGlass(final int width, final int height) {
+    public AbstractGlass(final int width, final int height, final int nextPosition) {
+        state = new GlassState<>(nextPosition);
         state.setWidth(width);
         state.setHeight(height);
     }

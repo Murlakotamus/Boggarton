@@ -28,7 +28,7 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
         try (final BufferedReader in = new BufferedReader(new FileReader(new File(filename)))) {
             String line;
             while ((line = in.readLine()) != null)
-                if (line.startsWith(Const.FIGURE_STR) || line.startsWith(Const.YUCK_STR))
+                if (line.startsWith(Const.FIGURE_STR) || line.startsWith(Const.YUCK_STR) || line.startsWith(Const.SCORE_STR))
                     events.add(line);
                 else if (Const.GAMEOVER_STR.equals(line))
                     break;
@@ -41,7 +41,7 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
         int figureSize = 3;
         for (final String event : events)
             if (event.startsWith(Const.FIGURE_STR)) {
-                figureSize = events.get(0).substring(Const.FIGURE_STR.length()).length();
+                figureSize = event.substring(Const.FIGURE_STR.length()).length();
                 break;
             }
 

@@ -29,9 +29,9 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
     final Map<String, Integer> sounds;
 
     public AbstractVisualGlass(final B[][] bricks, final Layer layer, final Vector2f position, final int width, final int height,
-            final Map<String, Integer> sounds) {
+            final Map<String, Integer> sounds, final int nextPosition) {
 
-        super(width, height);
+        super(width, height, nextPosition);
 
         this.sounds = sounds;
 

@@ -15,12 +15,12 @@ import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.players.IPlayer;
 
-abstract public class AbstractOnePlayerScene<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
+abstract public class AbstractOnePlayerScene<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>, T extends AbstractVisualGame<B, F, G, P>>
         extends AbstractPlayingScene<B, F, G, P> {
 
     protected static final int X = 355;
     protected final SimpleEntity gameOverEntity = new SimpleEntity(GAME_OVER, layer);
-    protected AbstractVisualGame<B, F, G, P> game;
+    protected T game;
 
     protected IPlayer player;
 

@@ -62,26 +62,6 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
 
     abstract protected void checkAuto();
 
-    private void losersAndWinners(final int loserNumber) {
-        for (int i = 0; i < PLAYERS; i++) {
-            final int figureSize = getFigureSize(game[i]);
-            if (i == loserNumber)
-                loser.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
-            else {
-                winner.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
-                Victories.addVictory(i);
-            }
-            game[i].closeLogger();
-        }
-    }
-
-    protected void saveOutcome(final int loserNumber) {
-        if (loserNumber == 0)
-            DbHandler.getInstance().saveGameOutcome(second, first);
-        else
-            DbHandler.getInstance().saveGameOutcome(first, second);
-    }
-
     @Override
     protected void changes() {
         checkAuto();
@@ -89,30 +69,12 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
         if (gameOver)
             return;
 
-        for (int i = 0; i < PLAYERS; i++)
-            if (game[i].isGameOver()) {
-                gameOver = true;
-                losersAndWinners(i);
-                saveOutcome(i);
-                pauseBetweenGames = System.currentTimeMillis();
-            }
-
-        if (gameOver) {
+        if (checkGameOver()) {
             for (int i = 0; i < PLAYERS; i++)
                 game[i].setGameOver();
             return;
         }
-
-        for (int i = 0; i < PLAYERS; i++) {
-            game[i].processStage();
-            getYucks(i);
-        }
-    }
-
-    private void getYucks(final int n) {
-        for (int j = 0; j < PLAYERS; j++)
-            if (n != j)
-                game[n].addYuck(game[j].getYucksForEnemy());
+        processScene();
     }
 
     @Override
@@ -138,5 +100,49 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
             gamePaused[i].unspawn();
             game[i].getGlass().pauseOff();
         }
+    }
+
+    private boolean checkGameOver() {
+        for (int i = 0; i < PLAYERS; i++)
+            if (game[i].isGameOver()) {
+                gameOver = true;
+                losersAndWinners(i);
+                saveOutcome(i);
+                pauseBetweenGames = System.currentTimeMillis();
+            }
+        return gameOver;
+    }
+
+    private void losersAndWinners(final int loserNumber) {
+        for (int i = 0; i < PLAYERS; i++) {
+            final int figureSize = getFigureSize(game[i]);
+            if (i == loserNumber)
+                loser.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
+            else {
+                winner.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
+                Victories.addVictory(i);
+            }
+            game[i].closeLogger();
+        }
+    }
+
+    private void saveOutcome(final int loserNumber) {
+        if (loserNumber == 0)
+            DbHandler.getInstance().saveGameOutcome(second, first);
+        else
+            DbHandler.getInstance().saveGameOutcome(first, second);
+    }
+
+    private void processScene() {
+        for (int i = 0; i < PLAYERS; i++) {
+            game[i].processStage();
+            getYucks(i);
+        }
+    }
+
+    private void getYucks(final int n) {
+        for (int j = 0; j < PLAYERS; j++)
+            if (n != j)
+                game[n].addYuck(game[j].getYucksForEnemy());
     }
 }

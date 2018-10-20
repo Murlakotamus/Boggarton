@@ -16,7 +16,7 @@ import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.MovesExecutor;
 
-public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> {
+public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast, ReplayGame> {
 
     public ReplayScene(final int width, final int height) {
         super(SceneItem.REPLAY);
@@ -48,7 +48,6 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
         game = new ReplayGame(layer, X, Y, width, height, figureSize, events, Const.SOUNDS);
         game.setName("Replay");
         game.startGame();
-
         new MovesExecutor(game, moves.toString().toCharArray());
     }
 

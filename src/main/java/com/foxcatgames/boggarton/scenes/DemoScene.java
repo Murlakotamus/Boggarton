@@ -10,7 +10,7 @@ import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class DemoScene extends AbstractOnePlayerScene<Brick, SimpleFigure, SimpleGlass, SimpleForecast> {
+public class DemoScene extends AbstractOnePlayerScene<Brick, SimpleFigure, SimpleGlass, SimpleForecast, SimpleGame> {
 
     public DemoScene(final int width, final int height, final int prognosis, final int figureSize, final RandomTypes randomType,
             final DifficultyTypes difficulty) {

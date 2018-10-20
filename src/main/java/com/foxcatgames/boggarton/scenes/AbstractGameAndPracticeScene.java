@@ -8,11 +8,12 @@ import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
+import com.foxcatgames.boggarton.game.AbstractOnePlayerGame;
 import com.foxcatgames.boggarton.game.figure.SimpleFigure;
 import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
 import com.foxcatgames.boggarton.game.glass.SimpleGlass;
 
-abstract public class AbstractGameAndPracticeScene extends AbstractOnePlayerScene<Brick, SimpleFigure, SimpleGlass, SimpleForecast> {
+abstract public class AbstractGameAndPracticeScene<T extends AbstractOnePlayerGame> extends AbstractOnePlayerScene<Brick, SimpleFigure, SimpleGlass, SimpleForecast, T> {
 
     private final SimpleEntity gamePaused = new SimpleEntity(GAME_PAUSED, layer);
 

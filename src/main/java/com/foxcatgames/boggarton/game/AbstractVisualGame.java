@@ -24,7 +24,7 @@ import com.foxcatgames.boggarton.scenes.AbstractScene;
 abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
         extends AbstractGame<B, F, G, P> {
 
-    private static final float APPEAR_PAUSE = 1f;
+    private static final float APPEAR_PAUSE = 1.5f;
     private static final float DISAPPEAR_PAUSE = 1f;
     private static final float SET_PAUSE = 0.1f;
     protected static final float YUCK_PAUSE = 0.5f;
@@ -62,14 +62,14 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
                 charge();
             break;
         case APPEAR:
-            executeCommand();
+            executeSoundCommand();
             if (dropPressed)
                 nextStage();
             else
                 stagePause(APPEAR_PAUSE);
             break;
         case FALL:
-            executeCommand();
+            executeSoundCommand();
             fall();
             break;
         case SET:
@@ -86,6 +86,11 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             break;
         default:
         }
+    }
+
+    private void executeSoundCommand() {
+        if (!(Sound.isBusy(sounds.get(Const.SHIFT)) || Sound.isBusy(sounds.get(Const.CYCLE))))
+            executeCommand();
     }
 
     protected F nextFigure() {

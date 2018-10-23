@@ -1,5 +1,7 @@
 package com.foxcatgames.boggarton.players.virtual;
 
+import static com.foxcatgames.boggarton.Const.NEXT;
+
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;

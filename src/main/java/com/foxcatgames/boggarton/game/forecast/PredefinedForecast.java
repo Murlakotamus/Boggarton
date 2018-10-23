@@ -35,7 +35,7 @@ public class PredefinedForecast extends AbstractVisualForecast<Brick, Predefined
                 figures[i] = new PredefinedFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), size,
                         predefinedFigures.get(forecastCounter++));
             else
-                figures[i] = new PredefinedFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER), 0, "");
+                figures[i] = new PredefinedFigure(layer, new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + i * BOX + BORDER));
         }
     }
 
@@ -56,6 +56,6 @@ public class PredefinedForecast extends AbstractVisualForecast<Brick, Predefined
                     predefinedFigures.get(forecastCounter++));
         else
             figures[figures.length - 1] = new PredefinedFigure(frame.getLayer(),
-                    new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (figures.length - 1) * BOX + BORDER));
+                    new Vector2f(frame.getPosition().getX(), frame.getPosition().getY() + (figures.length - 1) * BOX + BORDER)); // empty figure
     }
 }

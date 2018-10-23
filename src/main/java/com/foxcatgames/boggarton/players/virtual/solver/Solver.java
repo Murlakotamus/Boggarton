@@ -1,6 +1,7 @@
 package com.foxcatgames.boggarton.players.virtual.solver;
 
 import static com.foxcatgames.boggarton.Const.WIDTH;
+import static com.foxcatgames.boggarton.Const.*;
 
 import java.util.HashSet;
 
@@ -20,8 +21,6 @@ import com.foxcatgames.boggarton.game.utils.Pair;
 public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>> {
 
     private static final int DEFAULT_SIZE = 16; // CCLLLDCRRRDLLLDN (16)
-    private static final String D = "D";
-    private static final String DN = "DN";
 
     private final int spaceAvail;
     private final String[] cycles;
@@ -55,15 +54,15 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
 
         shiftsLeft = new String[spaceAvail];
         for (int i = 0; i < spaceAvail; i++)
-            shiftsLeft[i] = getRepeat(i, 'L');
+            shiftsLeft[i] = getRepeat(i, LEFT);
 
         shiftsRight = new String[spaceAvail];
         for (int i = 0; i < spaceAvail; i++)
-            shiftsRight[i] = getRepeat(i, 'R');
+            shiftsRight[i] = getRepeat(i, RIGHT);
 
         cycles = new String[figureSize];
         for (int i = 0; i < figureSize; i++)
-            cycles[i] = getRepeat(i, 'C');
+            cycles[i] = getRepeat(i, UP);
 
         final int size = WIDTH - figureSize;
 
@@ -139,7 +138,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             isFallen = glass.moveDown();
         } while (!glass.hasChanges());
 
-        return isFallen ? D : DN;
+        return isFallen ? DOWN_ : DOWN_NEXT;
     }
 
     private int getFigureSetSize(final VirtualFigure figure) {

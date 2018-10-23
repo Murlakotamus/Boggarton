@@ -32,7 +32,7 @@ public class ReplayGlass extends AbstractVisualGlass<Brick, PredefinedFigure> {
 
         if (yuckBricks.contains(",")) { // nasty brick
             final String[] yuck = yuckBricks.split(", ");
-            state.setBrick(Integer.parseInt(yuck[0]), Integer.parseInt(yuck[1]), new Brick(Integer.parseInt(yuck[2]), layer));
+            state.setBrick(Integer.parseInt(yuck[0]), Integer.parseInt(yuck[1]), new Brick(Utils.parseBrick(yuck[2].charAt(0)), layer));
             return;
         }
         raiseBricks();

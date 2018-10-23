@@ -1,6 +1,7 @@
 package com.foxcatgames.boggarton.game;
 
-import com.foxcatgames.boggarton.Const;
+import static com.foxcatgames.boggarton.Const.*;
+
 import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
@@ -150,26 +151,26 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
 
     public void rotateFigure() {
         glass.rotate();
-        logEvent("C");
+        logEvent(UP);
     }
 
     public void moveLeft() {
         glass.moveLeft();
-        logEvent("L");
+        logEvent(LEFT);
     }
 
     public void moveRight() {
         glass.moveRight();
-        logEvent("R");
+        logEvent(RIGHT);
     }
 
     public void dropFigure() {
         dropPressed = true;
-        logEvent("D");
+        logEvent(DOWN);
     }
 
     public void finishTurn() {
-        logEvent("N\n");
+        logEvent(NEXT + "\n");
         turnFinished = true;
     }
 
@@ -207,11 +208,11 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
 
     protected void logFigure(final F figure) {
         if (figure != null)
-            logEvent(Const.FIGURE_STR + figure);
+            logEvent(FIGURE_STR + figure);
     }
 
     protected void logScore(final int diffScore) {
-        logEvent(Const.SCORE_STR + diffScore + "\n");
+        logEvent(SCORE_STR + diffScore + "\n");
     }
 
     protected void logGlass(final String glassState) {
@@ -219,12 +220,16 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
     }
 
     protected void logMoves() {
-        logEvent(Const.MOVES_STR);
+        logEvent(MOVES_STR);
     }
 
     protected void logYuck(final String yuck) {
         if (yuck != null)
-            logEvent(Const.YUCK_STR + yuck + "\n");
+            logEvent(YUCK_STR + yuck + "\n");
+    }
+
+    private void logEvent(final char c) {
+        logEvent("" + c);
     }
 
     private void logEvent(final String str) {

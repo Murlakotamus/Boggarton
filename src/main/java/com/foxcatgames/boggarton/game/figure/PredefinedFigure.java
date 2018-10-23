@@ -18,6 +18,6 @@ public class PredefinedFigure extends AbstractVisualFigure<Brick> {
     }
 
     public PredefinedFigure(final Layer layer, final Vector2f position) {
-        super(new Brick[0], position);
+        this(layer, position, 0, "");
     }
 }

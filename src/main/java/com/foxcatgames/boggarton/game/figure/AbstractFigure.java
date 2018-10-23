@@ -88,7 +88,7 @@ abstract public class AbstractFigure<B extends IBrick> implements IFigure<B> {
             if (bricks[i] == null)
                 sb.append('x');
             else
-                sb.append(bricks[i].getType() - 10);
+                sb.append((char)(bricks[i].getType() + 54));
         }
         sb.append('\n');
 

@@ -30,7 +30,11 @@ public class Utils {
     }
 
     static public int parseBrick(final String str, final int index) {
-        return Integer.parseInt("" + str.charAt(index)) + CURRENT_SET * 10;
+        return parseBrick(str.charAt(index));
     }
 
+    static public int parseBrick(final char c) {
+        final int i = (int) c - 64;
+        return i + CURRENT_SET * 10;
+    }
 }

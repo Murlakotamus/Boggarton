@@ -1,5 +1,7 @@
 package com.foxcatgames.boggarton.players.virtual;
 
+import static com.foxcatgames.boggarton.Const.*;
+
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
@@ -9,12 +11,6 @@ import com.foxcatgames.boggarton.game.utils.ICommand;
 
 abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
         implements Runnable {
-
-    protected static final char LEFT = 'L';
-    protected static final char RIGHT = 'R';
-    protected static final char CYCLE = 'C';
-    protected static final char DOWN = 'D';
-    protected static final char NEXT = 'N';
 
     protected final AbstractVisualGame<B, F, G, P> game;
 
@@ -44,7 +40,7 @@ abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractV
             });
             break;
 
-        case CYCLE:
+        case UP:
             game.restoreSpeed();
             game.sendCommand(new ICommand() {
                 @Override

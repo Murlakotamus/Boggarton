@@ -79,7 +79,7 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
             else
                 brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
             state.setBrick(place.getFirst(), place.getSecond(), new Brick(brick, layer));
-            return place.getFirst() + ", " + place.getSecond() + ", " + brick;
+            return place.getFirst() + ", " + place.getSecond() + ", " + (char)(brick + 54);
         }
         return null;
     }

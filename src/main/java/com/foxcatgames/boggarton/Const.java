@@ -25,6 +25,15 @@ public class Const {
     public static final int WIDTH = 6;
     public static final int HEIGHT = 12;
 
+    public static final char LEFT = '←';
+    public static final char RIGHT = '→';
+    public static final char UP = '↑';
+    public static final char DOWN = '↓';
+    public static final char NEXT = '↵';
+
+    public static final String DOWN_ = "" + DOWN;
+    public static final String DOWN_NEXT = "" + DOWN + NEXT;
+
     public static final float DEFAULT_Z = 0;
     public static final int CURRENT_SET = 1;
 

@@ -10,7 +10,7 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     private boolean moveDown;
     private boolean forSearchingSolution = true;
 
-    public <B extends IBrick, F extends IFigure<B>> VirtualGlass(final IGlassState<B, F> glassState, final boolean moveDown) {
+    public <B extends IBrick, F extends IFigure<B>> VirtualGlass(final GlassState<B, F> glassState, final boolean moveDown) {
         super(glassState.getWidth(), glassState.getHeight(), 0);
         this.moveDown = moveDown;
 

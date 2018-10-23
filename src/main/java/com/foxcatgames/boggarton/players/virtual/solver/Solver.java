@@ -13,7 +13,7 @@ import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
-import com.foxcatgames.boggarton.game.glass.IGlassState;
+import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.glass.VirtualGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 
@@ -78,7 +78,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
 
     public Solution getSolution(final int depth) {
         try {
-            final Pair<IGlassState<B, F>, P> pair = game.getBuffer();
+            final Pair<GlassState<B, F>, P> pair = game.getBuffer();
             final VirtualGlass initGlass = new VirtualGlass(pair.getFirst(), moveDown);
             final VirtualForecast initForecast = new VirtualForecast(pair.getSecond());
             final int initScore = initGlass.getGlassState().getScore();

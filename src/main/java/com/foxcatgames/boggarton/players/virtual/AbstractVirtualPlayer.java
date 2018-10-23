@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
-import com.foxcatgames.boggarton.game.glass.IGlassState;
+import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.IEater;
@@ -43,8 +43,8 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
     public void run() {
         try {
             while (game.isGameOn()) {
-                final Pair<IGlassState<B, F>, P> buffer = game.getBuffer();
-                final IGlassState<B, F> glassState = buffer.getFirst();
+                final Pair<GlassState<B, F>, P> buffer = game.getBuffer();
+                final GlassState<B, F> glassState = buffer.getFirst();
                 if (glassState == null)
                     break;
 

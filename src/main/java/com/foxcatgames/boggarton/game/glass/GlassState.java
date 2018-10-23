@@ -5,7 +5,7 @@ import static com.foxcatgames.boggarton.Const.EMPTY;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 
-public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlassState<B, F> {
+public class GlassState<B extends IBrick, F extends IFigure<B>> {
 
     static private final int VERTICAL = 1;
     static private final int HORIZONTAL = 2;
@@ -83,7 +83,6 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         return true;
     }
 
-    @Override
     public boolean canMoveLeft() {
         if (i <= 0)
             return false;
@@ -96,7 +95,6 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         return true;
     }
 
-    @Override
     public boolean canMoveRight() {
         if (i >= width - figure.getLenght())
             return false;
@@ -108,7 +106,6 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         return true;
     }
 
-    @Override
     public int getSpaceLeft() {
         int result = 0;
         if (canMoveLeft()) {
@@ -120,7 +117,6 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         return result;
     }
 
-    @Override
     public int getSpaceRight() {
         int result = 0;
         if (canMoveRight()) {
@@ -132,7 +128,6 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         return result;
     }
 
-    @Override
     public int getFullness() {
         for (int j = 0; j < height; j++)
             for (int i = 0; i < width; i++)
@@ -148,12 +143,10 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         return height - 1;
     }
 
-    @Override
     public void setNextPosition(final int nextPosition) {
         this.nextPosition = nextPosition;
     }
 
-    @Override
     public void setScore(final int score) {
         this.score = score;
     }
@@ -178,32 +171,26 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         this.bricks = bricks;
     }
 
-    @Override
     public void setFigure(final F figure) {
         this.figure = figure;
     }
 
-    @Override
     public int getI() {
         return i;
     }
 
-    @Override
     public int getJ() {
         return j;
     }
 
-    @Override
     public int getScore() {
         return score;
     }
 
-    @Override
     public F getFigure() {
         return figure;
     }
 
-    @Override
     public B getBrick(final int i, final int j) {
         return bricks[i][j];
     }
@@ -212,17 +199,14 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         bricks[i][j] = brick;
     }
 
-    @Override
     public int getWidth() {
         return width;
     }
 
-    @Override
     public int getHeight() {
         return height;
     }
 
-    @Override
     public int getNextPosition() {
         return nextPosition;
     }
@@ -243,8 +227,7 @@ public class GlassState<B extends IBrick, F extends IFigure<B>> implements IGlas
         }
     }
 
-    @Override
-    public IGlassState<B, F> getGlassState() {
+    public GlassState<B, F> getGlassState() {
         return this;
     }
 

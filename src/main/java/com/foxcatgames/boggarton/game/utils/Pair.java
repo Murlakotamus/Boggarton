@@ -5,6 +5,8 @@ public class Pair<F, S> {
     private S second;
 
     protected Pair() {
+        first = null;
+        first = null;
     }
 
     public Pair(final F first, final S second) {
@@ -47,7 +49,6 @@ public class Pair<F, S> {
 
     @Override
     public String toString() {
-        return "first = " + (first == null ? "null" : first.toString()) + ", second = "
-                + (second == null ? "null" : second.toString());
+        return "first = " + (first == null ? "null" : first) + ", second = " + (second == null ? "null" : second);
     }
 }

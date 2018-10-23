@@ -4,8 +4,8 @@ import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.game.figure.IFigure;
 import com.foxcatgames.boggarton.game.forecast.IForecast;
+import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.glass.IGlass;
-import com.foxcatgames.boggarton.game.glass.IGlassState;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
@@ -32,7 +32,7 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
 
     protected GameLogger gameLogger = null;
 
-    protected final Pair<IGlassState<B, F>, P> buffer = new Pair<>(null, null);
+    protected final Pair<GlassState<B, F>, P> buffer = new Pair<>(null, null);
     protected final OuterCommand command = new OuterCommand();
     protected int targetPosition = 0;
 
@@ -94,7 +94,7 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
         }
     }
 
-    public Pair<IGlassState<B, F>, P> getBuffer() throws InterruptedException {
+    public Pair<GlassState<B, F>, P> getBuffer() throws InterruptedException {
         synchronized (buffer) {
             while (buffer.isEmpty() && isGameOn())
                 buffer.wait();

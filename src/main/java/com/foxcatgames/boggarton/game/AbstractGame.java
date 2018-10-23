@@ -32,12 +32,14 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
 
     protected GameLogger gameLogger = null;
 
-    final protected Pair<IGlassState<B, F>, P> buffer = new Pair<>(null, null);
-    final protected OuterCommand command = new OuterCommand();
+    protected final Pair<IGlassState<B, F>, P> buffer = new Pair<>(null, null);
+    protected final OuterCommand command = new OuterCommand();
     protected int targetPosition = 0;
 
     protected boolean needNewFigure = true;
     protected int lastScore = 0;
+    protected final boolean virtualPlayer;
+    protected boolean turnFinished;
 
     abstract public void processStage();
 
@@ -45,7 +47,13 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
 
     abstract protected void resumeScore();
 
+    public AbstractGame(final boolean virtualPlayer) {
+        this.virtualPlayer = virtualPlayer;
+    }
+
     protected F nextFigure() {
+        resumeScore();
+        turnFinished = false;
         final F figure;
         if (needNewFigure) {
             figure = forecast.getForecast();
@@ -58,7 +66,6 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
             return null;
         }
         needNewFigure = false;
-        resumeScore();
         oldGlassState = glass.getGlassState().toString();
         return figure;
     }
@@ -161,8 +168,9 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
         logEvent("D");
     }
 
-    public void waitNextFigure() {
+    public void finishTurn() {
         logEvent("N\n");
+        turnFinished = true;
     }
 
     public G getGlass() {

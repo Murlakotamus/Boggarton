@@ -151,7 +151,7 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     }
 
     @Override
-    public void waitChanges() {
+    public void waitChanges() throws InterruptedException {
         if (!forSearchingSolution)
             super.waitChanges();
     }

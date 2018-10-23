@@ -4,8 +4,6 @@ import com.foxcatgames.boggarton.game.IBrick;
 
 abstract public class AbstractFigure<B extends IBrick> implements IFigure<B> {
 
-    static final protected int REASON_TO_RORATE = 2;
-
     final protected B[] bricks;
     final protected int figureSize;
 
@@ -47,7 +45,7 @@ abstract public class AbstractFigure<B extends IBrick> implements IFigure<B> {
 
     @Override
     public void rotate() {
-        if (number < REASON_TO_RORATE)
+        if (number < 2)
             return;
 
         final int firstBrick = getFirstBrickNum();

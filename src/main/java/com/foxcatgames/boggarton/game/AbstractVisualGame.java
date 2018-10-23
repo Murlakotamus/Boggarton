@@ -29,7 +29,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private static final float SET_PAUSE = 0.1f;
     protected static final float YUCK_PAUSE = 0.5f;
 
-    private static final int DROPPING_SPEED = 500000;
+    private static final int DROPPING_SPEED = 400000;
     private static final int CRASH_SPEED = 150000;
     private static final int MOVING_SPEED = 3000;
     private static final int CHARGE_SPEED = 300000;
@@ -42,7 +42,8 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private final Text diffScore;
     protected final Map<String, Integer> sounds;
 
-    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final Map<String, Integer> sounds) {
+    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final Map<String, Integer> sounds, final boolean virtualPlayer) {
+        super(virtualPlayer);
         this.x = x;
         this.y = y;
         this.sounds = sounds;
@@ -56,8 +57,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
         switch (stage) {
         case NEXT:
             if (needNewFigure) {
-                logFigure(nextFigure());
-                logMoves();
+                nextFigure();
             } else
                 charge();
             break;
@@ -73,6 +73,11 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             fall();
             break;
         case SET:
+            if (virtualPlayer && !turnFinished) {
+                executeCommand();
+                Thread.yield();
+                break;
+            }
             stagePause(SET_PAUSE);
             break;
         case CRASH:
@@ -143,6 +148,8 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             if (scpecialBricks != null)
                 satisfyCondition.execute();
             fillBuffer();
+            logFigure(figure);
+            logMoves();
             nextStage();
             return;
         }

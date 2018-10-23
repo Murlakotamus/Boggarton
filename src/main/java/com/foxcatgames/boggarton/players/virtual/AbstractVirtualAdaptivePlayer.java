@@ -15,9 +15,9 @@ abstract public class AbstractVirtualAdaptivePlayer<B extends Brick, F extends A
     }
 
     @Override
-    protected String getSolution(final int dept) {
-        String moves = super.getSolution(dept);
-        int lastIndex = moves.indexOf(NEXT);
+    protected String getSolution(final int depth) {
+        final String moves = super.getSolution(depth);
+        final int lastIndex = moves.indexOf(NEXT);
         String result = moves;
         if (lastIndex > 0)
             result = moves.substring(0, lastIndex + 1);

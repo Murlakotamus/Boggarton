@@ -76,7 +76,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             movesToRight[i] = new Vector(true, i + 1);
     }
 
-    public Solution getSolution(final int dept) {
+    public Solution getSolution(final int depth) {
         try {
             final Pair<IGlassState<B, F>, P> pair = game.getBuffer();
             final VirtualGlass initGlass = new VirtualGlass(pair.getFirst(), moveDown);
@@ -84,7 +84,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             final int initScore = initGlass.getGlassState().getScore();
 
             solution = new Solution(initScore);
-            maxDepth = Math.min(initForecast.getDepth(), dept);
+            maxDepth = Math.min(initForecast.getDepth(), depth);
 
             findSolutionRecursively(initGlass, initForecast, 0, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)));
 
@@ -132,7 +132,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return shiftsLeft[j];
     }
 
-    private String drop(final VirtualGlass glass) {
+    private String drop(final VirtualGlass glass) throws InterruptedException {
         glass.dropChanges();
         boolean isFallen = false;
         do {
@@ -152,7 +152,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return set.size();
     }
 
-    private void findSolutionRecursively(final VirtualGlass glass, final VirtualForecast initForecast, int reactions, final StringBuilder result) {
+    private void findSolutionRecursively(final VirtualGlass glass, final VirtualForecast initForecast, int reactions, final StringBuilder result) throws InterruptedException {
         if (game.isGameOver())
             return;
 
@@ -166,8 +166,8 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             for (int i = 0; i <= cycles; i++) {
                 final VirtualGlass virtualGlass = new VirtualGlass(glass.getGlassState(), moveDown);
                 final StringBuilder currResult = new StringBuilder(result);
-                currResult.append(cycle(virtualGlass, i));
                 currResult.append(move(virtualGlass, shift.getDirection(), j));
+                currResult.append(cycle(virtualGlass, i));
                 currResult.append(drop(virtualGlass));
 
                 if (!virtualGlass.figure().isFallen())
@@ -190,7 +190,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             }
     }
 
-    private void findDropRecursively(final VirtualGlass glass, final VirtualForecast initForecast, final StringBuilder result) {
+    private void findDropRecursively(final VirtualGlass glass, final VirtualForecast initForecast, final StringBuilder result) throws InterruptedException {
         final int avail = glass.figure().getNumber() - 1;
         for (int i = 0; i <= avail; i++) {
 

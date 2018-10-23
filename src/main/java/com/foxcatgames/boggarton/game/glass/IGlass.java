@@ -37,9 +37,9 @@ public interface IGlass<B extends IBrick, F extends IFigure<B>> {
     void addReaction();
     int cleanReactions();
 
-    void dropChanges();
+    void dropChanges() throws InterruptedException;
     boolean hasChanges();
-    void waitChanges();
+    void waitChanges() throws InterruptedException;
 
     int getFullness();
     int getCount();

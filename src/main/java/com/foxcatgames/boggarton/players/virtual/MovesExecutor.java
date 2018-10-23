@@ -6,7 +6,7 @@ import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 
-public class MovesExecutor extends AbstractExecutor<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> implements Runnable {
+public class MovesExecutor extends AbstractMovesExecutor<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> implements Runnable {
 
     private final char[] moves;
 

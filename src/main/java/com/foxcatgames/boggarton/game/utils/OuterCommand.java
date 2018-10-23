@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.game.utils;
 
 public class OuterCommand {
 
-    ICommand command = null;
+    private ICommand command = null;
 
     public void execute() {
         command.execute();

@@ -14,9 +14,9 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
     public CompetitionDemoScene(final int width, final int height, final int[] prognosis, final int figureSize, final YuckTypes yuckType,
             final RandomTypes randomType, final DifficultyTypes difficulty) {
 
-        super(SceneItem.COMPETITION_DEMO, width, height, prognosis, figureSize, yuckType, randomType, difficulty);
+        super(SceneItem.COMPETITION_DEMO, width, height, prognosis, figureSize, yuckType, randomType, difficulty, new boolean[] { true, true });
 
-        first = new EffectiveVirtualNonAdaptivePlayer<>(game[0], Const.REACTIONS_EATER);
+        first = new EffectiveVirtualNonAdaptivePlayer<>(game[0], Const.FULLNESS_EATER);
         second = new VirtualAdaptivePlayer<>(game[1], Const.FULLNESS_EATER);
     }
 

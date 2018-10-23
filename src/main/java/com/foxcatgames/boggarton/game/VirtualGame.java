@@ -8,6 +8,7 @@ import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, VirtualGlass, VirtualForecast> {
 
     public VirtualGame(final int width, final int height, final int prognosis, final int figureSize, final int difficulty, final RandomTypes randomType) {
+        super(true);
         forecast = new VirtualForecast(prognosis, figureSize, difficulty, randomType);
         glass = new VirtualGlass(width, height);
     }
@@ -33,6 +34,11 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
             fall();
             break;
         case SET:
+            if (!turnFinished) {
+                executeCommand();
+                Thread.yield();
+                break;
+            }
             nextStage();
             break;
         case PROCESS:
@@ -70,7 +76,7 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
         }
         if (!killedBricks)
             nextStage();
-        
+
         glass.killChains();
         nextStage();
     }

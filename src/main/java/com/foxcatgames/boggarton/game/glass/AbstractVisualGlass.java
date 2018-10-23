@@ -157,26 +157,29 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     @Override
     public void rotate() {
-        if (!gamePaused && !gameOver) {
-            Sound.play(sounds.get(Const.CYCLE));
-            figure().rotate();
-        }
+        if (gamePaused || gameOver)
+            return;
+
+        Sound.play(sounds.get(Const.CYCLE));
+        figure().rotate();
     }
 
     @Override
     public void moveLeft() {
-        if (!gamePaused && !gameOver && canMoveLeft()) {
-            Sound.play(sounds.get(Const.SHIFT));
-            setFigure(state.getI() - 1, state.getJ(), true);
-        }
+        if (gamePaused || gameOver || !canMoveLeft())
+            return;
+
+        Sound.play(sounds.get(Const.SHIFT));
+        setFigure(state.getI() - 1, state.getJ(), true);
     }
 
     @Override
     public void moveRight() {
-        if (!gamePaused && !gameOver && canMoveRight()) {
-            Sound.play(sounds.get(Const.SHIFT));
-            setFigure(state.getI() + 1, state.getJ(), true);
-        }
+        if (gamePaused || gameOver || !canMoveRight())
+            return;
+
+        Sound.play(sounds.get(Const.SHIFT));
+        setFigure(state.getI() + 1, state.getJ(), true);
     }
 
     @Override

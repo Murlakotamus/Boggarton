@@ -74,20 +74,16 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     }
 
     @Override
-    public void waitChanges() {
+    public void waitChanges() throws InterruptedException {
         synchronized (changes) {
-            try {
-                while (!changes.isFlag() && !gameOver)
-                    changes.wait();
-            } catch (final InterruptedException e) {
-                e.printStackTrace();
-            }
+            while (!changes.isFlag() && !gameOver)
+                changes.wait();
             changes.notify();
         }
     }
 
     @Override
-    public void dropChanges() {
+    public void dropChanges() throws InterruptedException {
         setChanges(false);
     }
 

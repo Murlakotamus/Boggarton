@@ -40,7 +40,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
     protected long pauseBetweenGames = 0;
 
     AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] prognosis, final int figureSize,
-            YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty) {
+            YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty, final boolean[] virtualPlayer) {
         super(scene);
         for (int i = 0; i < PLAYERS; i++)
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);
@@ -50,7 +50,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Bric
 
         for (int i = 0; i < PLAYERS; i++) {
             game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(), Victories.getVictories(i),
-                    yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
+                    yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT, virtualPlayer[i]);
             game[i].setName(PLAYERS_NAMES[i]);
         }
 

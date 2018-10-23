@@ -54,6 +54,7 @@ public class GameLogger {
     public void logEvent(final String str) {
         try {
             bw.write(str);
+            bw.flush();
         } catch (final IOException e) {
             e.printStackTrace();
         }

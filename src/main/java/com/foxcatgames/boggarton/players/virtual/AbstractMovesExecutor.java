@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
-abstract public class AbstractExecutor<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
+abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
         implements Runnable {
 
     protected static final char LEFT = 'L';
@@ -18,7 +18,7 @@ abstract public class AbstractExecutor<B extends Brick, F extends AbstractVisual
 
     protected final AbstractVisualGame<B, F, G, P> game;
 
-    public AbstractExecutor(final AbstractVisualGame<B, F, G, P> game) {
+    public AbstractMovesExecutor(final AbstractVisualGame<B, F, G, P> game) {
         this.game = game;
     }
 
@@ -68,10 +68,16 @@ abstract public class AbstractExecutor<B extends Brick, F extends AbstractVisual
             break;
 
         case NEXT:
-            game.clearBuffer();
+            game.sendCommand(new ICommand() {
+                @Override
+                public void execute() {
+                    game.finishTurn();
+                }
+            });
+            game.clearBuffer(); // MoveExecutor and NonAdaptivePlayer must wait for buffer update
             game.getBuffer();
             game.restoreSpeed();
-            break; // non-adaptive algorithm
+            break;
         }
     }
 }

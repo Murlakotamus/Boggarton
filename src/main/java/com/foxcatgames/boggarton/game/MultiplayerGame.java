@@ -37,9 +37,10 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
     private int xYuck, yYuck;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
-            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
+            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds,
+            final boolean virtualPlayer) {
 
-        super(layer, x, y, width, height, sounds);
+        super(layer, x, y, width, height, sounds, virtualPlayer);
         this.yuckType = yuckType;
         glass = new MultiplayerGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, setSize, sounds);
         forecast = new SimpleForecast(layer, new Vector2f(x, y), prognosis, figureSize, setSize, randomType);

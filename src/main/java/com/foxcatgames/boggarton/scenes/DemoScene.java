@@ -16,7 +16,7 @@ public class DemoScene extends AbstractOnePlayerScene<Brick, SimpleFigure, Simpl
             final DifficultyTypes difficulty) {
 
         super(SceneItem.DEMO);
-        game = new SimpleGame(layer, X, Y, width, height, prognosis, figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS);
+        game = new SimpleGame(layer, X, Y, width, height, prognosis, figureSize, difficulty.getSetSize(), randomType, Const.SOUNDS, true);
         game.setName("Virtual");
         game.initLogger();
         game.startGame();

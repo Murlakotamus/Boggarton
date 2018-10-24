@@ -42,7 +42,8 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private final Text diffScore;
     protected final Map<String, Integer> sounds;
 
-    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final Map<String, Integer> sounds, final boolean virtualPlayer) {
+    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final Map<String, Integer> sounds,
+            final boolean virtualPlayer) {
         super(virtualPlayer);
         this.x = x;
         this.y = y;
@@ -70,6 +71,8 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             break;
         case FALL:
             executeSoundCommand();
+            if (dropPressed)
+                increaseSpeed();
             fall();
             break;
         case SET:
@@ -278,6 +281,11 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
     public void setMaxSpeed() {
         currentSpeed = DROPPING_SPEED;
+    }
+
+    public void increaseSpeed() {
+        if (currentSpeed < DROPPING_SPEED)
+            currentSpeed += 2000;
     }
 
     public int getX() {

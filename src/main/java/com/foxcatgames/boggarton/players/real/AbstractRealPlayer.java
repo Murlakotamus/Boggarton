@@ -47,7 +47,6 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
         final KeyListener moveDown = new KeyListener() {
             @Override
             public void onKeyDown() {
-                game.setMaxSpeed();
                 game.dropFigure();
             }
 

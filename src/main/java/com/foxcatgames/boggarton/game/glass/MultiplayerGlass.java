@@ -57,7 +57,7 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
 
         final StringBuilder result = new StringBuilder(state.getWidth());
         for (int i = 0; i < width(); i++)
-            result.append(yuckBricks.get(i) - Const.CURRENT_SET * 10);
+            result.append((char)(yuckBricks.get(i) - Const.CURRENT_SET * 10 + 64));
 
         return result.toString();
     }
@@ -79,7 +79,7 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
             else
                 brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
             state.setBrick(place.getFirst(), place.getSecond(), new Brick(brick, layer));
-            return place.getFirst() + ", " + place.getSecond() + ", " + (char)(brick + 54);
+            return place.getFirst() + ", " + place.getSecond() + ", " + (char)(brick - Const.CURRENT_SET * 10 + 64);
         }
         return null;
     }

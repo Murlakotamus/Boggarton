@@ -18,9 +18,12 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
 
     private final IEater eater;
     private final boolean moveDown;
+    private final int prognosis;
 
-    public AbstractVirtualPlayer(final AbstractVisualGame<B, F, G, P> game, final String name, final IEater eater, final boolean moveDown) {
+    public AbstractVirtualPlayer(final AbstractVisualGame<B, F, G, P> game, final String name, final int prognosis, final IEater eater,
+            final boolean moveDown) {
         super(game);
+        this.prognosis = prognosis;
         this.eater = eater;
         this.moveDown = moveDown;
         final Thread thread = new Thread(this);
@@ -36,8 +39,8 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
     }
 
     protected String getSolution(final int depth) {
-        final Solver<B, F, G, P> solver = new Solver<>(game, moveDown, game.getForecast().getFigureSize(), eater);
-        return solver.getSolution(depth).getMoves();
+        final Solver<B, F, G, P> solver = new Solver<>(game, depth, moveDown, game.getForecast().getFigureSize(), eater);
+        return solver.getSolution().getMoves();
     }
 
     public void run() {
@@ -48,8 +51,11 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
                 if (glassState == null)
                     break;
 
-                final int depth = glassState.getFullness();
+                final int fullness = glassState.getFullness();
+                final int forecast = buffer.getSecond().getDepth();
+                final int depth = Math.min(Math.min(prognosis, forecast), fullness);
                 final char[] moves = getMoves(depth).toCharArray();
+
                 if (moves.length > 0)
                     makeVirtualPlayerMoves(moves);
             }

@@ -10,8 +10,8 @@ import com.foxcatgames.boggarton.players.virtual.solver.IEater;
 public class VirtualAdaptivePlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
         extends AbstractVirtualAdaptivePlayer<B, F, G, P> {
 
-    public VirtualAdaptivePlayer(final AbstractVisualGame<B, F, G, P> game, final IEater price) {
-        super(game, price, true);
+    public VirtualAdaptivePlayer(final AbstractVisualGame<B, F, G, P> game, final int prognosis, final IEater price) {
+        super(game, prognosis, price, true);
     }
 
     public String getName() {

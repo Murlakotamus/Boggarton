@@ -30,11 +30,12 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
     private final Vector[] movesToRight;
 
     private final AbstractVisualGame<B, F, G, P> game;
+    private final IEater eater;
+    private final int maxDepth;
     private final boolean moveDown;
+
     private Solution solution;
     private int depth;
-    private int maxDepth;
-    private final IEater eater;
 
     private final HashSet<Integer> set = new HashSet<>();
 
@@ -46,8 +47,9 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return sb.toString();
     }
 
-    public Solver(final AbstractVisualGame<B, F, G, P> game, final boolean moveDown, final int figureSize, final IEater eater) {
+    public Solver(final AbstractVisualGame<B, F, G, P> game, final int maxDepth, final boolean moveDown, final int figureSize, final IEater eater) {
         this.game = game;
+        this.maxDepth = maxDepth;
         this.moveDown = moveDown;
         this.eater = eater;
         spaceAvail = WIDTH - figureSize + 1;
@@ -75,7 +77,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             movesToRight[i] = new Vector(true, i + 1);
     }
 
-    public Solution getSolution(final int depth) {
+    public Solution getSolution() {
         try {
             final Pair<GlassState<B, F>, P> pair = game.getBuffer();
             final VirtualGlass initGlass = new VirtualGlass(pair.getFirst(), moveDown);
@@ -83,8 +85,6 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             final int initScore = initGlass.getGlassState().getScore();
 
             solution = new Solution(initScore);
-            maxDepth = Math.min(initForecast.getDepth(), depth);
-
             findSolutionRecursively(initGlass, initForecast, 0, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)));
 
             if (eater.getPrice(solution) <= eater.getPrice(new Solution(initScore))) {
@@ -151,7 +151,8 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return set.size();
     }
 
-    private void findSolutionRecursively(final VirtualGlass glass, final VirtualForecast initForecast, int reactions, final StringBuilder result) throws InterruptedException {
+    private void findSolutionRecursively(final VirtualGlass glass, final VirtualForecast initForecast, int reactions, final StringBuilder result)
+            throws InterruptedException {
         if (game.isGameOver())
             return;
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum YuckTypes {
-    NONE("None"), RANDOM("Additional random line"), HARD("Additional hard line"), NASTY("Nasty bricks");
+    NONE("None"), RANDOM("Random line"), HARD("Hard line"), NASTY("Nasty brick");
 
     private final String name;
 

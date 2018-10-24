@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.game.glass;
 
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.VirtualBrick;
-import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 
 public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
@@ -10,7 +10,7 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     private boolean moveDown;
     private boolean forSearchingSolution = true;
 
-    public <B extends IBrick, F extends IFigure<B>> VirtualGlass(final GlassState<B, F> glassState, final boolean moveDown) {
+    public <B extends IBrick, F extends AbstractFigure<B>> VirtualGlass(final GlassState<B, F> glassState, final boolean moveDown) {
         super(glassState.getWidth(), glassState.getHeight(), 0);
         this.moveDown = moveDown;
 
@@ -35,7 +35,6 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
         state.setBricks(new VirtualBrick[width][height]);
     }
 
-    @Override
     public void setFigure(final int x, final int y, final boolean setChanges) {
         state.setI(x);
         state.setJ(y);
@@ -74,7 +73,6 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
         state.getFigure().rotate();
     }
 
-    @Override
     public boolean moveDown() {
         if (moveDown)
             return moveDownTrue();
@@ -101,7 +99,6 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
         return holesFoundOverall;
     }
 
-    @Override
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, figure().getBrick(num));
         figure().setNull(num);

@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-abstract public class AbstractForecast<B extends IBrick, F extends AbstractFigure<B>> implements IForecast<B, F> {
+abstract public class AbstractForecast<B extends IBrick, F extends AbstractFigure<B>> {
 
     final protected F[] figures;
     final protected int difficulty;
@@ -25,32 +25,26 @@ abstract public class AbstractForecast<B extends IBrick, F extends AbstractFigur
         this.randomType = randomType;
     }
 
-    @Override
     public int getDepth() {
         return figures.length;
     }
 
-    @Override
     public int getFigureSize() {
         return figures[0].getLenght();
     }
 
-    @Override
     public F getForecast() {
         return getForecast(0);
     }
 
-    @Override
     public F getForecast(final int i) {
         return figures[i];
     }
 
-    @Override
     public int getDifficulty() {
         return difficulty;
     }
 
-    @Override
     public RandomTypes getRandomType() {
         return randomType;
     }

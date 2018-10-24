@@ -1,12 +1,20 @@
 package com.foxcatgames.boggarton.game;
 
-import static com.foxcatgames.boggarton.Const.*;
+import static com.foxcatgames.boggarton.Const.DOWN;
+import static com.foxcatgames.boggarton.Const.FIGURE_STR;
+import static com.foxcatgames.boggarton.Const.LEFT;
+import static com.foxcatgames.boggarton.Const.MOVES_STR;
+import static com.foxcatgames.boggarton.Const.NEXT;
+import static com.foxcatgames.boggarton.Const.RIGHT;
+import static com.foxcatgames.boggarton.Const.SCORE_STR;
+import static com.foxcatgames.boggarton.Const.UP;
+import static com.foxcatgames.boggarton.Const.YUCK_STR;
 
 import com.foxcatgames.boggarton.GameParams;
-import com.foxcatgames.boggarton.game.figure.IFigure;
-import com.foxcatgames.boggarton.game.forecast.IForecast;
+import com.foxcatgames.boggarton.game.figure.AbstractFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractGlass;
 import com.foxcatgames.boggarton.game.glass.GlassState;
-import com.foxcatgames.boggarton.game.glass.IGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
@@ -14,7 +22,7 @@ import com.foxcatgames.boggarton.game.utils.Pair;
 /**
  * The game is a glass, a forecast and the all motion inside the Glass.
  */
-abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G extends IGlass<B, F>, P extends IForecast<B, F>> {
+abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>, G extends AbstractGlass<B, F>, P extends AbstractForecast<B, F>> {
 
     protected G glass;
     protected P forecast;
@@ -42,15 +50,13 @@ abstract public class AbstractGame<B extends IBrick, F extends IFigure<B>, G ext
     protected final boolean virtualPlayer;
     protected boolean turnFinished;
 
-    abstract public void processStage();
+    public AbstractGame(final boolean virtualPlayer) {
+        this.virtualPlayer = virtualPlayer;
+    }
 
     abstract protected void nextStage();
 
     abstract protected void resumeScore();
-
-    public AbstractGame(final boolean virtualPlayer) {
-        this.virtualPlayer = virtualPlayer;
-    }
 
     protected F nextFigure() {
         resumeScore();

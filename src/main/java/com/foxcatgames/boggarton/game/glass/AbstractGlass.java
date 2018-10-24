@@ -4,7 +4,7 @@ import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.utils.Changes;
 
-abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B>> implements IGlass<B, F> {
+abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B>> {
 
     volatile protected boolean gameOver = false;
     protected int count = 0; // figures counter
@@ -18,7 +18,18 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         state.setHeight(height);
     }
 
-    @Override
+    abstract public boolean removeHoles();
+
+    abstract public void removeBrick(int i, int j);
+
+    abstract public int newFigure(F newFigure);
+
+    abstract public void rotate();
+
+    abstract public void moveLeft();
+
+    abstract public void moveRight();
+
     public boolean findChainsToKill() {
         final int oldScore = state.getScore();
         for (int i = 1; i < width() - 1; i++)
@@ -37,12 +48,10 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         return oldScore < state.getScore();
     }
 
-    @Override
     public int getFullness() {
         return state.getFullness();
     }
 
-    @Override
     public int processGlass() {
         while (findChainsToKill()) {
             killChains();
@@ -53,7 +62,6 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         return cleanReactions();
     }
 
-    @Override
     public void killChains() {
         for (int i = 0; i < width(); i++)
             for (int j = 0; j < height(); j++)
@@ -61,7 +69,6 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
                     removeBrick(i, j);
     }
 
-    @Override
     public boolean isGameOver() {
         return gameOver;
     }
@@ -73,7 +80,6 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         }
     }
 
-    @Override
     public void waitChanges() throws InterruptedException {
         synchronized (changes) {
             while (!changes.isFlag() && !gameOver)
@@ -82,83 +88,67 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         }
     }
 
-    @Override
     public void dropChanges() throws InterruptedException {
         setChanges(false);
     }
 
-    @Override
     public void setGameOver() {
         gameOver = true;
         setChanges(true);
     }
 
-    @Override
     public int getReactions() {
         return state.getReactionLenght();
     }
 
-    @Override
     public void addReaction() {
         state.addReaction();
     }
 
-    @Override
     public int cleanReactions() {
         return state.cleanReactions();
     }
 
-    @Override
     public boolean hasChanges() {
         return changes.isFlag();
     }
 
-    @Override
     public GlassState<B, F> getGlassState() {
         return state;
     }
 
-    @Override
     public B brick(final int i, final int j) {
         return state.getBrick(i, j);
     }
 
-    @Override
     public F figure() {
         return state.getFigure();
     }
 
-    @Override
     public int width() {
         return state.getWidth();
     }
 
-    @Override
     public int height() {
         return state.getHeight();
     }
 
-    @Override
     public boolean canMoveLeft() {
         return state.canMoveLeft();
     }
 
-    @Override
     public boolean canMoveRight() {
         return state.canMoveRight();
     }
 
-    @Override
     public int getSpaceLeft() {
         return state.getSpaceLeft();
     }
 
-    @Override
     public int getSpaceRight() {
         return state.getSpaceRight();
     }
 
-    @Override
     public int getCount() {
         return count;
     }

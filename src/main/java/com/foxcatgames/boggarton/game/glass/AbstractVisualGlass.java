@@ -182,7 +182,6 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
         setFigure(state.getI() + 1, state.getJ(), true);
     }
 
-    @Override
     public void setChanges(final int num, final int i, final int j) {
         Sound.playDrop(sounds.get(Const.DROP));
         state.setBrick(i, j, figure().getBrick(num));
@@ -190,7 +189,6 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
         setChanges(true);
     }
 
-    @Override
     public void setFigure(final int i, final int j, final boolean setChanges) {
         state.setI(i);
         state.setJ(j);
@@ -199,7 +197,6 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
         setChanges(setChanges);
     }
 
-    @Override
     public boolean moveDown() {
         boolean changes = false;
         state.setJ((int) (getY() / BOX));

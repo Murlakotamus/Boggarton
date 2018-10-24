@@ -6,7 +6,7 @@ import com.foxcatgames.boggarton.game.utils.Utils;
 
 public class VirtualFigure extends AbstractFigure<VirtualBrick> {
 
-    public <B extends IBrick, F extends IFigure<B>> VirtualFigure(final F figure) {
+    public <B extends IBrick, F extends AbstractFigure<B>> VirtualFigure(final F figure) {
         super(new VirtualBrick[figure.getLenght()]);
 
         for (int j = 0; j < figureSize; j++)

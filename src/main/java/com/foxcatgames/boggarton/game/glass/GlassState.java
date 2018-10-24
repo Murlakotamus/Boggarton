@@ -3,9 +3,9 @@ package com.foxcatgames.boggarton.game.glass;
 import static com.foxcatgames.boggarton.Const.EMPTY;
 
 import com.foxcatgames.boggarton.game.IBrick;
-import com.foxcatgames.boggarton.game.figure.IFigure;
+import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 
-public class GlassState<B extends IBrick, F extends IFigure<B>> {
+public class GlassState<B extends IBrick, F extends AbstractFigure<B>> {
 
     static private final int VERTICAL = 1;
     static private final int HORIZONTAL = 2;

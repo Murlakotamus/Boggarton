@@ -26,6 +26,7 @@ abstract public class AbstractPlayingScene<B extends Brick, F extends AbstractVi
 
     abstract protected void showGlass();
 
+    @Override
     protected void addKeyEscape(final SceneItem sceneItem) {
         final KeyListener escape = new KeyListener() {
             @Override

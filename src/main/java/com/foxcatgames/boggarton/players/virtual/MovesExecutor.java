@@ -20,6 +20,7 @@ public class MovesExecutor extends AbstractMovesExecutor<Brick, PredefinedFigure
         thread.start();
     }
 
+    @Override
     public void run() {
         try {
             for (int i = 0; i < moves.length && game.isGameOn(); i++)

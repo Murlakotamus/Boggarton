@@ -14,6 +14,7 @@ public class VirtualAdaptivePlayer<B extends Brick, F extends AbstractVisualFigu
         super(game, prognosis, price, true);
     }
 
+    @Override
     public String getName() {
         return "Путин"; // Путин адаптивный, но не эффективный
     }

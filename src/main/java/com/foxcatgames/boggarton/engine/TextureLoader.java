@@ -111,8 +111,8 @@ public class TextureLoader {
                 }
                 IMAGE_CASHE.put(path, buffImage);
                 return buffImage;
-            } else
-                return (BufferedImage) IMAGE_CASHE.get(path);
+            }
+            return IMAGE_CASHE.get(path);
         } catch (final IOException e) {
             e.printStackTrace();
             return null;

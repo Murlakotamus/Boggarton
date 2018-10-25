@@ -14,6 +14,7 @@ public class EffectiveVirtualAdaptivePlayer<B extends Brick, F extends AbstractV
         super(game, prognosis, price, false);
     }
 
+    @Override
     public String getName() {
         return "Чубайс"; // Чубайс эффективный и адаптивный
     }

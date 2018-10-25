@@ -29,7 +29,7 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int figureSize, final List<String> events,
             final Map<String, Integer> sounds) {
-        super(layer, x, y, width, height, sounds, true);
+        super(layer, x, y, sounds, true);
 
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, figureSize, events);
         this.events = events;
@@ -43,7 +43,7 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
                 for (int i = 0; i < width; i++) {
                     final char c = line.charAt(i);
                     if (c >= 'A' && c <= 'J')
-                        bricks[i][j] = (int) (c - '@');
+                        bricks[i][j] = c - '@';
                     else
                         bricks[i][j] = 0;
                 }

@@ -62,7 +62,7 @@ public class Graphics {
         GL11.glTexImage2D(GL_TEXTURE_2D, 0, glType, 1024, 1024, 0, glType, GL_UNSIGNED_BYTE, scratch);
     }
 
-    private static ByteBuffer convertImageData(BufferedImage bufferedImage, int square) {
+    private static ByteBuffer convertImageData(BufferedImage bufferedImage) {
         final ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false,
                 Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
 
@@ -101,9 +101,9 @@ public class Graphics {
             Display.setTitle("Boggarton");
 
             final ByteBuffer[] list = new ByteBuffer[3];
-            list[0] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton128.png")), 128);
-            list[1] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton32.png")), 32);
-            list[2] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton16.png")), 16);
+            list[0] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton128.png")));
+            list[1] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton32.png")));
+            list[2] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton16.png")));
 
             Display.setIcon(list);
         } else {
@@ -155,9 +155,9 @@ public class Graphics {
             actualWidth = (int) Math.round(SCREEN_WIDTH * ratioAmendment);
             actualHeight = SCREEN_HEIGHT;
 
-            GLU.gluOrtho2D(-(int) actualWidth / 2, (int) actualWidth / 2, -(int) actualHeight / 2, (int) actualHeight / 2);
+            GLU.gluOrtho2D(-actualWidth / 2, actualWidth / 2, -actualHeight / 2, actualHeight / 2);
         } else
-            GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2, -(int) SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
+            GLU.gluOrtho2D(-SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2, SCREEN_HEIGHT / 2);
         GL11.glMatrixMode(GL_MODELVIEW);
         TEXTURE_LOADER.init();
     }

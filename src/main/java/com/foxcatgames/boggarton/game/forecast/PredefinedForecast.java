@@ -39,6 +39,7 @@ public class PredefinedForecast extends AbstractVisualForecast<Brick, Predefined
         }
     }
 
+    @Override
     public void setNext(final List<Pair<Integer, Integer>> pairs) {
         final int newMax = predefinedFigures.size() - 1 - figuresCounter;
         int max = figures.length - 1;

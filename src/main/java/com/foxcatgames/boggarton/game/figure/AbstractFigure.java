@@ -72,6 +72,7 @@ abstract public class AbstractFigure<B extends IBrick> {
         return number;
     }
 
+    @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer();
         for (int i = 0; i < figureSize; i++) {

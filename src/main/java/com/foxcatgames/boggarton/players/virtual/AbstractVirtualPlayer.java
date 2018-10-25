@@ -28,7 +28,7 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
         this.moveDown = moveDown;
         final Thread thread = new Thread(this);
         thread.setPriority(Thread.MIN_PRIORITY);
-        thread.setName(game.getName() + ", " + thread.getId());
+        thread.setName(name + ", " + thread.getId());
         thread.start();
     }
 
@@ -43,6 +43,7 @@ abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractV
         return solver.getSolution().getMoves();
     }
 
+    @Override
     public void run() {
         try {
             while (game.isGameOn()) {

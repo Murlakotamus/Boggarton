@@ -14,6 +14,7 @@ public class EffectiveVirtualNonAdaptivePlayer<B extends Brick, F extends Abstra
         super(game, prognosis, price, false);
     }
 
+    @Override
     public String getName() {
         return "Улюкаев"; // Улюкаев эффективный, но не адаптивный
     }

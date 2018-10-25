@@ -14,6 +14,7 @@ public class VirtualNonAdaptivePlayer<B extends Brick, F extends AbstractVisualF
         super(game, prognosis, price, true);
     }
 
+    @Override
     public String getName() {
         return "Медведев"; // Медведев не эффективный и не адаптивный
     }

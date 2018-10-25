@@ -42,7 +42,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private final Text diffScore;
     protected final Map<String, Integer> sounds;
 
-    public AbstractVisualGame(final Layer layer, final int x, final int y, final int width, final int height, final Map<String, Integer> sounds,
+    public AbstractVisualGame(final Layer layer, final int x, final int y, final Map<String, Integer> sounds,
             final boolean virtualPlayer) {
         super(virtualPlayer);
         this.x = x;
@@ -51,8 +51,6 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
         diffScore = new Text("", Const.DARK_FONT, layer);
     }
-
-    abstract protected void nextStage();
 
     public void processStage() {
         switch (stage) {
@@ -101,6 +99,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             executeCommand();
     }
 
+    @Override
     protected F nextFigure() {
         final F figure = super.nextFigure();
         if (figure != null)
@@ -108,6 +107,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
         return figure;
     }
 
+    @Override
     protected void resumeScore() {
         final int diff = getGlass().getGlassState().getScore() - lastScore;
         if (diff > 0) {
@@ -185,7 +185,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
         if (diffCell == 0) {
             glass.setY(newY);
-            glass.getGlassState().setJ((int) ((newY + BOX) / BOX));
+            glass.getGlassState().setJ((newY + BOX) / BOX);
         } else {
             for (int i = 1; i <= diffCell; i++) {
                 glass.setY((oldCell + i) * BOX);

@@ -199,7 +199,7 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     public boolean moveDown() {
         boolean changes = false;
-        state.setJ((int) (getY() / BOX));
+        state.setJ(getY() / BOX);
         for (int i = 0; i < figure().getLenght(); i++)
             if (figure().getBrick(i) != null)
                 if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null) {

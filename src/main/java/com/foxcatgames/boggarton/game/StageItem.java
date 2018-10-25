@@ -11,11 +11,11 @@ public enum StageItem {
     }
 
     public StageItem getNextStage(final boolean reactionDetected) {
-        if (this == COMPRESS)
+        if (this == COMPRESS) {
             if (reactionDetected)
                 return StageItem.CRASH;
-            else
-                return StageItem.NEXT;
+            return StageItem.NEXT;
+        }
         return nextStage;
     }
 
@@ -31,8 +31,7 @@ public enum StageItem {
         case YUCK_PAUSE:
             if (hasYucks)
                 return StageItem.YUCK;
-            else
-                return StageItem.PROCESS;
+            return StageItem.PROCESS;
         default:
             return nextStage;
         }

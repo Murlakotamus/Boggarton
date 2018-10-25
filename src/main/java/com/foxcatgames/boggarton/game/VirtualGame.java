@@ -13,6 +13,7 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
         glass = new VirtualGlass(width, height);
     }
 
+    @Override
     protected void nextStage() {
         stage = stage.getNextStage(reactionDetected);
     }
@@ -51,6 +52,7 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
         }
     }
 
+    @Override
     protected void resumeScore() {
         final int diff = getGlass().getGlassState().getScore() - lastScore;
         if (diff > 0) {

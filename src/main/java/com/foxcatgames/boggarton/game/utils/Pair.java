@@ -30,15 +30,6 @@ public class Pair<F, S> {
         return second;
     }
 
-    @Override
-    public boolean equals(final Object src) {
-        if (src instanceof Pair) {
-            return equals((Pair<?, ?>) src);
-        } else {
-            return false;
-        }
-    }
-
     public static <O1, O2> Pair<O1, O2> create(final O1 first, final O2 second) {
         return new Pair<O1, O2>(first, second);
     }

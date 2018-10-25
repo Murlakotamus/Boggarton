@@ -34,7 +34,7 @@ public class Utils {
     }
 
     static public int parseBrick(final char c) {
-        final int i = (int) c - 64;
+        final int i = c - 64;
         return i + CURRENT_SET * 10;
     }
 }

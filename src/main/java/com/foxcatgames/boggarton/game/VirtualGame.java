@@ -6,7 +6,7 @@ import com.foxcatgames.boggarton.game.glass.VirtualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, VirtualGlass, VirtualForecast> implements AutomatedGame {
+public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, VirtualGlass, VirtualForecast> implements IAutomatedGame {
 
     private final GameAutomation gameAutomation;
 
@@ -87,7 +87,7 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
     }
 
     @Override
-    public void setSimpleGameOver(AutomatedGame game) {
+    public void setSimpleGameOver(IAutomatedGame game) {
         if (game == this)
             super.setGameOver();
     }

@@ -22,7 +22,7 @@ import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
-final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> implements AutomatedGame {
+final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> implements IAutomatedGame {
 
     private static final float YUCK_PAUSE = 0.5f;
     protected int yucks = 0;
@@ -120,7 +120,7 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
     }
 
     @Override
-    public void setSimpleGameOver(AutomatedGame game) {
+    public void setSimpleGameOver(IAutomatedGame game) {
         if (game == this)
             super.setGameOver();
     }

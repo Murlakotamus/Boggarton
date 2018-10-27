@@ -6,7 +6,7 @@ import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-final public class AutomatedSimpleGame extends SimpleGame implements AutomatedGame {
+final public class AutomatedSimpleGame extends SimpleGame implements IAutomatedGame {
 
     private final GameAutomation gameAutomation;
 
@@ -29,7 +29,7 @@ final public class AutomatedSimpleGame extends SimpleGame implements AutomatedGa
     }
 
     @Override
-    public void setSimpleGameOver(AutomatedGame game) {
+    public void setSimpleGameOver(IAutomatedGame game) {
         if (game == this)
             super.setGameOver();
     }

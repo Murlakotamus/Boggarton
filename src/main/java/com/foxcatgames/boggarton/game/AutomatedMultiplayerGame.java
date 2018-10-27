@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-final public class AutomatedMultiplayerGame extends MultiplayerGame implements AutomatedGame {
+final public class AutomatedMultiplayerGame extends MultiplayerGame implements IAutomatedGame {
 
     private final GameAutomation gameAutomation;
 
@@ -30,7 +30,7 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements A
     }
 
     @Override
-    public void setSimpleGameOver(AutomatedGame game) {
+    public void setSimpleGameOver(IAutomatedGame game) {
         if (game == this)
             super.setGameOver();
     }

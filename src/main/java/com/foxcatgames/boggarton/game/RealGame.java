@@ -17,7 +17,6 @@ public class RealGame extends AbstractOnePlayerGame {
 
     private int oldEmptyBrickLines = 0;
     private final ICommand satisfyCondition = new ICommand() {
-
         @Override
         public void execute() {
             oldEmptyBrickLines++;

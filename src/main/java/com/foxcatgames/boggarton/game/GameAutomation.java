@@ -65,7 +65,7 @@ public class GameAutomation {
         }
     }
 
-    public void setGameOver(final AutomatedGame game, final Pair<?, ?> gamestateBuffer) {
+    public void setGameOver(final IAutomatedGame game, final Pair<?, ?> gamestateBuffer) {
         synchronized (gamestateBuffer) {
             game.setSimpleGameOver(game);
             gamestateBuffer.notify();

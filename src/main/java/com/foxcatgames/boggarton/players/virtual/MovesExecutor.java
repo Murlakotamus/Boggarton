@@ -1,16 +1,16 @@
 package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.entity.Brick;
-import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.ReplayGame;
 import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 
-public class MovesExecutor extends AbstractMovesExecutor<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> implements Runnable {
+public class MovesExecutor extends AbstractMovesExecutor<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast, ReplayGame> {
 
     private final char[] moves;
 
-    public MovesExecutor(final AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> game, final char[] moves) {
+    public MovesExecutor(final ReplayGame game, final char[] moves) {
         super(game);
         this.moves = moves;
 

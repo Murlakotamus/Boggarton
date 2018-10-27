@@ -3,12 +3,15 @@ package com.foxcatgames.boggarton.game;
 import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
 import com.foxcatgames.boggarton.game.glass.VirtualGlass;
+import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, VirtualGlass, VirtualForecast> {
+public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, VirtualGlass, VirtualForecast> implements AutomatedGame {
+
+    private final GameAutomation gameAutomation;
 
     public VirtualGame(final int width, final int height, final int prognosis, final int figureSize, final int difficulty, final RandomTypes randomType) {
-        super(true);
+        this.gameAutomation = new GameAutomation(null);
         forecast = new VirtualForecast(prognosis, figureSize, difficulty, randomType);
         glass = new VirtualGlass(width, height);
     }
@@ -31,15 +34,10 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
             nextStage();
             break;
         case FALL:
-            executeCommand();
+            gameAutomation.executeCommand();
             fall();
             break;
         case SET:
-            if (!turnFinished) {
-                executeCommand();
-                Thread.yield();
-                break;
-            }
             nextStage();
             break;
         case PROCESS:
@@ -81,5 +79,21 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
 
         glass.killChains();
         nextStage();
+    }
+
+    @Override
+    public void setGameOver() {
+        gameAutomation.setGameOver(this, gamestateBuffer);
+    }
+
+    @Override
+    public void setSimpleGameOver(AutomatedGame game) {
+        if (game == this)
+            super.setGameOver();
+    }
+
+    @Override
+    public void sendCommand(final ICommand cmd) throws InterruptedException {
+        gameAutomation.sendCommand(cmd);
     }
 }

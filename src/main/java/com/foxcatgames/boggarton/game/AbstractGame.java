@@ -15,8 +15,6 @@ import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractGlass;
 import com.foxcatgames.boggarton.game.glass.GlassState;
-import com.foxcatgames.boggarton.game.utils.ICommand;
-import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 
 /**
@@ -41,18 +39,14 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
 
     protected GameLogger gameLogger = null;
 
-    protected final Pair<GlassState<B, F>, P> buffer = new Pair<>(null, null);
-    protected final OuterCommand command = new OuterCommand();
+    protected final Pair<GlassState<B, F>, P> gamestateBuffer = new Pair<>(null, null);
+
     protected int targetPosition = 0;
 
     protected boolean needNewFigure = true;
     protected int lastScore = 0;
-    protected final boolean virtualPlayer;
-    protected boolean turnFinished;
 
-    public AbstractGame(final boolean virtualPlayer) {
-        this.virtualPlayer = virtualPlayer;
-    }
+    protected boolean turnFinished;
 
     abstract protected void nextStage();
 
@@ -94,52 +88,31 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
     }
 
     public void setGameOver() {
-        synchronized (buffer) {
-            glass.setGameOver();
-            buffer.notify();
-            executeCommand();
-        }
+        glass.setGameOver();
     }
 
     public Pair<GlassState<B, F>, P> getBuffer() throws InterruptedException {
-        synchronized (buffer) {
-            while (buffer.isEmpty() && isGameOn())
-                buffer.wait();
-            buffer.notify();
+        synchronized (gamestateBuffer) {
+            while (gamestateBuffer.isEmpty() && isGameOn())
+                gamestateBuffer.wait();
+            gamestateBuffer.notify();
         }
-        return buffer;
+        return gamestateBuffer;
     }
 
     public void clearBuffer() {
-        synchronized (buffer) {
-            buffer.setFirst(null);
-            buffer.setSecond(null);
-            buffer.notify();
+        synchronized (gamestateBuffer) {
+            gamestateBuffer.setFirst(null);
+            gamestateBuffer.setSecond(null);
+            gamestateBuffer.notify();
         }
     }
 
     protected void fillBuffer() {
-        synchronized (buffer) {
-            buffer.setFirst(glass.getGlassState());
-            buffer.setSecond(forecast);
-            buffer.notify();
-        }
-    }
-
-    protected void executeCommand() {
-        if (command.getCommand() != null)
-            synchronized (command) {
-                command.execute();
-                command.notify();
-            }
-    }
-
-    public void sendCommand(final ICommand cmd) throws InterruptedException {
-        synchronized (command) {
-            while (command.getCommand() != null)
-                command.wait();
-            command.setCommand(cmd);
-            command.notify();
+        synchronized (gamestateBuffer) {
+            gamestateBuffer.setFirst(glass.getGlassState());
+            gamestateBuffer.setSecond(forecast);
+            gamestateBuffer.notify();
         }
     }
 

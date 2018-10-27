@@ -31,7 +31,7 @@ public class Pair<F, S> {
     }
 
     public static <O1, O2> Pair<O1, O2> create(final O1 first, final O2 second) {
-        return new Pair<O1, O2>(first, second);
+        return new Pair<>(first, second);
     }
 
     public boolean isEmpty() {

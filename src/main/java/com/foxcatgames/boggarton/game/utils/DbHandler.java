@@ -58,7 +58,7 @@ public class DbHandler {
         conn.setAutoCommit(false);
     }
 
-    private void saveGameOutcome(final PreparedStatement st, final Integer id, final GameParams params) throws SQLException {
+    private static void saveGameOutcome(final PreparedStatement st, final Integer id, final GameParams params) throws SQLException {
         st.setInt(1, id);
 
         st.setInt(2, params.getPrognosisDebth());
@@ -100,7 +100,7 @@ public class DbHandler {
         }
     }
 
-    public void saveGameOutcome(final IPlayer loser) throws SQLException {
+    public void saveGameOutcome(final IPlayer loser) {
         saveGameOutcome(null, loser);
     }
 
@@ -113,11 +113,7 @@ public class DbHandler {
     }
 
     public static void saveOutcome(final IPlayer player) {
-        try {
-            DbHandler.getInstance().saveGameOutcome(player);
-        } catch (final SQLException e) {
-            e.printStackTrace();
-        }
+        DbHandler.getInstance().saveGameOutcome(player);
     }
 
     public void closeHandler() {

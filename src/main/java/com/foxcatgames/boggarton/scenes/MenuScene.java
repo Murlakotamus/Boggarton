@@ -87,7 +87,7 @@ public class MenuScene extends AbstractLogoScene {
         addKeyEscape(SceneItem.OUTRO);
     }
 
-    private void playMove() {
+    private static void playMove() {
         Sound.playMove();
     }
 
@@ -105,7 +105,7 @@ public class MenuScene extends AbstractLogoScene {
                 drawMenu();
             }
         };
-        EventManager.getInstance().addListener(Keyboard.KEY_UP, up);
+        EventManager.addListener(Keyboard.KEY_UP, up);
     }
 
     private void addKeyDown() {
@@ -122,7 +122,7 @@ public class MenuScene extends AbstractLogoScene {
                 drawMenu();
             }
         };
-        EventManager.getInstance().addListener(Keyboard.KEY_DOWN, down);
+        EventManager.addListener(Keyboard.KEY_DOWN, down);
     }
 
     private void addKeyEnter() {
@@ -174,10 +174,10 @@ public class MenuScene extends AbstractLogoScene {
                 SceneItem.saveSettings();
             }
         };
-        EventManager.getInstance().addListener(Keyboard.KEY_RETURN, enter);
+        EventManager.addListener(Keyboard.KEY_RETURN, enter);
     }
 
-    private int nextValue(int param, final int min, final int max) {
+    private static int nextValue(int param, final int min, final int max) {
         if (++param > max)
             param = min;
         return param;

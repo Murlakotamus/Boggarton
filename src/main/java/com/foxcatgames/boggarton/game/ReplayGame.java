@@ -20,17 +20,21 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
+import com.foxcatgames.boggarton.game.utils.ICommand;
 
-public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> {
+final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> implements AutomatedGame {
 
+    private static final float YUCK_PAUSE = 0.5f;
     protected int yucks = 0;
     final List<String> events;
     int eventNum = 0;
+    private final GameAutomation gameAutomation;
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int figureSize, final List<String> events,
             final Map<String, Integer> sounds) {
-        super(layer, x, y, sounds, true);
 
+        super(layer, x, y, sounds);
+        this.gameAutomation = new GameAutomation(sounds);
         this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, figureSize, events);
         this.events = events;
 
@@ -70,6 +74,12 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
             } else
                 charge();
             break;
+        case APPEAR:
+        case FALL:
+        case SET:
+            if (gameAutomation.processStage(stage, turnFinished))
+                super.processStage();
+            break;
         case YUCK:
             resumeScore();
             executeYuck(events.get(eventNum++).substring(YUCK_STR.length()));
@@ -102,5 +112,21 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
         glass.respawn();
         Sound.play(sounds.get(Const.YUCK));
         nextStage();
+    }
+
+    @Override
+    public void setGameOver() {
+        gameAutomation.setGameOver(this, gamestateBuffer);
+    }
+
+    @Override
+    public void setSimpleGameOver(AutomatedGame game) {
+        if (game == this)
+            super.setGameOver();
+    }
+
+    @Override
+    public void sendCommand(final ICommand cmd) throws InterruptedException {
+        gameAutomation.sendCommand(cmd);
     }
 }

@@ -7,7 +7,7 @@ public class FullnessEater extends AbstractEater {
         return getPrice(solution.getFullness(), solution.getScore());
     }
 
-    private int getPrice(final int fullness, final int score) {
+    private static int getPrice(final int fullness, final int score) {
         return fullness * fullness + score;
     }
 

@@ -131,7 +131,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return shiftsLeft[j];
     }
 
-    private String drop(final VirtualGlass glass) throws InterruptedException {
+    private static String drop(final VirtualGlass glass) {
         glass.dropChanges();
         boolean isFallen = false;
         do {

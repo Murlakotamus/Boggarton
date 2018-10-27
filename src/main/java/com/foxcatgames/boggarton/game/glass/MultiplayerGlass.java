@@ -67,7 +67,7 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
         for (int i = 0; i < width(); i++) {
             final int fullness = state.getEmptyHeight(i);
             if (fullness >= 0)
-                places.add(new Pair<Integer, Integer>(i, fullness));
+                places.add(new Pair<>(i, fullness));
         }
 
         final int size = places.size();

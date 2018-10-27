@@ -7,7 +7,7 @@ public class ReactionsEater extends AbstractEater {
         return getPrice(solution.getReactions(), solution.getScore());
     }
 
-    private int getPrice(final int reactions, final int score) {
+    private static int getPrice(final int reactions, final int score) {
         return reactions * reactions + score;
     }
 

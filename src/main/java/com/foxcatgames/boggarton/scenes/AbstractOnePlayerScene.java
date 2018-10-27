@@ -16,7 +16,7 @@ import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.players.IPlayer;
 
 abstract public class AbstractOnePlayerScene<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>, T extends AbstractVisualGame<B, F, G, P>>
-        extends AbstractPlayingScene<B, F, G, P> {
+        extends AbstractPlayingScene {
 
     protected static final int X = 355;
     protected final SimpleEntity gameOverEntity = new SimpleEntity(GAME_OVER, layer);
@@ -41,7 +41,7 @@ abstract public class AbstractOnePlayerScene<B extends Brick, F extends Abstract
             gameOver = true;
             game.closeLogger();
             saveOutcome(player);
-            gameOverEntity.spawn(new Vector2f(X + getFigureSize(game) * BOX + 25, Y + BOX * 3 + BORDER));
+            gameOverEntity.spawn(new Vector2f(X + game.getForecast().getFigureSize() * BOX + 25, Y + BOX * 3 + BORDER));
         } else
             game.processStage();
     }

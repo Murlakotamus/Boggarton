@@ -23,6 +23,7 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
 
     private static final int MAX_YUCKS = 24; // 6 * 12 / 3 - theoretical limit
     private static final String YUCKS_TOTAL = "Yucks: ";
+    private static final float YUCK_PAUSE = 0.5f;
 
     public final YuckTypes yuckType;
     protected int yucks;
@@ -37,10 +38,9 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
     private int xYuck, yYuck;
 
     public MultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
-            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds,
-            final boolean virtualPlayer) {
+            final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
-        super(layer, x, y, sounds, virtualPlayer);
+        super(layer, x, y, sounds);
         this.yuckType = yuckType;
         glass = new MultiplayerGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, setSize, sounds);
         forecast = new SimpleForecast(layer, new Vector2f(x, y), prognosis, figureSize, setSize, randomType);

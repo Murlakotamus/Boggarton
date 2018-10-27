@@ -30,7 +30,7 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
                 game.moveLeft();
             }
         };
-        EventManager.getInstance().addListener(keyLeft, moveLeft);
+        EventManager.addListener(keyLeft, moveLeft);
     }
 
     private void addMoveRight(final int keyRight) {
@@ -40,7 +40,7 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
                 game.moveRight();
             }
         };
-        EventManager.getInstance().addListener(keyRight, moveRight);
+        EventManager.addListener(keyRight, moveRight);
     }
 
     private void addMoveDown(final int keyDown) {
@@ -55,7 +55,7 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
                 game.restoreSpeed();
             }
         };
-        EventManager.getInstance().addListener(keyDown, moveDown);
+        EventManager.addListener(keyDown, moveDown);
     }
 
     private void addRotate(final int keyRotate) {
@@ -65,7 +65,7 @@ abstract public class AbstractRealPlayer<B extends Brick, F extends AbstractVisu
                 game.rotateFigure();
             }
         };
-        EventManager.getInstance().addListener(keyRotate, rotate);
+        EventManager.addListener(keyRotate, rotate);
     }
 
     @Override

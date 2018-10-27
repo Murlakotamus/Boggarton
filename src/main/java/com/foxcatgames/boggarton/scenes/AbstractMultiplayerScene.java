@@ -8,139 +8,104 @@ import static com.foxcatgames.boggarton.Const.WINNER;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import com.foxcatgames.boggarton.Const;
-import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
-import com.foxcatgames.boggarton.game.figure.SimpleFigure;
-import com.foxcatgames.boggarton.game.forecast.SimpleForecast;
-import com.foxcatgames.boggarton.game.glass.MultiplayerGlass;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.IPlayer;
-import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
-import com.foxcatgames.boggarton.scenes.types.RandomTypes;
-import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-abstract public class AbstractMultiplayerScene extends AbstractPlayingScene<Brick, SimpleFigure, MultiplayerGlass, SimpleForecast> {
+abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     protected static final int X = 90;
+    protected static final int PLAYERS = 2;
 
     protected static final String[] PLAYERS_NAMES = { "First", "Second" };
 
-    protected static final int PLAYERS = 2;
     private final SimpleEntity winner = new SimpleEntity(WINNER, layer);
     private final SimpleEntity loser = new SimpleEntity(LOSER, layer);
-
-    protected final MultiplayerGame[] game = new MultiplayerGame[PLAYERS];
     private final SimpleEntity gamePaused[] = new SimpleEntity[PLAYERS];
 
-    protected IPlayer first;
-    protected IPlayer second;
-    protected long pauseBetweenGames = 0;
+    protected IPlayer leftPlayer;
+    protected IPlayer rightPlayer;
 
-    AbstractMultiplayerScene(final SceneItem scene, final int width, final int height, final int[] prognosis, final int figureSize,
-            YuckTypes yuckType, final RandomTypes randomType, final DifficultyTypes difficulty, final boolean[] virtualPlayer) {
+    AbstractMultiplayerScene(final SceneItem scene, final int width, final int figureSize) {
         super(scene);
         for (int i = 0; i < PLAYERS; i++)
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);
 
         if (width < figureSize)
             throw new IllegalStateException("Glass too narrow for figures");
-
-        for (int i = 0; i < PLAYERS; i++) {
-            game[i] = new MultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(), Victories.getVictories(i),
-                    yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT, virtualPlayer[i]);
-            game[i].setName(PLAYERS_NAMES[i]);
-        }
-
-        for (int i = 0; i < PLAYERS; i++) {
-            game[i].initLogger();
-            game[i].startGame();
-        }
     }
 
-    abstract protected void checkAuto();
-
-    @Override
-    protected void changes() {
-        checkAuto();
-
+    protected <T extends MultiplayerGame> void changes(T[] games) {
         if (gameOver)
             return;
 
-        if (checkGameOver()) {
+        if (checkGameOver(games)) {
             for (int i = 0; i < PLAYERS; i++)
-                game[i].setGameOver();
+                games[i].setGameOver();
             return;
         }
-        processScene();
+        processScene(games);
     }
 
-    @Override
-    protected void setGameOver() {
+    protected <T extends MultiplayerGame> void setGameOver(T[] games) {
         super.setGameOver();
+        for (int i = 0; i < PLAYERS; i++)
+            games[i].setGameOver();
+    }
+
+    protected <T extends MultiplayerGame> void hideGlass(T[] games) {
         for (int i = 0; i < PLAYERS; i++) {
-            game[i].setGameOver();
-            game[i].closeLogger();
+            games[i].getGlass().pauseOn();
+            gamePaused[i].spawn(new Vector2f(games[i].getX() + games[i].getForecast().getFigureSize() * BOX + 25, Y + BOX * 3 + BORDER));
         }
     }
 
-    @Override
-    protected void hideGlass() {
-        for (int i = 0; i < PLAYERS; i++) {
-            game[i].getGlass().pauseOn();
-            gamePaused[i].spawn(new Vector2f(game[i].getX() + getFigureSize(game[i]) * BOX + 25, Y + BOX * 3 + BORDER));
-        }
-    }
-
-    @Override
-    protected void showGlass() {
+    protected <T extends MultiplayerGame> void showGlass(T[] games) {
         for (int i = 0; i < PLAYERS; i++) {
             gamePaused[i].unspawn();
-            game[i].getGlass().pauseOff();
+            games[i].getGlass().pauseOff();
         }
     }
 
-    private boolean checkGameOver() {
+    private <T extends MultiplayerGame> boolean checkGameOver(T[] games) {
         for (int i = 0; i < PLAYERS; i++)
-            if (game[i].isGameOver()) {
+            if (games[i].isGameOver()) {
                 gameOver = true;
-                losersAndWinners(i);
+                losersAndWinners(games, i);
                 saveOutcome(i);
-                pauseBetweenGames = System.currentTimeMillis();
             }
         return gameOver;
     }
 
-    private void losersAndWinners(final int loserNumber) {
+    private <T extends MultiplayerGame> void losersAndWinners(T[] games, final int loserNumber) {
         for (int i = 0; i < PLAYERS; i++) {
-            final int figureSize = getFigureSize(game[i]);
+            final int figureSize = games[i].getForecast().getFigureSize();
             if (i == loserNumber)
-                loser.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
+                loser.spawn(new Vector2f(games[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
             else {
-                winner.spawn(new Vector2f(game[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
+                winner.spawn(new Vector2f(games[i].getX() + figureSize * BOX + 25, Y + BOX * 3 + BORDER));
                 Victories.addVictory(i);
             }
-            game[i].closeLogger();
         }
     }
 
     private void saveOutcome(final int loserNumber) {
         if (loserNumber == 0)
-            DbHandler.getInstance().saveGameOutcome(second, first);
+            DbHandler.getInstance().saveGameOutcome(rightPlayer, leftPlayer);
         else
-            DbHandler.getInstance().saveGameOutcome(first, second);
+            DbHandler.getInstance().saveGameOutcome(leftPlayer, rightPlayer);
     }
 
-    private void processScene() {
+    private static <T extends MultiplayerGame> void processScene(T[] games) {
         for (int i = 0; i < PLAYERS; i++) {
-            game[i].processStage();
-            getYucks(i);
+            games[i].processStage();
+            getYucks(games, i);
         }
     }
 
-    private void getYucks(final int n) {
+    private static <T extends MultiplayerGame> void getYucks(T[] game, final int n) {
         for (int j = 0; j < PLAYERS; j++)
             if (n != j)
                 game[n].addYuck(game[j].getYucksForEnemy());

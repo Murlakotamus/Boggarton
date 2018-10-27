@@ -88,7 +88,7 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         }
     }
 
-    public void dropChanges() throws InterruptedException {
+    public void dropChanges() {
         setChanges(false);
     }
 

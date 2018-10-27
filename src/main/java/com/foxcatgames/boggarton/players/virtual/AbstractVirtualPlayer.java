@@ -4,6 +4,7 @@ import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.AutomatedGame;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
@@ -13,14 +14,14 @@ import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.solver.IEater;
 import com.foxcatgames.boggarton.players.virtual.solver.Solver;
 
-abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
-        extends AbstractMovesExecutor<B, F, G, P> implements IPlayer {
+abstract public class AbstractVirtualPlayer<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>, T extends AbstractVisualGame<B, F, G, P> & AutomatedGame>
+        extends AbstractMovesExecutor<B, F, G, P, T> implements IPlayer {
 
     private final IEater eater;
     private final boolean moveDown;
     private final int prognosis;
 
-    public AbstractVirtualPlayer(final AbstractVisualGame<B, F, G, P> game, final String name, final int prognosis, final IEater eater,
+    public AbstractVirtualPlayer(final T game, final String name, final int prognosis, final IEater eater,
             final boolean moveDown) {
         super(game);
         this.prognosis = prognosis;

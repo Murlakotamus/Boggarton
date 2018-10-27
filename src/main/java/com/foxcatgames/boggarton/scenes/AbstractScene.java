@@ -57,7 +57,7 @@ abstract public class AbstractScene {
         while (scene == nextScene) {
             heartBeat();
             renderScene();
-            EventManager.getInstance().checkEvents();
+            EventManager.checkEvents();
             if (Display.isCloseRequested())
                 nextScene(SceneItem.FINISH_GAME);
             Thread.yield();
@@ -69,7 +69,7 @@ abstract public class AbstractScene {
     }
 
     protected void terminate() {
-        EventManager.getInstance().clear();
+        EventManager.clear();
         layer.removeAll();
     }
 
@@ -80,6 +80,6 @@ abstract public class AbstractScene {
                 nextScene(sceneItem);
             }
         };
-        EventManager.getInstance().addListener(Keyboard.KEY_ESCAPE, escape);
+        EventManager.addListener(Keyboard.KEY_ESCAPE, escape);
     }
 }

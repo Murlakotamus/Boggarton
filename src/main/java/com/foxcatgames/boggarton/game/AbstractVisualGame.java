@@ -27,7 +27,6 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private static final float APPEAR_PAUSE = 1.5f;
     private static final float DISAPPEAR_PAUSE = 1f;
     private static final float SET_PAUSE = 0.1f;
-    protected static final float YUCK_PAUSE = 0.5f;
 
     private static final int DROPPING_SPEED = 400000;
     private static final int CRASH_SPEED = 150000;
@@ -42,9 +41,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private final Text diffScore;
     protected final Map<String, Integer> sounds;
 
-    public AbstractVisualGame(final Layer layer, final int x, final int y, final Map<String, Integer> sounds,
-            final boolean virtualPlayer) {
-        super(virtualPlayer);
+    public AbstractVisualGame(final Layer layer, final int x, final int y, final Map<String, Integer> sounds) {
         this.x = x;
         this.y = y;
         this.sounds = sounds;
@@ -61,24 +58,17 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
                 charge();
             break;
         case APPEAR:
-            executeSoundCommand();
             if (dropPressed)
                 nextStage();
             else
                 stagePause(APPEAR_PAUSE);
             break;
         case FALL:
-            executeSoundCommand();
             if (dropPressed)
                 increaseSpeed();
             fall();
             break;
         case SET:
-            if (virtualPlayer && !turnFinished) {
-                executeCommand();
-                Thread.yield();
-                break;
-            }
             stagePause(SET_PAUSE);
             break;
         case CRASH:
@@ -92,11 +82,6 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             break;
         default:
         }
-    }
-
-    private void executeSoundCommand() {
-        if (!(Sound.isBusy(sounds.get(Const.SHIFT)) || Sound.isBusy(sounds.get(Const.CYCLE))))
-            executeCommand();
     }
 
     @Override

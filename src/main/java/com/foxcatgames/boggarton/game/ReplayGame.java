@@ -65,6 +65,7 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
         switch (stage) {
         case NEXT:
             if (needNewFigure) {
+                gameAutomation.processStage(stage); // set next turn
                 final PredefinedFigure figure = nextFigure();
                 if (figure == null || figure.getNumber() == 0) {
                     setGameOver();
@@ -77,7 +78,7 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
         case APPEAR:
         case FALL:
         case SET:
-            if (gameAutomation.processStage(stage, turnFinished))
+            if (gameAutomation.processStage(stage))
                 super.processStage();
             break;
         case YUCK:
@@ -96,7 +97,7 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
     protected void nextStage() {
         startTime = getTime();
         previousTime = startTime;
-        if (eventNum < events.size() && events.get(eventNum).startsWith(SCORE_STR)) { // #122
+        if (eventNum > 0 && eventNum < events.size() && events.get(eventNum).startsWith(SCORE_STR)) { // #122
             eventNum++;
             if (events.get(eventNum - 2).startsWith(YUCK_STR)) {
                 stage = StageItem.PROCESS;
@@ -120,7 +121,7 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
     }
 
     @Override
-    public void setSimpleGameOver(IAutomatedGame game) {
+    public void setSimpleGameOver(final IAutomatedGame game) {
         if (game == this)
             super.setGameOver();
     }
@@ -128,5 +129,20 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
     @Override
     public void sendCommand(final ICommand cmd) throws InterruptedException {
         gameAutomation.sendCommand(cmd);
+    }
+
+    @Override
+    public void finishTurn() {
+        super.finishTurn();
+        gameAutomation.finishTurn();
+    }
+
+    @Override
+    public boolean isYuckHappened() {
+        return false;
+    }
+
+    @Override
+    public void dropYuckHappened() {
     }
 }

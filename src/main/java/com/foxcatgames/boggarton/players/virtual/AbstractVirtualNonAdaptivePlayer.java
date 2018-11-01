@@ -1,5 +1,6 @@
 package com.foxcatgames.boggarton.players.virtual;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.IAutomatedGame;
@@ -12,6 +13,17 @@ abstract public class AbstractVirtualNonAdaptivePlayer<B extends Brick, F extend
         extends AbstractVirtualPlayer<B, F, G, P, T> {
 
     public AbstractVirtualNonAdaptivePlayer(final T game, final int prognosis, final IEater price, final boolean moveDown) {
-        super(game, "virtual player, non-adaptive, effective: " + moveDown, prognosis, price, moveDown);
+        super(game, "virtual player, non-adaptive, effective: " + !moveDown, prognosis, price, moveDown);
+    }
+
+    @Override
+    protected void makeVirtualPlayerMoves(final char[] moves) throws InterruptedException {
+        for (int i = 0; i < moves.length && game.isGameOn(); i++) {
+            executeMove(moves[i]);
+            if (game.isYuckHappened() && moves[i] == Const.NEXT) {
+                game.dropYuckHappened();
+                break;
+            }
+        }
     }
 }

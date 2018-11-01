@@ -19,7 +19,7 @@ final public class AutomatedSimpleGame extends SimpleGame implements IAutomatedG
 
     @Override
     public void processStage() {
-        if (gameAutomation.processStage(stage, turnFinished))
+        if (gameAutomation.processStage(stage))
             super.processStage();
     }
 
@@ -29,7 +29,7 @@ final public class AutomatedSimpleGame extends SimpleGame implements IAutomatedG
     }
 
     @Override
-    public void setSimpleGameOver(IAutomatedGame game) {
+    public void setSimpleGameOver(final IAutomatedGame game) {
         if (game == this)
             super.setGameOver();
     }
@@ -37,5 +37,20 @@ final public class AutomatedSimpleGame extends SimpleGame implements IAutomatedG
     @Override
     public void sendCommand(final ICommand cmd) throws InterruptedException {
         gameAutomation.sendCommand(cmd);
+    }
+
+    @Override
+    public void finishTurn() {
+        super.finishTurn();
+        gameAutomation.finishTurn();
+    }
+
+    @Override
+    public boolean isYuckHappened() {
+        return false;
+    }
+
+    @Override
+    public void dropYuckHappened() {
     }
 }

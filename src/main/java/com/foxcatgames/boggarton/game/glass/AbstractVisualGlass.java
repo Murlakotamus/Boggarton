@@ -151,7 +151,6 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
             state.setNextPosition(0);
 
         count++;
-        setChanges(true);
         return currentPosition;
     }
 
@@ -170,7 +169,8 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
             return;
 
         Sound.play(sounds.get(Const.SHIFT));
-        setFigure(state.getI() - 1, state.getJ(), true);
+        setFigure(state.getI() - 1, state.getJ());
+        setChanges(true);
     }
 
     @Override
@@ -179,22 +179,21 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
             return;
 
         Sound.play(sounds.get(Const.SHIFT));
-        setFigure(state.getI() + 1, state.getJ(), true);
+        setFigure(state.getI() + 1, state.getJ());
+        setChanges(true);
     }
 
     public void setChanges(final int num, final int i, final int j) {
         Sound.playDrop(sounds.get(Const.DROP));
         state.setBrick(i, j, figure().getBrick(num));
         figure().setNull(num);
-        setChanges(true);
     }
 
-    public void setFigure(final int i, final int j, final boolean setChanges) {
+    public void setFigure(final int i, final int j) {
         state.setI(i);
         state.setJ(j);
         final Vector2f position = frame.getPosition();
         figure().setPosition(new Vector2f(i * BOX + position.getX(), getY() + position.getY() + BORDER));
-        setChanges(setChanges);
     }
 
     public boolean moveDown() {
@@ -206,10 +205,14 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
                     changes = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
+
+        if (changes)
+            setChanges(true);
+
         if (figure().isFallen())
             return false;
 
-        setFigure(state.getI(), state.getJ(), changes);
+        setFigure(state.getI(), state.getJ());
         return true;
     }
 

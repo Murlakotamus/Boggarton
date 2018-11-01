@@ -33,6 +33,7 @@ abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractV
                     game.moveLeft();
                 }
             });
+            game.getGlass().waitChanges();
             break;
 
         case RIGHT:
@@ -41,8 +42,10 @@ abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractV
                 @Override
                 public void execute() {
                     game.moveRight();
+
                 }
             });
+            game.getGlass().waitChanges();
             break;
 
         case UP:
@@ -53,19 +56,20 @@ abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractV
                     game.rotateFigure();
                 }
             });
+            game.getGlass().waitChanges();
             break;
 
         case DOWN:
-            game.restoreSpeed();
             game.sendCommand(new ICommand() {
                 @Override
                 public void execute() {
                     game.dropFigure();
+                    game.setMaxSpeed();
+
                 }
             });
-            game.getGlass().dropChanges();
-            game.setMaxSpeed();
             game.getGlass().waitChanges();
+            game.restoreSpeed();
             break;
 
         case NEXT:
@@ -73,11 +77,12 @@ abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractV
                 @Override
                 public void execute() {
                     game.finishTurn();
+                    game.restoreSpeed();
                 }
             });
+            game.getGlass().waitChanges();
             game.clearBuffer(); // MoveExecutor and NonAdaptivePlayer must wait for buffer update
             game.getBuffer();
-            game.restoreSpeed();
             break;
         }
     }

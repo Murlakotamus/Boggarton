@@ -11,22 +11,7 @@ public class Boggarton {
             scene = scene.createScene().play();
     }
 
-    public static void playVirtualGame() {
-    }
-
     public static void main(String[] args) {
-        if (args.length > 0) {
-            int number = 0;
-            try {
-                number = Integer.parseInt(args[0]);
-                for (int i = 0; i < number; i++)
-                    Boggarton.playVirtualGame();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return;
-        }
-
         Sound.init();
         Graphics.init();
 

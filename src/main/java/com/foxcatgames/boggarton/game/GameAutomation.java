@@ -15,8 +15,12 @@ public class GameAutomation {
     private final Map<String, Integer> sounds;
     protected final OuterCommand command = new OuterCommand();
 
-    public boolean processStage(final StageItem stage, final boolean turnFinished) {
+    protected boolean turnFinished;
+
+    public boolean processStage(final StageItem stage) {
         switch (stage) {
+        case NEXT:
+            turnFinished = false;
         case APPEAR:
             executeSoundCommand();
             break;
@@ -49,11 +53,11 @@ public class GameAutomation {
     }
 
     public void executeCommand() {
-        if (command.getCommand() != null)
-            synchronized (command) {
+        synchronized (command) {
+            if (command.getCommand() != null)
                 command.execute();
-                command.notify();
-            }
+            command.notify();
+        }
     }
 
     public void sendCommand(final ICommand cmd) throws InterruptedException {
@@ -71,5 +75,9 @@ public class GameAutomation {
             gamestateBuffer.notify();
             executeCommand();
         }
+    }
+
+    public void finishTurn() {
+        turnFinished = true;
     }
 }

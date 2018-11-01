@@ -10,6 +10,8 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     private boolean moveDown;
     private boolean forSearchingSolution = true;
 
+    public int changesCounter;
+
     public <B extends IBrick, F extends AbstractFigure<B>> VirtualGlass(final GlassState<B, F> glassState, final boolean moveDown) {
         super(glassState.getWidth(), glassState.getHeight(), 0);
         this.moveDown = moveDown;
@@ -36,9 +38,13 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     }
 
     public void setFigure(final int x, final int y, final boolean setChanges) {
+        setFigure(x, y);
+        changes.setFlag(setChanges);
+    }
+
+    public void setFigure(final int x, final int y) {
         state.setI(x);
         state.setJ(y);
-        changes.setFlag(setChanges);
     }
 
     @Override
@@ -102,7 +108,6 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     public void setChanges(final int num, final int i, final int j) {
         state.setBrick(i, j, figure().getBrick(num));
         figure().setNull(num);
-        changes.setFlag(true);
     }
 
     @Override
@@ -119,28 +124,42 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
                     changes = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
+
+        if (changes) {
+            changesCounter++;
+            this.changes.setFlag(true);
+        }
+
         if (figure().isFallen())
             return false;
 
-        setFigure(state.getI(), state.getJ() + 1, changes);
+        setFigure(state.getI(), state.getJ() + 1);
         return true;
     }
 
     private boolean moveDownEffective() {
+        boolean changes = false;
         for (int i = 0; i < figure().getLenght(); i++)
             if (figure().getBrick(i) != null)
-                if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null)
+                if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null) {
+                    changes = true;
                     setChanges(i, state.getI() + i, state.getJ());
+                }
 
-        if (figure().isFallen())
+        if (changes)
+            changesCounter++;
+
+        if (figure().isFallen()) {
+            setChanges(true);
             return false;
+        }
 
-        setFigure(state.getI(), state.getJ() + 1, false);
+        setFigure(state.getI(), state.getJ() + 1);
         return true;
     }
 
     @Override
-    protected void setChanges(final boolean flag) {
+    public void setChanges(final boolean flag) {
         if (forSearchingSolution)
             changes.setFlag(flag);
         else

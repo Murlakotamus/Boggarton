@@ -31,9 +31,6 @@ public class Const {
     public static final char DOWN = '↓';
     public static final char NEXT = '↵';
 
-    public static final String DOWN_ = "" + DOWN;
-    public static final String DOWN_NEXT = "" + DOWN + NEXT;
-
     public static final float DEFAULT_Z = 0;
     public static final int CURRENT_SET = 1;
 

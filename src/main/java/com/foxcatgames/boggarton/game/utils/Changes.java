@@ -2,10 +2,9 @@ package com.foxcatgames.boggarton.game.utils;
 
 public class Changes {
 
-    private volatile boolean flag;
+    private volatile boolean flag = false;
 
-    public Changes(final boolean flag) {
-        this.flag = flag;
+    public Changes() {
     }
 
     public boolean isFlag() {

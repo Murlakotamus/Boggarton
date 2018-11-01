@@ -30,7 +30,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
     private static final int DROPPING_SPEED = 400000;
     private static final int CRASH_SPEED = 150000;
-    private static final int MOVING_SPEED = 3000;
+    private static final int MOVING_SPEED = 500;
     private static final int CHARGE_SPEED = 300000;
     private int currentSpeed = MOVING_SPEED;
 

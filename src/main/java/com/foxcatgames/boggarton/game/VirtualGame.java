@@ -96,4 +96,13 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
     public void sendCommand(final ICommand cmd) throws InterruptedException {
         gameAutomation.sendCommand(cmd);
     }
+
+    @Override
+    public boolean isYuckHappened() {
+        return false;
+    }
+
+    @Override
+    public void dropYuckHappened() {
+    }
 }

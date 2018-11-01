@@ -6,4 +6,6 @@ public interface IAutomatedGame {
 
     void sendCommand(ICommand cmd) throws InterruptedException;
     void setSimpleGameOver(IAutomatedGame game);
+    boolean isYuckHappened();
+    void dropYuckHappened();
 }

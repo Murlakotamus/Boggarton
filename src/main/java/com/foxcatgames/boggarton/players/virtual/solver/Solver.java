@@ -134,11 +134,16 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
     private static String drop(final VirtualGlass glass) {
         glass.dropChanges();
         boolean isFallen = false;
+        glass.changesCounter = 0;
         do {
             isFallen = glass.moveDown();
         } while (!glass.hasChanges());
 
-        return isFallen ? DOWN_ : DOWN_NEXT;
+        StringBuilder down = new StringBuilder(glass.changesCounter + 1);
+        for (int i = 0; i < glass.changesCounter; i++)
+            down.append(DOWN);
+
+        return isFallen ? down.toString() : down.append(NEXT).toString();
     }
 
     private int getFigureSetSize(final VirtualFigure figure) {

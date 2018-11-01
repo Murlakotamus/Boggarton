@@ -9,7 +9,7 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     volatile protected boolean gameOver = false;
     protected int count = 0; // figures counter
 
-    final protected Changes changes = new Changes(false);
+    final protected Changes changes = new Changes();
     final protected GlassState<B, F> state;
 
     public AbstractGlass(final int width, final int height, final int nextPosition) {
@@ -73,8 +73,14 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         return gameOver;
     }
 
-    protected void setChanges(final boolean flag) {
+    public void setChanges(final boolean flag) {
         synchronized (changes) {
+            while (flag == changes.isFlag())
+                try {
+                    changes.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             changes.setFlag(flag);
             changes.notify();
         }
@@ -84,17 +90,21 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         synchronized (changes) {
             while (!changes.isFlag() && !gameOver)
                 changes.wait();
+            changes.setFlag(false);
             changes.notify();
         }
     }
 
     public void dropChanges() {
-        setChanges(false);
+        changes.setFlag(false);
     }
 
     public void setGameOver() {
         gameOver = true;
-        setChanges(true);
+        synchronized (changes) {
+            changes.setFlag(true);
+            changes.notify();
+        }
     }
 
     public int getReactions() {

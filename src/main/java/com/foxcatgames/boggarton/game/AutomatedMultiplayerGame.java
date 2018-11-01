@@ -20,7 +20,7 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
 
     @Override
     public void processStage() {
-        if (gameAutomation.processStage(stage, turnFinished))
+        if (gameAutomation.processStage(stage))
             super.processStage();
     }
 
@@ -30,7 +30,7 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
     }
 
     @Override
-    public void setSimpleGameOver(IAutomatedGame game) {
+    public void setSimpleGameOver(final IAutomatedGame game) {
         if (game == this)
             super.setGameOver();
     }
@@ -38,5 +38,21 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
     @Override
     public void sendCommand(final ICommand cmd) throws InterruptedException {
         gameAutomation.sendCommand(cmd);
+    }
+
+    @Override
+    public void finishTurn() {
+        super.finishTurn();
+        gameAutomation.finishTurn();
+    }
+
+    @Override
+    public boolean isYuckHappened() {
+        return yuckHappened;
+    }
+
+    @Override
+    public void dropYuckHappened() {
+        yuckHappened = false;
     }
 }

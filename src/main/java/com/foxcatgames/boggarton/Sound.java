@@ -17,32 +17,18 @@ import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 public class Sound {
     public static final IntBuffer BUFFER = BufferUtils.createIntBuffer(10); // must be equals to number of sound files
 
-    /** Sources are points emitting sound. */
     private static final IntBuffer SOURCE = BufferUtils.createIntBuffer(53);
 
-    /** Position of the source sound. */
     private static final FloatBuffer SOURCE_POS = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
     private static final FloatBuffer SOURCE_LEFT = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { -1.0f, 0.0f, 0.0f }).rewind();
     private static final FloatBuffer SOURCE_RIGHT = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 1.0f, 0.0f, 0.0f }).rewind();
 
-    /** Velocity of the source sound. */
     private static final FloatBuffer SOURCE_VEL = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
 
-    /** Position of the listener. */
     private static final FloatBuffer LISTENER_POS = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
-
-    /** Velocity of the listener. */
     private static final FloatBuffer LISTENER_VEL = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
-
-    /**
-     * Orientation of the listener. (first 3 elements are "at", second 3 are "up")
-     */
     private static final FloatBuffer LISTENER_ORI = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
 
-    /**
-     * We already defined certain values for the Listener, but we need to tell
-     * OpenAL to use that data. This function does just that.
-     */
     private static void setListenerValues() {
         AL10.alListener(AL10.AL_POSITION, LISTENER_POS);
         AL10.alListener(AL10.AL_VELOCITY, LISTENER_VEL);
@@ -72,7 +58,6 @@ public class Sound {
     }
 
     private static int loadALData() {
-        // Load wav data into a buffer.
         AL10.alGenBuffers(BUFFER);
 
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
@@ -90,7 +75,6 @@ public class Sound {
         sl.loadPattern(WAV_SHIFT, SND_SHIFT);
         sl.loadPattern(WAV_YUCK, SND_YUCK);
 
-        // Bind the buffer with the source.
         AL10.alGenSources(SOURCE);
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
@@ -136,17 +120,12 @@ public class Sound {
         initPatternLeft(SND_YUCK, SND_YUCK_LEFT);
         initPatternRight(SND_YUCK, SND_YUCK_RIGHT);
 
-        // Do another error check and return.
         if (AL10.alGetError() == AL10.AL_NO_ERROR)
             return AL10.AL_TRUE;
 
         return AL10.AL_FALSE;
     }
 
-    /**
-     * We have allocated memory for our buffers and sources which needs to be
-     * returned to the system. This function frees that memory.
-     */
     private static void killALData() {
         AL10.alDeleteSources(SOURCE);
         AL10.alDeleteBuffers(BUFFER);
@@ -181,8 +160,6 @@ public class Sound {
 
         if (currentSound < sound + 10)
             play(currentSound);
-        else
-            Logger.err("No source! " + currentSound);
     }
 
     public static void playMove() {

@@ -4,6 +4,8 @@ import static com.foxcatgames.boggarton.Const.*;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -11,6 +13,7 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
+import com.foxcatgames.boggarton.scenes.AbstractScene;
 import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
@@ -27,7 +30,12 @@ public class Sound {
 
     private static final FloatBuffer LISTENER_POS = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
     private static final FloatBuffer LISTENER_VEL = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
-    private static final FloatBuffer LISTENER_ORI = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
+    private static final FloatBuffer LISTENER_ORI = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f })
+            .rewind();
+
+    private static final Map<Integer, Float> PLAYING_SOUNDS = new ConcurrentHashMap<>();
+
+    private static float MOVE_DURATION = 0.3f;
 
     private static void setListenerValues() {
         AL10.alListener(AL10.AL_POSITION, LISTENER_POS);
@@ -171,8 +179,14 @@ public class Sound {
     }
 
     public static void play(final int sound) {
+        PLAYING_SOUNDS.put(sound, AbstractScene.getTime());
         if (SceneItem.getSound() == SoundTypes.ON)
             AL10.alSourcePlay(SOURCE.get(sound));
+    }
+
+    public static boolean isPlaying(final int sound) {
+        final float time = PLAYING_SOUNDS.getOrDefault(sound, 0f);
+        return time + MOVE_DURATION > AbstractScene.getTime();
     }
 
     public static boolean isBusy(final int sound) {

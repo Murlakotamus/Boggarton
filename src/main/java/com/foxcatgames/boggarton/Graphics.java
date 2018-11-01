@@ -85,9 +85,7 @@ public class Graphics {
         return imageBuffer;
     }
 
-    /**
-     * create OpenGL window
-     */
+
     private static void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
         final Application application = Application.getApplication();
         if (application != null) {

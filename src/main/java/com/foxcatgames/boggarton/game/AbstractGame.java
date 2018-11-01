@@ -16,6 +16,7 @@ import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractGlass;
 import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.utils.Pair;
+import com.foxcatgames.boggarton.scenes.AbstractScene;
 
 /**
  * The game is a glass, a forecast and the all motion inside the Glass.
@@ -44,6 +45,9 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
     protected int targetPosition = 0;
     protected int lastScore = 0;
     protected boolean needNewFigure = true;
+
+    protected float startTime = getTime();
+    protected float previousTime = startTime;
 
     abstract protected void nextStage();
 
@@ -128,22 +132,25 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
         glass.rotate();
         logEvent(UP);
         glass.setChanges(true);
+        previousTime = getTime();
     }
 
     public void moveLeft() {
         logEvent(LEFT);
         glass.moveLeft();
+        previousTime = getTime();
     }
 
     public void moveRight() {
         logEvent(RIGHT);
         glass.moveRight();
-
+        previousTime = getTime();
     }
 
     public void dropFigure() {
         logEvent(DOWN);
         dropPressed = true;
+        previousTime = getTime();
     }
 
     public void finishTurn() {
@@ -212,6 +219,10 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
     private void logEvent(final String str) {
         if (isLoggerInit)
             gameLogger.logEvent(str);
+    }
+
+    protected static float getTime() {
+        return AbstractScene.getTime();
     }
 
     public GameParams.Builder buildParams() {

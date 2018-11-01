@@ -82,4 +82,8 @@ abstract public class AbstractScene {
         };
         EventManager.addListener(Keyboard.KEY_ESCAPE, escape);
     }
+
+    public static float getTime() {
+        return TIMER.getTime();
+    }
 }

@@ -22,8 +22,6 @@ public class GameAutomation {
         case NEXT:
             turnFinished = false;
         case APPEAR:
-            executeSoundCommand();
-            break;
         case FALL:
             executeSoundCommand();
             break;
@@ -49,7 +47,7 @@ public class GameAutomation {
     }
 
     private boolean sounds(final String soundSource) {
-        return Sound.isBusy(sounds.get(soundSource));
+        return Sound.isPlaying(sounds.get(soundSource));
     }
 
     public void executeCommand() {

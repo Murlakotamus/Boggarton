@@ -19,7 +19,6 @@ import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
-import com.foxcatgames.boggarton.scenes.AbstractScene;
 
 abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>>
         extends AbstractGame<B, F, G, P> {
@@ -33,9 +32,6 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private static final int MOVING_SPEED = 500;
     private static final int CHARGE_SPEED = 300000;
     private int currentSpeed = MOVING_SPEED;
-
-    protected float startTime = getTime();
-    protected float previousTime = startTime;
 
     private final int x, y;
     private final Text diffScore;
@@ -253,10 +249,6 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             glass.respawn();
             nextStage();
         }
-    }
-
-    protected float getTime() {
-        return AbstractScene.TIMER.getTime();
     }
 
     public void restoreSpeed() {

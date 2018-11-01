@@ -64,8 +64,6 @@ abstract public class AbstractEntity {
         spawn(position, layer);
     }
 
-    // kill an entity from the layer
-    // killing makes the reference invalid and it will be cleaned up by gc
     public boolean unspawn() {
         if (layer == null)
             return false;
@@ -129,16 +127,13 @@ abstract public class AbstractEntity {
 
     @Override
     public String toString() {
-        if (!(this instanceof Brick))
-            return "";
+        final StringBuilder result = new StringBuilder("--------------------------\n");
+        result.append("px: ").append(position.x).append("\n");
+        result.append("py: ").append(position.y).append("\n");
+        result.append("width: ").append(originalWidth).append("\n");
+        result.append("height: ").append(originalHeight).append("\n");
+        result.append("spawned: ").append(spawned).append("\n");
 
-        String result = "--------------------------\n";
-        result += "px: " + position.x + "\n";
-        result += "py: " + position.y + "\n";
-        result += "width: " + originalWidth + "\n";
-        result += "height: " + originalHeight + "\n";
-        result += "spawned: " + spawned + "\n";
-
-        return result;
+        return result.toString();
     }
 }

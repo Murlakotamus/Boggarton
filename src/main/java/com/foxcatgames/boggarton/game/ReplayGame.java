@@ -64,14 +64,6 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
     }
 
     @Override
-    public boolean isGameOver() {
-        boolean result = super.isGameOver();
-        if (result)
-            gameAutomation.closeLogger();
-        return result;
-    }
-
-    @Override
     public void processStage() {
         switch (stage) {
         case NEXT:

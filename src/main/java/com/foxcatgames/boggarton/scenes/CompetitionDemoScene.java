@@ -56,6 +56,9 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
 
     @Override
     protected void terminate() {
+        for (int i = 0; i < PLAYERS; i++)
+            games[i].closeLogger();
+
         super.terminate();
         if (!escapePressed)
             nextScene(SceneItem.COMPETITION_DEMO);

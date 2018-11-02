@@ -96,7 +96,6 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
             game.setSimpleGameOver(game);
             gamestateBuffer.notify();
             executeCommand();
-            closeLogger();
         }
     }
 

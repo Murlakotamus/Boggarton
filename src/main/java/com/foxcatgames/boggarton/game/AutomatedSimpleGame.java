@@ -32,6 +32,10 @@ final public class AutomatedSimpleGame extends SimpleGame implements IAutomatedG
         gameAutomation.initLogger(this);
     }
 
+    public void closeLogger() {
+        gameAutomation.closeLogger();
+    }
+
     @Override
     public void processStage() {
         if (gameAutomation.processStage(stage))
@@ -41,14 +45,6 @@ final public class AutomatedSimpleGame extends SimpleGame implements IAutomatedG
     @Override
     public void setGameOver() {
         gameAutomation.setGameOver(this);
-    }
-
-    @Override
-    public boolean isGameOver() {
-        boolean result = super.isGameOver();
-        if (result)
-            gameAutomation.closeLogger();
-        return result;
     }
 
     @Override

@@ -34,6 +34,10 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
         gameAutomation.initLogger(this);
     }
 
+    public void closeLogger() {
+        gameAutomation.closeLogger();
+    }
+
     @Override
     public void processStage() {
         if (gameAutomation.processStage(stage))
@@ -43,14 +47,6 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
     @Override
     public void setGameOver() {
         gameAutomation.setGameOver(this);
-    }
-
-    @Override
-    public boolean isGameOver() {
-        final boolean result = super.isGameOver();
-        if (result)
-            gameAutomation.closeLogger();
-        return result;
     }
 
     @Override

@@ -6,19 +6,24 @@ import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
 public class VirtualGameScene {
 
-    //private IPlayer player;
+    // private IPlayer player;
+    private final VirtualGame game;
 
     public VirtualGameScene(final int width, final int height, final int prognosis, final int figureSize, final RandomTypes randomType,
             final DifficultyTypes difficulty) {
 
-        VirtualGame game = new VirtualGame(width, height, prognosis, figureSize, difficulty.getSetSize(), randomType);
+        game = new VirtualGame(width, height, prognosis, figureSize, difficulty.getSetSize(), randomType);
         game.setName("Virtual");
         game.initLogger();
         game.startGame();
-        //player = new VirtualAdaptivePlayer(game, new Price());
+        // player = new VirtualAdaptivePlayer(game, new Price());
     }
 
     protected void saveOutcome() {
-        //DbHandler.saveOutcome(player);
+        // DbHandler.saveOutcome(player);
+    }
+
+    protected void terminate() {
+        game.closeLogger();
     }
 }

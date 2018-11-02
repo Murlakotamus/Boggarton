@@ -28,12 +28,8 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
         gameAutomation.initLogger(this);
     }
 
-    @Override
-    public boolean isGameOver() {
-        boolean result = super.isGameOver();
-        if (result)
-            gameAutomation.closeLogger();
-        return result;
+    public void closeLogger() {
+        gameAutomation.closeLogger();
     }
 
     @Override

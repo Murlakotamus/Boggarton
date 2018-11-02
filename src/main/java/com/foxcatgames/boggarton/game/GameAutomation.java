@@ -25,7 +25,6 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
     protected final OuterCommand command = new OuterCommand();
     protected final Pair<GlassState<B, F>, P> gamestateBuffer = new Pair<>(null, null);
 
-    protected boolean isLoggerInit;
     protected GameLogger gameLogger;
 
     protected boolean turnFinished;
@@ -39,7 +38,6 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
         case SET:
             if (!turnFinished) {
                 executeCommand();
-                Thread.yield();
                 return false;
             }
             break;
@@ -125,51 +123,42 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
     }
 
     public void finishTurn() {
-        logEvent(NEXT + "\n");
+        log(NEXT + "\n");
         turnFinished = true;
     }
 
     public void initLogger(final IAutomatedGame<B, F, G, P> game) {
         gameLogger = new GameLogger(game.getName());
-        isLoggerInit = gameLogger.isInit();
     }
 
     public void closeLogger() {
-        if (isLoggerInit) {
-            gameLogger.close();
-            isLoggerInit = false;
-        }
+        gameLogger.close();
     }
 
     protected void logFigure(final F figure) {
         if (figure != null)
-            logEvent(FIGURE_STR + figure);
+            log(FIGURE_STR + figure);
     }
 
     protected void logScore(final int diffScore) {
-        logEvent(SCORE_STR + diffScore + "\n");
-    }
-
-    protected void logGlass(final String glassState) {
-        logEvent(glassState);
+        log(SCORE_STR + diffScore + "\n");
     }
 
     protected void logMoves() {
-        logEvent(MOVES_STR);
+        log(MOVES_STR);
     }
 
     protected void logYuck(final String yuck) {
         if (yuck != null)
-            logEvent(YUCK_STR + yuck + "\n");
+            log(YUCK_STR + yuck + "\n");
     }
 
-    public void logEvent(final char c) {
-        logEvent("" + c);
+    public void logMove(final char c) {
+        log("" + c);
     }
 
-    public void logEvent(final String str) {
-        if (isLoggerInit)
-            gameLogger.logEvent(str);
+    public void log(final String str) {
+        gameLogger.log(str);
     }
 
     public void resumeScore(final IAutomatedGame<B, F, G, P> game) {
@@ -177,8 +166,8 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
         if (diff > 0) {
             logScore(diff);
             if (diff > 100) {
-                logGlass(game.getOldGlassState());
-                logGlass(game.getGlass().getGlassState().toString());
+                log(game.getOldGlassState());
+                log(game.getGlass().getGlassState().toString());
             }
         }
     }

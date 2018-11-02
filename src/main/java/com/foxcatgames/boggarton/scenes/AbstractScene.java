@@ -60,7 +60,6 @@ abstract public class AbstractScene {
             EventManager.checkEvents();
             if (Display.isCloseRequested())
                 nextScene(SceneItem.FINISH_GAME);
-            Thread.yield();
         }
     }
 

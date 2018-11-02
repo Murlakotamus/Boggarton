@@ -29,9 +29,6 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
     protected int lastScore;
     protected boolean needNewFigure = true;
 
-    protected float startTime = getTime();
-    protected float previousTime = startTime;
-
     abstract protected void nextStage();
 
     abstract protected void resumeScore();
@@ -89,22 +86,18 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
     public void rotateFigure() {
         glass.rotate();
         glass.setChanges(true);
-        previousTime = getTime();
     }
 
     public void moveLeft() {
         glass.moveLeft();
-        previousTime = getTime();
     }
 
     public void moveRight() {
         glass.moveRight();
-        previousTime = getTime();
     }
 
     public void dropFigure() {
         dropPressed = true;
-        previousTime = getTime();
     }
 
     public void finishTurn() {

@@ -39,17 +39,18 @@ public class GameLogger {
     }
 
     public void close() {
-        try {
-            logEvent("\n" + Const.GAMEOVER_STR);
-            isInit = false;
-            bw.close();
-            fos.close();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
+        if (isInit)
+            try {
+                log("\n" + Const.GAMEOVER_STR);
+                isInit = false;
+                bw.close();
+                fos.close();
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
     }
 
-    public void logEvent(final String str) {
+    public void log(final String str) {
         if (isInit)
             try {
                 bw.write(str);

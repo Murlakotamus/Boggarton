@@ -33,6 +33,9 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private static final int CHARGE_SPEED = 300000;
     private int currentSpeed = MOVING_SPEED;
 
+    protected float startTime = getTime();
+    protected float previousTime = startTime;
+
     private final int x, y;
     private final Text diffScore;
     protected final Map<String, Integer> sounds;
@@ -255,6 +258,30 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     public void increaseSpeed() {
         if (currentSpeed < DROPPING_SPEED)
             currentSpeed += 2000;
+    }
+
+    @Override
+    public void rotateFigure() {
+        super.rotateFigure();
+        previousTime = getTime();
+    }
+
+    @Override
+    public void moveLeft() {
+        glass.moveLeft();
+        previousTime = getTime();
+    }
+
+    @Override
+    public void moveRight() {
+        super.moveRight();
+        previousTime = getTime();
+    }
+
+    @Override
+    public void dropFigure() {
+        super.dropFigure();
+        previousTime = getTime();
     }
 
     public int getX() {

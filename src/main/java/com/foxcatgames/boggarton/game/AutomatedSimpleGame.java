@@ -97,25 +97,25 @@ final public class AutomatedSimpleGame extends SimpleGame implements IAutomatedG
 
     @Override
     public void rotateFigure() {
-        gameAutomation.logEvent(UP);
+        gameAutomation.logMove(UP);
         super.rotateFigure();
     }
 
     @Override
     public void moveLeft() {
-        gameAutomation.logEvent(LEFT);
+        gameAutomation.logMove(LEFT);
         super.moveLeft();
     }
 
     @Override
     public void moveRight() {
-        gameAutomation.logEvent(RIGHT);
+        gameAutomation.logMove(RIGHT);
         super.moveRight();
     }
 
     @Override
     public void dropFigure() {
-        gameAutomation.logEvent(DOWN);
+        gameAutomation.logMove(DOWN);
         super.dropFigure();
     }
 

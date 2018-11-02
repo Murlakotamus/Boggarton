@@ -46,14 +46,11 @@ public class Graphics {
         Display.destroy();
     }
 
-    /**
-     * Off-screen buffer
-     */
     private static void createOffScreenBuffer() {
         final int bytesPerPixel = 3;
         final ByteBuffer scratch = ByteBuffer.allocateDirect(1024 * 1024 * bytesPerPixel);
         final IntBuffer buf = ByteBuffer.allocateDirect(12).order(ByteOrder.nativeOrder()).asIntBuffer();
-        GL11.glGenTextures(buf); // Create Texture In OpenGL
+        GL11.glGenTextures(buf);
         GL11.glBindTexture(GL_TEXTURE_2D, buf.get(0));
 
         final int glType = GL_RGB;
@@ -69,12 +66,9 @@ public class Graphics {
         final WritableRaster raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, bufferedImage.getWidth(), bufferedImage.getHeight(), 4, null);
         final BufferedImage texImage = new BufferedImage(glAlphaColorModel, raster, true, new Hashtable<>());
 
-        // copy the source image into the produced image
         final java.awt.Graphics g = texImage.getGraphics();
         g.drawImage(bufferedImage, 0, 0, null);
 
-        // build a byte buffer from the temporary image
-        // that be used by OpenGL to produce a texture.
         final byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
 
         final ByteBuffer imageBuffer = ByteBuffer.allocateDirect(data.length);
@@ -93,7 +87,7 @@ public class Graphics {
             application.setDockIconImage(image);
         }
 
-        if (!fullscreen) { // create windowed mode
+        if (!fullscreen) {
             Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
             Display.setLocation(300, 300);
             Display.setTitle("Boggarton");
@@ -130,18 +124,15 @@ public class Graphics {
         }
     }
 
-    /**
-     * OpenGL initialization
-     */
     private static void initGL() {
-        GL11.glEnable(GL_TEXTURE_2D); // Enable Texture Mapping
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
-        GL11.glClearDepth(1.0f); // Depth Buffer Setup
-        GL11.glDisable(GL_DEPTH_TEST); // Enables Depth Testing
+        GL11.glEnable(GL_TEXTURE_2D);
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        GL11.glClearDepth(1.0f);
+        GL11.glDisable(GL_DEPTH_TEST);
         GL11.glEnable(GL_BLEND);
         GL11.glDepthMask(false);
-        GL11.glMatrixMode(GL_PROJECTION); // Select The Projection Matrix
-        GL11.glLoadIdentity(); // Reset The Projection Matrix
+        GL11.glMatrixMode(GL_PROJECTION);
+        GL11.glLoadIdentity();
         if (FULL_SCREEN) {
             int actualWidth = actualDisplayMode.getWidth();
             int actualHeight = actualDisplayMode.getHeight();

@@ -103,9 +103,6 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
     private Vector getSpace(final VirtualGlass glass) {
         final int lSpace = glass.getSpaceLeft();
         final int rSpace = glass.getSpaceRight();
-        if (rSpace == 5) {
-            System.out.println("!");
-        }
         if (lSpace >= rSpace)
             return movesToLeft[lSpace];
 

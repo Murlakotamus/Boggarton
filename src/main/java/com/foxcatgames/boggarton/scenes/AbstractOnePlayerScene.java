@@ -39,7 +39,6 @@ abstract public class AbstractOnePlayerScene<B extends Brick, F extends Abstract
 
         if (game.isGameOver()) {
             gameOver = true;
-            game.closeLogger();
             saveOutcome(player);
             gameOverEntity.spawn(new Vector2f(X + game.getForecast().getFigureSize() * BOX + 25, Y + BOX * 3 + BORDER));
         } else
@@ -50,6 +49,5 @@ abstract public class AbstractOnePlayerScene<B extends Brick, F extends Abstract
     protected void setGameOver() {
         super.setGameOver();
         game.setGameOver();
-        game.closeLogger();
     }
 }

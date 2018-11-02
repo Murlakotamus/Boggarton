@@ -1,8 +1,8 @@
 package com.foxcatgames.boggarton.game;
 
 import static com.foxcatgames.boggarton.Const.BOX;
-import static com.foxcatgames.boggarton.Const.YUCK_STR;
 import static com.foxcatgames.boggarton.Const.SCORE_STR;
+import static com.foxcatgames.boggarton.Const.YUCK_STR;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,23 +19,26 @@ import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
 import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
+import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
+import com.foxcatgames.boggarton.game.utils.Pair;
 
-final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> implements IAutomatedGame {
+final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast>
+        implements IAutomatedGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> {
 
     private static final float YUCK_PAUSE = 0.5f;
     protected int yucks = 0;
     final List<String> events;
     int eventNum = 0;
-    private final GameAutomation gameAutomation;
+    private final GameAutomation<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> gameAutomation;
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int figureSize, final List<String> events,
             final Map<String, Integer> sounds) {
 
         super(layer, x, y, sounds);
-        this.gameAutomation = new GameAutomation(sounds);
-        this.forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, figureSize, events);
+        gameAutomation = new GameAutomation<>(sounds);
+        forecast = new PredefinedForecast(layer, new Vector2f(x, y), height, figureSize, events);
         this.events = events;
 
         final int[][] bricks = new int[width][height];
@@ -58,6 +61,14 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
         }
 
         glass = new ReplayGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, bricks, sounds);
+    }
+
+    @Override
+    public boolean isGameOver() {
+        boolean result = super.isGameOver();
+        if (result)
+            gameAutomation.closeLogger();
+        return result;
     }
 
     @Override
@@ -105,6 +116,7 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
             }
         }
         final boolean executeYuck = eventNum < events.size() && events.get(eventNum).startsWith(YUCK_STR);
+        gameAutomation.nextStage(stage, this);
         stage = stage.getNextStage(reactionDetected, executeYuck);
     }
 
@@ -117,11 +129,11 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
 
     @Override
     public void setGameOver() {
-        gameAutomation.setGameOver(this, gamestateBuffer);
+        gameAutomation.setGameOver(this);
     }
 
     @Override
-    public void setSimpleGameOver(final IAutomatedGame game) {
+    public void setSimpleGameOver(final IAutomatedGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> game) {
         if (game == this)
             super.setGameOver();
     }
@@ -132,17 +144,38 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
     }
 
     @Override
-    public void finishTurn() {
-        super.finishTurn();
-        gameAutomation.finishTurn();
-    }
-
-    @Override
     public boolean isYuckHappened() {
         return false;
     }
 
     @Override
     public void dropYuckHappened() {
+    }
+
+    @Override
+    public Pair<GlassState<Brick, PredefinedFigure>, PredefinedForecast> getBuffer() throws InterruptedException {
+        return gameAutomation.getBuffer(this);
+    }
+
+    @Override
+    public void clearBuffer() throws InterruptedException {
+        gameAutomation.clearBuffer();
+    }
+
+    @Override
+    public void fillBuffer() {
+        gameAutomation.fillBuffer(this);
+    }
+
+    @Override
+    protected void resumeScore() {
+        gameAutomation.resumeScore(this);
+        super.resumeScore();
+    }
+
+    @Override
+    public void finishTurn() {
+        gameAutomation.finishTurn();
+        super.finishTurn();
     }
 }

@@ -94,11 +94,6 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
         if (diff > 0) {
             diffScore.setString("+" + diff);
             diffScore.spawn(new Vector2f(x + BOX * 8, y - BOX * 2));
-            logScore(diff);
-            if (diff > 100) {
-                logGlass(oldGlassState);
-                logGlass(glass.getGlassState().toString());
-            }
             Sound.play(sounds.get(Const.SCORE));
         } else {
             diffScore.unspawn();
@@ -131,9 +126,6 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
             needNewFigure = true;
             if (scpecialBricks != null)
                 satisfyCondition.execute();
-            fillBuffer();
-            logFigure(figure);
-            logMoves();
             nextStage();
             return;
         }

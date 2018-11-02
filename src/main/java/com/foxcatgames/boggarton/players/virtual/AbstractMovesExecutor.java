@@ -7,14 +7,13 @@ import static com.foxcatgames.boggarton.Const.RIGHT;
 import static com.foxcatgames.boggarton.Const.UP;
 
 import com.foxcatgames.boggarton.entity.Brick;
-import com.foxcatgames.boggarton.game.AbstractVisualGame;
 import com.foxcatgames.boggarton.game.IAutomatedGame;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
-abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>, T extends AbstractVisualGame<B, F, G, P> & IAutomatedGame>
+abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>, T extends IAutomatedGame<B, F, G, P>>
         implements Runnable {
 
     protected final T game;
@@ -65,7 +64,6 @@ abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractV
                 public void execute() {
                     game.dropFigure();
                     game.setMaxSpeed();
-
                 }
             });
             game.getGlass().waitChanges();

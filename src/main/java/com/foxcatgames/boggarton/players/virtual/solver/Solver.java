@@ -1,13 +1,16 @@
 package com.foxcatgames.boggarton.players.virtual.solver;
 
+import static com.foxcatgames.boggarton.Const.DOWN;
+import static com.foxcatgames.boggarton.Const.LEFT;
+import static com.foxcatgames.boggarton.Const.NEXT;
+import static com.foxcatgames.boggarton.Const.RIGHT;
+import static com.foxcatgames.boggarton.Const.UP;
 import static com.foxcatgames.boggarton.Const.WIDTH;
-import static com.foxcatgames.boggarton.Const.*;
 
 import java.util.HashSet;
 
-import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.entity.Brick;
-import com.foxcatgames.boggarton.game.AbstractVisualGame;
+import com.foxcatgames.boggarton.game.IAutomatedGame;
 import com.foxcatgames.boggarton.game.VirtualBrick;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
 import com.foxcatgames.boggarton.game.figure.VirtualFigure;
@@ -29,7 +32,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
     private final Vector[] movesToLeft;
     private final Vector[] movesToRight;
 
-    private final AbstractVisualGame<B, F, G, P> game;
+    private final IAutomatedGame<B, F, G, P> game;
     private final IEater eater;
     private final int maxDepth;
     private final boolean moveDown;
@@ -47,7 +50,7 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
         return sb.toString();
     }
 
-    public Solver(final AbstractVisualGame<B, F, G, P> game, final int maxDepth, final boolean moveDown, final int figureSize, final IEater eater) {
+    public Solver(final IAutomatedGame<B, F, G, P> game, final int maxDepth, final boolean moveDown, final int figureSize, final IEater eater) {
         this.game = game;
         this.maxDepth = maxDepth;
         this.moveDown = moveDown;
@@ -83,28 +86,26 @@ public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extend
             final VirtualGlass initGlass = new VirtualGlass(pair.getFirst(), moveDown);
             final VirtualForecast initForecast = new VirtualForecast(pair.getSecond());
             final int initScore = initGlass.getGlassState().getScore();
-
+            game.clearBuffer();
             solution = new Solution(initScore);
             findSolutionRecursively(initGlass, initForecast, 0, new StringBuilder(DEFAULT_SIZE * (maxDepth + 1)));
 
-            if (eater.getPrice(solution) <= eater.getPrice(new Solution(initScore))) {
-                Logger.debug("Instead of " + solution);
+            if (eater.getPrice(solution) <= eater.getPrice(new Solution(initScore)))
                 findDropRecursively(initGlass, initForecast, new StringBuilder(DEFAULT_SIZE));
-                Logger.debug("Use this " + solution);
-            }
 
             return solution;
         } catch (final InterruptedException e) {
             e.printStackTrace();
             return solution;
-        } finally {
-            game.clearBuffer();
         }
     }
 
     private Vector getSpace(final VirtualGlass glass) {
         final int lSpace = glass.getSpaceLeft();
         final int rSpace = glass.getSpaceRight();
+        if (rSpace == 5) {
+            System.out.println("!");
+        }
         if (lSpace >= rSpace)
             return movesToLeft[lSpace];
 

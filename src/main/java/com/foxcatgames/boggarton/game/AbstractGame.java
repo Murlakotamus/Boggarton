@@ -1,21 +1,9 @@
 package com.foxcatgames.boggarton.game;
 
-import static com.foxcatgames.boggarton.Const.DOWN;
-import static com.foxcatgames.boggarton.Const.FIGURE_STR;
-import static com.foxcatgames.boggarton.Const.LEFT;
-import static com.foxcatgames.boggarton.Const.MOVES_STR;
-import static com.foxcatgames.boggarton.Const.NEXT;
-import static com.foxcatgames.boggarton.Const.RIGHT;
-import static com.foxcatgames.boggarton.Const.SCORE_STR;
-import static com.foxcatgames.boggarton.Const.UP;
-import static com.foxcatgames.boggarton.Const.YUCK_STR;
-
 import com.foxcatgames.boggarton.GameParams;
 import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractGlass;
-import com.foxcatgames.boggarton.game.glass.GlassState;
-import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.AbstractScene;
 
 /**
@@ -36,14 +24,9 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
 
     protected String name = "default";
     protected StageItem stage = StageItem.START;
-    protected boolean isLoggerInit = false;
 
-    protected GameLogger gameLogger = null;
-
-    protected final Pair<GlassState<B, F>, P> gamestateBuffer = new Pair<>(null, null);
-
-    protected int targetPosition = 0;
-    protected int lastScore = 0;
+    protected int targetPosition;
+    protected int lastScore;
     protected boolean needNewFigure = true;
 
     protected float startTime = getTime();
@@ -91,31 +74,6 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
         glass.setGameOver();
     }
 
-    public Pair<GlassState<B, F>, P> getBuffer() throws InterruptedException {
-        synchronized (gamestateBuffer) {
-            while (gamestateBuffer.isEmpty() && isGameOn())
-                gamestateBuffer.wait();
-            gamestateBuffer.notify();
-        }
-        return gamestateBuffer;
-    }
-
-    public void clearBuffer() {
-        synchronized (gamestateBuffer) {
-            gamestateBuffer.setFirst(null);
-            gamestateBuffer.setSecond(null);
-            gamestateBuffer.notify();
-        }
-    }
-
-    protected void fillBuffer() {
-        synchronized (gamestateBuffer) {
-            gamestateBuffer.setFirst(glass.getGlassState());
-            gamestateBuffer.setSecond(forecast);
-            gamestateBuffer.notify();
-        }
-    }
-
     public void startGame() {
         nextStage();
     }
@@ -130,31 +88,26 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
 
     public void rotateFigure() {
         glass.rotate();
-        logEvent(UP);
         glass.setChanges(true);
         previousTime = getTime();
     }
 
     public void moveLeft() {
-        logEvent(LEFT);
         glass.moveLeft();
         previousTime = getTime();
     }
 
     public void moveRight() {
-        logEvent(RIGHT);
         glass.moveRight();
         previousTime = getTime();
     }
 
     public void dropFigure() {
-        logEvent(DOWN);
         dropPressed = true;
         previousTime = getTime();
     }
 
     public void finishTurn() {
-        logEvent(NEXT + "\n");
         glass.setChanges(true);
     }
 
@@ -178,51 +131,16 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
         this.name = name;
     }
 
-    public void initLogger() {
-        gameLogger = new GameLogger(name);
-        isLoggerInit = gameLogger.isInit();
-    }
-
-    public void closeLogger() {
-        if (isLoggerInit) {
-            gameLogger.close();
-            isLoggerInit = false;
-        }
-    }
-
-    protected void logFigure(final F figure) {
-        if (figure != null)
-            logEvent(FIGURE_STR + figure);
-    }
-
-    protected void logScore(final int diffScore) {
-        logEvent(SCORE_STR + diffScore + "\n");
-    }
-
-    protected void logGlass(final String glassState) {
-        logEvent(glassState);
-    }
-
-    protected void logMoves() {
-        logEvent(MOVES_STR);
-    }
-
-    protected void logYuck(final String yuck) {
-        if (yuck != null)
-            logEvent(YUCK_STR + yuck + "\n");
-    }
-
-    private void logEvent(final char c) {
-        logEvent("" + c);
-    }
-
-    private void logEvent(final String str) {
-        if (isLoggerInit)
-            gameLogger.logEvent(str);
-    }
-
     protected static float getTime() {
         return AbstractScene.getTime();
+    }
+
+    public int getLastScore() {
+        return lastScore;
+    }
+
+    public String getOldGlassState() {
+        return oldGlassState;
     }
 
     public GameParams.Builder buildParams() {

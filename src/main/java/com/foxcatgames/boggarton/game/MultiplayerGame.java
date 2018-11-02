@@ -28,7 +28,6 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
     public final YuckTypes yuckType;
     protected int yucks;
     protected int yucksTotal;
-    protected boolean yuckHappened;
     private final Text showYucks;
     private final Text showVictoies;
 
@@ -102,9 +101,8 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
         stage = stage.getNextStage(reactionDetected, yucks > 0);
     }
 
-    protected void executeYuck() {
+    protected String executeYuck() {
         final String yuck = glass.executeYuck(yuckType);
-        logYuck(yuck);
         yucksTotal++;
         yucks--;
         glass.respawn();
@@ -112,8 +110,8 @@ public class MultiplayerGame extends AbstractVisualGame<Brick, SimpleFigure, Mul
         drawYucks();
         showYucks.setString(YUCKS_TOTAL + yucksTotal);
         showYucks.spawn(new Vector2f(xYuck, yYuck));
-        yuckHappened = true;
         nextStage();
+        return yuck;
     }
 
     private void drawYucks() {

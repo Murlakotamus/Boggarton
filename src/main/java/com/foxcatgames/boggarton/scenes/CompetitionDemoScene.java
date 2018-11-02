@@ -25,12 +25,11 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
             games[i] = new AutomatedMultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(),
                     Victories.getVictories(i), yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
             games[i].setName(PLAYERS_NAMES[i]);
+            games[i].initLogger();
         }
 
-        for (int i = 0; i < PLAYERS; i++) {
-            games[i].initLogger();
+        for (int i = 0; i < PLAYERS; i++)
             games[i].startGame();
-        }
 
         leftPlayer = new EffectiveVirtualNonAdaptivePlayer<>(games[0], prognosis[0], Const.FULLNESS_EATER);
         rightPlayer = new VirtualAdaptivePlayer<>(games[1], prognosis[1], Const.FULLNESS_EATER);
@@ -47,8 +46,6 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
     @Override
     protected void setGameOver() {
         super.setGameOver(games);
-        for (int i = 0; i < PLAYERS; i++)
-            games[i].closeLogger();
     }
 
     @Override

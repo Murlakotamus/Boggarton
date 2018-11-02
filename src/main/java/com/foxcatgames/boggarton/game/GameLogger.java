@@ -13,10 +13,10 @@ import com.foxcatgames.boggarton.Const;
 
 public class GameLogger {
 
-    private boolean isInit = false;
+    private boolean isInit;
 
-    private FileOutputStream fos = null;
-    private BufferedWriter bw = null;
+    private FileOutputStream fos;
+    private BufferedWriter bw;
 
     public GameLogger(final String name) {
 
@@ -42,9 +42,7 @@ public class GameLogger {
         try {
             logEvent("\n" + Const.GAMEOVER_STR);
             isInit = false;
-            bw.flush();
             bw.close();
-            fos.flush();
             fos.close();
         } catch (final IOException e) {
             e.printStackTrace();
@@ -52,12 +50,13 @@ public class GameLogger {
     }
 
     public void logEvent(final String str) {
-        try {
-            bw.write(str);
-            bw.flush();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
+        if (isInit)
+            try {
+                bw.write(str);
+                bw.flush();
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
     }
 
     public boolean isInit() {

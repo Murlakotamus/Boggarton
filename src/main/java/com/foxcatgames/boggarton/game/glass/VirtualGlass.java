@@ -171,4 +171,8 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
         if (!forSearchingSolution)
             super.waitChanges();
     }
+
+    public void dropChanges() {
+        changes.setFlag(false);
+    }
 }

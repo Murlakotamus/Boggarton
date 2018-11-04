@@ -90,10 +90,6 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         }
     }
 
-    public void dropChanges() {
-        changes.setFlag(false);
-    }
-
     public void setGameOver() {
         gameOver = true;
         synchronized (changes) {

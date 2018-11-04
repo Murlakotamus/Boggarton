@@ -19,15 +19,10 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     }
 
     abstract public boolean removeHoles();
-
     abstract public void removeBrick(int i, int j);
-
     abstract public int newFigure(F newFigure);
-
     abstract public void rotate();
-
     abstract public void moveLeft();
-
     abstract public void moveRight();
 
     public boolean findChainsToKill() {

@@ -20,6 +20,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionDemoScene;
+import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionGameScene;
+import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionPracticeScene;
+import com.foxcatgames.boggarton.scenes.gamescenes.DemoScene;
+import com.foxcatgames.boggarton.scenes.gamescenes.GameScene;
+import com.foxcatgames.boggarton.scenes.gamescenes.PracticeScene;
+import com.foxcatgames.boggarton.scenes.gamescenes.ReplayScene;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;

@@ -1,10 +1,12 @@
-package com.foxcatgames.boggarton.scenes;
+package com.foxcatgames.boggarton.scenes.gamescenes;
 
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.game.AutomatedMultiplayerGame;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.virtual.EffectiveVirtualNonAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
+import com.foxcatgames.boggarton.scenes.AbstractMultiplayerScene;
+import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
@@ -25,14 +27,27 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
             games[i] = new AutomatedMultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(),
                     Victories.getVictories(i), yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
             games[i].setName(PLAYERS_NAMES[i]);
-            games[i].initLogger();
         }
+    }
 
-        for (int i = 0; i < PLAYERS; i++)
+    @Override
+    protected void start() {
+        for (int i = 0; i < PLAYERS; i++) {
+            games[i].initLogger();
             games[i].startGame();
+        }
+        leftPlayer = new EffectiveVirtualNonAdaptivePlayer<>(games[0], 4, Const.FULLNESS_EATER);
+        rightPlayer = new VirtualAdaptivePlayer<>(games[1], 2, Const.FULLNESS_EATER);
+    }
 
-        leftPlayer = new EffectiveVirtualNonAdaptivePlayer<>(games[0], prognosis[0], Const.FULLNESS_EATER);
-        rightPlayer = new VirtualAdaptivePlayer<>(games[1], prognosis[1], Const.FULLNESS_EATER);
+    @Override
+    protected void terminate() {
+        for (int i = 0; i < PLAYERS; i++)
+            games[i].closeLogger();
+
+        super.terminate();
+        if (!escapePressed)
+            nextScene(SceneItem.COMPETITION_DEMO);
     }
 
     private void checkAuto() {
@@ -55,24 +70,10 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
     }
 
     @Override
-    protected void terminate() {
-        for (int i = 0; i < PLAYERS; i++)
-            games[i].closeLogger();
-
-        super.terminate();
-        if (!escapePressed)
-            nextScene(SceneItem.COMPETITION_DEMO);
-    }
-
-    @Override
     protected void hideGlass() {
     }
 
     @Override
     protected void showGlass() {
-    }
-
-    @Override
-    protected void start() {
     }
 }

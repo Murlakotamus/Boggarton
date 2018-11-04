@@ -1,4 +1,4 @@
-package com.foxcatgames.boggarton.scenes;
+package com.foxcatgames.boggarton.scenes.gamescenes;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,16 +15,20 @@ import com.foxcatgames.boggarton.game.forecast.PredefinedForecast;
 import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 import com.foxcatgames.boggarton.players.IPlayer;
 import com.foxcatgames.boggarton.players.virtual.MovesExecutor;
+import com.foxcatgames.boggarton.scenes.AbstractOnePlayerScene;
+import com.foxcatgames.boggarton.scenes.SceneItem;
 
 public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast, ReplayGame> {
+
+    final char[] moves;
 
     public ReplayScene(final int width, final int height) {
         super(SceneItem.REPLAY);
 
-        final StringBuilder moves = new StringBuilder();
         final List<String> events = new ArrayList<>();
-
+        final StringBuilder moves = new StringBuilder();
         final String filename = this.getClass().getResource("/games/game.txt").getFile();
+
         try (final BufferedReader in = new BufferedReader(new FileReader(new File(filename)))) {
             String line;
             while ((line = in.readLine()) != null)
@@ -37,6 +41,7 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
         } catch (final IOException e) {
             e.printStackTrace();
         }
+        this.moves = moves.toString().toCharArray();
 
         int figureSize = 3;
         for (final String event : events)
@@ -47,8 +52,17 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
 
         game = new ReplayGame(layer, X, Y, width, height, figureSize, events, Const.SOUNDS);
         game.setName("Replay");
+    }
+
+    @Override
+    protected void start() {
         game.startGame();
-        new MovesExecutor(game, moves.toString().toCharArray());
+        new MovesExecutor(game, moves);
+    }
+
+    @Override
+    protected void terminate() {
+        super.terminate();
     }
 
     @Override
@@ -61,9 +75,5 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
 
     @Override
     protected void showGlass() {
-    }
-
-    @Override
-    protected void start() {
     }
 }

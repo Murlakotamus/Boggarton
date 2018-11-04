@@ -9,19 +9,19 @@ import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import java.util.HashSet;
 
-import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.IAutomatedGame;
+import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.VirtualBrick;
-import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.figure.VirtualFigure;
-import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
+import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
 import com.foxcatgames.boggarton.game.forecast.VirtualForecast;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
+import com.foxcatgames.boggarton.game.glass.AbstractGlass;
 import com.foxcatgames.boggarton.game.glass.GlassState;
 import com.foxcatgames.boggarton.game.glass.VirtualGlass;
 import com.foxcatgames.boggarton.game.utils.Pair;
 
-public class Solver<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>> {
+public class Solver<B extends IBrick, F extends AbstractFigure<B>, G extends AbstractGlass<B, F>, P extends AbstractForecast<B, F>> {
 
     private static final int DEFAULT_SIZE = 16; // CCLLLDCRRRDLLLDN (16)
 

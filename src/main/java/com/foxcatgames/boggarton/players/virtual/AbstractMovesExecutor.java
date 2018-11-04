@@ -6,14 +6,14 @@ import static com.foxcatgames.boggarton.Const.NEXT;
 import static com.foxcatgames.boggarton.Const.RIGHT;
 import static com.foxcatgames.boggarton.Const.UP;
 
-import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.IAutomatedGame;
-import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
-import com.foxcatgames.boggarton.game.forecast.AbstractVisualForecast;
-import com.foxcatgames.boggarton.game.glass.AbstractVisualGlass;
+import com.foxcatgames.boggarton.game.IBrick;
+import com.foxcatgames.boggarton.game.figure.AbstractFigure;
+import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
+import com.foxcatgames.boggarton.game.glass.AbstractGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 
-abstract public class AbstractMovesExecutor<B extends Brick, F extends AbstractVisualFigure<B>, G extends AbstractVisualGlass<B, F>, P extends AbstractVisualForecast<B, F>, T extends IAutomatedGame<B, F, G, P>>
+abstract public class AbstractMovesExecutor<B extends IBrick, F extends AbstractFigure<B>, G extends AbstractGlass<B, F>, P extends AbstractForecast<B, F>, T extends IAutomatedGame<B, F, G, P>>
         implements Runnable {
 
     protected final T game;

@@ -28,7 +28,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
     protected IPlayer leftPlayer;
     protected IPlayer rightPlayer;
 
-    AbstractMultiplayerScene(final SceneItem scene, final int width, final int figureSize) {
+    public AbstractMultiplayerScene(final SceneItem scene, final int width, final int figureSize) {
         super(scene);
         for (int i = 0; i < PLAYERS; i++)
             gamePaused[i] = new SimpleEntity(GAME_PAUSED, layer);

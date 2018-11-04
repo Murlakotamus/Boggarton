@@ -1,4 +1,4 @@
-package com.foxcatgames.boggarton.scenes;
+package com.foxcatgames.boggarton.scenes.gamescenes;
 
 import org.lwjgl.input.Keyboard;
 
@@ -8,6 +8,8 @@ import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.real.RealMultiplayer;
 import com.foxcatgames.boggarton.players.virtual.EffectiveVirtualAdaptivePlayer;
+import com.foxcatgames.boggarton.scenes.AbstractMultiplayerScene;
+import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
@@ -29,12 +31,23 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
         rightGame = new MultiplayerGame(layer, X + 446, Y, width, height, prognosis[1], figureSize, difficulty.getSetSize(), Victories.getVictories(1),
                 yuckType, randomType, Const.SOUNDS_RIGHT);
         rightGame.setName(PLAYERS_NAMES[0]);
+    }
+
+    @Override
+    protected void start() {
+        leftGame.setName(PLAYERS_NAMES[0]);
+        rightGame.setName(PLAYERS_NAMES[0]);
 
         leftGame.startGame();
         rightGame.startGame();
 
-        leftPlayer = new EffectiveVirtualAdaptivePlayer<>(leftGame, prognosis[0], Const.FULLNESS_EATER);
+        leftPlayer = new EffectiveVirtualAdaptivePlayer<>(leftGame, 4, Const.FULLNESS_EATER);
         rightPlayer = new RealMultiplayer(rightGame, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
+    }
+
+    @Override
+    protected void terminate() {
+        super.terminate();
     }
 
     private MultiplayerGame[] getGames() {
@@ -54,9 +67,5 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
     @Override
     protected void showGlass() {
         hideGlass(getGames());
-    }
-
-    @Override
-    protected void start() {
     }
 }

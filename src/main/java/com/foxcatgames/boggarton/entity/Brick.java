@@ -8,8 +8,8 @@ import com.foxcatgames.boggarton.game.IBrick;
 
 public class Brick extends AbstractAnimatedEntity implements IBrick {
 
-    private boolean kill = false;
-    private boolean crashing = false;
+    private boolean kill;
+    private boolean crashing;
     private final int id;
 
     public Brick(final int type, Layer layer) {

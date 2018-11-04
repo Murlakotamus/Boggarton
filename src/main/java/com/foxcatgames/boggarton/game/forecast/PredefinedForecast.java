@@ -17,8 +17,8 @@ import com.foxcatgames.boggarton.game.utils.Pair;
 
 public class PredefinedForecast extends AbstractVisualForecast<Brick, PredefinedFigure> {
 
-    private int forecastCounter = 0;
-    private int figuresCounter = 0;
+    private int forecastCounter;
+    private int figuresCounter;
 
     final private List<String> predefinedFigures = new ArrayList<>();
 

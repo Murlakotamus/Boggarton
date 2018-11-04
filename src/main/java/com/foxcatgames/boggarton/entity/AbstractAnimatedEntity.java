@@ -6,9 +6,9 @@ import com.foxcatgames.boggarton.engine.Texture;
 abstract public class AbstractAnimatedEntity extends AbstractEntity {
 
     protected Texture[] animationTextures;
-    protected boolean displayAnimation = false;
+    protected boolean displayAnimation;
     protected float animationCursor;
-    protected boolean looped = false;
+    protected boolean looped;
     protected float animationSpeed = 8.8f;
 
     @Override

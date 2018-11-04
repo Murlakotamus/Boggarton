@@ -14,8 +14,8 @@ import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 public class RealGame extends AbstractOnePlayerGame {
 
     private static final int FIGURES_FOR_NEXT_EMPTY_BRICK = 5;
+    private int oldEmptyBrickLines;
 
-    private int oldEmptyBrickLines = 0;
     private final ICommand satisfyCondition = new ICommand() {
         @Override
         public void execute() {

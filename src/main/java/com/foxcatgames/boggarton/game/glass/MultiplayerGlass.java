@@ -18,7 +18,7 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
 
     private final Layer layer;
     private final int difficulty;
-    private int count = 0;
+    private int count;
 
     public MultiplayerGlass(final Layer layer, final Vector2f position, final int width, final int height, final int difficulty,
             final Map<String, Integer> sounds) {
@@ -57,7 +57,7 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
 
         final StringBuilder result = new StringBuilder(state.getWidth());
         for (int i = 0; i < width(); i++)
-            result.append((char)(yuckBricks.get(i) - Const.CURRENT_SET * 10 + 64));
+            result.append((char) (yuckBricks.get(i) - Const.CURRENT_SET * 10 + 64));
 
         return result.toString();
     }
@@ -72,14 +72,10 @@ public class MultiplayerGlass extends AbstractVisualGlass<Brick, SimpleFigure> {
 
         final int size = places.size();
         if (size > 0) {
-            final int brick;
             final Pair<Integer, Integer> place = places.get(Utils.random(size));
-            if (Utils.random(difficulty + 1) == difficulty)
-                brick = Const.EMPTY;
-            else
-                brick = Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
+            final int brick = Utils.random(difficulty + 1) == difficulty ? Const.EMPTY : Utils.getBrick(difficulty, RandomTypes.RANDOM.getRandomType());
             state.setBrick(place.getFirst(), place.getSecond(), new Brick(brick, layer));
-            return place.getFirst() + ", " + place.getSecond() + ", " + (char)(brick - Const.CURRENT_SET * 10 + 64);
+            return place.getFirst() + ", " + place.getSecond() + ", " + (char) (brick - Const.CURRENT_SET * 10 + 64);
         }
         return null;
     }

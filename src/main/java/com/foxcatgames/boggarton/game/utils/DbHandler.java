@@ -27,7 +27,7 @@ public class DbHandler {
     private static final String CONN_STR = "jdbc:sqlite:boggarton.db";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private static DbHandler instance = null;
+    private static DbHandler instance;
     private final Connection conn;
 
     private static PreparedStatement loserStmt;

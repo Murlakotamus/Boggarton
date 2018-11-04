@@ -3,7 +3,7 @@ package com.foxcatgames.boggarton.game;
 public class VirtualBrick implements IBrick {
 
     private final int type;
-    private boolean kill = false;
+    private boolean kill;
     private int id;
 
     public VirtualBrick(final int type) {

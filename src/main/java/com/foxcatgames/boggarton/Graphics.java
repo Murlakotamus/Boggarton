@@ -35,7 +35,7 @@ import com.apple.eawt.Application;
 public class Graphics {
 
     private static final boolean FULL_SCREEN = false;
-    private static DisplayMode actualDisplayMode = null;
+    private static DisplayMode actualDisplayMode;
 
     public static void init() {
         initEngine();

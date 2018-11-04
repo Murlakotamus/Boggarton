@@ -26,8 +26,8 @@ public class MenuScene extends AbstractLogoScene {
     private final Text[] active = new Text[ITEMS_NUMBER];
     private final Brick[] brickSet = new Brick[MAX_DIFFICULTY];
 
-    private MenuForecast forecast = null;
-    private int currentPosition = 0;
+    private MenuForecast forecast;
+    private int currentPosition;
 
     public MenuScene() {
         super(SceneItem.MENU);

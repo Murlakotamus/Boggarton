@@ -2,7 +2,7 @@ package com.foxcatgames.boggarton.game.utils;
 
 public class Changes {
 
-    private volatile boolean flag = false;
+    private volatile boolean flag;
 
     public Changes() {
     }

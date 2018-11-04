@@ -28,10 +28,10 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
         implements IAutomatedGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> {
 
     private static final float YUCK_PAUSE = 0.5f;
-    protected int yucks = 0;
-    final List<String> events;
-    int eventNum = 0;
     private final GameAutomation<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> gameAutomation;
+    private final List<String> events;
+    private int eventNum;
+    protected int yucks;
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int figureSize, final List<String> events,
             final Map<String, Integer> sounds) {

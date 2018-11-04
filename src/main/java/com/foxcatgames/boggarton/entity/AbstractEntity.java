@@ -15,26 +15,24 @@ import com.foxcatgames.boggarton.scenes.AbstractScene;
 
 abstract public class AbstractEntity {
 
+    final public Vector2f position = new Vector2f();
+
+    public int type;
     public int originalWidth;
     public int originalHeight;
 
-    private float ratio = 1f;
-    private boolean spawned = false;
     public float width;
     public float height;
 
-    protected float tick;
+    protected Layer layer;
     protected Texture texture;
-    public int type;
-
+    protected float tick;
+    protected float textureDown;
+    protected float textureLeft;
     protected float textureUp = 1;
-    protected float textureDown = 0;
-    protected float textureLeft = 0;
     protected float textureRight = 1;
-
-    protected Layer layer = null;
-
-    final public Vector2f position = new Vector2f();
+    private float ratio = 1f;
+    private boolean spawned;
 
     public void setRatio(final float newRatio) {
         ratio = newRatio;

@@ -18,12 +18,12 @@ public class Utils {
             total += probabilities[i];
 
         final double quantile = 1d / total;
-        final double p = Math.random();
+        final double currentPercenthile = Math.random();
 
         double percenthile = 0;
         for (int i = 0; i < difficulty; i++) {
             percenthile += (quantile * probabilities[i]);
-            if (p <= percenthile)
+            if (currentPercenthile <= percenthile)
                 return getBrickType(i);
         }
         return getBrickType(difficulty);

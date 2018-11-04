@@ -19,8 +19,8 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
     protected boolean killedBricks;
     protected String oldGlassState;
 
-    protected boolean reactionDetected = false;
-    protected boolean dropPressed = false;
+    protected boolean reactionDetected;
+    protected boolean dropPressed;
 
     protected String name = "default";
     protected StageItem stage = StageItem.START;

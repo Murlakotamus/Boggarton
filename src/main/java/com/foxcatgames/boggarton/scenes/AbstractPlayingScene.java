@@ -8,8 +8,8 @@ import com.foxcatgames.boggarton.engine.KeyListener;
 abstract public class AbstractPlayingScene extends AbstractScene {
 
     protected static final int Y = 160;
-    protected boolean escapePressed = false;
-    protected boolean gameOver = false;
+    protected boolean escapePressed;
+    protected boolean gameOver;
 
     AbstractPlayingScene(final SceneItem scene) {
         super(scene);

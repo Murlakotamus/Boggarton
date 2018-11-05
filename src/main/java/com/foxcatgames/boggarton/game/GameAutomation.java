@@ -158,7 +158,8 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
     }
 
     public void log(final String str) {
-        gameLogger.log(str);
+        if (gameLogger != null)
+            gameLogger.log(str);
     }
 
     public void resumeScore(final IAutomatedGame<B, F, G, P> game) {

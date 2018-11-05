@@ -1,27 +1,27 @@
 package com.foxcatgames.boggarton.scenes.types;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.foxcatgames.boggarton.game.utils.Utils;
 
-public enum SoundTypes {
-    ON, OFF;
+public enum SoundTypes implements IMenu<SoundTypes> {
+    ON("On"), OFF("Off");
 
+    private final String name;
+
+    private SoundTypes(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
     public SoundTypes next() {
-        switch(this) {
-        case ON:
-            return OFF;
-        case OFF:
-        default:
-            return ON;
-        }
-    }
-    
-    public static String[] getAllYuckNames() {
-        final List<String> list = new ArrayList<>();
-        for (final YuckTypes yuck : YuckTypes.values())
-            list.add(yuck.getName());
-        final String result[] = new String[list.size()];
-        return list.toArray(result);
+        return Utils.nextEnumValue(this, SoundTypes.class);
     }
 
+    public static String[] getNames() {
+        return Utils.getNames(SoundTypes.class);
+    }
 }

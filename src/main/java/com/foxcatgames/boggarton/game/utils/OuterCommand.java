@@ -5,6 +5,8 @@ public class OuterCommand {
     private ICommand command;
 
     public void execute() {
+        if (command == null)
+            return;
         command.execute();
         command = null;
     }

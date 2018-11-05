@@ -1,6 +1,12 @@
 package com.foxcatgames.boggarton.game.utils;
 
-import static com.foxcatgames.boggarton.Const.CURRENT_SET;;
+import static com.foxcatgames.boggarton.Const.CURRENT_SET;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.foxcatgames.boggarton.scenes.types.IMenu;
+import com.foxcatgames.boggarton.scenes.types.IName;
 
 public class Utils {
 
@@ -36,5 +42,30 @@ public class Utils {
     static public int parseBrick(final char c) {
         final int i = c - 64;
         return i + CURRENT_SET * 10;
+    }
+
+    public static <E extends Enum<E>> E nextEnumValue(final E currentValue, final Class<E> enumData) {
+        if (currentValue.ordinal() >= enumData.getEnumConstants().length - 1)
+            return enumData.getEnumConstants()[0];
+
+        return enumData.getEnumConstants()[currentValue.ordinal() + 1];
+    }
+
+    public static <E extends Enum<E> & IName<E>> String[] getNames(final Class<E> enumData) {
+        final List<String> list = new ArrayList<>();
+        for (final E enumVal : enumData.getEnumConstants())
+            if (enumVal.getName() != null)
+                list.add(enumVal.getName());
+
+        final String result[] = new String[list.size()];
+        return list.toArray(result);
+    }
+
+    public static <E extends Enum<E>> E getValue(final Class<E> enumType, final int position) {
+        return enumType.getEnumConstants()[position];
+    }
+
+    public static <E extends Enum<E> & IMenu<E>> E nextValue(final E currentValue) {
+        return currentValue.next();
     }
 }

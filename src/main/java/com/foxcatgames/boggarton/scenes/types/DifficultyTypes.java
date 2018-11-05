@@ -1,9 +1,8 @@
 package com.foxcatgames.boggarton.scenes.types;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.foxcatgames.boggarton.game.utils.Utils;
 
-public enum DifficultyTypes {
+public enum DifficultyTypes implements IMenu<DifficultyTypes> {
     EASY(4, "Easy"), NORMAL(5, "Normal"), HARD(6, "Hard"), IMPOSSIBLE(7, "Impossible");
 
     private final int setSize;
@@ -14,34 +13,21 @@ public enum DifficultyTypes {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public DifficultyTypes next() {
-        switch (this) {
-        case NORMAL:
-            return HARD;
-        case HARD:
-            return IMPOSSIBLE;
-        case IMPOSSIBLE:
-            return EASY;
-        case EASY:
-        default:
-            return NORMAL;
-        }
+        return Utils.nextEnumValue(this, DifficultyTypes.class);
     }
 
     public int getSetSize() {
         return setSize;
     }
 
-    public static String[] getAllDifficultyNames() {
-        final List<String> list = new ArrayList<>();
-        for (final DifficultyTypes difficulty : DifficultyTypes.values())
-            list.add(difficulty.getName());
-        final String result[] = new String[list.size()];
-        return list.toArray(result);
+    public static String[] getNames() {
+        return Utils.getNames(DifficultyTypes.class);
     }
-
 }

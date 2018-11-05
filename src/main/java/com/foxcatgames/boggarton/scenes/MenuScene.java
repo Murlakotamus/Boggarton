@@ -13,6 +13,7 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.forecast.MenuForecast;
+import com.foxcatgames.boggarton.game.utils.Utils;
 
 public class MenuScene extends AbstractLogoScene {
 
@@ -137,24 +138,32 @@ public class MenuScene extends AbstractLogoScene {
                 final MenuItem menuItem = ITEMS[currentPosition];
                 switch (menuItem) {
                 case START:
-                    nextScene = SceneItem.getStartScene();
+                    nextScene = SceneItem.gameScenes.get(ITEMS[1].getSubmenuElementPosition());
                     break;
                 case MODE:
-                    menuItem.setSubmenuElementPosition(SceneItem.nextStartScene());
+                    menuItem.setSubmenuPosition(menuItem.getSubmenuElementPosition() + 1);
                     drawMenu();
                     break;
                 case YUCKS:
-                    menuItem.setSubmenuElementPosition(SceneItem.nextYucksType());
+                    SceneItem.yuckType = Utils.nextValue(SceneItem.yuckType);
+                    menuItem.setSubmenuPosition(SceneItem.yuckType.ordinal());
                     drawMenu();
                     break;
                 case RANDOM_TYPE:
-                    menuItem.setSubmenuElementPosition(SceneItem.nextRandomType());
+                    SceneItem.randomType = Utils.nextValue(SceneItem.randomType);
+                    menuItem.setSubmenuPosition(SceneItem.randomType.ordinal());
                     drawMenu();
                     break;
                 case DIFFICULTY:
-                    menuItem.setSubmenuElementPosition(SceneItem.nextDifficultyType());
+                    SceneItem.difficultyType = Utils.nextValue(SceneItem.difficultyType);
+                    menuItem.setSubmenuPosition(SceneItem.difficultyType.ordinal());
                     drawMenu();
                     drawPrognosis(SceneItem.getSetSize());
+                    break;
+                case SOUND:
+                    SceneItem.soundType = Utils.nextValue(SceneItem.soundType);
+                    menuItem.setSubmenuPosition(SceneItem.soundType.ordinal());
+                    drawMenu();
                     break;
                 case FIGURE_SIZE:
                     SceneItem.figureSize = nextValue(SceneItem.figureSize, MIN_SIZE, MAX_SIZE);
@@ -163,10 +172,6 @@ public class MenuScene extends AbstractLogoScene {
                 case PROGNOSIS:
                     SceneItem.prognosis = nextValue(SceneItem.prognosis, MIN_PROGNOSIS, MAX_PROGNOSIS);
                     drawPrognosis(SceneItem.getSetSize());
-                    break;
-                case SOUND:
-                    menuItem.setSubmenuElementPosition(SceneItem.nextSoundType());
-                    drawMenu();
                     break;
                 default:
                     nextScene = SceneItem.ABOUT;

@@ -1,9 +1,8 @@
 package com.foxcatgames.boggarton.scenes.types;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.foxcatgames.boggarton.game.utils.Utils;
 
-public enum YuckTypes {
+public enum YuckTypes implements IMenu<YuckTypes> {
     NONE("None"), RANDOM("Random line"), HARD("Hard line"), NASTY("Nasty brick");
 
     private final String name;
@@ -11,30 +10,18 @@ public enum YuckTypes {
     private YuckTypes(final String name) {
         this.name = name;
     }
-    
+
+    @Override
     public String getName() {
         return name;
     }
-    
+
+    @Override
     public YuckTypes next() {
-        switch(this) {
-        case RANDOM:
-            return HARD;
-        case HARD:
-            return NASTY;
-        case NASTY:
-            return NONE;
-        case NONE:
-        default:
-            return RANDOM;
-        }
+        return Utils.nextEnumValue(this, YuckTypes.class);
     }
-    
-    public static String[] getAllYuckNames() {
-        final List<String> list = new ArrayList<>();
-        for (final YuckTypes yuck : YuckTypes.values())
-            list.add(yuck.getName());
-        final String result[] = new String[list.size()];
-        return list.toArray(result);
+
+    public static String[] getNames() {
+        return Utils.getNames(YuckTypes.class);
     }
 }

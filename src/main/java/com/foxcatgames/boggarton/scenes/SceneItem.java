@@ -15,11 +15,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import com.foxcatgames.boggarton.game.utils.Utils;
 import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionDemoScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionGameScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionPracticeScene;
@@ -28,15 +28,16 @@ import com.foxcatgames.boggarton.scenes.gamescenes.GameScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.PracticeScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.ReplayScene;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.IName;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-public enum SceneItem {
+public enum SceneItem implements IName<SceneItem> {
     INTRO, MENU, GAME("Game"), PRACTICE("Practice"), DEMO("Demo"), COMPETITION_PRACTICE("Practice with computer"), COMPETITION("Competition"), COMPETITION_DEMO(
             "Competition demo"), REPLAY("Replay game"), ABOUT, OUTRO, FINISH_GAME;
 
-    private static List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, COMPETITION, COMPETITION_PRACTICE, DEMO, COMPETITION_DEMO, REPLAY);
+    static List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, COMPETITION, COMPETITION_PRACTICE, DEMO, COMPETITION_DEMO, REPLAY);
 
     protected static int prognosis = 3;
     protected static int figureSize = 3;
@@ -46,11 +47,11 @@ public enum SceneItem {
     private static final int PROGNOSIS_EFFECTIVE = 4;
     private static final int PROGNOSIS_COMPLEX = 2;
 
-    private static YuckTypes yuckType = YuckTypes.RANDOM;
-    private static RandomTypes randomType = RandomTypes.RANDOM;
-    private static DifficultyTypes difficultyType = DifficultyTypes.EASY;
-    private static SoundTypes soundType = SoundTypes.ON;
-    private static SceneItem currentGameScene = GAME;
+    static YuckTypes yuckType = YuckTypes.RANDOM;
+    static RandomTypes randomType = RandomTypes.RANDOM;
+    static DifficultyTypes difficultyType = DifficultyTypes.EASY;
+    static SoundTypes soundType = SoundTypes.ON;
+    static SceneItem currentGameScene = GAME;
 
     SceneItem() {
         sceneName = null;
@@ -88,14 +89,6 @@ public enum SceneItem {
         }
     }
 
-    public static int nextStartScene() {
-        int startSceneNumber = gameScenes.indexOf(currentGameScene) + 1;
-        if (startSceneNumber >= gameScenes.size())
-            startSceneNumber = 0;
-        currentGameScene = gameScenes.get(startSceneNumber);
-        return gameScenes.indexOf(currentGameScene);
-    }
-
     protected static void restoreSettings() {
         final File configFile = new File(CONFIG);
         if (!configFile.exists())
@@ -105,47 +98,36 @@ public enum SceneItem {
             final Properties props = new Properties();
             props.load(in);
             for (final String key : props.stringPropertyNames()) {
-                final int value = Integer.parseInt(props.getProperty(key));
+                final int position = Integer.parseInt(props.getProperty(key));
                 switch (key) {
                 case "MODE":
-                    final MenuItem mode = MenuItem.MODE;
-                    dropStartScene();
-                    for (int i = 0; i < value; i++)
-                        mode.setSubmenuElementPosition(nextStartScene());
+                    MenuItem.MODE.setSubmenuPosition(position);
                     break;
                 case "YUCKS":
-                    final MenuItem yucks = MenuItem.YUCKS;
-                    dropYucksType();
-                    for (int i = 0; i < value; i++)
-                        yucks.setSubmenuElementPosition(nextYucksType());
+                    yuckType = Utils.getValue(YuckTypes.class, position);
+                    MenuItem.YUCKS.setSubmenuPosition(yuckType.ordinal());
                     break;
                 case "RANDOM_TYPE":
-                    final MenuItem bricks = MenuItem.RANDOM_TYPE;
-                    dropRandomType();
-                    for (int i = 0; i < value; i++)
-                        bricks.setSubmenuElementPosition(nextRandomType());
+                    randomType = Utils.getValue(RandomTypes.class, position);
+                    MenuItem.RANDOM_TYPE.setSubmenuPosition(randomType.ordinal());
                     break;
                 case "DIFFICULTY":
-                    final MenuItem difficulty = MenuItem.DIFFICULTY;
-                    dropDifficultyType();
-                    for (int i = 0; i < value; i++)
-                        difficulty.setSubmenuElementPosition(nextDifficultyType());
-                    break;
-                case "FIGURE_SIZE":
-                    figureSize = setValue(value, MIN_SIZE, MAX_SIZE);
-                    break;
-                case "PROGNOSIS":
-                    prognosis = setValue(value, MIN_PROGNOSIS, MAX_PROGNOSIS);
+                    difficultyType = Utils.getValue(DifficultyTypes.class, position);
+                    MenuItem.DIFFICULTY.setSubmenuPosition(difficultyType.ordinal());
                     break;
                 case "SOUND":
-                    final MenuItem sound = MenuItem.SOUND;
-                    dropSoundType();
-                    for (int i = 0; i < value; i++)
-                        sound.setSubmenuElementPosition(nextSoundType());
+                    soundType = Utils.getValue(SoundTypes.class, position);
+                    MenuItem.SOUND.setSubmenuPosition(soundType.ordinal());
+                    break;
+                case "FIGURE_SIZE":
+                    figureSize = setValue(position, MIN_SIZE, MAX_SIZE);
+                    break;
+                case "PROGNOSIS":
+                    prognosis = setValue(position, MIN_PROGNOSIS, MAX_PROGNOSIS);
                     break;
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -176,67 +158,24 @@ public enum SceneItem {
         return param;
     }
 
-    public static void dropStartScene() {
-        currentGameScene = gameScenes.get(0);
-    }
-
     public static SceneItem getStartScene() {
         return currentGameScene;
-    }
-
-    public static int nextYucksType() {
-        yuckType = yuckType.next();
-        return yuckType.ordinal();
-    }
-
-    public static void dropYucksType() {
-        yuckType = YuckTypes.NONE;
-    }
-
-    public static int nextRandomType() {
-        randomType = randomType.next();
-        return randomType.ordinal();
-    }
-
-    public static void dropRandomType() {
-        randomType = RandomTypes.RANDOM;
     }
 
     public static int getSetSize() {
         return difficultyType.getSetSize();
     }
 
-    public static int nextDifficultyType() {
-        difficultyType = difficultyType.next();
-        return difficultyType.ordinal();
-    }
-
-    public static void dropDifficultyType() {
-        difficultyType = DifficultyTypes.EASY;
-    }
-
-    public String getSceneName() {
-        return sceneName;
-    }
-
     public static SoundTypes getSound() {
         return soundType;
     }
 
-    public static int nextSoundType() {
-        soundType = soundType.next();
-        return soundType.ordinal();
+    public static String[] getNames() {
+        return Utils.getNames(SceneItem.class);
     }
 
-    public static void dropSoundType() {
-        soundType = SoundTypes.ON;
+    @Override
+    public String getName() {
+        return sceneName;
     }
-
-    public static String[] getAllSceneNames() {
-        final List<String> list = new ArrayList<>();
-        for (final SceneItem sceneItem : gameScenes)
-            list.add(sceneItem.getSceneName());
-        final String result[] = new String[list.size()];
-        return list.toArray(result);
-    }
-};
+}

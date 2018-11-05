@@ -35,8 +35,7 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
 
     @Override
     protected void start() {
-        leftGame.setName(PLAYERS_NAMES[0]);
-        rightGame.setName(PLAYERS_NAMES[0]);
+        leftGame.initLogger();
 
         leftGame.startGame();
         rightGame.startGame();
@@ -47,6 +46,7 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
 
     @Override
     protected void terminate() {
+        leftGame.closeLogger();
         super.terminate();
     }
 

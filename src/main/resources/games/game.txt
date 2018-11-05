@@ -7,6 +7,4 @@ MOVES: →↓→↓↵
 FIGURE: DGE
 MOVES: ←←↓↓↵
 SCORE: 4
-FIGURE: AEB
- 
 Game over!

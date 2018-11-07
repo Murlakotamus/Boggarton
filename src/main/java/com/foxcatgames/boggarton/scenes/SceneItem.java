@@ -34,7 +34,7 @@ import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
 public enum SceneItem implements IName<SceneItem> {
-    INTRO, MENU, GAME("Game"), PRACTICE("Practice"), DEMO("Demo"), COMPETITION_PRACTICE("Practice with computer"), COMPETITION("Competition"), COMPETITION_DEMO(
+    INTRO, MENU, GAME("Game"), PRACTICE("Practice"), COMPETITION("Competition"), COMPETITION_PRACTICE("Practice with computer"), DEMO("Demo"), COMPETITION_DEMO(
             "Competition demo"), REPLAY("Replay game"), ABOUT, OUTRO, FINISH_GAME;
 
     static List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, COMPETITION, COMPETITION_PRACTICE, DEMO, COMPETITION_DEMO, REPLAY);

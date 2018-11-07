@@ -199,7 +199,7 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
     }
 
     public Pair<Boolean, Boolean> moveDown() {
-        Pair<Boolean, Boolean> result = new Pair<>();
+        final Pair<Boolean, Boolean> result = new Pair<>();
         boolean changes = false;
         state.setJ(getY() / BOX);
         for (int i = 0; i < figure().getLenght(); i++)

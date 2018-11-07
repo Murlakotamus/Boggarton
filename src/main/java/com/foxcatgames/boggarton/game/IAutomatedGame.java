@@ -23,7 +23,7 @@ public interface IAutomatedGame<B extends IBrick, F extends AbstractFigure<B>, G
 
     void sendCommand(ICommand cmd) throws InterruptedException;
     void setSimpleGameOver(IAutomatedGame<B, F, G, P> game);
-    void setChanges();
+    void changeHappens();
     void waitChanges() throws InterruptedException;
     void clearBuffer() throws InterruptedException;
     void fillBuffer();

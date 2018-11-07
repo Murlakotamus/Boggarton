@@ -19,4 +19,8 @@ public class MultiplayerGame extends AbstractMultiplayerGame {
         super(layer, x, y, width, height, prognosis, figureSize, setSize, victories, yuckType, randomType, sounds);
         glass = new MultiplayerGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, setSize, sounds);
     }
+
+    @Override
+    protected void changeHappens() {
+    }
 }

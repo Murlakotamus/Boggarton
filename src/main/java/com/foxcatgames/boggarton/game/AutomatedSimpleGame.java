@@ -140,7 +140,7 @@ public class AutomatedSimpleGame extends AbstractSimpleGame implements IAutomate
     }
 
     @Override
-    public void setChanges() {
+    public void changeHappens() {
         gameAutomation.setChanges();
     }
 }

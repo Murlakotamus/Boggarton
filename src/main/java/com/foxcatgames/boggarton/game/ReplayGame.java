@@ -203,7 +203,7 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
     }
 
     @Override
-    public void setChanges() {
+    public void changeHappens() {
         gameAutomation.setChanges();
     }
 }

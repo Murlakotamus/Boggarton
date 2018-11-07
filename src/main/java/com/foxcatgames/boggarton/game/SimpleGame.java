@@ -18,4 +18,8 @@ public class SimpleGame extends AbstractSimpleGame {
         super(layer, x, y, prognosis, figureSize, setSize, randomType, sounds);
         glass = new SimpleGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, sounds);
     }
+
+    @Override
+    protected void changeHappens() {
+    }
 }

@@ -31,6 +31,7 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
 
     abstract protected void nextStage();
     abstract protected void resumeScore();
+    abstract protected void changeHappens();
 
     protected F nextFigure() {
         resumeScore();
@@ -64,9 +65,6 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
         }
         glassProcessed = false;
         nextStage();
-    }
-
-    public void setChanges() {
     }
 
     public void setGameOver() {

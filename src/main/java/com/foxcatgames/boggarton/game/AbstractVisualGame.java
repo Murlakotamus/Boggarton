@@ -145,7 +145,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
         if (glass.getY() % BOX == 0) {
             final Pair<Boolean, Boolean> movedownResult = glass.moveDown();
             if (movedownResult.getSecond())
-                setChanges();
+                changeHappens();
             if (!movedownResult.getFirst()) {
                 nextStage();
                 return;
@@ -173,7 +173,7 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
                 final Pair<Boolean, Boolean> movedownResult = glass.moveDown();
                 if (movedownResult.getSecond())
-                    setChanges();
+                    changeHappens();
 
                 if (!movedownResult.getFirst()) {
                     nextStage();

@@ -60,4 +60,9 @@ public class RealGame extends AbstractSimpleGame {
         list.add(new Pair<>(Utils.random(getForecast().getFigureSize()), Const.EMPTY));
         return list;
     }
+
+    @Override
+    protected void changeHappens() {
+    }
+
 }

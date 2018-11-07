@@ -176,7 +176,7 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
     }
 
     @Override
-    public void setChanges() {
+    public void changeHappens() {
         gameAutomation.setChanges();
     }
 }

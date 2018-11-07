@@ -150,7 +150,7 @@ public class AutomatedMultiplayerGame extends AbstractMultiplayerGame implements
     }
 
     @Override
-    public void setChanges() {
+    public void changeHappens() {
         gameAutomation.setChanges();
     }
 }

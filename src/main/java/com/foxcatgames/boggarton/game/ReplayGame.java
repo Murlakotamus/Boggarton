@@ -1,7 +1,10 @@
 package com.foxcatgames.boggarton.game;
 
 import static com.foxcatgames.boggarton.Const.BOX;
+import static com.foxcatgames.boggarton.Const.LEFT;
+import static com.foxcatgames.boggarton.Const.RIGHT;
 import static com.foxcatgames.boggarton.Const.SCORE_STR;
+import static com.foxcatgames.boggarton.Const.UP;
 import static com.foxcatgames.boggarton.Const.YUCK_STR;
 
 import java.io.BufferedReader;
@@ -24,7 +27,7 @@ import com.foxcatgames.boggarton.game.glass.ReplayGlass;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 
-final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast>
+public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast>
         implements IAutomatedGame<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> {
 
     private static final float YUCK_PAUSE = 0.5f;
@@ -166,8 +169,41 @@ final public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure
     }
 
     @Override
+    public boolean rotateFigure() {
+        final boolean result = super.rotateFigure();
+        if (result)
+            gameAutomation.makeMove(UP);
+        return result;
+    }
+
+    @Override
+    public boolean moveLeft() {
+        final boolean result = super.moveLeft();
+        if (result)
+            gameAutomation.makeMove(LEFT);
+        return result;
+    }
+
+    @Override
+    public boolean moveRight() {
+        final boolean result = super.moveRight();
+        if (result)
+            gameAutomation.makeMove(RIGHT);
+        return result;
+    }
+
+    @Override
     public void finishTurn() {
         gameAutomation.finishTurn();
-        super.finishTurn();
+    }
+
+    @Override
+    public void waitChanges() throws InterruptedException {
+        gameAutomation.waitChanges(this);
+    }
+
+    @Override
+    public void setChanges() {
+        gameAutomation.setChanges();
     }
 }

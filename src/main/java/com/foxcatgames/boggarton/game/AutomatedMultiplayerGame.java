@@ -1,11 +1,14 @@
 package com.foxcatgames.boggarton.game;
 
+import static com.foxcatgames.boggarton.Const.BOX;
 import static com.foxcatgames.boggarton.Const.DOWN;
 import static com.foxcatgames.boggarton.Const.LEFT;
 import static com.foxcatgames.boggarton.Const.RIGHT;
 import static com.foxcatgames.boggarton.Const.UP;
 
 import java.util.Map;
+
+import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.engine.Layer;
 import com.foxcatgames.boggarton.entity.Brick;
@@ -18,7 +21,7 @@ import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 
-final public class AutomatedMultiplayerGame extends MultiplayerGame implements IAutomatedGame<Brick, SimpleFigure, MultiplayerGlass, SimpleForecast> {
+public class AutomatedMultiplayerGame extends AbstractMultiplayerGame implements IAutomatedGame<Brick, SimpleFigure, MultiplayerGlass, SimpleForecast> {
 
     protected boolean yuckHappened;
     private final GameAutomation<Brick, SimpleFigure, MultiplayerGlass, SimpleForecast> gameAutomation;
@@ -27,6 +30,7 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
             final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
 
         super(layer, x, y, width, height, prognosis, figureSize, setSize, victories, yuckType, randomType, sounds);
+        glass = new MultiplayerGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, setSize, sounds);
         gameAutomation = new GameAutomation<>(sounds);
     }
 
@@ -98,33 +102,38 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
     }
 
     @Override
-    public void rotateFigure() {
-        gameAutomation.logMove(UP);
-        super.rotateFigure();
+    public boolean rotateFigure() {
+        final boolean result = super.rotateFigure();
+        if (result)
+            gameAutomation.makeMove(UP);
+        return result;
     }
 
     @Override
-    public void moveLeft() {
-        gameAutomation.logMove(LEFT);
-        super.moveLeft();
+    public boolean moveLeft() {
+        final boolean result = super.moveLeft();
+        if (result)
+            gameAutomation.makeMove(LEFT);
+        return result;
     }
 
     @Override
-    public void moveRight() {
-        gameAutomation.logMove(RIGHT);
-        super.moveRight();
+    public boolean moveRight() {
+        final boolean result = super.moveRight();
+        if (result)
+            gameAutomation.makeMove(RIGHT);
+        return result;
     }
 
     @Override
     public void dropFigure() {
-        gameAutomation.logMove(DOWN);
+        gameAutomation.makeMove(DOWN);
         super.dropFigure();
     }
 
     @Override
     public void finishTurn() {
         gameAutomation.finishTurn();
-        super.finishTurn();
     }
 
     @Override
@@ -133,5 +142,15 @@ final public class AutomatedMultiplayerGame extends MultiplayerGame implements I
         gameAutomation.logYuck(yuck);
         yuckHappened = true;
         return yuck;
+    }
+
+    @Override
+    public void waitChanges() throws InterruptedException {
+        gameAutomation.waitChanges(this);
+    }
+
+    @Override
+    public void setChanges() {
+        gameAutomation.setChanges();
     }
 }

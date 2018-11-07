@@ -30,7 +30,6 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
     protected boolean needNewFigure = true;
 
     abstract protected void nextStage();
-
     abstract protected void resumeScore();
 
     protected F nextFigure() {
@@ -67,6 +66,9 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
         nextStage();
     }
 
+    public void setChanges() {
+    }
+
     public void setGameOver() {
         glass.setGameOver();
     }
@@ -83,25 +85,20 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
         return !glass.isGameOver();
     }
 
-    public void rotateFigure() {
-        glass.rotate();
-        glass.setChanges(true);
+    public boolean rotateFigure() {
+        return glass.rotate();
     }
 
-    public void moveLeft() {
-        glass.moveLeft();
+    public boolean moveLeft() {
+        return glass.moveLeft();
     }
 
-    public void moveRight() {
-        glass.moveRight();
+    public boolean moveRight() {
+        return glass.moveRight();
     }
 
     public void dropFigure() {
         dropPressed = true;
-    }
-
-    public void finishTurn() {
-        glass.setChanges(true);
     }
 
     public G getGlass() {

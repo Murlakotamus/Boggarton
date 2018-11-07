@@ -8,7 +8,7 @@ import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
 
     private boolean moveDown;
-    private boolean forSearchingSolution = true;
+    private boolean changes;
 
     public int changesCounter;
 
@@ -33,13 +33,12 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     public VirtualGlass(final int width, final int height) {
         super(width, height, 0);
         moveDown = true;
-        forSearchingSolution = false;
         state.setBricks(new VirtualBrick[width][height]);
     }
 
     public void setFigure(final int x, final int y, final boolean setChanges) {
         setFigure(x, y);
-        changes.setFlag(setChanges);
+        changes = setChanges;
     }
 
     public void setFigure(final int x, final int y) {
@@ -63,20 +62,25 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     }
 
     @Override
-    public void moveLeft() {
-        if (canMoveLeft())
+    public boolean moveLeft() {
+        boolean result = canMoveLeft();
+        if (result)
             setFigure(state.getI() - 1, state.getJ(), true);
+        return result;
     }
 
     @Override
-    public void moveRight() {
-        if (canMoveRight())
+    public boolean moveRight() {
+        boolean result = canMoveRight();
+        if (result)
             setFigure(state.getI() + 1, state.getJ(), true);
+        return result;
     }
 
     @Override
-    public void rotate() {
+    public boolean rotate() {
         state.getFigure().rotate();
+        return true;
     }
 
     public boolean moveDown() {
@@ -117,17 +121,17 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     }
 
     private boolean moveDownTrue() {
-        boolean changes = false;
+        boolean currentChanges = false;
         for (int i = 0; i < figure().getLenght(); i++)
             if (figure().getBrick(i) != null)
                 if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null) {
-                    changes = true;
+                    currentChanges = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
 
-        if (changes) {
+        if (currentChanges) {
             changesCounter++;
-            this.changes.setFlag(true);
+            changes = true;
         }
 
         if (figure().isFallen())
@@ -138,15 +142,15 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     }
 
     private boolean moveDownEffective() {
-        boolean changes = false;
+        boolean currentChanges = false;
         for (int i = 0; i < figure().getLenght(); i++)
             if (figure().getBrick(i) != null)
                 if (state.getJ() + 1 == height() || brick(state.getI() + i, state.getJ() + 1) != null) {
-                    changes = true;
+                    currentChanges = true;
                     setChanges(i, state.getI() + i, state.getJ());
                 }
 
-        if (changes)
+        if (currentChanges)
             changesCounter++;
 
         if (figure().isFallen()) {
@@ -158,21 +162,15 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
         return true;
     }
 
-    @Override
     public void setChanges(final boolean flag) {
-        if (forSearchingSolution)
-            changes.setFlag(flag);
-        else
-            super.setChanges(flag);
+        changes = flag;
     }
 
-    @Override
-    public void waitChanges() throws InterruptedException {
-        if (!forSearchingSolution)
-            super.waitChanges();
+    public boolean hasChanges() {
+        return changes;
     }
 
     public void dropChanges() {
-        changes.setFlag(false);
+        changes = false;
     }
 }

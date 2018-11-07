@@ -142,9 +142,14 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
     private void fall() {
         final G glass = this.glass;
-        if (glass.getY() % BOX == 0 && !glass.moveDown()) {
-            nextStage();
-            return;
+        if (glass.getY() % BOX == 0) {
+            final Pair<Boolean, Boolean> movedownResult = glass.moveDown();
+            if (movedownResult.getSecond())
+                setChanges();
+            if (!movedownResult.getFirst()) {
+                nextStage();
+                return;
+            }
         }
 
         final float currentTime = getTime();
@@ -165,7 +170,12 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
         } else {
             for (int i = 1; i <= diffCell; i++) {
                 glass.setY((oldCell + i) * BOX);
-                if (!glass.moveDown()) {
+
+                final Pair<Boolean, Boolean> movedownResult = glass.moveDown();
+                if (movedownResult.getSecond())
+                    setChanges();
+
+                if (!movedownResult.getFirst()) {
                     nextStage();
                     return;
                 }
@@ -199,9 +209,9 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
 
                 fell = fell | crashBrick(brick, i, j, currY, newY);
             }
-        previousTime = currentTime;
         if (fell)
             Sound.playDrop(sounds.get(Const.DROP));
+        previousTime = currentTime;
     }
 
     private boolean crashBrick(final B brick, final int i, final int j, final int currY, final int newY) {
@@ -261,27 +271,27 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     }
 
     @Override
-    public void rotateFigure() {
-        super.rotateFigure();
+    public boolean rotateFigure() {
         previousTime = getTime();
+        return super.rotateFigure();
     }
 
     @Override
-    public void moveLeft() {
-        glass.moveLeft();
+    public boolean moveLeft() {
         previousTime = getTime();
+        return super.moveLeft();
     }
 
     @Override
-    public void moveRight() {
-        super.moveRight();
+    public boolean moveRight() {
         previousTime = getTime();
+        return super.moveRight();
     }
 
     @Override
     public void dropFigure() {
-        super.dropFigure();
         previousTime = getTime();
+        super.dropFigure();
     }
 
     public int getX() {

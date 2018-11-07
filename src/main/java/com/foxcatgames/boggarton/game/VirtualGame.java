@@ -136,32 +136,47 @@ public class VirtualGame extends AbstractGame<VirtualBrick, VirtualFigure, Virtu
     }
 
     @Override
-    public void rotateFigure() {
-        gameAutomation.logMove(UP);
-        super.rotateFigure();
+    public boolean rotateFigure() {
+        final boolean result = super.rotateFigure();
+        if (result)
+            gameAutomation.makeMove(UP);
+        return result;
     }
 
     @Override
-    public void moveLeft() {
-        gameAutomation.logMove(LEFT);
-        super.moveLeft();
+    public boolean moveLeft() {
+        final boolean result = super.moveLeft();
+        if (result)
+            gameAutomation.makeMove(LEFT);
+        return result;
     }
 
     @Override
-    public void moveRight() {
-        gameAutomation.logMove(RIGHT);
-        super.moveRight();
+    public boolean moveRight() {
+        final boolean result = super.moveRight();
+        if (result)
+            gameAutomation.makeMove(RIGHT);
+        return result;
     }
 
     @Override
     public void dropFigure() {
-        gameAutomation.logMove(DOWN);
+        gameAutomation.makeMove(DOWN);
         super.dropFigure();
     }
 
     @Override
     public void finishTurn() {
         gameAutomation.finishTurn();
-        super.finishTurn();
+    }
+
+    @Override
+    public void waitChanges() throws InterruptedException {
+        gameAutomation.waitChanges(this);
+    }
+
+    @Override
+    public void setChanges() {
+        gameAutomation.setChanges();
     }
 }

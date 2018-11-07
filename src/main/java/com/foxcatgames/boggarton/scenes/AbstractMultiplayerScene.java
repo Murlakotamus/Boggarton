@@ -9,7 +9,7 @@ import static com.foxcatgames.boggarton.Const.WINNER;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.entity.SimpleEntity;
-import com.foxcatgames.boggarton.game.MultiplayerGame;
+import com.foxcatgames.boggarton.game.AbstractMultiplayerGame;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.IPlayer;
@@ -37,7 +37,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
             throw new IllegalStateException("Glass too narrow for figures");
     }
 
-    protected <T extends MultiplayerGame> void changes(T[] games) {
+    protected <T extends AbstractMultiplayerGame> void changes(T[] games) {
         if (gameOver)
             return;
 
@@ -49,27 +49,27 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
         processScene(games);
     }
 
-    protected <T extends MultiplayerGame> void setGameOver(T[] games) {
+    protected <T extends AbstractMultiplayerGame> void setGameOver(T[] games) {
         super.setGameOver();
         for (int i = 0; i < PLAYERS; i++)
             games[i].setGameOver();
     }
 
-    protected <T extends MultiplayerGame> void hideGlass(T[] games) {
+    protected <T extends AbstractMultiplayerGame> void hideGlass(T[] games) {
         for (int i = 0; i < PLAYERS; i++) {
             games[i].getGlass().pauseOn();
             gamePaused[i].spawn(new Vector2f(games[i].getX() + games[i].getForecast().getFigureSize() * BOX + 25, Y + BOX * 3 + BORDER));
         }
     }
 
-    protected <T extends MultiplayerGame> void showGlass(T[] games) {
+    protected <T extends AbstractMultiplayerGame> void showGlass(T[] games) {
         for (int i = 0; i < PLAYERS; i++) {
             gamePaused[i].unspawn();
             games[i].getGlass().pauseOff();
         }
     }
 
-    private <T extends MultiplayerGame> boolean checkGameOver(T[] games) {
+    private <T extends AbstractMultiplayerGame> boolean checkGameOver(T[] games) {
         for (int i = 0; i < PLAYERS; i++)
             if (games[i].isGameOver()) {
                 gameOver = true;
@@ -79,7 +79,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
         return gameOver;
     }
 
-    private <T extends MultiplayerGame> void losersAndWinners(T[] games, final int loserNumber) {
+    private <T extends AbstractMultiplayerGame> void losersAndWinners(T[] games, final int loserNumber) {
         for (int i = 0; i < PLAYERS; i++) {
             final int figureSize = games[i].getForecast().getFigureSize();
             if (i == loserNumber)
@@ -98,14 +98,14 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
             DbHandler.getInstance().saveGameOutcome(leftPlayer, rightPlayer);
     }
 
-    private static <T extends MultiplayerGame> void processScene(T[] games) {
+    private static <T extends AbstractMultiplayerGame> void processScene(T[] games) {
         for (int i = 0; i < PLAYERS; i++) {
             games[i].processStage();
             getYucks(games, i);
         }
     }
 
-    private static <T extends MultiplayerGame> void getYucks(T[] game, final int n) {
+    private static <T extends AbstractMultiplayerGame> void getYucks(T[] game, final int n) {
         for (int j = 0; j < PLAYERS; j++)
             if (n != j)
                 game[n].addYuck(game[j].getYucksForEnemy());

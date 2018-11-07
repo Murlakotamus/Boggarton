@@ -3,6 +3,7 @@ package com.foxcatgames.boggarton.scenes.gamescenes;
 import org.lwjgl.input.Keyboard;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.game.AbstractMultiplayerGame;
 import com.foxcatgames.boggarton.game.AutomatedMultiplayerGame;
 import com.foxcatgames.boggarton.game.MultiplayerGame;
 import com.foxcatgames.boggarton.game.utils.Victories;
@@ -50,8 +51,8 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
         super.terminate();
     }
 
-    private MultiplayerGame[] getGames() {
-        return new MultiplayerGame[] { leftGame, rightGame };
+    private AbstractMultiplayerGame[] getGames() {
+        return new AbstractMultiplayerGame[] { leftGame, rightGame };
     }
 
     @Override

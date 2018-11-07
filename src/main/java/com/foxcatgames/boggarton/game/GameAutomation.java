@@ -10,11 +10,13 @@ import static com.foxcatgames.boggarton.Const.YUCK_STR;
 
 import java.util.Map;
 
+import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractGlass;
 import com.foxcatgames.boggarton.game.glass.GlassState;
+import com.foxcatgames.boggarton.game.utils.Changes;
 import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.OuterCommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
@@ -24,9 +26,9 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
     private final Map<String, Integer> sounds;
     protected final OuterCommand command = new OuterCommand();
     protected final Pair<GlassState<B, F>, P> gamestateBuffer = new Pair<>(null, null);
+    final protected Changes changes = new Changes();
 
     protected GameLogger gameLogger;
-
     protected boolean turnFinished;
 
     public boolean processStage(final StageItem stage) {
@@ -92,6 +94,10 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
     public void setGameOver(final IAutomatedGame<B, F, G, P> game) {
         synchronized (gamestateBuffer) {
             game.setSimpleGameOver(game);
+            synchronized (changes) {
+                changes.setFlag(true);
+                changes.notify();
+            }
             gamestateBuffer.notify();
             executeCommand();
         }
@@ -122,9 +128,32 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
         }
     }
 
+    public void setChanges() {
+        synchronized (changes) {
+            while (changes.isFlag())
+                try {
+                    changes.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            changes.setFlag(true);
+            changes.notify();
+        }
+    }
+
+    public void waitChanges(final IAutomatedGame<B, F, G, P> game) throws InterruptedException {
+        synchronized (changes) {
+            while (!changes.isFlag() && game.isGameOn())
+                changes.wait();
+            changes.setFlag(false);
+            changes.notify();
+        }
+    }
+
     public void finishTurn() {
         log(NEXT + "\n");
         turnFinished = true;
+        setChanges();
     }
 
     public void initLogger(final IAutomatedGame<B, F, G, P> game) {
@@ -153,8 +182,10 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
             log(YUCK_STR + yuck + "\n");
     }
 
-    public void logMove(final char c) {
-        log("" + c);
+    public void makeMove(final char move) {
+        log("" + move);
+        if (move != Const.DOWN)
+            setChanges();
     }
 
     public void log(final String str) {

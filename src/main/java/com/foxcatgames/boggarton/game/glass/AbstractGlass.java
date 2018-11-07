@@ -2,14 +2,12 @@ package com.foxcatgames.boggarton.game.glass;
 
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.AbstractFigure;
-import com.foxcatgames.boggarton.game.utils.Changes;
 
 abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B>> {
 
     volatile protected boolean gameOver;
     protected int count; // figures counter
 
-    final protected Changes changes = new Changes();
     final protected GlassState<B, F> state;
 
     public AbstractGlass(final int width, final int height, final int nextPosition) {
@@ -21,9 +19,9 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     abstract public boolean removeHoles();
     abstract public void removeBrick(int i, int j);
     abstract public int newFigure(F newFigure);
-    abstract public void rotate();
-    abstract public void moveLeft();
-    abstract public void moveRight();
+    abstract public boolean rotate();
+    abstract public boolean moveLeft();
+    abstract public boolean moveRight();
 
     public boolean findChainsToKill() {
         final int oldScore = state.getScore();
@@ -68,34 +66,8 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
         return gameOver;
     }
 
-    public void setChanges(final boolean flag) {
-        synchronized (changes) {
-            while (flag == changes.isFlag())
-                try {
-                    changes.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            changes.setFlag(flag);
-            changes.notify();
-        }
-    }
-
-    public void waitChanges() throws InterruptedException {
-        synchronized (changes) {
-            while (!changes.isFlag() && !gameOver)
-                changes.wait();
-            changes.setFlag(false);
-            changes.notify();
-        }
-    }
-
     public void setGameOver() {
         gameOver = true;
-        synchronized (changes) {
-            changes.setFlag(true);
-            changes.notify();
-        }
     }
 
     public int getReactions() {
@@ -108,10 +80,6 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
 
     public int cleanReactions() {
         return state.cleanReactions();
-    }
-
-    public boolean hasChanges() {
-        return changes.isFlag();
     }
 
     public GlassState<B, F> getGlassState() {

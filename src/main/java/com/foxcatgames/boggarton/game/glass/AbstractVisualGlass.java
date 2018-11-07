@@ -15,6 +15,7 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.Frame;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.figure.AbstractVisualFigure;
+import com.foxcatgames.boggarton.game.utils.Pair;
 
 abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVisualFigure<B>> extends AbstractGlass<B, F> {
 
@@ -155,32 +156,33 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
     }
 
     @Override
-    public void rotate() {
+    public boolean rotate() {
         if (gamePaused || gameOver)
-            return;
+            return false;
 
         Sound.play(sounds.get(Const.CYCLE));
         figure().rotate();
+        return true;
     }
 
     @Override
-    public void moveLeft() {
+    public boolean moveLeft() {
         if (gamePaused || gameOver || !canMoveLeft())
-            return;
+            return false;
 
         Sound.play(sounds.get(Const.SHIFT));
         setFigure(state.getI() - 1, state.getJ());
-        setChanges(true);
+        return true;
     }
 
     @Override
-    public void moveRight() {
+    public boolean moveRight() {
         if (gamePaused || gameOver || !canMoveRight())
-            return;
+            return false;
 
         Sound.play(sounds.get(Const.SHIFT));
         setFigure(state.getI() + 1, state.getJ());
-        setChanges(true);
+        return true;
     }
 
     public void setChanges(final int num, final int i, final int j) {
@@ -196,7 +198,8 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
         figure().setPosition(new Vector2f(i * BOX + position.getX(), getY() + position.getY() + BORDER));
     }
 
-    public boolean moveDown() {
+    public Pair<Boolean, Boolean> moveDown() {
+        Pair<Boolean, Boolean> result = new Pair<>();
         boolean changes = false;
         state.setJ(getY() / BOX);
         for (int i = 0; i < figure().getLenght(); i++)
@@ -206,14 +209,16 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
                     setChanges(i, state.getI() + i, state.getJ());
                 }
 
-        if (changes)
-            setChanges(true);
+        result.setSecond(changes);
 
-        if (figure().isFallen())
-            return false;
+        if (figure().isFallen()) {
+            result.setFirst(false);
+            return result;
+        }
 
         setFigure(state.getI(), state.getJ());
-        return true;
+        result.setFirst(true);
+        return result;
     }
 
     @Override

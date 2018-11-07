@@ -4,7 +4,7 @@ public class Pair<F, S> {
     private F first;
     private S second;
 
-    protected Pair() {
+    public Pair() {
         first = null;
         first = null;
     }

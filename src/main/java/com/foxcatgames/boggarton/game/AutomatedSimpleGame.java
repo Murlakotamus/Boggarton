@@ -20,7 +20,7 @@ import com.foxcatgames.boggarton.game.utils.ICommand;
 import com.foxcatgames.boggarton.game.utils.Pair;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class AutomatedSimpleGame extends AbstractSimpleGame implements IAutomatedGame<Brick, SimpleFigure, SimpleGlass, SimpleForecast> {
+public class AutomatedSimpleGame extends AbstractOnePlayerGame implements IAutomatedGame<Brick, SimpleFigure, SimpleGlass, SimpleForecast> {
 
     private final GameAutomation<Brick, SimpleFigure, SimpleGlass, SimpleForecast> gameAutomation;
 

@@ -3,7 +3,7 @@ package com.foxcatgames.boggarton.scenes.gamescenes;
 import org.lwjgl.input.Keyboard;
 
 import com.foxcatgames.boggarton.Const;
-import com.foxcatgames.boggarton.game.AbstractSimpleGame;
+import com.foxcatgames.boggarton.game.AbstractOnePlayerGame;
 import com.foxcatgames.boggarton.game.SimpleGame;
 import com.foxcatgames.boggarton.players.real.RealSingleplayer;
 import com.foxcatgames.boggarton.scenes.AbstractGameAndPracticeScene;
@@ -11,7 +11,7 @@ import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 
-public class PracticeScene extends AbstractGameAndPracticeScene<AbstractSimpleGame> {
+public class PracticeScene extends AbstractGameAndPracticeScene<AbstractOnePlayerGame> {
 
     public PracticeScene(final int width, final int height, final int prognosis, final int figureSize, final RandomTypes randomType,
             final DifficultyTypes difficulty) {

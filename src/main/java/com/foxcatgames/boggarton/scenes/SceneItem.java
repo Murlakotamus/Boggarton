@@ -28,6 +28,7 @@ import com.foxcatgames.boggarton.scenes.gamescenes.GameScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.PracticeScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.ReplayScene;
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.IMenu;
 import com.foxcatgames.boggarton.scenes.types.IName;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
@@ -177,5 +178,23 @@ public enum SceneItem implements IName<SceneItem> {
     @Override
     public String getName() {
         return sceneName;
+    }
+
+    public static <E extends Enum<E> & IMenu<E>> E nextEnumValue(final E enumValue) {
+        final String className = enumValue.getClass().getSimpleName();
+        switch (className) {
+        case "YuckTypes":
+            yuckType = yuckType.next();
+            break;
+        case "RandomTypes":
+            randomType = randomType.next();
+            break;
+        case "DifficultyTypes":
+            difficultyType = difficultyType.next();
+            break;
+        case "SoundTypes":
+            soundType = soundType.next();
+        }
+        return enumValue.next();
     }
 }

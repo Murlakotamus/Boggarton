@@ -17,7 +17,7 @@ import com.foxcatgames.boggarton.game.forecast.MenuForecast;
 public class MenuScene extends AbstractLogoScene {
 
     static private final MenuItem[] ITEMS = MenuItem.values();
-    static private final int ITEMS_NUMBER = MenuItem.values().length;
+    static private final int ITEMS_NUMBER = ITEMS.length;
     static private final int Y_POS_MENU = 200;
     static private final int Y_INTERVAL = FONT_HEIGHT + 1;
 

@@ -58,6 +58,7 @@ public enum MenuItem {
     }
 
     public <E extends Enum<E> & IMenu<E>> void setNextPositionFor(final E enumValue) {
-        setSubmenuPosition(enumValue.next());
+        final E newValue = SceneItem.nextEnumValue(enumValue);
+        setSubmenuPosition(newValue);
     }
 }

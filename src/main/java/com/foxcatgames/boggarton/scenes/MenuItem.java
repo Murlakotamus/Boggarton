@@ -1,6 +1,7 @@
 package com.foxcatgames.boggarton.scenes;
 
 import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
+import com.foxcatgames.boggarton.scenes.types.IMenu;
 import com.foxcatgames.boggarton.scenes.types.RandomTypes;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 import com.foxcatgames.boggarton.scenes.types.YuckTypes;
@@ -50,5 +51,13 @@ public enum MenuItem {
             submenuElementPosition = 0;
         else
             submenuElementPosition = position;
+    }
+
+    public <E extends Enum<E>> void setSubmenuPosition(final E enumValue) {
+        setSubmenuPosition(enumValue.ordinal());
+    }
+
+    public <E extends Enum<E> & IMenu<E>> void setNextPositionFor(final E enumValue) {
+        setSubmenuPosition(enumValue.next());
     }
 }

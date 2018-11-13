@@ -5,7 +5,6 @@ import static com.foxcatgames.boggarton.Const.CURRENT_SET;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.foxcatgames.boggarton.scenes.types.IMenu;
 import com.foxcatgames.boggarton.scenes.types.IName;
 
 public class Utils {
@@ -63,9 +62,5 @@ public class Utils {
 
     public static <E extends Enum<E>> E getValue(final Class<E> enumType, final int position) {
         return enumType.getEnumConstants()[position];
-    }
-
-    public static <E extends Enum<E> & IMenu<E>> E nextValue(final E currentValue) {
-        return currentValue.next();
     }
 }

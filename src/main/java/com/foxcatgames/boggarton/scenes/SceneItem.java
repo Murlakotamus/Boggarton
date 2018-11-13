@@ -105,19 +105,19 @@ public enum SceneItem implements IName<SceneItem> {
                     break;
                 case "YUCKS":
                     yuckType = Utils.getValue(YuckTypes.class, position);
-                    MenuItem.YUCKS.setSubmenuPosition(yuckType.ordinal());
+                    MenuItem.YUCKS.setSubmenuPosition(yuckType);
                     break;
                 case "RANDOM_TYPE":
                     randomType = Utils.getValue(RandomTypes.class, position);
-                    MenuItem.RANDOM_TYPE.setSubmenuPosition(randomType.ordinal());
+                    MenuItem.RANDOM_TYPE.setSubmenuPosition(randomType);
                     break;
                 case "DIFFICULTY":
                     difficultyType = Utils.getValue(DifficultyTypes.class, position);
-                    MenuItem.DIFFICULTY.setSubmenuPosition(difficultyType.ordinal());
+                    MenuItem.DIFFICULTY.setSubmenuPosition(difficultyType);
                     break;
                 case "SOUND":
                     soundType = Utils.getValue(SoundTypes.class, position);
-                    MenuItem.SOUND.setSubmenuPosition(soundType.ordinal());
+                    MenuItem.SOUND.setSubmenuPosition(soundType);
                     break;
                 case "FIGURE_SIZE":
                     figureSize = setValue(position, MIN_SIZE, MAX_SIZE);

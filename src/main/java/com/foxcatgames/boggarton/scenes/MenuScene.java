@@ -13,7 +13,6 @@ import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.forecast.MenuForecast;
-import com.foxcatgames.boggarton.game.utils.Utils;
 
 public class MenuScene extends AbstractLogoScene {
 
@@ -145,24 +144,20 @@ public class MenuScene extends AbstractLogoScene {
                     drawMenu();
                     break;
                 case YUCKS:
-                    SceneItem.yuckType = Utils.nextValue(SceneItem.yuckType);
-                    menuItem.setSubmenuPosition(SceneItem.yuckType.ordinal());
+                    menuItem.setNextPositionFor(SceneItem.yuckType);
                     drawMenu();
                     break;
                 case RANDOM_TYPE:
-                    SceneItem.randomType = Utils.nextValue(SceneItem.randomType);
-                    menuItem.setSubmenuPosition(SceneItem.randomType.ordinal());
+                    menuItem.setNextPositionFor(SceneItem.randomType);
                     drawMenu();
                     break;
                 case DIFFICULTY:
-                    SceneItem.difficultyType = Utils.nextValue(SceneItem.difficultyType);
-                    menuItem.setSubmenuPosition(SceneItem.difficultyType.ordinal());
+                    menuItem.setNextPositionFor(SceneItem.difficultyType);
                     drawMenu();
                     drawPrognosis(SceneItem.getSetSize());
                     break;
                 case SOUND:
-                    SceneItem.soundType = Utils.nextValue(SceneItem.soundType);
-                    menuItem.setSubmenuPosition(SceneItem.soundType.ordinal());
+                    menuItem.setNextPositionFor(SceneItem.soundType);
                     drawMenu();
                     break;
                 case FIGURE_SIZE:

@@ -99,8 +99,8 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
                 changes.notify();
             }
             gamestateBuffer.notify();
-            executeCommand();
         }
+        executeCommand();
     }
 
     public Pair<GlassState<B, F>, P> getBuffer(final IAutomatedGame<B, F, G, P> game) throws InterruptedException {

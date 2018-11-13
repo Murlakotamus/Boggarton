@@ -259,10 +259,12 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     public void restoreSpeed() {
         dropPressed = false;
         currentSpeed = MOVING_SPEED;
+        previousTime = getTime();
     }
 
     public void setMaxSpeed() {
         currentSpeed = DROPPING_SPEED;
+        previousTime = getTime();
     }
 
     public void increaseSpeed() {

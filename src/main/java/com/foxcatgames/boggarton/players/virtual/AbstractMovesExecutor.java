@@ -67,7 +67,6 @@ abstract public class AbstractMovesExecutor<B extends IBrick, F extends Abstract
                 }
             });
             game.waitChanges();
-            game.restoreSpeed();
             break;
 
         case NEXT:

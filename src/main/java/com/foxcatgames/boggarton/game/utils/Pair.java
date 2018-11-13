@@ -1,8 +1,8 @@
 package com.foxcatgames.boggarton.game.utils;
 
 public class Pair<F, S> {
-    private F first;
-    private S second;
+    private volatile F first;
+    private volatile S second;
 
     public Pair() {
         first = null;

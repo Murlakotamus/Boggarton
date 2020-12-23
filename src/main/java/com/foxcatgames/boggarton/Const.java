@@ -105,6 +105,12 @@ public class Const {
     public static final int SND_SHIFT = 7;
     public static final int SND_YUCK = 8;
     public static final int SND_DROP = 9;
+    public static final int SND_LOGO_ID = 10;
+    public static final int SND_WIN_ID = 11;
+    public static final int SND_LOSE_ID = 12;
+    public static final int SND_NEUTRAL_ID = 13;
+    public static final int SND_SUPER_SCORE_ID = 14;
+    public static final int SND_MEGA_SCORE_ID = 15;
 
     // sound sources
     public static final int SND_DROP0 = 9;
@@ -132,8 +138,22 @@ public class Const {
     public static final int SND_YUCK_LEFT = 51;
     public static final int SND_YUCK_RIGHT = 52;
 
+    public static final int SND_LOGO = 53;
+    public static final int SND_WIN = 54;
+    public static final int SND_LOSE = 55;
+    public static final int SND_NEUTRAL = 56;
+
+    public static final int SND_SUPER_SCORE = 57;
+    public static final int SND_SUPER_SCORE_LEFT = 58;
+    public static final int SND_SUPER_SCORE_RIGHT = 59;
+
+    public static final int SND_MEGA_SCORE = 60;
+    public static final int SND_MEGA_SCORE_LEFT= 61;
+    public static final int SND_MEGA_SCORE_RIGHT = 62;
+
     // sound files
     private static final String WAV_PATH = "/sounds/";
+    private static final String JINGLES_PATH = "/jingles/";
     private static final String WAV = ".wav";
 
     public static final String ADDYUCK = "addyuck";
@@ -148,21 +168,30 @@ public class Const {
     public static final String DROP = "drop";
     public static final String WAV_DROP = WAV_PATH + DROP + WAV;
 
-    public static final String WAV_MOVE = WAV_PATH + "move" + WAV;
-
     public static final String NEW = "new";
     public static final String WAV_NEW = WAV_PATH + NEW + WAV;
 
     public static final String SCORE = "score";
     public static final String WAV_SCORE = WAV_PATH + SCORE + WAV;
 
-    public static final String WAV_SELECT = WAV_PATH + "select" + WAV;
-
     public static final String SHIFT = "shift";
     public static final String WAV_SHIFT = WAV_PATH + SHIFT + WAV;
 
     public static final String YUCK = "yuck";
     public static final String WAV_YUCK = WAV_PATH + YUCK + WAV;
+
+    public static final String WAV_SELECT = WAV_PATH + "select" + WAV;
+    public static final String WAV_MOVE = WAV_PATH + "move" + WAV;
+
+    public static final String JINGLE_LOGO = JINGLES_PATH + "logo" + WAV;
+    public static final String JINGLE_WIN = JINGLES_PATH + "win" + WAV;
+    public static final String JINGLE_LOSE = JINGLES_PATH + "lose" + WAV;
+    public static final String JINGLE_NEUTRAL = JINGLES_PATH + "neutral" + WAV;
+
+    public static final String SUPER_SCORE = "superscore";
+    public static final String JINGLE_SUPER_SCORE = JINGLES_PATH + SUPER_SCORE + WAV;
+    public static final String MEGA_SCORE = "megascore";
+    public static final String JINGLE_MEGA_SCORE = JINGLES_PATH + MEGA_SCORE + WAV;
 
     public static final Map<String, Integer> SOUNDS = new HashMap<>();
     public static final Map<String, Integer> SOUNDS_LEFT = new HashMap<>();
@@ -177,6 +206,8 @@ public class Const {
         SOUNDS.put(SCORE, SND_SCORE);
         SOUNDS.put(SHIFT, SND_SHIFT);
         SOUNDS.put(YUCK, SND_YUCK);
+        SOUNDS.put(SUPER_SCORE, SND_SUPER_SCORE);
+        SOUNDS.put(MEGA_SCORE, SND_MEGA_SCORE);
 
         SOUNDS_LEFT.put(ADDYUCK, SND_ADDYUCK_LEFT);
         SOUNDS_LEFT.put(CYCLE, SND_CYCLE_LEFT);
@@ -186,6 +217,8 @@ public class Const {
         SOUNDS_LEFT.put(SCORE, SND_SCORE_LEFT);
         SOUNDS_LEFT.put(SHIFT, SND_SHIFT_LEFT);
         SOUNDS_LEFT.put(YUCK, SND_YUCK_LEFT);
+        SOUNDS_LEFT.put(SUPER_SCORE, SND_SUPER_SCORE_LEFT);
+        SOUNDS_LEFT.put(MEGA_SCORE, SND_MEGA_SCORE_LEFT);
 
         SOUNDS_RIGHT.put(ADDYUCK, SND_ADDYUCK_RIGHT);
         SOUNDS_RIGHT.put(CYCLE, SND_CYCLE_RIGHT);
@@ -195,5 +228,7 @@ public class Const {
         SOUNDS_RIGHT.put(SCORE, SND_SCORE_RIGHT);
         SOUNDS_RIGHT.put(SHIFT, SND_SHIFT_RIGHT);
         SOUNDS_RIGHT.put(YUCK, SND_YUCK_RIGHT);
+        SOUNDS_RIGHT.put(SUPER_SCORE, SND_SUPER_SCORE_RIGHT);
+        SOUNDS_RIGHT.put(MEGA_SCORE, SND_MEGA_SCORE_RIGHT);
     }
 }

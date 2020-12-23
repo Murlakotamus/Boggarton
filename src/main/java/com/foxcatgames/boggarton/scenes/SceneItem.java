@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.game.utils.Utils;
 import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionDemoScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.CompetitionGameScene;
@@ -63,8 +64,10 @@ public enum SceneItem implements IName<SceneItem> {
     }
 
     public AbstractScene createScene() {
+        SceneItem.restoreSettings();
         switch (this) {
         case INTRO:
+            Sound.playLogo();
             return new IntroScene();
         case MENU:
             return new MenuScene();

@@ -27,6 +27,9 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     private static final float DISAPPEAR_PAUSE = 1f;
     private static final float SET_PAUSE = 0.1f;
 
+    private static final int SUPER_SCORE = 100;
+    private static final int MEGA_SCORE = 200;
+
     private static final int DROPPING_SPEED = 400000;
     private static final int CRASH_SPEED = 150000;
     private static final int MOVING_SPEED = 500;
@@ -97,11 +100,20 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
         if (diff > 0) {
             diffScore.setString("+" + diff);
             diffScore.spawn(new Vector2f(x + BOX * 8, y - BOX * 2));
-            Sound.play(sounds.get(Const.SCORE));
+            playJingle(diff);
         } else {
             diffScore.unspawn();
         }
         lastScore = getGlass().getGlassState().getScore();
+    }
+
+    private void playJingle(final int score) {
+        if (score >= MEGA_SCORE) {
+            Sound.play(sounds.get(Const.MEGA_SCORE));
+        } else if (score >= SUPER_SCORE)
+            Sound.play(sounds.get(Const.SUPER_SCORE));
+        else
+            Sound.play(sounds.get(Const.SCORE));
     }
 
     private boolean enoughSleep(final float sleep) {

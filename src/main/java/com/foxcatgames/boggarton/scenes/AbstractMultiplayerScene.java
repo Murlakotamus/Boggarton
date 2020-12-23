@@ -8,6 +8,7 @@ import static com.foxcatgames.boggarton.Const.WINNER;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.AbstractMultiplayerGame;
 import com.foxcatgames.boggarton.game.utils.DbHandler;
@@ -75,6 +76,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
                 gameOver = true;
                 losersAndWinners(games, i);
                 saveOutcome(i);
+                Sound.playNeutral();
             }
         return gameOver;
     }

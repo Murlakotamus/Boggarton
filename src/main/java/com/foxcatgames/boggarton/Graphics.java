@@ -59,7 +59,7 @@ public class Graphics {
         GL11.glTexImage2D(GL_TEXTURE_2D, 0, glType, 1024, 1024, 0, glType, GL_UNSIGNED_BYTE, scratch);
     }
 
-    private static ByteBuffer convertImageData(BufferedImage bufferedImage) {
+    private static ByteBuffer convertImageData(final BufferedImage bufferedImage) {
         final ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] { 8, 8, 8, 8 }, true, false,
                 Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
 
@@ -80,7 +80,7 @@ public class Graphics {
     }
 
 
-    private static void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
+    private static void createWindow(final int screenWidth, final int screenHeight, final boolean fullscreen) throws Exception {
         final Application application = Application.getApplication();
         if (application != null) {
             final Image image = Toolkit.getDefaultToolkit().getImage(Graphics.class.getResource("/icons/boggarton128.png"));
@@ -105,7 +105,7 @@ public class Graphics {
                 org.lwjgl.util.Display.setDisplayMode(dm,
                         new String[] { "width=" + screenWidth, "height=" + screenHeight, "freq=85", "bpp=" + Display.getDisplayMode().getBitsPerPixel() });
                 actualDisplayMode = Display.getDesktopDisplayMode();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Sys.alert("Error", "Could not start full screen, switching to windowed mode");
                 Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
             }
@@ -119,7 +119,7 @@ public class Graphics {
             Mouse.setGrabbed(false);
             createWindow(SCREEN_WIDTH, SCREEN_HEIGHT, FULL_SCREEN);
             createOffScreenBuffer();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace(System.out);
         }
     }

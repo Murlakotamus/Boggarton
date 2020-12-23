@@ -6,6 +6,7 @@ import static com.foxcatgames.boggarton.Const.GAME_OVER;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.game.AbstractVisualGame;
@@ -41,6 +42,7 @@ abstract public class AbstractOnePlayerScene<B extends Brick, F extends Abstract
             gameOver = true;
             saveOutcome(player);
             gameOverEntity.spawn(new Vector2f(X + game.getForecast().getFigureSize() * BOX + 25, Y + BOX * 3 + BORDER));
+            Sound.playLose();
         } else
             game.processStage();
     }

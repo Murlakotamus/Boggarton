@@ -18,9 +18,9 @@ import com.foxcatgames.boggarton.scenes.SceneItem;
 import com.foxcatgames.boggarton.scenes.types.SoundTypes;
 
 public class Sound {
-    public static final IntBuffer BUFFER = BufferUtils.createIntBuffer(10); // must be equals to number of sound files
+    public static final IntBuffer BUFFER = BufferUtils.createIntBuffer(16); // must be equals to number of sound files
 
-    private static final IntBuffer SOURCE = BufferUtils.createIntBuffer(53);
+    private static final IntBuffer SOURCE = BufferUtils.createIntBuffer(63); // real sound buffers - common ones and by channel
 
     private static final FloatBuffer SOURCE_POS = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { 0.0f, 0.0f, 0.0f }).rewind();
     private static final FloatBuffer SOURCE_LEFT = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { -1.0f, 0.0f, 0.0f }).rewind();
@@ -83,6 +83,14 @@ public class Sound {
         sl.loadPattern(WAV_SHIFT, SND_SHIFT);
         sl.loadPattern(WAV_YUCK, SND_YUCK);
 
+        sl.loadPattern(JINGLE_LOGO, SND_LOGO_ID);
+        sl.loadPattern(JINGLE_WIN, SND_WIN_ID);
+        sl.loadPattern(JINGLE_LOSE, SND_LOSE_ID);
+        sl.loadPattern(JINGLE_NEUTRAL, SND_NEUTRAL_ID);
+
+        sl.loadPattern(JINGLE_SUPER_SCORE, SND_SUPER_SCORE_ID);
+        sl.loadPattern(JINGLE_MEGA_SCORE, SND_MEGA_SCORE_ID);
+
         AL10.alGenSources(SOURCE);
         if (AL10.alGetError() != AL10.AL_NO_ERROR)
             return AL10.AL_FALSE;
@@ -127,6 +135,19 @@ public class Sound {
         initPattern(SND_YUCK, SND_YUCK);
         initPatternLeft(SND_YUCK, SND_YUCK_LEFT);
         initPatternRight(SND_YUCK, SND_YUCK_RIGHT);
+
+        initPattern(SND_LOGO_ID, SND_LOGO);
+        initPattern(SND_WIN_ID, SND_WIN);
+        initPattern(SND_LOSE_ID, SND_LOSE);
+        initPattern(SND_NEUTRAL_ID, SND_NEUTRAL);
+
+        initPattern(SND_SUPER_SCORE_ID, SND_SUPER_SCORE);
+        initPatternLeft(SND_SUPER_SCORE_ID, SND_SUPER_SCORE_LEFT);
+        initPatternRight(SND_SUPER_SCORE_ID, SND_SUPER_SCORE_RIGHT);
+
+        initPattern(SND_MEGA_SCORE_ID, SND_MEGA_SCORE);
+        initPatternLeft(SND_MEGA_SCORE_ID, SND_MEGA_SCORE_LEFT);
+        initPatternRight(SND_MEGA_SCORE_ID, SND_MEGA_SCORE_RIGHT);
 
         if (AL10.alGetError() == AL10.AL_NO_ERROR)
             return AL10.AL_TRUE;
@@ -176,6 +197,22 @@ public class Sound {
 
     public static void playSelect() {
         play(SND_SELECT);
+    }
+
+    public static void playLogo() {
+        play(SND_LOGO);
+    }
+
+    public static void playWin() {
+        play(SND_WIN);
+    }
+
+    public static void playLose() {
+        play(SND_LOSE);
+    }
+
+    public static void playNeutral() {
+        play(SND_NEUTRAL);
     }
 
     public static void play(final int sound) {

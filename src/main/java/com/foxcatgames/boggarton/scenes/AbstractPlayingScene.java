@@ -15,6 +15,7 @@ abstract public class AbstractPlayingScene extends AbstractScene {
         super(scene);
         addKeyEscape(SceneItem.MENU);
         addKeyPause();
+        addKeyMute();
     }
 
     abstract protected void hideGlass();
@@ -48,6 +49,16 @@ abstract public class AbstractPlayingScene extends AbstractScene {
             }
         };
         EventManager.addListener(Keyboard.KEY_P, pause);
+    }
+
+    protected void addKeyMute() {
+        final KeyListener escape = new KeyListener() {
+            @Override
+            public void onKeyUp() {
+                SceneItem.soundType = SceneItem.soundType.next();
+            }
+        };
+        EventManager.addListener(Keyboard.KEY_M, escape);
     }
 
     protected void setGameOver() {

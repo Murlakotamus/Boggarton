@@ -14,15 +14,15 @@ import com.foxcatgames.boggarton.scenes.types.YuckTypes;
 public class CompetitionDemoScene extends AbstractMultiplayerScene {
 
     private static final long GAMEOVER_PAUSE = 3000;
+    private final int[] prognosis;
     protected final AutomatedMultiplayerGame[] games = new AutomatedMultiplayerGame[PLAYERS];
 
     private long pauseBetweenGames;
 
     public CompetitionDemoScene(final int width, final int height, final int[] prognosis, final int figureSize, final YuckTypes yuckType,
             final RandomTypes randomType, final DifficultyTypes difficulty) {
-
         super(SceneItem.COMPETITION_DEMO, width, figureSize);
-
+        this.prognosis = prognosis;
         for (int i = 0; i < PLAYERS; i++) {
             games[i] = new AutomatedMultiplayerGame(layer, X + 446 * i, Y, width, height, prognosis[i], figureSize, difficulty.getSetSize(),
                     Victories.getVictories(i), yuckType, randomType, i == 0 ? Const.SOUNDS_LEFT : Const.SOUNDS_RIGHT);
@@ -36,8 +36,8 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
             games[i].initLogger();
             games[i].startGame();
         }
-        leftPlayer = new EffectiveVirtualNonAdaptivePlayer<>(games[0], 4, Const.FULLNESS_EATER);
-        rightPlayer = new VirtualAdaptivePlayer<>(games[1], 2, Const.FULLNESS_EATER);
+        leftPlayer = new EffectiveVirtualNonAdaptivePlayer<>(games[0], prognosis[0], Const.FULLNESS_EATER);
+        rightPlayer = new VirtualAdaptivePlayer<>(games[1], prognosis[1], Const.FULLNESS_EATER);
     }
 
     @Override

@@ -12,10 +12,12 @@ public class VirtualGameScene {
 
     private IPlayer player;
     private final VirtualGame game;
+    private final int prognosis;
 
     public VirtualGameScene(final int width, final int height, final int prognosis, final int figureSize, final RandomTypes randomType,
             final DifficultyTypes difficulty) {
 
+        this.prognosis = prognosis;
         game = new VirtualGame(width, height, prognosis, figureSize, difficulty.getSetSize(), randomType);
         game.setName("Virtual");
     }
@@ -27,7 +29,7 @@ public class VirtualGameScene {
     protected void start() {
         game.initLogger();
         game.startGame();
-        player = new VirtualAdaptivePlayer<>(game, 2, Const.FULLNESS_EATER);
+        player = new VirtualAdaptivePlayer<>(game, prognosis, Const.FULLNESS_EATER);
     }
 
     protected void terminate() {

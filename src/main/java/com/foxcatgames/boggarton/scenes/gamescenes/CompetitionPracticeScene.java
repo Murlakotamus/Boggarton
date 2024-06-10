@@ -19,6 +19,7 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
 
     private final AutomatedMultiplayerGame leftGame;
     private final MultiplayerGame rightGame;
+    private final int prognosis;
 
     public CompetitionPracticeScene(final int width, final int height, final int[] prognosis, final int figureSize, final YuckTypes yuckType,
             final RandomTypes randomType, final DifficultyTypes difficulty) {
@@ -41,7 +42,7 @@ public class CompetitionPracticeScene extends AbstractMultiplayerScene {
         leftGame.startGame();
         rightGame.startGame();
 
-        leftPlayer = new EffectiveVirtualAdaptivePlayer<>(leftGame, 4, Const.FULLNESS_EATER);
+        leftPlayer = new EffectiveVirtualAdaptivePlayer<>(leftGame, prognosis, Const.FULLNESS_EATER);
         rightPlayer = new RealMultiplayer(rightGame, Keyboard.KEY_LEFT, Keyboard.KEY_RIGHT, Keyboard.KEY_DOWN, Keyboard.KEY_UP);
     }
 

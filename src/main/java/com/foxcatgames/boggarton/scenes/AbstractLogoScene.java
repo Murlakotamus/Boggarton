@@ -16,7 +16,7 @@ abstract public class AbstractLogoScene extends AbstractScene {
     private float startTime = TIMER.getTime();
     private float previousTime = startTime;
 
-    private static final int TITLE_SPEED = 300000;
+    private static final int TITLE_SPEED = 600000;
 
     AbstractLogoScene(final SceneItem scene) {
         super(scene);

@@ -15,9 +15,9 @@ abstract public class AbstractScene {
     protected SceneItem nextScene;
 
     protected final Layer layer = new Layer();
-    private static float lastTime = TIMER.getTime();
+    private static double lastTime = TIMER.getTime();
 
-    public static float tick;
+    public static double tick;
     public static float fadeAlpha;
 
     abstract protected void changes();

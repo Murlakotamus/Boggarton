@@ -26,7 +26,7 @@ abstract public class AbstractEntity {
 
     protected Layer layer;
     protected Texture texture;
-    protected float tick;
+    protected double tick;
     protected float textureDown;
     protected float textureLeft;
     protected float textureUp = 1;

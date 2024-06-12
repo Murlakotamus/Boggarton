@@ -40,6 +40,10 @@ public class Brick extends AbstractAnimatedEntity implements IBrick {
     public void draw() {
         if (displayAnimation) {
             animationCursor += animationSpeed * tick;
+            if (animationCursor < 0) {
+                tick = 0;
+                animationCursor = 0;
+            }
             if (looped)
                 animationCursor %= animationTextures.length;
             else if (animationCursor >= animationTextures.length)

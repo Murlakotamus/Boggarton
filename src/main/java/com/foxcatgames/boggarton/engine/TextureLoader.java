@@ -84,7 +84,6 @@ public class TextureLoader {
 
     private static void convertFromBGRToRGB(final byte[] data) {
         for (int i = 0; i < data.length; i += 3) {
-            // A small optimisation
             data[i] ^= data[i + 2];
             data[i + 2] ^= data[i];
             data[i] ^= data[i + 2];
@@ -95,6 +94,7 @@ public class TextureLoader {
         try {
             if (IMAGE_CASHE.get(path) == null) {
                 final URL url = this.getClass().getResource(path);
+                assert url != null;
                 final BufferedImage buffImage = ImageIO.read(url);
                 final byte[] data = ((DataBufferByte) buffImage.getRaster().getDataBuffer()).getData();
 
@@ -114,7 +114,7 @@ public class TextureLoader {
             }
             return IMAGE_CASHE.get(path);
         } catch (final IOException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
             return null;
         }
     }
@@ -123,6 +123,7 @@ public class TextureLoader {
 
         final BufferedImage buffImage = getBufferedImage(path);
 
+        assert buffImage != null;
         final int bytesPerPixel = buffImage.getColorModel().getPixelSize() / 8;
         final ByteBuffer scratch = ByteBuffer.allocateDirect(textWidth * textHeight * bytesPerPixel).order(ByteOrder.BIG_ENDIAN);
         final DataBufferByte data = ((DataBufferByte) buffImage.getRaster().getDataBuffer());
@@ -148,17 +149,12 @@ public class TextureLoader {
     }
 
     private Texture[] loadAnimation(final String path, final int cols, final int rows, final int textWidth, final int textHeight) {
-        return loadAnimation(path, cols, rows, textWidth, textHeight, 0, 0);
-    }
-
-    private Texture[] loadAnimation(final String path, final int cols, final int rows, final int textWidth, final int textHeight, final int xOffSet,
-            final int yOffSet) {
 
         final Texture[] toReturntextures = new Texture[cols * rows];
 
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++)
-                toReturntextures[i * cols + j] = loadTexture(path, j * textWidth + xOffSet, i * textHeight + yOffSet, textWidth, textHeight);
+                toReturntextures[i * cols + j] = loadTexture(path, j * textWidth, i * textHeight, textWidth, textHeight);
 
         return toReturntextures;
     }

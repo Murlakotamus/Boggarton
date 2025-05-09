@@ -1,12 +1,12 @@
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+  D   
+  A   
+ BC   
+DDEEC 
+BDCBE 
+CBBAE 
+DEAEDB
+BCDDBD
+CEAACA
+EDABAE
+CEBBCD

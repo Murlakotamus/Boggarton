@@ -80,13 +80,8 @@ public class AutomatedMultiplayerGame extends AbstractMultiplayerGame implements
     }
 
     @Override
-    public void clearBuffer() throws InterruptedException {
+    public void clearBuffer() {
         gameAutomation.clearBuffer();
-    }
-
-    @Override
-    public void fillBuffer() {
-        gameAutomation.fillBuffer(this);
     }
 
     @Override
@@ -102,11 +97,9 @@ public class AutomatedMultiplayerGame extends AbstractMultiplayerGame implements
     }
 
     @Override
-    public boolean rotateFigure() {
-        final boolean result = super.rotateFigure();
-        if (result)
-            gameAutomation.makeMove(UP);
-        return result;
+    public void rotateFigure() {
+        super.rotateFigure();
+        gameAutomation.makeMove(UP);
     }
 
     @Override

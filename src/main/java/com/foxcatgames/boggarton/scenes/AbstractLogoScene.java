@@ -13,7 +13,7 @@ abstract public class AbstractLogoScene extends AbstractScene {
     protected int y;
     protected SimpleEntity title;
 
-    private float startTime = TIMER.getTime();
+    private final float startTime = TIMER.getTime();
     private float previousTime = startTime;
 
     private static final int TITLE_SPEED = 600000;

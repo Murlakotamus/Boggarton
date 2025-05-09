@@ -285,9 +285,9 @@ abstract public class AbstractVisualGame<B extends Brick, F extends AbstractVisu
     }
 
     @Override
-    public boolean rotateFigure() {
+    public void rotateFigure() {
         previousTime = getTime();
-        return super.rotateFigure();
+        super.rotateFigure();
     }
 
     @Override

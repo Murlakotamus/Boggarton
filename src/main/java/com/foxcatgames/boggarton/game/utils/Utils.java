@@ -50,13 +50,13 @@ public class Utils {
         return enumData.getEnumConstants()[currentValue.ordinal() + 1];
     }
 
-    public static <E extends Enum<E> & IName<E>> String[] getNames(final Class<E> enumData) {
+    public static <E extends Enum<E> & IName> String[] getNames(final Class<E> enumData) {
         final List<String> list = new ArrayList<>();
         for (final E enumVal : enumData.getEnumConstants())
             if (enumVal.getName() != null)
                 list.add(enumVal.getName());
 
-        final String result[] = new String[list.size()];
+        final String[] result = new String[list.size()];
         return list.toArray(result);
     }
 

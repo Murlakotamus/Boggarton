@@ -7,7 +7,7 @@ public enum YuckTypes implements IMenu<YuckTypes> {
 
     private final String name;
 
-    private YuckTypes(final String name) {
+    YuckTypes(final String name) {
         this.name = name;
     }
 

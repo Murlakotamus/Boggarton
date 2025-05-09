@@ -19,7 +19,7 @@ abstract public class AbstractVisualForecast<B extends Brick, F extends Abstract
 
     public void unspawn() {
         frame.unspawn();
-        for (int i = 0; i < figures.length; i++)
-            figures[i].unspawn();
+        for (F figure: figures)
+            figure.unspawn();
     }
 }

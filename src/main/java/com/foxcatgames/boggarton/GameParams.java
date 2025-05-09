@@ -43,13 +43,11 @@ public class GameParams {
         private String playerName = "";
         private String yuckName = "";
         private String randomName = "";
-        private String priceName = "";
 
         private Boolean virtual = true;
 
-        public Builder setPrognosisDebth(final Integer prognosisDebth) {
+        public void setPrognosisDebth(final Integer prognosisDebth) {
             this.prognosisDebth = prognosisDebth;
-            return this;
         }
 
         public Builder setSetSize(final Integer setSize) {
@@ -67,29 +65,20 @@ public class GameParams {
             return this;
         }
 
-        public Builder setCount(final Integer count) {
+        public void setCount(final Integer count) {
             this.count = count;
-            return this;
         }
 
-        public Builder setPlayerName(final String playerName) {
+        public void setPlayerName(final String playerName) {
             this.playerName = playerName;
-            return this;
         }
 
-        public Builder setYuckName(final String yuckName) {
+        public void setYuckName(final String yuckName) {
             this.yuckName = yuckName;
-            return this;
         }
 
-        public Builder setRandomName(final String randomName) {
+        public void setRandomName(final String randomName) {
             this.randomName = randomName;
-            return this;
-        }
-
-        public Builder setPriceName(final String priceName) {
-            this.priceName = priceName;
-            return this;
         }
 
         public Builder setVirtual(final Boolean virtual) {
@@ -98,6 +87,7 @@ public class GameParams {
         }
 
         public GameParams build() {
+            String priceName = "";
             return new GameParams(prognosisDebth, setSize, figureSize, score, count, playerName, yuckName, randomName, priceName, virtual);
         }
     }

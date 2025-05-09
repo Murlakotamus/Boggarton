@@ -47,6 +47,7 @@ public enum MenuItem {
     }
 
     public void setSubmenuPosition(final int position) {
+        assert values != null;
         if (position >= values.length)
             submenuElementPosition = 0;
         else

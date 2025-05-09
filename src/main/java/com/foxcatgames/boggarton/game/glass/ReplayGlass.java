@@ -27,7 +27,7 @@ public class ReplayGlass extends AbstractVisualGlass<Brick, PredefinedFigure> {
     }
 
     public void executeYuck(final String yuckBricks) {
-        if (yuckBricks.length() == 0)
+        if (yuckBricks.isEmpty())
             return;
 
         if (yuckBricks.contains(",")) { // nasty brick

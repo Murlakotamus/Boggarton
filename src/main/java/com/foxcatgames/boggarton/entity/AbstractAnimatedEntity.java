@@ -18,10 +18,6 @@ abstract public class AbstractAnimatedEntity extends AbstractEntity {
         originalHeight = animationTextures[0].getTextureHeight();
     }
 
-    public void startAnimation() {
-        displayAnimation = true;
-    }
-
     public void startLoopedAnimation() {
         looped = true;
         displayAnimation = true;
@@ -34,13 +30,5 @@ abstract public class AbstractAnimatedEntity extends AbstractEntity {
     public void stopAnimation() {
         displayAnimation = false;
         animationCursor = 0;
-    }
-
-    public boolean isLooped() {
-        return looped;
-    }
-
-    public void setLooped(final boolean looped) {
-        this.looped = looped;
     }
 }

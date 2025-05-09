@@ -1,6 +1,7 @@
 package com.foxcatgames.boggarton.players.virtual;
 
 import com.foxcatgames.boggarton.GameParams;
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.IAutomatedGame;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.figure.AbstractFigure;
@@ -32,8 +33,7 @@ abstract public class AbstractVirtualPlayer<B extends IBrick, F extends Abstract
     }
 
     protected String getMoves(final int depth) {
-        final String moves = getSolution(depth);
-        return moves;
+        return getSolution(depth);
     }
 
     protected String getSolution(final int depth) {
@@ -59,7 +59,7 @@ abstract public class AbstractVirtualPlayer<B extends IBrick, F extends Abstract
                     makeVirtualPlayerMoves(moves);
             }
         } catch (final InterruptedException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
     }
 

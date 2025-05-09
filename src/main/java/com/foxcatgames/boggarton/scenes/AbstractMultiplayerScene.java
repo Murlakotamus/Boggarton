@@ -15,6 +15,8 @@ import com.foxcatgames.boggarton.game.utils.DbHandler;
 import com.foxcatgames.boggarton.game.utils.Victories;
 import com.foxcatgames.boggarton.players.IPlayer;
 
+import java.util.Objects;
+
 abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     protected static final int X = 90;
@@ -24,7 +26,7 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     private final SimpleEntity winner = new SimpleEntity(WINNER, layer);
     private final SimpleEntity loser = new SimpleEntity(LOSER, layer);
-    private final SimpleEntity gamePaused[] = new SimpleEntity[PLAYERS];
+    private final SimpleEntity[] gamePaused = new SimpleEntity[PLAYERS];
 
     protected IPlayer leftPlayer;
     protected IPlayer rightPlayer;
@@ -95,9 +97,9 @@ abstract public class AbstractMultiplayerScene extends AbstractPlayingScene {
 
     private void saveOutcome(final int loserNumber) {
         if (loserNumber == 0)
-            DbHandler.getInstance().saveGameOutcome(rightPlayer, leftPlayer);
+            Objects.requireNonNull(DbHandler.getInstance()).saveGameOutcome(rightPlayer, leftPlayer);
         else
-            DbHandler.getInstance().saveGameOutcome(leftPlayer, rightPlayer);
+            Objects.requireNonNull(DbHandler.getInstance()).saveGameOutcome(leftPlayer, rightPlayer);
     }
 
     private static <T extends AbstractMultiplayerGame> void processScene(T[] games) {

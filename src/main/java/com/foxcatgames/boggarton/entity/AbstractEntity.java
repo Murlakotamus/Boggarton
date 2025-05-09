@@ -83,16 +83,16 @@ abstract public class AbstractEntity {
         GL11.glBegin(GL11.GL_QUADS);
 
         GL11.glTexCoord2f(textureRight, textureUp); // Upper right
-        GL11.glVertex2f(width - (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2) - height);
+        GL11.glVertex2f(width - ((float) SCREEN_WIDTH / 2), ((float) SCREEN_HEIGHT / 2) - height);
 
         GL11.glTexCoord2f(textureLeft, textureUp); // Upper left
-        GL11.glVertex2f(-(SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2) - height);
+        GL11.glVertex2f(-((float) SCREEN_WIDTH / 2), ((float) SCREEN_HEIGHT / 2) - height);
 
         GL11.glTexCoord2f(textureLeft, textureDown); // Lower left
-        GL11.glVertex2f(-(SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+        GL11.glVertex2f(-((float) SCREEN_WIDTH / 2), ((float) SCREEN_HEIGHT / 2));
 
         GL11.glTexCoord2f(textureRight, textureDown); // Lower right
-        GL11.glVertex2f(width - (SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2));
+        GL11.glVertex2f(width - ((float) SCREEN_WIDTH / 2), ((float) SCREEN_HEIGHT / 2));
 
         GL11.glEnd();
     }
@@ -103,7 +103,6 @@ abstract public class AbstractEntity {
 
             if (Logger.IS_ACTIVE)
                 Logger.log(this.getClass().getName() + " died");
-            return;
         }
     }
 
@@ -119,19 +118,12 @@ abstract public class AbstractEntity {
         this.layer = layer;
     }
 
-    public boolean isSpawned() {
-        return spawned;
-    }
-
     @Override
     public String toString() {
-        final StringBuilder result = new StringBuilder("--------------------------\n");
-        result.append("px: ").append(position.x).append("\n");
-        result.append("py: ").append(position.y).append("\n");
-        result.append("width: ").append(originalWidth).append("\n");
-        result.append("height: ").append(originalHeight).append("\n");
-        result.append("spawned: ").append(spawned).append("\n");
-
-        return result.toString();
+        return "--------------------------\n" + "px: " + position.x + "\n" +
+                "py: " + position.y + "\n" +
+                "width: " + originalWidth + "\n" +
+                "height: " + originalHeight + "\n" +
+                "spawned: " + spawned + "\n";
     }
 }

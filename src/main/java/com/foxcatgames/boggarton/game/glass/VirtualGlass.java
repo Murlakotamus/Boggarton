@@ -7,7 +7,7 @@ import com.foxcatgames.boggarton.game.figure.VirtualFigure;
 
 public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
 
-    private boolean moveDown;
+    private final boolean moveDown;
     private boolean changes;
 
     public int changesCounter;
@@ -78,9 +78,8 @@ public class VirtualGlass extends AbstractGlass<VirtualBrick, VirtualFigure> {
     }
 
     @Override
-    public boolean rotate() {
+    public void rotate() {
         state.getFigure().rotate();
-        return true;
     }
 
     public boolean moveDown() {

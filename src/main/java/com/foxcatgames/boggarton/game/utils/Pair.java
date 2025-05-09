@@ -30,10 +30,6 @@ public class Pair<F, S> {
         return second;
     }
 
-    public static <O1, O2> Pair<O1, O2> create(final O1 first, final O2 second) {
-        return new Pair<>(first, second);
-    }
-
     public boolean isEmpty() {
         return first == null || second == null;
     }

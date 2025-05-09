@@ -8,12 +8,13 @@ import static com.foxcatgames.boggarton.Const.UP;
 import static com.foxcatgames.boggarton.Const.YUCK_STR;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import com.foxcatgames.boggarton.Logger;
 import org.lwjgl.util.vector.Vector2f;
 
 import com.foxcatgames.boggarton.Const;
@@ -34,7 +35,6 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
     private final GameAutomation<Brick, PredefinedFigure, ReplayGlass, PredefinedForecast> gameAutomation;
     private final List<String> events;
     private int eventNum;
-    protected int yucks;
 
     public ReplayGame(final Layer layer, final int x, final int y, final int width, final int height, final int figureSize, final List<String> events,
             final Map<String, Integer> sounds) {
@@ -45,8 +45,8 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
         this.events = events;
 
         final int[][] bricks = new int[width][height];
-        final String filename = this.getClass().getResource("/games/glass.txt").getFile();
-        try (final BufferedReader in = new BufferedReader(new FileReader(new File(filename)))) {
+        final String filename = Objects.requireNonNull(this.getClass().getResource("/games/glass.txt")).getFile();
+        try (final BufferedReader in = new BufferedReader(new FileReader(filename))) {
             int j = 0;
             String line;
             while ((line = in.readLine()) != null) {
@@ -60,7 +60,7 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
                 j++;
             }
         } catch (final IOException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
 
         glass = new ReplayGlass(layer, new Vector2f(x + figureSize * BOX + 20, y), width, height, bricks, sounds);
@@ -153,13 +153,8 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
     }
 
     @Override
-    public void clearBuffer() throws InterruptedException {
+    public void clearBuffer() {
         gameAutomation.clearBuffer();
-    }
-
-    @Override
-    public void fillBuffer() {
-        gameAutomation.fillBuffer(this);
     }
 
     @Override
@@ -169,11 +164,9 @@ public class ReplayGame extends AbstractVisualGame<Brick, PredefinedFigure, Repl
     }
 
     @Override
-    public boolean rotateFigure() {
-        final boolean result = super.rotateFigure();
-        if (result)
-            gameAutomation.makeMove(UP);
-        return result;
+    public void rotateFigure() {
+        super.rotateFigure();
+        gameAutomation.makeMove(UP);
     }
 
     @Override

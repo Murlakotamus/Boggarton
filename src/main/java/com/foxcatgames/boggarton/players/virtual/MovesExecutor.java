@@ -1,5 +1,6 @@
 package com.foxcatgames.boggarton.players.virtual;
 
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.ReplayGame;
 import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
@@ -26,7 +27,7 @@ public class MovesExecutor extends AbstractMovesExecutor<Brick, PredefinedFigure
             for (int i = 0; i < moves.length && game.isGameOn(); i++)
                 executeMove(moves[i]);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
     }
 }

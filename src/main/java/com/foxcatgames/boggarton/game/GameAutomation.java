@@ -11,6 +11,7 @@ import static com.foxcatgames.boggarton.Const.YUCK_STR;
 import java.util.Map;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.game.figure.AbstractFigure;
 import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
@@ -71,6 +72,7 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
     }
 
     private boolean sounds(final String soundSource) {
+        assert sounds != null;
         return Sound.isPlaying(sounds.get(soundSource));
     }
 
@@ -134,7 +136,7 @@ public class GameAutomation<B extends IBrick, F extends AbstractFigure<B>, G ext
                 try {
                     changes.wait();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Logger.printStackTrace(e);
                 }
             changes.setFlag(true);
             changes.notify();

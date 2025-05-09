@@ -3,7 +3,7 @@ package com.foxcatgames.boggarton.scenes.gamescenes;
 import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.game.AutomatedMultiplayerGame;
 import com.foxcatgames.boggarton.game.utils.Victories;
-import com.foxcatgames.boggarton.players.virtual.EffectiveVirtualNonAdaptivePlayer;
+import com.foxcatgames.boggarton.players.virtual.VirtualEffectiveNonAdaptivePlayer;
 import com.foxcatgames.boggarton.players.virtual.VirtualAdaptivePlayer;
 import com.foxcatgames.boggarton.scenes.AbstractMultiplayerScene;
 import com.foxcatgames.boggarton.scenes.SceneItem;
@@ -36,7 +36,7 @@ public class CompetitionDemoScene extends AbstractMultiplayerScene {
             games[i].initLogger();
             games[i].startGame();
         }
-        leftPlayer = new EffectiveVirtualNonAdaptivePlayer<>(games[0], prognosis[0], Const.FULLNESS_EATER);
+        leftPlayer = new VirtualEffectiveNonAdaptivePlayer<>(games[0], prognosis[0], Const.FULLNESS_EATER);
         rightPlayer = new VirtualAdaptivePlayer<>(games[1], prognosis[1], Const.FULLNESS_EATER);
     }
 

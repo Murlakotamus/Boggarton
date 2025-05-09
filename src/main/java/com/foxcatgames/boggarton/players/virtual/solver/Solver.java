@@ -9,6 +9,7 @@ import static com.foxcatgames.boggarton.Const.WIDTH;
 
 import java.util.HashSet;
 
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.game.IAutomatedGame;
 import com.foxcatgames.boggarton.game.IBrick;
 import com.foxcatgames.boggarton.game.VirtualBrick;
@@ -95,7 +96,7 @@ public class Solver<B extends IBrick, F extends AbstractFigure<B>, G extends Abs
 
             return solution;
         } catch (final InterruptedException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
             return solution;
         }
     }
@@ -131,7 +132,7 @@ public class Solver<B extends IBrick, F extends AbstractFigure<B>, G extends Abs
 
     private static String drop(final VirtualGlass glass) {
         glass.dropChanges();
-        boolean isFallen = false;
+        boolean isFallen;
         glass.changesCounter = 0;
         do {
             isFallen = glass.moveDown();
@@ -187,7 +188,7 @@ public class Solver<B extends IBrick, F extends AbstractFigure<B>, G extends Abs
                     if (depth == maxDepth) {
                         if (!virtualGlass.isGameOver() && virtualGlass.getFullness() > 0)
                             solution = eater.chooseBest(solution,
-                                    new Solution(currResult, virtualGlass.getGlassState().getScore(), virtualGlass.getFullness(), reactions));
+                                    new Solution(currResult, virtualGlass.getGlassState().getScore(), virtualGlass.getFullness()));
                     }
                 }
             }
@@ -213,7 +214,7 @@ public class Solver<B extends IBrick, F extends AbstractFigure<B>, G extends Abs
                 }
 
                 if (depth == maxDepth) {
-                    solution = new Solution(currResult, 0, 0, 0);
+                    solution = new Solution(currResult, 0, 0);
                     return;
                 }
             }

@@ -6,7 +6,6 @@ import java.util.Map;
 import com.foxcatgames.boggarton.engine.TextureLoader;
 import com.foxcatgames.boggarton.players.virtual.solver.FullnessEater;
 import com.foxcatgames.boggarton.players.virtual.solver.IEater;
-import com.foxcatgames.boggarton.players.virtual.solver.ReactionsEater;
 
 public class Const {
 
@@ -15,8 +14,6 @@ public class Const {
     public static final int BOX = 30;
     public static final int BORDER = 5;
 
-    static public final int MIN_DIFFICULTY = 4;
-    static public final int MAX_DIFFICULTY = 7;
     static public final int MIN_SIZE = 3;
     static public final int MAX_SIZE = 5;
     static public final int MIN_PROGNOSIS = 1;
@@ -92,7 +89,6 @@ public class Const {
     public static final String GAMEOVER_STR = "Game over!";
 
     public static final IEater FULLNESS_EATER = new FullnessEater();
-    public static final IEater REACTIONS_EATER = new ReactionsEater();
 
     // sounds ids
     public static final int SND_ADDYUCK = 0;

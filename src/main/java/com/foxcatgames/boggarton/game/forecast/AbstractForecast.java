@@ -51,9 +51,9 @@ abstract public class AbstractForecast<B extends IBrick, F extends AbstractFigur
 
     @Override
     public String toString() {
-        String result = "Forecast:\n";
+        StringBuilder result = new StringBuilder("Forecast:\n");
         for (F figure : figures)
-            result += figure;
-        return result;
+            result.append(figure);
+        return result.toString();
     }
 }

@@ -12,10 +12,6 @@ public final class EventManager {
         LISTENERS.add(listener);
     }
 
-    public static void removeListener(final KeyListener listener) {
-        LISTENERS.remove(listener);
-    }
-
     public static void clear() {
         LISTENERS.clear();
     }

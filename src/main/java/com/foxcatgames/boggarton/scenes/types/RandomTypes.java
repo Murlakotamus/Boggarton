@@ -9,7 +9,7 @@ public enum RandomTypes implements IMenu<RandomTypes> {
     private final String name;
     private final int[] probabilities;
 
-    private RandomTypes(final String name, final int[] probabilities) {
+    RandomTypes(final String name, final int[] probabilities) {
         this.name = name;
         this.probabilities = probabilities;
     }

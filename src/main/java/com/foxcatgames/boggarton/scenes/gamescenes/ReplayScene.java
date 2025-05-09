@@ -1,13 +1,14 @@
 package com.foxcatgames.boggarton.scenes.gamescenes;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Logger;
 import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.game.ReplayGame;
 import com.foxcatgames.boggarton.game.figure.PredefinedFigure;
@@ -27,9 +28,9 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
 
         final List<String> events = new ArrayList<>();
         final StringBuilder moves = new StringBuilder();
-        final String filename = this.getClass().getResource("/games/game.txt").getFile();
+        final String filename = Objects.requireNonNull(this.getClass().getResource("/games/game.txt")).getFile();
 
-        try (final BufferedReader in = new BufferedReader(new FileReader(new File(filename)))) {
+        try (final BufferedReader in = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = in.readLine()) != null)
                 if (line.startsWith(Const.FIGURE_STR) || line.startsWith(Const.YUCK_STR) || line.startsWith(Const.SCORE_STR))
@@ -39,7 +40,7 @@ public class ReplayScene extends AbstractOnePlayerScene<Brick, PredefinedFigure,
                 else if (line.startsWith(Const.MOVES_STR))
                     moves.append(line.substring(line.indexOf(" ")).trim());
         } catch (final IOException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
         this.moves = moves.toString().toCharArray();
 

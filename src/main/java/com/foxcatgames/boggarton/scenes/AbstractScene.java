@@ -11,14 +11,13 @@ import com.foxcatgames.boggarton.engine.Layer;
 abstract public class AbstractScene {
 
     final static public Timer TIMER = new Timer();
-    private SceneItem scene;
+    private final SceneItem scene;
     protected SceneItem nextScene;
 
     protected final Layer layer = new Layer();
     private static double lastTime = TIMER.getTime();
 
     public static double tick;
-    public static float fadeAlpha;
 
     abstract protected void changes();
 

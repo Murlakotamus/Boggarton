@@ -81,7 +81,7 @@ public class Frame {
                             position.getY() + WIDTH_WITH_BORDER + (height - 2) * BOX));
 
             frameElements[elCount] = new SimpleEntity(FRAME_LOWER_LEFT, layer);
-            frameElements[elCount++].spawn(new Vector2f(position.getX(),
+            frameElements[elCount].spawn(new Vector2f(position.getX(),
                     position.getY() + WIDTH_WITH_BORDER + (height - 2) * BOX));
         } else {
             frameElements[elCount] = new SimpleEntity(FRAME_FULL_LEFT, layer);
@@ -89,7 +89,7 @@ public class Frame {
 
             if (isForecast && isGlass) {
                 frameElements[elCount] = new SimpleEntity(FRAME_FULL_RIGHT, layer);
-                frameElements[elCount++].spawn(new Vector2f(position.getX() + BORDER + (width - 1) * BOX, position.getY()));
+                frameElements[elCount].spawn(new Vector2f(position.getX() + BORDER + (width - 1) * BOX, position.getY()));
             } else if (isForecast & !isGlass) {
                 frameElements[elCount] = new SimpleEntity(FRAME_UPPER, layer);
                 frameElements[elCount++].spawn(new Vector2f(position.getX() + BORDER + (width - 1) * BOX, position.getY()));
@@ -98,7 +98,7 @@ public class Frame {
                 frameElements[elCount++].spawn(new Vector2f(position.getX() + BORDER + (width - 1) * BOX, position.getY() + BORDER));
 
                 frameElements[elCount] = new SimpleEntity(FRAME_UPPER_BRIDGE, layer);
-                frameElements[elCount++].spawn(new Vector2f(position.getX() + BORDER + width * BOX, position.getY() + + BOX + BORDER));
+                frameElements[elCount].spawn(new Vector2f(position.getX() + BORDER + width * BOX, position.getY() + BOX + BORDER));
             }
         }
 

@@ -83,8 +83,8 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
         return !glass.isGameOver();
     }
 
-    public boolean rotateFigure() {
-        return glass.rotate();
+    public void rotateFigure() {
+        glass.rotate();
     }
 
     public boolean moveLeft() {
@@ -105,10 +105,6 @@ abstract public class AbstractGame<B extends IBrick, F extends AbstractFigure<B>
 
     public P getForecast() {
         return forecast;
-    }
-
-    public boolean hasReaction() {
-        return reactionDetected;
     }
 
     public String getName() {

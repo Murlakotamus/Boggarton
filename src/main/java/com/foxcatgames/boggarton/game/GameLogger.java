@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.foxcatgames.boggarton.Const;
+import com.foxcatgames.boggarton.Logger;
 
 public class GameLogger {
 
@@ -34,7 +35,7 @@ public class GameLogger {
             bw = new BufferedWriter(new OutputStreamWriter(fos));
             isInit = true;
         } catch (final FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
     }
 
@@ -46,7 +47,7 @@ public class GameLogger {
                 bw.close();
                 fos.close();
             } catch (final IOException e) {
-                e.printStackTrace();
+                Logger.printStackTrace(e);
             }
     }
 
@@ -56,11 +57,7 @@ public class GameLogger {
                 bw.write(str);
                 bw.flush();
             } catch (final IOException e) {
-                e.printStackTrace();
+                Logger.printStackTrace(e);
             }
-    }
-
-    public boolean isInit() {
-        return isInit;
     }
 }

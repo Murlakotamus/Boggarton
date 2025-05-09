@@ -7,7 +7,7 @@ public enum SoundTypes implements IMenu<SoundTypes> {
 
     private final String name;
 
-    private SoundTypes(String name) {
+    SoundTypes(String name) {
         this.name = name;
     }
 

@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public interface IBrick {
 
-    static final AtomicInteger ID_GENERATOR = new AtomicInteger(0);
+    AtomicInteger ID_GENERATOR = new AtomicInteger(0);
 
     boolean isKill();
     void setKill();

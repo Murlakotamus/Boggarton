@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import java.util.Hashtable;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
@@ -80,7 +81,7 @@ public class Graphics {
     }
 
 
-    private static void createWindow(final int screenWidth, final int screenHeight, final boolean fullscreen) throws Exception {
+    private static void createWindow(final boolean fullscreen) throws Exception {
         final Application application = Application.getApplication();
         if (application != null) {
             final Image image = Toolkit.getDefaultToolkit().getImage(Graphics.class.getResource("/icons/boggarton128.png"));
@@ -88,26 +89,26 @@ public class Graphics {
         }
 
         if (!fullscreen) {
-            Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
+            Display.setDisplayMode(new DisplayMode(Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT));
             Display.setLocation(300, 300);
             Display.setTitle("Boggarton");
 
             final ByteBuffer[] list = new ByteBuffer[3];
-            list[0] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton128.png")));
-            list[1] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton32.png")));
-            list[2] = convertImageData(ImageIO.read(Graphics.class.getResource("/icons/boggarton16.png")));
+            list[0] = convertImageData(ImageIO.read(Objects.requireNonNull(Graphics.class.getResource("/icons/boggarton128.png"))));
+            list[1] = convertImageData(ImageIO.read(Objects.requireNonNull(Graphics.class.getResource("/icons/boggarton32.png"))));
+            list[2] = convertImageData(ImageIO.read(Objects.requireNonNull(Graphics.class.getResource("/icons/boggarton16.png"))));
 
             Display.setIcon(list);
         } else {
             Display.setFullscreen(true);
             try {
-                final DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(screenWidth, screenHeight, -1, -1, -1, -1, 60, 100);
+                final DisplayMode[] dm = org.lwjgl.util.Display.getAvailableDisplayModes(Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT, -1, -1, -1, -1, 60, 100);
                 org.lwjgl.util.Display.setDisplayMode(dm,
-                        new String[] { "width=" + screenWidth, "height=" + screenHeight, "freq=85", "bpp=" + Display.getDisplayMode().getBitsPerPixel() });
+                        new String[] { "width=" + Const.SCREEN_WIDTH, "height=" + Const.SCREEN_HEIGHT, "freq=85", "bpp=" + Display.getDisplayMode().getBitsPerPixel() });
                 actualDisplayMode = Display.getDesktopDisplayMode();
             } catch (final Exception e) {
                 Sys.alert("Error", "Could not start full screen, switching to windowed mode");
-                Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
+                Display.setDisplayMode(new DisplayMode(Const.SCREEN_WIDTH, Const.SCREEN_HEIGHT));
             }
         }
 
@@ -117,7 +118,7 @@ public class Graphics {
     private static void initEngine() {
         try {
             Mouse.setGrabbed(false);
-            createWindow(SCREEN_WIDTH, SCREEN_HEIGHT, FULL_SCREEN);
+            createWindow(FULL_SCREEN);
             createOffScreenBuffer();
         } catch (final Exception e) {
             e.printStackTrace(System.out);
@@ -144,9 +145,9 @@ public class Graphics {
             actualWidth = (int) Math.round(SCREEN_WIDTH * ratioAmendment);
             actualHeight = SCREEN_HEIGHT;
 
-            GLU.gluOrtho2D(-actualWidth / 2, actualWidth / 2, -actualHeight / 2, actualHeight / 2);
+            GLU.gluOrtho2D((float) -actualWidth / 2, (float) actualWidth / 2, (float) -actualHeight / 2, (float) actualHeight / 2);
         } else
-            GLU.gluOrtho2D(-SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2, SCREEN_HEIGHT / 2);
+            GLU.gluOrtho2D((float) -SCREEN_WIDTH / 2, (float) SCREEN_WIDTH / 2, (float) -SCREEN_HEIGHT / 2, (float) SCREEN_HEIGHT / 2);
         GL11.glMatrixMode(GL_MODELVIEW);
         TEXTURE_LOADER.init();
     }

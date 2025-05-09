@@ -8,7 +8,7 @@ public enum DifficultyTypes implements IMenu<DifficultyTypes> {
     private final int setSize;
     private final String name;
 
-    private DifficultyTypes(final int setSize, final String name) {
+    DifficultyTypes(final int setSize, final String name) {
         this.setSize = setSize;
         this.name = name;
     }

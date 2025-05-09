@@ -24,9 +24,6 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
     private final Text showScore;
     private final Text showCount;
     private final Frame frame;
-
-    private boolean gamePaused;
-
     final Map<String, Integer> sounds;
 
     public AbstractVisualGlass(final B[][] bricks, final Layer layer, final Vector2f position, final int width, final int height,
@@ -59,12 +56,10 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
                 if (brick(i, j) != null)
                     brick(i, j).unspawn();
         figure().unspawn();
-        gamePaused = true;
     }
 
     public void pauseOff() {
         respawn();
-        gamePaused = false;
     }
 
     public void respawn() {
@@ -139,15 +134,14 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
         if (figure() != null)
             figure().unspawn();
 
-        final F figure = newFigure;
-        state.setFigure(figure);
+        state.setFigure(newFigure);
         state.setI(state.getNextPosition());
         state.setJ(0);
 
         // figures will appear from left and right side by rotation
         final int currentPosition = state.getNextPosition();
         if (state.getNextPosition() == 0)
-            state.setNextPosition(width() - figure.getLenght());
+            state.setNextPosition(width() - newFigure.getLenght());
         else
             state.setNextPosition(0);
 
@@ -156,18 +150,14 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
     }
 
     @Override
-    public boolean rotate() {
-        if (gamePaused || gameOver)
-            return false;
-
+    public void rotate() {
         Sound.play(sounds.get(Const.CYCLE));
         figure().rotate();
-        return true;
     }
 
     @Override
     public boolean moveLeft() {
-        if (gamePaused || gameOver || !canMoveLeft())
+        if (!canMoveLeft())
             return false;
 
         Sound.play(sounds.get(Const.SHIFT));
@@ -177,7 +167,7 @@ abstract public class AbstractVisualGlass<B extends Brick, F extends AbstractVis
 
     @Override
     public boolean moveRight() {
-        if (gamePaused || gameOver || !canMoveRight())
+        if (!canMoveRight())
             return false;
 
         Sound.play(sounds.get(Const.SHIFT));

@@ -74,7 +74,7 @@ abstract public class AbstractFigure<B extends IBrick> {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < figureSize; i++) {
             if (bricks[i] == null)
                 sb.append('x');

@@ -6,7 +6,7 @@ public enum StageItem {
 
     private final StageItem nextStage;
 
-    private StageItem(final StageItem nextStage) {
+    StageItem(final StageItem nextStage) {
         this.nextStage = nextStage;
     }
 

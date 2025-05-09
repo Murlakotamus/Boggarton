@@ -23,14 +23,12 @@ public interface IAutomatedGame<B extends IBrick, F extends AbstractFigure<B>, G
 
     void sendCommand(ICommand cmd) throws InterruptedException;
     void setSimpleGameOver(IAutomatedGame<B, F, G, P> game);
-    void changeHappens();
     void waitChanges() throws InterruptedException;
     void clearBuffer() throws InterruptedException;
-    void fillBuffer();
     void restoreSpeed();
     boolean moveLeft();
     boolean moveRight();
-    boolean rotateFigure();
+    void rotateFigure();
     void dropFigure();
     void setMaxSpeed();
     void finishTurn();

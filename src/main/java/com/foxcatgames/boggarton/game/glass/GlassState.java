@@ -227,14 +227,10 @@ public class GlassState<B extends IBrick, F extends AbstractFigure<B>> {
         }
     }
 
-    public GlassState<B, F> getGlassState() {
-        return this;
-    }
-
     @Override
     public String toString() {
 
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         sb.append("==============================================\n");
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++)
@@ -250,7 +246,7 @@ public class GlassState<B extends IBrick, F extends AbstractFigure<B>> {
                 if (bricks[i][j] == null)
                     sb.append("0, ");
                 else
-                    sb.append(bricks[i][j].getId() + ", ");
+                    sb.append(bricks[i][j].getId()).append(", ");
             sb.append("\n");
         }
         sb.append("==============================================\n");

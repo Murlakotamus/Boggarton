@@ -17,12 +17,8 @@ public class Layer {
         entities.add(entity);
     }
 
-    public boolean remove(final AbstractEntity entity) {
-        return entities.remove(entity);
-    }
-
-    public boolean contains(final AbstractEntity entity) {
-        return entities.contains(entity);
+    public void remove(final AbstractEntity entity) {
+        entities.remove(entity);
     }
 
     public void render() {
@@ -44,9 +40,9 @@ public class Layer {
 
     @Override
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (final AbstractEntity entity : entities)
-            result += entity;
-        return result;
+            result.append(entity);
+        return result.toString();
     }
 }

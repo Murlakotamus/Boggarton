@@ -5,11 +5,9 @@ import static com.foxcatgames.boggarton.Const.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 
-import com.foxcatgames.boggarton.Const;
 import com.foxcatgames.boggarton.Sound;
 import com.foxcatgames.boggarton.engine.EventManager;
 import com.foxcatgames.boggarton.engine.KeyListener;
-import com.foxcatgames.boggarton.entity.Brick;
 import com.foxcatgames.boggarton.entity.SimpleEntity;
 import com.foxcatgames.boggarton.entity.Text;
 import com.foxcatgames.boggarton.game.forecast.MenuForecast;
@@ -24,7 +22,6 @@ public class MenuScene extends AbstractLogoScene {
     private final SimpleEntity title = new SimpleEntity(TITLE, layer);
     private final Text[] passive = new Text[ITEMS_NUMBER];
     private final Text[] active = new Text[ITEMS_NUMBER];
-    private final Brick[] brickSet = new Brick[MAX_DIFFICULTY];
 
     private MenuForecast forecast;
     private int currentPosition;
@@ -38,9 +35,6 @@ public class MenuScene extends AbstractLogoScene {
             passive[i] = new Text(item.getName(), DARK_FONT, layer);
             active[i++] = new Text(item.getName(), LIGHT_FONT, layer);
         }
-
-        for (i = 0; i < MAX_DIFFICULTY; i++)
-            brickSet[i] = new Brick(10 * Const.CURRENT_SET + 1 + i, layer);
 
         drawMenu();
         drawPrognosis(SceneItem.getSetSize());

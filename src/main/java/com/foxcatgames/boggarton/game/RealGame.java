@@ -5,6 +5,7 @@ import static com.foxcatgames.boggarton.Const.BOX;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.lwjgl.util.vector.Vector2f;
 
@@ -37,8 +38,7 @@ public class RealGame extends AbstractOnePlayerGame {
 
     @Override
     public void processStage() {
-        switch (stage) {
-        case NEXT:
+        if (Objects.requireNonNull(stage) == StageItem.NEXT) {
             if (needNewFigure) {
                 nextFigure();
             } else {
@@ -49,8 +49,7 @@ public class RealGame extends AbstractOnePlayerGame {
                     charge(getEmptyBricks(), satisfyCondition);
                 }
             }
-            break;
-        default:
+        } else {
             super.processStage();
         }
     }

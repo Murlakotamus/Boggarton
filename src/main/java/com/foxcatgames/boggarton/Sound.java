@@ -35,7 +35,7 @@ public class Sound {
 
     private static final Map<Integer, Float> PLAYING_SOUNDS = new ConcurrentHashMap<>();
 
-    private static float MOVE_DURATION = 0.3f;
+    private static final float MOVE_DURATION = 0.3f;
 
     private static void setListenerValues() {
         AL10.alListener(AL10.AL_POSITION, LISTENER_POS);
@@ -163,8 +163,8 @@ public class Sound {
     public static void init() {
         try {
             AL.create();
-        } catch (LWJGLException le) {
-            le.printStackTrace();
+        } catch (LWJGLException e) {
+            Logger.printStackTrace(e);
             return;
         }
         AL10.alGetError();
@@ -235,6 +235,7 @@ class SoundLoader {
 
     public void loadPattern(final String filename, final int id) {
         WaveData waveFile = WaveData.create(this.getClass().getResource(filename));
+        assert waveFile != null;
         AL10.alBufferData(Sound.BUFFER.get(id), waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();
     }

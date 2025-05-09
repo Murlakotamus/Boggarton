@@ -39,7 +39,7 @@ public class Brick extends AbstractAnimatedEntity implements IBrick {
     @Override
     public void draw() {
         if (displayAnimation) {
-            animationCursor += animationSpeed * tick;
+            animationCursor += (float) (animationSpeed * tick);
             if (animationCursor < 0) {
                 tick = 0;
                 animationCursor = 0;

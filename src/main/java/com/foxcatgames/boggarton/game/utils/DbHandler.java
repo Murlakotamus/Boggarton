@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
+import com.foxcatgames.boggarton.Logger;
 import org.sqlite.JDBC;
 
 import com.foxcatgames.boggarton.GameParams;
@@ -47,7 +49,7 @@ public class DbHandler {
 
             return instance;
         } catch (final SQLException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
             return null;
         }
     }
@@ -91,11 +93,11 @@ public class DbHandler {
 
             conn.commit();
         } catch (final Exception e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
             try {
                 conn.rollback();
             } catch (final SQLException sqlEx) {
-                sqlEx.printStackTrace();
+                Logger.printStackTrace(sqlEx);
             }
         }
     }
@@ -113,18 +115,18 @@ public class DbHandler {
     }
 
     public static void saveOutcome(final IPlayer player) {
-        DbHandler.getInstance().saveGameOutcome(player);
+        Objects.requireNonNull(DbHandler.getInstance()).saveGameOutcome(player);
     }
 
     public void closeHandler() {
         try {
             conn.close();
         } catch (final SQLException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
     }
 
     public static void close() {
-        DbHandler.getInstance().closeHandler();
+        Objects.requireNonNull(DbHandler.getInstance()).closeHandler();
     }
 }

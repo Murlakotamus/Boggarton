@@ -29,13 +29,13 @@ abstract public class AbstractMultiplayerGame extends AbstractVisualGame<Brick, 
     protected int yucks;
     protected int yucksTotal;
     private final Text showYucks;
-    private final Text showVictoies;
 
     private final Brick[] yuckBricks = new Brick[MAX_YUCKS];
     private final Vector2f yuckPosition;
 
     private int oldYucks;
-    private int xYuck, yYuck;
+    private final int xYuck;
+    private final int yYuck;
 
     public AbstractMultiplayerGame(final Layer layer, final int x, final int y, final int width, final int height, final int prognosis, final int figureSize,
             final int setSize, final int victories, YuckTypes yuckType, final RandomTypes randomType, final Map<String, Integer> sounds) {
@@ -49,10 +49,10 @@ abstract public class AbstractMultiplayerGame extends AbstractVisualGame<Brick, 
         showYucks = new Text(YUCKS_TOTAL + yucksTotal, LIGHT_FONT, layer);
         showYucks.spawn(new Vector2f(xYuck, yYuck));
 
-        showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
+        Text showVictoies = new Text("Victories: " + victories, LIGHT_FONT, layer);
         showVictoies.spawn(new Vector2f(x + BOX * figureSize + 20, y + BOX * height + 65));
         yuckPosition = new Vector2f(x + BOX * figureSize + 20 + width * BOX + 15, y + BOX * height - BOX + 5);
-        int num = 0;
+        int num;
         for (int i = 0; i < MAX_YUCKS; i++) {
             num = i;
             if (i >= setSize)

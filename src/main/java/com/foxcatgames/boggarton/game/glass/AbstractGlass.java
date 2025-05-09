@@ -19,7 +19,7 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     abstract public boolean removeHoles();
     abstract public void removeBrick(int i, int j);
     abstract public int newFigure(F newFigure);
-    abstract public boolean rotate();
+    abstract public void rotate();
     abstract public boolean moveLeft();
     abstract public boolean moveRight();
 
@@ -48,8 +48,10 @@ abstract public class AbstractGlass<B extends IBrick, F extends AbstractFigure<B
     public int processGlass() {
         while (findChainsToKill()) {
             killChains();
-            while (removeHoles())
-                ;
+            boolean removeHoles;
+            do {
+                removeHoles = removeHoles();
+            } while (removeHoles);
             addReaction();
         }
         return cleanReactions();

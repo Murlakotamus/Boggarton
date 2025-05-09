@@ -7,10 +7,10 @@ import com.foxcatgames.boggarton.game.forecast.AbstractForecast;
 import com.foxcatgames.boggarton.game.glass.AbstractGlass;
 import com.foxcatgames.boggarton.players.virtual.solver.IEater;
 
-public class EffectiveVirtualNonAdaptivePlayer<B extends IBrick, F extends AbstractFigure<B>, G extends AbstractGlass<B, F>, P extends AbstractForecast<B, F>, T extends IAutomatedGame<B, F, G, P>>
+public class VirtualEffectiveNonAdaptivePlayer<B extends IBrick, F extends AbstractFigure<B>, G extends AbstractGlass<B, F>, P extends AbstractForecast<B, F>, T extends IAutomatedGame<B, F, G, P>>
         extends AbstractVirtualNonAdaptivePlayer<B, F, G, P, T> {
 
-    public EffectiveVirtualNonAdaptivePlayer(final T game, final int prognosis, final IEater price) {
+    public VirtualEffectiveNonAdaptivePlayer(final T game, final int prognosis, final IEater price) {
         super(game, prognosis, price, false);
     }
 

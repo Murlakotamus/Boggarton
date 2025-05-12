@@ -17,8 +17,8 @@ public enum YuckTypes implements IMenu<YuckTypes> {
     }
 
     @Override
-    public YuckTypes next() {
-        return Utils.nextEnumValue(this, YuckTypes.class);
+    public YuckTypes relative(final int relativePosition) {
+        return Utils.relativeEnumValue(this, YuckTypes.class, relativePosition);
     }
 
     public static String[] getNames() {

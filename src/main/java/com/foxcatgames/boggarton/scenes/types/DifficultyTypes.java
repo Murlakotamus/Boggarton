@@ -19,8 +19,8 @@ public enum DifficultyTypes implements IMenu<DifficultyTypes> {
     }
 
     @Override
-    public DifficultyTypes next() {
-        return Utils.nextEnumValue(this, DifficultyTypes.class);
+    public DifficultyTypes relative(final int relativePosition) {
+        return Utils.relativeEnumValue(this, DifficultyTypes.class, relativePosition);
     }
 
     public int getSetSize() {

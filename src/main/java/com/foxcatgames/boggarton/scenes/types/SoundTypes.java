@@ -17,10 +17,9 @@ public enum SoundTypes implements IMenu<SoundTypes> {
     }
 
     @Override
-    public SoundTypes next() {
-        return Utils.nextEnumValue(this, SoundTypes.class);
+    public SoundTypes relative(final int relativePosition) {
+        return Utils.relativeEnumValue(this, SoundTypes.class, relativePosition);
     }
-
     public static String[] getNames() {
         return Utils.getNames(SoundTypes.class);
     }

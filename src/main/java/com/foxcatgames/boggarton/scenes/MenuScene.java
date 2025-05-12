@@ -78,6 +78,8 @@ public class MenuScene extends AbstractLogoScene {
         addKeyUp();
         addKeyDown();
         addKeyEnter();
+        addKeyLeft();
+        addKeyRight();
         addKeyEscape(SceneItem.OUTRO);
     }
 
@@ -119,6 +121,64 @@ public class MenuScene extends AbstractLogoScene {
         EventManager.addListener(Keyboard.KEY_DOWN, down);
     }
 
+    private void addKeyLeft() {
+        final KeyListener left = new KeyListener() {
+            @Override
+            public void onKeyDown() {
+                Sound.playSelect();
+            }
+
+            @Override
+            public void onKeyUp() {
+                setSubmenuPosition(ITEMS[currentPosition], -1);
+            }
+        };
+        EventManager.addListener(Keyboard.KEY_LEFT, left);
+    }
+
+    private void addKeyRight() {
+        final KeyListener right = new KeyListener() {
+            @Override
+            public void onKeyDown() {
+                Sound.playSelect();
+            }
+
+            @Override
+            public void onKeyUp() {
+                setSubmenuPosition(ITEMS[currentPosition], 1);
+            }
+        };
+        EventManager.addListener(Keyboard.KEY_RIGHT, right);
+    }
+
+    private void setSubmenuPosition(final MenuItem menuItem, final int nextPosition) {
+        switch (menuItem) {
+            case MODE:
+                menuItem.setSubmenuPosition(menuItem.getSubmenuElementPosition() + nextPosition);
+                break;
+            case YUCKS:
+                menuItem.setRelativePositionFor(SceneItem.yuckType, nextPosition);
+                break;
+            case RANDOM_TYPE:
+                menuItem.setRelativePositionFor(SceneItem.randomType, nextPosition);
+                break;
+            case DIFFICULTY:
+                menuItem.setRelativePositionFor(SceneItem.difficultyType, nextPosition);
+                break;
+            case SOUND:
+                menuItem.setRelativePositionFor(SceneItem.soundType, nextPosition);
+                break;
+            case FIGURE_SIZE:
+                SceneItem.figureSize = nextValue(SceneItem.figureSize, MIN_SIZE, MAX_SIZE, nextPosition);
+                break;
+            case PROGNOSIS:
+                SceneItem.prognosis = nextValue(SceneItem.prognosis, MIN_PROGNOSIS, MAX_PROGNOSIS, nextPosition);
+                break;
+        }
+        drawMenu();
+        drawPrognosis(SceneItem.getSetSize());
+    }
+
     private void addKeyEnter() {
         final KeyListener enter = new KeyListener() {
             @Override
@@ -130,40 +190,23 @@ public class MenuScene extends AbstractLogoScene {
             public void onKeyUp() {
                 final MenuItem menuItem = ITEMS[currentPosition];
                 switch (menuItem) {
-                case START:
-                    nextScene = SceneItem.gameScenes.get(ITEMS[1].getSubmenuElementPosition());
-                    break;
-                case MODE:
-                    menuItem.setSubmenuPosition(menuItem.getSubmenuElementPosition() + 1);
-                    drawMenu();
-                    break;
-                case YUCKS:
-                    menuItem.setNextPositionFor(SceneItem.yuckType);
-                    drawMenu();
-                    break;
-                case RANDOM_TYPE:
-                    menuItem.setNextPositionFor(SceneItem.randomType);
-                    drawMenu();
-                    break;
-                case DIFFICULTY:
-                    menuItem.setNextPositionFor(SceneItem.difficultyType);
-                    drawMenu();
-                    drawPrognosis(SceneItem.getSetSize());
-                    break;
-                case SOUND:
-                    menuItem.setNextPositionFor(SceneItem.soundType);
-                    drawMenu();
-                    break;
-                case FIGURE_SIZE:
-                    SceneItem.figureSize = nextValue(SceneItem.figureSize, MIN_SIZE, MAX_SIZE);
-                    drawPrognosis(SceneItem.getSetSize());
-                    break;
-                case PROGNOSIS:
-                    SceneItem.prognosis = nextValue(SceneItem.prognosis, MIN_PROGNOSIS, MAX_PROGNOSIS);
-                    drawPrognosis(SceneItem.getSetSize());
-                    break;
-                default:
-                    nextScene = SceneItem.ABOUT;
+                    case START:
+                        nextScene = SceneItem.gameScenes.get(MenuItem.MODE.getSubmenuElementPosition());
+                        break;
+                    case MODE:
+                    case YUCKS:
+                    case RANDOM_TYPE:
+                    case DIFFICULTY:
+                    case SOUND:
+                    case FIGURE_SIZE:
+                    case PROGNOSIS:
+                        setSubmenuPosition(menuItem, 1);
+                        break;
+                    case ABOUT:
+                        nextScene = SceneItem.ABOUT;
+                        break;
+                    default:
+                        nextScene = SceneItem.OUTRO;
                 }
                 SceneItem.saveSettings();
             }
@@ -171,10 +214,13 @@ public class MenuScene extends AbstractLogoScene {
         EventManager.addListener(Keyboard.KEY_RETURN, enter);
     }
 
-    private static int nextValue(int param, final int min, final int max) {
-        if (++param > max)
-            param = min;
-        return param;
+    private static int nextValue(int param, final int min, final int max, final int nextPosition) {
+        if (param + nextPosition > max) {
+            return min;
+        } else if (param + nextPosition < min) {
+            return max;
+        }
+        return param + nextPosition;
     }
 
     @Override

@@ -24,10 +24,9 @@ public enum RandomTypes implements IMenu<RandomTypes> {
     }
 
     @Override
-    public RandomTypes next() {
-        return Utils.nextEnumValue(this, RandomTypes.class);
+    public RandomTypes relative(final int relativePosition) {
+        return Utils.relativeEnumValue(this, RandomTypes.class, relativePosition);
     }
-
     public static String[] getNames() {
         return Utils.getNames(RandomTypes.class);
     }

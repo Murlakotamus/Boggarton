@@ -43,11 +43,15 @@ public class Utils {
         return i + CURRENT_SET * 10;
     }
 
-    public static <E extends Enum<E>> E nextEnumValue(final E currentValue, final Class<E> enumData) {
-        if (currentValue.ordinal() >= enumData.getEnumConstants().length - 1)
+    public static <E extends Enum<E>> E relativeEnumValue(final E currentValue, final Class<E> enumData, final int nextPosition) {
+        int abs = nextPosition != 0 ? Math.abs(nextPosition) / nextPosition : 0;
+        int newPosition = abs + currentValue.ordinal();
+        if (newPosition >= enumData.getEnumConstants().length) {
             return enumData.getEnumConstants()[0];
-
-        return enumData.getEnumConstants()[currentValue.ordinal() + 1];
+        } else if (newPosition < 0) {
+            return enumData.getEnumConstants()[enumData.getEnumConstants().length - 1];
+        } else
+            return enumData.getEnumConstants()[newPosition];
     }
 
     public static <E extends Enum<E> & IName> String[] getNames(final Class<E> enumData) {

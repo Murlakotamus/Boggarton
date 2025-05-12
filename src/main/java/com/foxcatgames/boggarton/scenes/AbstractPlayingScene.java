@@ -55,7 +55,7 @@ abstract public class AbstractPlayingScene extends AbstractScene {
         final KeyListener escape = new KeyListener() {
             @Override
             public void onKeyUp() {
-                SceneItem.soundType = SceneItem.soundType.next();
+                SceneItem.soundType = SceneItem.soundType.relative(1);
             }
         };
         EventManager.addListener(Keyboard.KEY_M, escape);

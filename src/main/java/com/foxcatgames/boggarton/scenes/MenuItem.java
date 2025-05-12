@@ -16,7 +16,8 @@ public enum MenuItem {
     FIGURE_SIZE("Figure size"),
     PROGNOSIS("Prognosis"),
     SOUND("Sound", SoundTypes.getNames()),
-    ABOUT("About");
+    ABOUT("About"),
+    QUIT("Quit");
 
     final private String name;
     final private String[] values;
@@ -48,9 +49,11 @@ public enum MenuItem {
 
     public void setSubmenuPosition(final int position) {
         assert values != null;
-        if (position >= values.length)
+        if (position >= values.length) {
             submenuElementPosition = 0;
-        else
+        } else if (position < 0) {
+            submenuElementPosition = values.length - 1;
+        } else
             submenuElementPosition = position;
     }
 
@@ -58,8 +61,9 @@ public enum MenuItem {
         setSubmenuPosition(enumValue.ordinal());
     }
 
-    public <E extends Enum<E> & IMenu<E>> void setNextPositionFor(final E enumValue) {
-        final E newValue = SceneItem.nextEnumValue(enumValue);
+    public <E extends Enum<E> & IMenu<E>> void setRelativePositionFor(final E enumValue, final int position) {
+        final E newValue = SceneItem.getRelativeEnumValue(enumValue, position);
         setSubmenuPosition(newValue);
     }
+
 }

@@ -179,21 +179,22 @@ public enum SceneItem implements IName {
         return sceneName;
     }
 
-    public static <E extends Enum<E> & IMenu<E>> E nextEnumValue(final E enumValue) {
+    public static <E extends Enum<E> & IMenu<E>> E getRelativeEnumValue(final E enumValue, final int nextPosition) {
         final String className = enumValue.getClass().getSimpleName();
         switch (className) {
-        case "YuckTypes":
-            yuckType = yuckType.next();
-            break;
-        case "RandomTypes":
-            randomType = randomType.next();
-            break;
-        case "DifficultyTypes":
-            difficultyType = difficultyType.next();
-            break;
-        case "SoundTypes":
-            soundType = soundType.next();
+            case "YuckTypes":
+                yuckType = yuckType.relative(nextPosition);
+                break;
+            case "RandomTypes":
+                randomType = randomType.relative(nextPosition);
+                break;
+            case "DifficultyTypes":
+                difficultyType = difficultyType.relative(nextPosition);
+                break;
+            case "SoundTypes":
+                soundType = soundType.relative(nextPosition);
         }
-        return enumValue.next();
+        return enumValue.relative(nextPosition);
     }
+
 }

@@ -44,8 +44,7 @@ public class Utils {
     }
 
     public static <E extends Enum<E>> E relativeEnumValue(final E currentValue, final Class<E> enumData, final int nextPosition) {
-        int abs = nextPosition != 0 ? Math.abs(nextPosition) / nextPosition : 0;
-        int newPosition = abs + currentValue.ordinal();
+        int newPosition = nextPosition + currentValue.ordinal();
         if (newPosition >= enumData.getEnumConstants().length) {
             return enumData.getEnumConstants()[0];
         } else if (newPosition < 0) {

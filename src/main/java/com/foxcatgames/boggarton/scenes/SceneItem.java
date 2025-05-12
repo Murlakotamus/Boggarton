@@ -30,27 +30,23 @@ import com.foxcatgames.boggarton.scenes.gamescenes.DemoScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.GameScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.PracticeScene;
 import com.foxcatgames.boggarton.scenes.gamescenes.ReplayScene;
-import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
-import com.foxcatgames.boggarton.scenes.types.IMenu;
-import com.foxcatgames.boggarton.scenes.types.IName;
-import com.foxcatgames.boggarton.scenes.types.RandomTypes;
-import com.foxcatgames.boggarton.scenes.types.SoundTypes;
-import com.foxcatgames.boggarton.scenes.types.YuckTypes;
+import com.foxcatgames.boggarton.scenes.types.*;
 
 public enum SceneItem implements IName {
-    INTRO, MENU, GAME("Game"), PRACTICE("Practice"), COMPETITION("Competition"), COMPETITION_PRACTICE("Practice with computer"), DEMO("Demo"), COMPETITION_DEMO(
+    INTRO, MENU, GAME("Game"), GAME_TYPE("Game type"), PRACTICE("Practice"), COMPETITION("Competition"), COMPETITION_PRACTICE("Practice with computer"), DEMO("Demo"), COMPETITION_DEMO(
             "Competition demo"), REPLAY("Replay game"), ABOUT, OUTRO, FINISH_GAME;
 
-    static final List<SceneItem> gameScenes = Arrays.asList(GAME, PRACTICE, COMPETITION, COMPETITION_PRACTICE, DEMO, COMPETITION_DEMO, REPLAY);
+    static final List<SceneItem> gameScenes = Arrays.asList(GAME, GAME_TYPE, PRACTICE, COMPETITION, COMPETITION_PRACTICE, DEMO, COMPETITION_DEMO, REPLAY);
 
     public static int prognosis = 3;
     public static int figureSize = 3;
 
     private final String sceneName;
-    private static final int[] PROGNOSISES = { prognosis, prognosis };
+    private static final int[] PROGNOSISES = {prognosis, prognosis};
     private static final int PROGNOSIS_EFFECTIVE = 4;
     private static final int PROGNOSIS_COMPLEX = 2;
 
+    static GameTypes gameType = GameTypes.HORIZONTAL;
     static YuckTypes yuckType = YuckTypes.RANDOM;
     static RandomTypes randomType = RandomTypes.RANDOM;
     static DifficultyTypes difficultyType = DifficultyTypes.EASY;
@@ -67,30 +63,30 @@ public enum SceneItem implements IName {
     public AbstractScene createScene() {
         SceneItem.restoreSettings();
         switch (this) {
-        case INTRO:
-            Sound.playLogo();
-            return new IntroScene();
-        case MENU:
-            return new MenuScene();
-        case GAME:
-            return new GameScene(WIDTH, HEIGHT, prognosis, figureSize, randomType, difficultyType);
-        case PRACTICE:
-            return new PracticeScene(WIDTH, HEIGHT, prognosis, figureSize, randomType, difficultyType);
-        case DEMO:
-            return new DemoScene(WIDTH, HEIGHT, PROGNOSIS_COMPLEX, figureSize, randomType, difficultyType);
-        case COMPETITION_PRACTICE:
-            return new CompetitionPracticeScene(WIDTH, HEIGHT, PROGNOSISES, figureSize, yuckType, randomType, difficultyType);
-        case COMPETITION:
-            return new CompetitionGameScene(WIDTH, HEIGHT, PROGNOSISES, figureSize, yuckType, randomType, difficultyType);
-        case COMPETITION_DEMO:
-            return new CompetitionDemoScene(WIDTH, HEIGHT, new int[] { PROGNOSIS_EFFECTIVE, PROGNOSIS_COMPLEX },
-                    figureSize, yuckType, randomType, difficultyType);
-        case REPLAY:
-            return new ReplayScene(WIDTH, HEIGHT);
-        case OUTRO:
-            return new OutroScene();
-        default:
-            return new AboutScene();
+            case INTRO:
+                Sound.playLogo();
+                return new IntroScene();
+            case MENU:
+                return new MenuScene();
+            case GAME:
+                return new GameScene(WIDTH, HEIGHT, prognosis, figureSize, randomType, difficultyType, gameType);
+            case PRACTICE:
+                return new PracticeScene(WIDTH, HEIGHT, prognosis, figureSize, randomType, difficultyType);
+            case DEMO:
+                return new DemoScene(WIDTH, HEIGHT, PROGNOSIS_COMPLEX, figureSize, randomType, difficultyType);
+            case COMPETITION_PRACTICE:
+                return new CompetitionPracticeScene(WIDTH, HEIGHT, PROGNOSISES, figureSize, yuckType, randomType, difficultyType);
+            case COMPETITION:
+                return new CompetitionGameScene(WIDTH, HEIGHT, PROGNOSISES, figureSize, yuckType, randomType, difficultyType);
+            case COMPETITION_DEMO:
+                return new CompetitionDemoScene(WIDTH, HEIGHT, new int[]{PROGNOSIS_EFFECTIVE, PROGNOSIS_COMPLEX},
+                        figureSize, yuckType, randomType, difficultyType);
+            case REPLAY:
+                return new ReplayScene(WIDTH, HEIGHT);
+            case OUTRO:
+                return new OutroScene();
+            default:
+                return new AboutScene();
         }
     }
 
@@ -105,35 +101,40 @@ public enum SceneItem implements IName {
             for (final String key : props.stringPropertyNames()) {
                 final int position = Integer.parseInt(props.getProperty(key));
                 switch (key) {
-                case "MODE":
-                    MODE.setSubmenuPosition(position);
-                    break;
-                case "YUCKS":
-                    yuckType = Utils.getValue(YuckTypes.class, position);
-                    YUCKS.setSubmenuPosition(yuckType);
-                    break;
-                case "RANDOM_TYPE":
-                    randomType = Utils.getValue(RandomTypes.class, position);
-                    RANDOM_TYPE.setSubmenuPosition(randomType);
-                    break;
-                case "DIFFICULTY":
-                    difficultyType = Utils.getValue(DifficultyTypes.class, position);
-                    DIFFICULTY.setSubmenuPosition(difficultyType);
-                    break;
-                case "SOUND":
-                    soundType = Utils.getValue(SoundTypes.class, position);
-                    SOUND.setSubmenuPosition(soundType);
-                    break;
-                case "FIGURE_SIZE":
-                    figureSize = setValue(position, MIN_SIZE, MAX_SIZE);
-                    break;
-                case "PROGNOSIS":
-                    prognosis = setValue(position, MIN_PROGNOSIS, MAX_PROGNOSIS);
-                    break;
+                    case "GAME_TYPE":
+                        gameType = Utils.getValue(GameTypes.class, position);
+                        BOGGARTON_TYPE.setSubmenuPosition(gameType);
+                        break;
+                    case "MODE":
+                        MODE.setSubmenuPosition(position);
+                        break;
+                    case "YUCKS":
+                        yuckType = Utils.getValue(YuckTypes.class, position);
+                        YUCKS.setSubmenuPosition(yuckType);
+                        break;
+                    case "RANDOM_TYPE":
+                        randomType = Utils.getValue(RandomTypes.class, position);
+                        RANDOM_TYPE.setSubmenuPosition(randomType);
+                        break;
+                    case "DIFFICULTY":
+                        difficultyType = Utils.getValue(DifficultyTypes.class, position);
+                        DIFFICULTY.setSubmenuPosition(difficultyType);
+                        break;
+                    case "SOUND":
+                        soundType = Utils.getValue(SoundTypes.class, position);
+                        SOUND.setSubmenuPosition(soundType);
+                        break;
+                    case "FIGURE_SIZE":
+                        figureSize = setValue(position, MIN_SIZE, MAX_SIZE);
+                        break;
+                    case "PROGNOSIS":
+                        prognosis = setValue(position, MIN_PROGNOSIS, MAX_PROGNOSIS);
+                        break;
                 }
             }
         } catch (final IOException e) {
-            Logger.printStackTrace(e);        }
+            Logger.printStackTrace(e);
+        }
     }
 
     static void saveSettings() {
@@ -143,6 +144,7 @@ public enum SceneItem implements IName {
             file.createNewFile();
             final Properties props = new Properties();
 
+            props.setProperty(GAME_TYPE.name(), "" + BOGGARTON_TYPE.getSubmenuElementPosition());
             props.setProperty(MODE.name(), "" + MODE.getSubmenuElementPosition());
             props.setProperty(YUCKS.name(), "" + YUCKS.getSubmenuElementPosition());
             props.setProperty(RANDOM_TYPE.name(), "" + RANDOM_TYPE.getSubmenuElementPosition());
@@ -153,7 +155,8 @@ public enum SceneItem implements IName {
 
             props.store(bw, "");
         } catch (final IOException e) {
-            Logger.printStackTrace(e);        }
+            Logger.printStackTrace(e);
+        }
     }
 
     private static int setValue(int param, final int min, final int max) {
@@ -182,6 +185,9 @@ public enum SceneItem implements IName {
     public static <E extends Enum<E> & IMenu<E>> E getRelativeEnumValue(final E enumValue, final int nextPosition) {
         final String className = enumValue.getClass().getSimpleName();
         switch (className) {
+            case "GameTypes":
+                gameType = gameType.relative(nextPosition);
+                break;
             case "YuckTypes":
                 yuckType = yuckType.relative(nextPosition);
                 break;

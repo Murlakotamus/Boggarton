@@ -1,14 +1,11 @@
 package com.foxcatgames.boggarton.scenes;
 
-import com.foxcatgames.boggarton.scenes.types.DifficultyTypes;
-import com.foxcatgames.boggarton.scenes.types.IMenu;
-import com.foxcatgames.boggarton.scenes.types.RandomTypes;
-import com.foxcatgames.boggarton.scenes.types.SoundTypes;
-import com.foxcatgames.boggarton.scenes.types.YuckTypes;
+import com.foxcatgames.boggarton.scenes.types.*;
 
 public enum MenuItem {
 
     START("Start"),
+    BOGGARTON_TYPE("Game type", GameTypes.getNames()),
     MODE("Mode", SceneItem.getNames()),
     RANDOM_TYPE("Brick's appearance", RandomTypes.getNames()),
     DIFFICULTY("Difficulty", DifficultyTypes.getNames()),
@@ -61,7 +58,7 @@ public enum MenuItem {
         setSubmenuPosition(enumValue.ordinal());
     }
 
-    public <E extends Enum<E> & IMenu<E>> void setRelativePositionFor(final E enumValue, final int position) {
+    public <E extends Enum<E> & IMenu<E>> void setRelativePosition(final E enumValue, final int position) {
         final E newValue = SceneItem.getRelativeEnumValue(enumValue, position);
         setSubmenuPosition(newValue);
     }

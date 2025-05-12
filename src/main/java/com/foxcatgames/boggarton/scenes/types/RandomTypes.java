@@ -27,6 +27,7 @@ public enum RandomTypes implements IMenu<RandomTypes> {
     public RandomTypes relative(final int relativePosition) {
         return Utils.relativeEnumValue(this, RandomTypes.class, relativePosition);
     }
+
     public static String[] getNames() {
         return Utils.getNames(RandomTypes.class);
     }

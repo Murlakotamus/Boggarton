@@ -153,20 +153,23 @@ public class MenuScene extends AbstractLogoScene {
 
     private void setSubmenuPosition(final MenuItem menuItem, final int nextPosition) {
         switch (menuItem) {
+            case BOGGARTON_TYPE:
+                menuItem.setRelativePosition(SceneItem.gameType, nextPosition);
+                break;
             case MODE:
                 menuItem.setSubmenuPosition(menuItem.getSubmenuElementPosition() + nextPosition);
                 break;
             case YUCKS:
-                menuItem.setRelativePositionFor(SceneItem.yuckType, nextPosition);
+                menuItem.setRelativePosition(SceneItem.yuckType, nextPosition);
                 break;
             case RANDOM_TYPE:
-                menuItem.setRelativePositionFor(SceneItem.randomType, nextPosition);
+                menuItem.setRelativePosition(SceneItem.randomType, nextPosition);
                 break;
             case DIFFICULTY:
-                menuItem.setRelativePositionFor(SceneItem.difficultyType, nextPosition);
+                menuItem.setRelativePosition(SceneItem.difficultyType, nextPosition);
                 break;
             case SOUND:
-                menuItem.setRelativePositionFor(SceneItem.soundType, nextPosition);
+                menuItem.setRelativePosition(SceneItem.soundType, nextPosition);
                 break;
             case FIGURE_SIZE:
                 SceneItem.figureSize = nextValue(SceneItem.figureSize, MIN_SIZE, MAX_SIZE, nextPosition);
@@ -193,6 +196,7 @@ public class MenuScene extends AbstractLogoScene {
                     case START:
                         nextScene = SceneItem.gameScenes.get(MenuItem.MODE.getSubmenuElementPosition());
                         break;
+                    case BOGGARTON_TYPE:
                     case MODE:
                     case YUCKS:
                     case RANDOM_TYPE:

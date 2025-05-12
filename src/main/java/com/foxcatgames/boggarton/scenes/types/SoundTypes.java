@@ -20,6 +20,7 @@ public enum SoundTypes implements IMenu<SoundTypes> {
     public SoundTypes relative(final int relativePosition) {
         return Utils.relativeEnumValue(this, SoundTypes.class, relativePosition);
     }
+
     public static String[] getNames() {
         return Utils.getNames(SoundTypes.class);
     }
